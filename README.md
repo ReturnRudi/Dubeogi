@@ -1,16 +1,9 @@
 # clamp
 
-A new Flutter project.
+동국대학교 길찾기 어플리케이션 Du벅이
 
-## Getting Started
+## 현재까지 완성된 기능
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+학교 지도 이미지 업로드(지도 이미지 제작 예정)
+지도 위에 임의의 경로를 빨간 선으로 표시
+업로드된 경로가 표시된 지도 이미지 드래그, 줌 기능
