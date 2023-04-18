@@ -76,15 +76,27 @@ class _ImageDrawingState extends State<ImageDrawing> {
       final ratio = MediaQuery.of(context).size.height / MediaQuery.of(context).size.width;
       final screenWidth = _imageWidth / _scale; //화면에서 보여지는 너비의 물리적 픽셀값
       final screenHeight = screenWidth * ratio; //화면에서 보여지는 높이의 물리적 픽셀값
-
+      
+      double minY, maxY;
+      
       // 이미지의 최소 및 최대 제한 값을 계산합니다.
       double minX = -_imageWidth / 2 + screenWidth / 2;
       double maxX = _imageWidth / 2 - screenWidth / 2;
-      double minY = -_imageHeight / 2 + screenHeight / 2;
-      double maxY = _imageHeight / 2 - screenHeight / 2;
+      
+      // 위 아래 여백이 생기는 경우 minY, maxY의 크기가 역전되지 않도록 if문 추가
+      if(_imageHeight > screenHeight){
+        minY = -_imageHeight / 2 + screenHeight / 2;
+        maxY = _imageHeight / 2 - screenHeight / 2;
+      }
+      else{
+        minY = _imageHeight / 2 - screenHeight / 2;
+        maxY = -_imageHeight / 2 + screenHeight / 2;
+      }
+      
 
       // 값을 출력합니다.
       print('imageHeight: $_imageHeight, imageWidth: $_imageWidth');
+      print('screenWidth: $screenWidth, screenHeight: $screenHeight');
       print('minX: $minX, maxX: $maxX, minY: $minY, maxY: $maxY');
 
       // _position 값을 제한 값으로 설정합니다.
