@@ -370,26 +370,26 @@ class _ImageDrawingState extends State<ImageDrawing> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: !_imageLoaded
-            ? Text('지도를 불러오는 중')
-            : GestureDetector(
-          onScaleStart: _onScaleStart,
-          onScaleUpdate: _onScaleUpdate,
-          onScaleEnd: _onScaleEnd,
-          child: Transform.scale(
+    return GestureDetector(
+      onScaleStart: _onScaleStart,
+      onScaleUpdate: _onScaleUpdate,
+      onScaleEnd: _onScaleEnd,
+      child: Scaffold(
+        body: Center(
+          child: !_imageLoaded
+              ? Text('지도를 불러오는 중')
+              : Transform.scale(
             scale: _scale,
             child: Transform.translate(
               offset: _position.scale(scale_offset, scale_offset),
               child: ClipRect(
                 child: CustomPaint(
                   size: Size(_imageWidth, _imageHeight),
-                  foregroundPainter: LinePainter(
-                      _imageInfo, startPoints, endPoints),
+                  foregroundPainter:
+                  LinePainter(_imageInfo, startPoints, endPoints),
                   child: Image.asset(
                     'assets/images/du.png',
-                     fit: BoxFit.cover,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -399,6 +399,7 @@ class _ImageDrawingState extends State<ImageDrawing> {
       ),
     );
   }
+
 }
 
 class LinePainter extends CustomPainter {
