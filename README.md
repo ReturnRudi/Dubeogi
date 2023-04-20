@@ -19,4 +19,8 @@
 
 임시 로딩 이미지 설정  
 
-Gesturedetector 범위 수정
+Gesturedetector 범위 수정  
+
+<4/20>  
+
+dart 코드 파일 정리
