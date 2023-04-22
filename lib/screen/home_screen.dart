@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/component/appbar.dart';
+import 'package:Dubeogi/screen/search_screen.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 
 List<Node> reconstructPath(
@@ -40,7 +41,29 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
-      body: ImageDrawing(),
+      body: Stack(
+        children: [
+          ImageDrawing(),
+          Positioned(
+            bottom: 50,
+            right: 50,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchScreen()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30), // 버튼 모서리 둥글기 정도
+                ),
+              ),
+              child: Text('길찾기'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
