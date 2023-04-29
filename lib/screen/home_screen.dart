@@ -28,6 +28,95 @@ List<Node> reconstructPath(
   return path;
 }
 
+<<<<<<< Updated upstream
+=======
+class InputScreen extends StatefulWidget {
+  const InputScreen({Key? key}) : super(key: key);
+
+  @override
+  State<InputScreen> createState() => _InputScreenState();
+}
+
+class _InputScreenState extends State<InputScreen> {
+  final firstFocus = FocusNode();
+  final secondFocus = FocusNode();
+  final firstController = TextEditingController();
+  final secondController = TextEditingController();
+ // ㅇ
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: CustomAppBar(
+          title: '동국대학교',
+        ),
+        body: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Container(
+                    width: 200.0,
+                    child: TextFormField(
+                      focusNode: firstFocus,
+                      controller: firstController,
+                      onFieldSubmitted: (term) {
+                        FocusScope.of(context).requestFocus(secondFocus);
+                      },
+                      decoration: InputDecoration(
+                        hintText: '출발 지점을 입력하세요',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 200.0,
+                    child: TextFormField(
+                      focusNode: secondFocus,
+                      controller: secondController,
+                      decoration: InputDecoration(hintText: '도착 지점을 입력하세요'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      handleInput();
+                    },
+                    child: Icon(
+                      Icons.arrow_right_alt_rounded,
+                      color: Colors.white,
+                      size: 90.0,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
+  }
+
+  void handleInput() {
+    String firstValue = firstController.text;
+    String secondValue = secondController.text;
+
+    Navigator.of(context as BuildContext).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => HomeScreen(
+          start: firstValue,
+          end: secondValue,
+        ),
+      ),
+    );
+  }
+}
+
+>>>>>>> Stashed changes
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
