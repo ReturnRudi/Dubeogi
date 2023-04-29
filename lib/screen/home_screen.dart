@@ -13,14 +13,16 @@ List<Node> reconstructPath(
   List<Node> path = [];
   int currentNode = endIndex;
 
-  while (currentNode != startIndex) { // end부터 start까지 path로 추가
+  while (currentNode != startIndex) {
+    // end부터 start까지 path로 추가
     path.add(nodes[currentNode]);
     currentNode = prev[currentNode];
     if (currentNode == -1) {
       break;
     }
   }
-  if (currentNode == startIndex) { // 위 while에서 startnode는 추가가 안됐기 때문에 따로 추가
+  if (currentNode == startIndex) {
+    // 위 while에서 startnode는 추가가 안됐기 때문에 따로 추가
     path.add(nodes[startIndex]);
   }
 
@@ -28,8 +30,6 @@ List<Node> reconstructPath(
   return path;
 }
 
-<<<<<<< Updated upstream
-=======
 class InputScreen extends StatefulWidget {
   const InputScreen({Key? key}) : super(key: key);
 
@@ -42,7 +42,8 @@ class _InputScreenState extends State<InputScreen> {
   final secondFocus = FocusNode();
   final firstController = TextEditingController();
   final secondController = TextEditingController();
- // ㅇ
+
+  // ㅇ
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +117,6 @@ class _InputScreenState extends State<InputScreen> {
   }
 }
 
->>>>>>> Stashed changes
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
@@ -136,7 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           ImageDrawing(), // 지도 화면
-          Positioned( // 버튼
+          Positioned(
+            // 버튼
             bottom: 50,
             right: 50,
             child: ElevatedButton(
@@ -175,7 +176,8 @@ class _ImageDrawingState extends State<ImageDrawing> {
   List<Offset> endPoints = [];
 
   @override
-  void initState() { // init: 그래프 형성
+  void initState() {
+    // init: 그래프 형성
     super.initState();
     _getImageInfo();
     Graph graph = Graph();
