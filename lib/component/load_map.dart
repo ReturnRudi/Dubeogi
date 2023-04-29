@@ -19,8 +19,6 @@ class _ImageDrawingState extends State<ImageDrawing> {
   late double _imageWidth;
   late double _imageHeight;
   late double scale_offset;
-  List<Offset> startPoints = [];
-  List<Offset> endPoints = [];
 
   double _scale = 4.0;
   double _previousScale = 1.0;
@@ -32,29 +30,12 @@ class _ImageDrawingState extends State<ImageDrawing> {
     // init: 그래프 형성
     super.initState();
     _getImageInfo();
-    Graph graph = Graph();
-
-    graph.addEdge("다향관", 6107, 5898, "명진관", 5917, 6442, 100, "평지", "차도");
-    graph.addEdge("명진관", 5917, 6442, "과학관", 5885, 6671, 30, "평지", "차도");
-    graph.addEdge("과학관", 5885, 6671, "대운동장앞", 6385, 6837, 20, "평지", "차도");
-    graph.addEdge("명진관", 5917, 6442, "법학관", 6339, 6113, 70, "평지", "차도");
-    graph.addEdge("다향관", 6107, 5898, "법학관", 6339, 6113, 70, "평지", "차도");
-    graph.addEdge("법학관", 6339, 6113, "혜화관", 6757, 6443, 50, "평지", "차도");
-    graph.addEdge("법학관", 6339, 6113, "대운동장앞", 6385, 6837, 170, "평지", "차도");
-    graph.addEdge("대운동장앞", 6385, 6837, "경영관", 7223, 6823, 200, "평지", "차도");
-    graph.addEdge("대운동장앞", 6385, 6837, "사회과학관", 7103, 6457, 220, "평지", "차도");
-    graph.addEdge("대운동장앞", 6385, 6837, "혜화관", 6757, 6443, 80, "평지", "차도");
-    graph.addEdge("경영관", 7223, 6823, "사회과학관", 7103, 6457, 10, "평지", "도보");
-    graph.addEdge("사회과학관", 7103, 6457, "혜화관", 6757, 6443, 30, "평지", "차도");
-    graph.addEdge("혜화관", 6757, 6443, "문화관", 7291, 6357, 45, "평지", "도보");
-    graph.addEdge("사회과학관", 7103, 6457, "문화관", 7291, 6357, 20, "평지", "도보");
-    graph.addEdge("문화관", 7291, 6357, "학술관", 7517, 6215, 20, "평지", "도보");
   }
 
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
-    AssetImage('assets/images/du.png').resolve(ImageConfiguration());
+        AssetImage('assets/images/du.png').resolve(ImageConfiguration());
     final listener = ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     });
@@ -137,22 +118,17 @@ class _ImageDrawingState extends State<ImageDrawing> {
           child: !_imageLoaded
               ? Text('지도를 불러오는 중')
               : Transform.scale(
-            scale: _scale,
-            child: Transform.translate(
-              offset: _position.scale(scale_offset, scale_offset),
-              child: ClipRect(
-                child: CustomPaint(
-                  size: Size(_imageWidth, _imageHeight),
-                  foregroundPainter:
-                  LinePainter(_imageInfo, startPoints, endPoints),
-                  child: Image.asset(
-                    'assets/images/du.png',
-                    fit: BoxFit.cover,
+                  scale: _scale,
+                  child: Transform.translate(
+                    offset: _position.scale(scale_offset, scale_offset),
+                    child: ClipRect(
+                      child: Image.asset(
+                        'assets/images/du.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
         ),
       ),
     );
