@@ -690,7 +690,6 @@ class _ImageDrawingState extends State<ImageDrawing> {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                             backgroundColor: Colors.white //.withOpacity(0.5),
-                            ),
                         ),
                         child: Text(
                           '자판기',
