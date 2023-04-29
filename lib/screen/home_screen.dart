@@ -226,28 +226,187 @@ class _ImageDrawingState extends State<ImageDrawing> {
       onScaleStart: _onScaleStart,
       onScaleUpdate: _onScaleUpdate,
       onScaleEnd: _onScaleEnd,
-      child: Scaffold(
-        body: Center(
-          child: !_imageLoaded
-              ? Text('지도를 불러오는 중')
-              : Transform.scale(
-                  scale: _scale,
-                  child: Transform.translate(
-                    offset: _position.scale(scale_offset, scale_offset),
-                    child: ClipRect(
-                      child: CustomPaint(
-                        size: Size(_imageWidth, _imageHeight),
-                        foregroundPainter:
-                            LinePainter(_imageInfo, startPoints, endPoints),
-                        child: Image.asset(
-                          'assets/images/du.png',
-                          fit: BoxFit.cover,
+      child: Stack(
+        children: [
+          Scaffold(
+            body: Center(
+              child: !_imageLoaded
+                  ? Text('지도를 불러오는 중')
+                  : Transform.scale(
+                      scale: _scale,
+                      child: Transform.translate(
+                        offset: _position.scale(scale_offset, scale_offset),
+                        child: ClipRect(
+                          child: CustomPaint(
+                            size: Size(_imageWidth, _imageHeight),
+                            foregroundPainter:
+                                LinePainter(_imageInfo, startPoints, endPoints),
+                            child: Image.asset(
+                              'assets/images/du.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                     ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Container(
+                          width: 200.0,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white.withOpacity(0.7),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              hintText: '출발지를 입력하세요',
+                              hintStyle: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 50.0,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.search,
+                            ),
+                            Text(
+                              '길찾기',
+                              style: TextStyle(
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            backgroundColor: Colors.white //.withOpacity(0.5),
+                            ),
+                        child: Text(
+                          '자판기',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                        child: Text(
+                          '샤워실',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                        child: Text(
+                          '편의점',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                        },
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                        child: Text(
+                          '프린터',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                        child: Text(
+                          '미정',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                        child: Text(
+                          '미정',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-        ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
