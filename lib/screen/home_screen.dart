@@ -43,7 +43,7 @@ class _InputScreenState extends State<InputScreen> {
   final firstController = TextEditingController();
   final secondController = TextEditingController();
 
-  // ㅇ
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,8 +118,12 @@ class _InputScreenState extends State<InputScreen> {
 }
 
 class HomeScreen extends StatefulWidget {
+  final String start;
+  final String end;
   const HomeScreen({
     Key? key,
+    required this.start,
+    required this.end,
   }) : super(key: key);
 
   @override
