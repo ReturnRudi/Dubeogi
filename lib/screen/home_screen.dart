@@ -15,14 +15,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  dynamic result;
+  Graph graph = Graph();
+  String _startNodeName = "";
+  String _endNodeName = "";
   List<Offset> startPoints = [];
   List<Offset> endPoints = [];
 
   @override
   void initState() {
     super.initState();
-    Graph graph = Graph();
-
     graph.addEdge("다향관", 6107, 5898, "명진관", 5917, 6442, 100, "평지", "차도");
     graph.addEdge("명진관", 5917, 6442, "과학관", 5885, 6671, 30, "평지", "차도");
     graph.addEdge("과학관", 5885, 6671, "대운동장앞", 6385, 6837, 20, "평지", "차도");
@@ -38,10 +40,31 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("혜화관", 6757, 6443, "문화관", 7291, 6357, 45, "평지", "도보");
     graph.addEdge("사회과학관", 7103, 6457, "문화관", 7291, 6357, 20, "평지", "도보");
     graph.addEdge("문화관", 7291, 6357, "학술관", 7517, 6215, 20, "평지", "도보");
+  }
 
-    String startNodeName = "명진관";
-    String endNodeName = "학술관";
+  List<Node> reconstructPath(
+      List<int> prev, List<Node> nodes, int startIndex, int endIndex) {
+    List<Node> path = [];
+    int currentNode = endIndex;
 
+    while (currentNode != startIndex) {
+      // end부터 start까지 path로 추가
+      path.add(nodes[currentNode]);
+      currentNode = prev[currentNode];
+      if (currentNode == -1) {
+        break;
+      }
+    }
+    if (currentNode == startIndex) {
+      // 위 while에서 startnode는 추가가 안됐기 때문에 따로 추가
+      path.add(nodes[startIndex]);
+    }
+
+    path = path.reversed.toList();
+    return path;
+  }
+
+  void a(String startNodeName, String endNodeName){
     Node startNode = graph.findNode(startNodeName);
     Node endNode = graph.findNode(endNodeName);
 
@@ -50,14 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Regular search
     var regularResult =
-        graph.aStar(graph.nodes, graph.edges, startNode, endNode);
+    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
     List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
     List<Node> startNodePoints = [];
     List<Node> endNodePoints = [];
     List<Node> regularPath =
-        reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
+    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
 
     print("Regular path from $startNode to $endNode:");
     for (int i = 0; i < regularPath.length; i++) {
@@ -95,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
       print('endPoints: $endPoints');
     }
 
-    // print('Initial _position: $_position');
+    //print('Initial _position: $_position');
   }
 
   @override
@@ -113,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 50,
             child: ElevatedButton(
               onPressed: () async {
-                final result = await Navigator.push(
+                result = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => SearchScreen(),

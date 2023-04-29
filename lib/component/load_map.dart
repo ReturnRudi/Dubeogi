@@ -19,6 +19,8 @@ class _ImageDrawingState extends State<ImageDrawing> {
   late double _imageWidth;
   late double _imageHeight;
   late double scale_offset;
+  List<Offset> startPoints = [];
+  List<Offset> endPoints = [];
 
   double _scale = 4.0;
   double _previousScale = 1.0;
@@ -27,7 +29,6 @@ class _ImageDrawingState extends State<ImageDrawing> {
 
   @override
   void initState() {
-    // init: 그래프 형성
     super.initState();
     _getImageInfo();
   }
@@ -122,9 +123,17 @@ class _ImageDrawingState extends State<ImageDrawing> {
                   child: Transform.translate(
                     offset: _position.scale(scale_offset, scale_offset),
                     child: ClipRect(
-                      child: Image.asset(
-                        'assets/images/du.png',
-                        fit: BoxFit.cover,
+                      child: CustomPaint(
+                        size: Size(_imageWidth, _imageHeight),
+                        foregroundPainter: LinePainter(
+                          imageInfo: _imageInfo,
+                          startPoints: startPoints,
+                          endPoints: endPoints,
+                        ),
+                        child: Image.asset(
+                          'assets/images/du.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),

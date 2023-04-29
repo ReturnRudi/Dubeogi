@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 
-class LinePainter extends CustomPainter { // 지도에 선을 그리는 클래스
+class LinePainter extends CustomPainter {
+  // 지도에 선을 그리는 클래스
   final ImageInfo imageInfo;
   final List<Offset> startPoints;
   final List<Offset> endPoints;
 
-  LinePainter(this.imageInfo, this.startPoints, this.endPoints);
+  LinePainter({
+    required this.imageInfo,
+    required this.startPoints,
+    required this.endPoints,
+  });
+
+  void erase(){
+    startPoints.clear();
+    endPoints.clear();
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -37,30 +47,4 @@ class LinePainter extends CustomPainter { // 지도에 선을 그리는 클래�
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
-}
-
-List<Node> reconstructPath(
-    List<int> prev,
-    List<Node> nodes,
-    int startIndex,
-    int endIndex,
-    ) {
-  List<Node> path = [];
-  int currentNode = endIndex;
-
-  while (currentNode != startIndex) {
-    // end부터 start까지 path로 추가
-    path.add(nodes[currentNode]);
-    currentNode = prev[currentNode];
-    if (currentNode == -1) {
-      break;
-    }
-  }
-  if (currentNode == startIndex) {
-    // 위 while에서 startnode는 추가가 안됐기 때문에 따로 추가
-    path.add(nodes[startIndex]);
-  }
-
-  path = path.reversed.toList();
-  return path;
 }
