@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Dubeogi/screen/input.dart';
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/component/appbar.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
@@ -92,45 +93,43 @@ class _ImageDrawingState extends State<ImageDrawing> {
 
   void _changeImage(String newPath, String hall) {
     setState(() {
-      if(hall == "중앙도서관")
+      if (hall == "중앙도서관")
         libraryPath = 'assets/images/after/중앙도서관(897,2663).png';
-      else if(hall == "과학관")
+      else if (hall == "과학관")
         sciencePath = 'assets/images/after/과학관(1102,2973).png';
-      else if(hall == "대운동장")
+      else if (hall == "대운동장")
         dwPath = 'assets/images/after/대운동장(1308,3206).png';
-      else if(hall == "만해광장")
+      else if (hall == "만해광장")
         mhPath = 'assets/images/after/만해광장(972,1880).png';
-      else if(hall == "명진관")
+      else if (hall == "명진관")
         mjPath = 'assets/images/after/명진관(1129,2805).png';
-      else if(hall == "문화관")
+      else if (hall == "문화관")
         culturePath = 'assets/images/after/문화관(2297,2582).png';
-      else if(hall == "본관")
+      else if (hall == "본관")
         bPath = 'assets/images/after/본관(1017,2394).png';
-      else if(hall == "사회과학관_경영관")
+      else if (hall == "사회과학관_경영관")
         scPath = 'assets/images/after/사회과학관_경영관(2145,2775).png';
-      else if(hall == "신공학관")
+      else if (hall == "신공학관")
         nePath = 'assets/images/after/신공학관(482,2525).png';
-      else if(hall == "원흥관")
+      else if (hall == "원흥관")
         whPath = 'assets/images/after/원흥관(694,2084).png';
-      else if(hall == "정p")
+      else if (hall == "정p")
         ipPath = 'assets/images/after/정p(769,1920).png';
-      else if(hall == "정q")
+      else if (hall == "정q")
         iqPath = 'assets/images/after/정q(634,1866).png';
-      else if(hall == "정각원")
+      else if (hall == "정각원")
         jgPath = 'assets/images/after/정각원(1673,2941).png';
-      else if(hall == "체육관")
+      else if (hall == "체육관")
         gymPath = 'assets/images/after/체육관(1321,1843).png';
-      else if(hall == "학림관")
+      else if (hall == "학림관")
         hlPath = 'assets/images/after/학림관(1078,1636).png';
-      else if(hall == "학생회관")
+      else if (hall == "학생회관")
         stuPath = 'assets/images/after/학생회관(670,1773).png';
-      else if(hall == "학술관")
+      else if (hall == "학술관")
         hsPath = 'assets/images/after/학술관(2527,2567).png';
-      else if(hall == "혜화관")
-        hhPath = 'assets/images/after/혜화관(1804,2694).png';
+      else if (hall == "혜화관") hhPath = 'assets/images/after/혜화관(1804,2694).png';
     });
   }
-
 
   @override
   void initState() {
@@ -307,319 +306,323 @@ class _ImageDrawingState extends State<ImageDrawing> {
                   !_imageLoaded_du
                       ? Text('지도를 불러오는 중')
                       : Transform.scale(
-                    scale: _scale,
-                    child: Transform.translate(
-                      offset: _position.scale(scale_offset, scale_offset),
-                      child: ClipRect(
-                        child: Stack(
-                          children: [
-                            CustomPaint(
-                              size: Size(_imageWidth_du, _imageHeight_du),
-                              foregroundPainter:
-                              LinePainter(_imageInfo_du, startPoints, endPoints),
-                              child: Image.asset(
-                                'assets/images/du.png',
-                                fit: BoxFit.cover,
+                          scale: _scale,
+                          child: Transform.translate(
+                            offset: _position.scale(scale_offset, scale_offset),
+                            child: ClipRect(
+                              child: Stack(
+                                children: [
+                                  CustomPaint(
+                                    size: Size(_imageWidth_du, _imageHeight_du),
+                                    foregroundPainter: LinePainter(
+                                        _imageInfo_du, startPoints, endPoints),
+                                    child: Image.asset(
+                                      'assets/images/du.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 1102 * scale_offset,
+                                    top: 2973 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '과학관';
+                                      },
+                                      child: Image.asset(
+                                        sciencePath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 1308 * scale_offset,
+                                    top: 3206 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '대운동장';
+                                      },
+                                      child: Image.asset(
+                                        dwPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 972 * scale_offset,
+                                    top: 1880 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '만해광장';
+                                      },
+                                      child: Image.asset(
+                                        mhPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 1129 * scale_offset,
+                                    top: 2805 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '명진관';
+                                      },
+                                      child: Image.asset(
+                                        mjPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 2297 * scale_offset,
+                                    top: 2582 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '문화관';
+                                      },
+                                      child: Image.asset(
+                                        culturePath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 1017 * scale_offset,
+                                    top: 2394 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '본관';
+                                      },
+                                      child: Image.asset(
+                                        bPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 2145 * scale_offset,
+                                    top: 2775 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '사회과학관_경영관';
+                                      },
+                                      child: Image.asset(
+                                        scPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 482 * scale_offset,
+                                    top: 2525 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '신공학관';
+                                      },
+                                      child: Image.asset(
+                                        nePath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 694 * scale_offset,
+                                    top: 2084 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '원흥관';
+                                      },
+                                      child: Image.asset(
+                                        whPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 769 * scale_offset,
+                                    top: 1920 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '정p';
+                                      },
+                                      child: Image.asset(
+                                        ipPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 634 * scale_offset,
+                                    top: 1866 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '정q';
+                                      },
+                                      child: Image.asset(
+                                        iqPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 1673 * scale_offset,
+                                    top: 2941 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '정각원';
+                                      },
+                                      child: Image.asset(
+                                        jgPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 897 * scale_offset,
+                                    top: 2663 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '중앙도서관';
+                                      },
+                                      child: Image.asset(
+                                        libraryPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 1321 * scale_offset,
+                                    top: 1843 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '체육관';
+                                      },
+                                      child: Image.asset(
+                                        gymPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 1078 * scale_offset,
+                                    top: 1636 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '학림관';
+                                      },
+                                      child: Image.asset(
+                                        hlPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 670 * scale_offset,
+                                    top: 1773 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '학생회관';
+                                      },
+                                      child: Image.asset(
+                                        stuPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 2527 * scale_offset,
+                                    top: 2567 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '학술관';
+                                      },
+                                      child: Image.asset(
+                                        hsPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 1804 * scale_offset,
+                                    top: 2694 * scale_offset,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _toggleButton();
+                                        selectedHall = '혜화관';
+                                      },
+                                      child: Image.asset(
+                                        hhPath,
+                                        scale: 1 / scale_offset,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Positioned(
-                              left: 1102 * scale_offset,
-                              top: 2973 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '과학관';
-                                },
-                                child: Image.asset(
-                                  sciencePath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 1308 * scale_offset,
-                              top: 3206 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '대운동장';
-                                },
-                                child: Image.asset(
-                                  dwPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 972 * scale_offset,
-                              top: 1880 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '만해광장';
-                                },
-                                child: Image.asset(
-                                  mhPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 1129 * scale_offset,
-                              top: 2805 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '명진관';
-                                },
-                                child: Image.asset(
-                                  mjPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 2297 * scale_offset,
-                              top: 2582 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '문화관';
-                                },
-                                child: Image.asset(
-                                  culturePath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 1017 * scale_offset,
-                              top: 2394 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '본관';
-                                },
-                                child: Image.asset(
-                                  bPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 2145 * scale_offset,
-                              top: 2775 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '사회과학관_경영관';
-                                },
-                                child: Image.asset(
-                                  scPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 482 * scale_offset,
-                              top: 2525 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '신공학관';
-                                },
-                                child: Image.asset(
-                                  nePath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 694 * scale_offset,
-                              top: 2084 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '원흥관';
-                                },
-                                child: Image.asset(
-                                  whPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 769 * scale_offset,
-                              top: 1920 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '정p';
-                                },
-                                child: Image.asset(
-                                  ipPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 634 * scale_offset,
-                              top: 1866 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '정q';
-                                },
-                                child: Image.asset(
-                                  iqPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 1673 * scale_offset,
-                              top: 2941 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '정각원';
-                                },
-                                child: Image.asset(
-                                  jgPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 897 * scale_offset,
-                              top: 2663 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '중앙도서관';
-                                },
-                                child: Image.asset(
-                                  libraryPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 1321 * scale_offset,
-                              top: 1843 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '체육관';
-                                },
-                                child: Image.asset(
-                                  gymPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 1078 * scale_offset,
-                              top: 1636 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '학림관';
-                                },
-                                child: Image.asset(
-                                  hlPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 670 * scale_offset,
-                              top: 1773 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '학생회관';
-                                },
-                                child: Image.asset(
-                                  stuPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 2527 * scale_offset,
-                              top: 2567 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '학술관';
-                                },
-                                child: Image.asset(
-                                  hsPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 1804 * scale_offset,
-                              top: 2694 * scale_offset,
-                              child: InkWell(
-                                onTap: () {
-                                  _toggleButton();
-                                  selectedHall = '혜화관';
-                                },
-                                child: Image.asset(
-                                  hhPath,
-                                  scale: 1 / scale_offset,
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                   if (_showButton)
                     Positioned(
                       left: 20, // 버튼의 x 좌표를 조절하세요.
                       bottom: 20, // 버튼의 y 좌표를 조절하세요.
                       child: ElevatedButton(
                         onPressed: () {
-                          if(selectedHall == "중앙도서관")
-                            libraryPath = 'assets/images/after/중앙도서관(897,2663).png';
-                          else if(selectedHall == "과학관")
-                            sciencePath = 'assets/images/after/과학관(1102,2973).png';
-                          else if(selectedHall == "대운동장")
+                          if (selectedHall == "중앙도서관")
+                            libraryPath =
+                                'assets/images/after/중앙도서관(897,2663).png';
+                          else if (selectedHall == "과학관")
+                            sciencePath =
+                                'assets/images/after/과학관(1102,2973).png';
+                          else if (selectedHall == "대운동장")
                             dwPath = 'assets/images/after/대운동장(1308,3206).png';
-                          else if(selectedHall == "만해광장")
+                          else if (selectedHall == "만해광장")
                             mhPath = 'assets/images/after/만해광장(972,1880).png';
-                          else if(selectedHall == "명진관")
+                          else if (selectedHall == "명진관")
                             mjPath = 'assets/images/after/명진관(1129,2805).png';
-                          else if(selectedHall == "문화관")
-                            culturePath = 'assets/images/after/문화관(2297,2582).png';
-                          else if(selectedHall == "본관")
+                          else if (selectedHall == "문화관")
+                            culturePath =
+                                'assets/images/after/문화관(2297,2582).png';
+                          else if (selectedHall == "본관")
                             bPath = 'assets/images/after/본관(1017,2394).png';
-                          else if(selectedHall == "사회과학관_경영관")
-                            scPath = 'assets/images/after/사회과학관_경영관(2145,2775).png';
-                          else if(selectedHall == "신공학관")
+                          else if (selectedHall == "사회과학관_경영관")
+                            scPath =
+                                'assets/images/after/사회과학관_경영관(2145,2775).png';
+                          else if (selectedHall == "신공학관")
                             nePath = 'assets/images/after/신공학관(482,2525).png';
-                          else if(selectedHall == "원흥관")
+                          else if (selectedHall == "원흥관")
                             whPath = 'assets/images/after/원흥관(694,2084).png';
-                          else if(selectedHall == "정p")
+                          else if (selectedHall == "정p")
                             ipPath = 'assets/images/after/정p(769,1920).png';
-                          else if(selectedHall == "정q")
+                          else if (selectedHall == "정q")
                             iqPath = 'assets/images/after/정q(634,1866).png';
-                          else if(selectedHall == "정각원")
+                          else if (selectedHall == "정각원")
                             jgPath = 'assets/images/after/정각원(1673,2941).png';
-                          else if(selectedHall == "체육관")
+                          else if (selectedHall == "체육관")
                             gymPath = 'assets/images/after/체육관(1321,1843).png';
-                          else if(selectedHall == "학림관")
+                          else if (selectedHall == "학림관")
                             hlPath = 'assets/images/after/학림관(1078,1636).png';
-                          else if(selectedHall == "학생회관")
+                          else if (selectedHall == "학생회관")
                             stuPath = 'assets/images/after/학생회관(670,1773).png';
-                          else if(selectedHall == "학술관")
+                          else if (selectedHall == "학술관")
                             hsPath = 'assets/images/after/학술관(2527,2567).png';
-                          else if(selectedHall == "혜화관")
+                          else if (selectedHall == "혜화관")
                             hhPath = 'assets/images/after/혜화관(1804,2694).png';
                           _toggleButton();
                         },
@@ -639,25 +642,43 @@ class _ImageDrawingState extends State<ImageDrawing> {
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Container(
-                          width: 200.0,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white.withOpacity(0.7),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide: BorderSide.none,
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (_)=> Pressinput(),)
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white.withOpacity(0.7),
+                              border: Border.all(
+                                color: Colors.transparent,
+                                width: 12.0,
                               ),
-                              hintText: '출발지를 입력하세요',
-                              hintStyle: TextStyle(color: Colors.grey),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 1,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Text(
+                              '출발지를 입력하세요',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16.0,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
                     Container(
-                      height: 50.0,
+                      height: 43.0,
+                      width: 60.0,
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Column(
@@ -690,7 +711,7 @@ class _ImageDrawingState extends State<ImageDrawing> {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                             backgroundColor: Colors.white //.withOpacity(0.5),
-                        ),
+                            ),
                         child: Text(
                           '자판기',
                           style: TextStyle(
@@ -732,8 +753,7 @@ class _ImageDrawingState extends State<ImageDrawing> {
                       ),
                       SizedBox(width: 10),
                       ElevatedButton(
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                         style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
@@ -789,7 +809,6 @@ class _ImageDrawingState extends State<ImageDrawing> {
       ),
     );
   }
-
 }
 
 class LinePainter extends CustomPainter {
