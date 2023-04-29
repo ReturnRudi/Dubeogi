@@ -5,19 +5,22 @@ import 'package:Dubeogi/screen/search_screen.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 
 List<Node> reconstructPath(
-    List<int> prev, List<Node> nodes, int startIndex, int endIndex) {
+  List<int> prev,
+  List<Node> nodes,
+  int startIndex,
+  int endIndex,
+) {
   List<Node> path = [];
   int currentNode = endIndex;
 
-  while (currentNode != startIndex) {
+  while (currentNode != startIndex) { // end부터 start까지 path로 추가
     path.add(nodes[currentNode]);
     currentNode = prev[currentNode];
     if (currentNode == -1) {
       break;
     }
   }
-
-  if (currentNode == startIndex) {
+  if (currentNode == startIndex) { // 위 while에서 startnode는 추가가 안됐기 때문에 따로 추가
     path.add(nodes[startIndex]);
   }
 
@@ -43,8 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Stack(
         children: [
-          ImageDrawing(),
-          Positioned(
+          ImageDrawing(), // 지도 화면
+          Positioned( // 버튼
             bottom: 50,
             right: 50,
             child: ElevatedButton(
@@ -83,7 +86,7 @@ class _ImageDrawingState extends State<ImageDrawing> {
   List<Offset> endPoints = [];
 
   @override
-  void initState() {
+  void initState() { // init: 그래프 형성
     super.initState();
     _getImageInfo();
     Graph graph = Graph();
