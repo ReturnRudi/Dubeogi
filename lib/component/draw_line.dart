@@ -13,11 +13,6 @@ class LinePainter extends CustomPainter {
     required this.endPoints,
   });
 
-  void erase(){
-    startPoints.clear();
-    endPoints.clear();
-  }
-
   @override
   void paint(Canvas canvas, Size size) {
     final scaleX = size.width / imageInfo.image.width;

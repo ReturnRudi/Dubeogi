@@ -75,6 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Offset> startPoints = [];
   List<Offset> endPoints = [];
+
+  void erase(){
+    startPoints.clear();
+    endPoints.clear();
+  }
+
   String _startNodeName = "";
   String _endNodeName = "";
   Graph graph = Graph();

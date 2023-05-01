@@ -75,10 +75,13 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  void handleInput() {
-    String firstValue = firstController.text;
-    String secondValue = secondController.text;
+  void handleInput(){
+    setState(() {
+      String firstValue = firstController.text;
+      String secondValue = secondController.text;
 
-    Navigator.pop(context, {'start':firstValue,'end':secondValue});
+      Navigator.pop(context, {'start':firstValue,'end':secondValue});
+    });
+
   }
 }
