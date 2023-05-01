@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:Dubeogi/screen/input.dart';
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/component/appbar.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
@@ -824,7 +823,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: GestureDetector(
                                   onTap: (){
                                     Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (_)=> Pressinput(),)
+                                        MaterialPageRoute(builder: (_)=> SearchScreen(),)
                                     );
                                   },
                                   child: Container(
