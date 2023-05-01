@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("명진관", 1320, 2900, "과학관", 1248, 3071, 30, "평지", "차도");
     graph.addEdge("과학관", 1248, 3071, "대운동장앞", 1589, 3421, 20, "평지", "차도");
     graph.addEdge("명진관", 1320, 2900, "법학관", 1656, 2641, 70, "평지", "차도");
-    graph.addEdge("다향관", 6107, 5898, "법학관", 1656, 2641, 70, "평지", "차도");
+    graph.addEdge("다향관", 1451, 2469, "법학관", 1656, 2641, 70, "평지", "차도");
     graph.addEdge("법학관", 1656, 2641, "혜화관", 1990, 2882, 50, "평지", "차도");
     graph.addEdge("법학관", 1656, 2641, "대운동장앞", 1589, 3421, 170, "평지", "차도");
     graph.addEdge("대운동장앞", 1589, 3421, "경영관", 2366, 3214, 200, "평지", "차도");
@@ -296,18 +296,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ClipRect(
                                 child: Stack(
                                   children: [
-                                    CustomPaint(
-                                      size: Size(_imageWidth_du, _imageHeight_du),
-                                      foregroundPainter: LinePainter(
-                                        imageInfo: _imageInfo_du,
-                                        startPoints: startPoints,
-                                        endPoints: endPoints,
-                                      ),
-                                      child: Image.asset(
-                                        'assets/images/du.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
                                     Positioned(
                                       left: 1102 * scale_offset,
                                       top: 2973 * scale_offset,
@@ -762,6 +750,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                           loungePath,
                                           scale: 1 / (scale_offset/16),),
                                       ),
+                                    Stack(
+                                      children: [
+                                        CustomPaint(
+                                          size: Size(_imageWidth_du, _imageHeight_du),
+                                          foregroundPainter: LinePainter(
+                                            imageInfo: _imageInfo_du,
+                                            startPoints: startPoints,
+                                            endPoints: endPoints,
+                                          ),
+                                          child: Image.asset(
+                                            'assets/images/du.png',
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
