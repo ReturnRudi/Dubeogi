@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showFloorButton(String selectedHall) {
+    print('_showButton: $_showButton');
     setState(() {
       if (selectedHall == "과학관"){
         if(_showButton == 1)
@@ -899,237 +900,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          if (_showButton == 1)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 2)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 3)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 4)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 5)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 6)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 7)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 8)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 9)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 10)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 11)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 12)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 13)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 14)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 15)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 16)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 17)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 18)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 19)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 20)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                          if (_showButton == 21)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
                         ],
                       ),
                     ),
@@ -1337,6 +1107,489 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  if (_showButton == 1)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 2)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 3)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 4)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 5)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 6)
+                    Stack(
+                      children: [
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                culturePath = 'assets/images/floor/문화1.png';
+                              });
+                            },
+                            child: Text('1F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                culturePath = 'assets/images/floor/문화2.png';
+                              });
+                            },
+                            child: Text('2F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                culturePath = 'assets/images/floor/문화3.png';
+                              });
+                            },
+                            child: Text('3F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                culturePath = 'assets/images/floor/문화관(2297,2582).png';
+                              });
+                            },
+                            child: Text('기본'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (_showButton == 7)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 8)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 9)
+                    Stack(
+                      children: [
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                scPath = 'assets/images/floor/사과경영1.png';
+                              });
+                            },
+                            child: Text('1F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                scPath = 'assets/images/floor/사과경영2.png';
+                              });
+                            },
+                            child: Text('2F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                scPath = 'assets/images/floor/사과경영3.png';
+                              });
+                            },
+                            child: Text('3F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                scPath = 'assets/images/floor/사회과학관_경영관(2145,2775).png';
+                              });
+                            },
+                            child: Text('기본'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (_showButton == 10)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 11)
+                    Stack(
+                      children: [
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                nePath = 'assets/images/floor/신공1.png';
+                              });
+                            },
+                            child: Text('1F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                nePath = 'assets/images/floor/신공2.png';
+                              });
+                            },
+                            child: Text('4F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                nePath = 'assets/images/floor/신공3.png';
+                              });
+                            },
+                            child: Text('7F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                nePath = 'assets/images/floor/신공학관(482,2525).png';
+                              });
+                            },
+                            child: Text('기본'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (_showButton == 12)
+                    Stack(
+                      children: [
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                whPath = 'assets/images/floor/원흥1.png';
+                              });
+                            },
+                            child: Text('1F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                whPath = 'assets/images/floor/원흥2.png';
+                              });
+                            },
+                            child: Text('2F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                whPath = 'assets/images/floor/원흥3.png';
+                              });
+                            },
+                            child: Text('3F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                whPath = 'assets/images/floor/원흥관(694,2084).png';
+                              });
+                            },
+                            child: Text('기본'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (_showButton == 13)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 14)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 15)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 16)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 17)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 18)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 19)
+                    Positioned(
+                      left: 20, // 버튼의 x 좌표를 조절하세요.
+                      bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: Text('1F'),
+                      ),
+                    ),
+                  if (_showButton == 20)
+                    Stack(
+                      children: [
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                hsPath = 'assets/images/floor/학술1.png';
+                              });
+                            },
+                            child: Text('1F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                hsPath = 'assets/images/floor/학술2.png';
+                              });
+                            },
+                            child: Text('2F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                hsPath = 'assets/images/floor/학술3.png';
+                              });
+                            },
+                            child: Text('3F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                hsPath = 'assets/images/floor/학술관(2527,2567).png';
+                              });
+                            },
+                            child: Text('기본'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (_showButton == 21)
+                    Stack(
+                      children: [
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                hhPath = 'assets/images/floor/혜화1.png';
+                              });
+                            },
+                            child: Text('1F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                hhPath = 'assets/images/floor/혜화2.png';
+                              });
+                            },
+                            child: Text('2F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                hhPath = 'assets/images/floor/혜화3.png';
+                              });
+                            },
+                            child: Text('3F'),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20, // 버튼의 x 좌표를 조절하세요.
+                          bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                hhPath = 'assets/images/floor/혜화관(1804,2964).png';
+                              });
+                            },
+                            child: Text('기본'),
+                          ),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
@@ -1350,6 +1603,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ],
-        ));
+        ),
+    );
   }
 }
