@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../component/appbar.dart';
+import 'package:Dubeogi/save/save.dart';
 
 class FindScreen extends StatefulWidget {
   const FindScreen({Key? key}) : super(key: key);
@@ -10,13 +11,6 @@ class FindScreen extends StatefulWidget {
 
 class _FindScreenState extends State<FindScreen> {
   final Controller = TextEditingController();
-  final List<String> names = [
-    '과학관',
-    '명진관',
-    '학술관',
-    '중앙도서관',
-    '다향관',
-  ];
 
   @override
   Widget build(BuildContext context) {

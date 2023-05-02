@@ -233,6 +233,10 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("혜화관", 1990, 2882, "문화관", 2416, 2838, 45, "평지", "도보");
     graph.addEdge("사회과학관", 2274, 2921, "문화관", 2416, 2838, 20, "평지", "도보");
     graph.addEdge("문화관", 2416, 2838, "학술관", 2595, 2722, 20, "평지", "도보");
+
+    for(int i = 0; i < graph.nodes.length; i++){
+      names.add(graph.nodes[i].name);
+    }
   }
 
   Future<void> _getImageInfo() async {
