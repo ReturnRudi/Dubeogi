@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/component/appbar.dart';
-import 'package:Dubeogi/screen/home_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -18,6 +17,13 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
+
+    if (arguments != null) {
+      firstController.text = arguments['start'] ?? '';
+      secondController.text = arguments['end'] ?? '';
+    }
+
     return Scaffold(
       appBar: CustomAppBar(
         title: '동국대학교',
@@ -79,7 +85,6 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       String firstValue = firstController.text;
       String secondValue = secondController.text;
-
       Navigator.pop(context, {'start':firstValue,'end':secondValue});
     });
 

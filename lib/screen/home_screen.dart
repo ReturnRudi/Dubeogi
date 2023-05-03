@@ -4,7 +4,6 @@ import 'package:Dubeogi/component/appbar.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/component/draw_line.dart';
-import 'package:Dubeogi/screen/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -23,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late double scale_offset;
   late String selectedHall;
 
-  bool _showButton = false;
+  int _showButton = 0;
   bool _vendingvisibility = false;
   bool _showervisibility = false;
   bool _storevisibility = false;
@@ -36,35 +35,146 @@ class _HomeScreenState extends State<HomeScreen> {
       _vendingvisibility = !_vendingvisibility;
     });
   }
+
   void _showershow() {
     setState(() {
       _showervisibility = !_showervisibility;
     });
   }
+
   void _storeshow() {
     setState(() {
       _storevisibility = !_storevisibility;
     });
   }
+
   void _atmshow() {
     setState(() {
       _atmvisibility = !_atmvisibility;
     });
   }
+
   void _loungeshow() {
     setState(() {
       _loungevisibility = !_loungevisibility;
     });
   }
+
   void _printershow() {
     setState(() {
       _printervisibility = !_printervisibility;
     });
   }
 
-  void _toggleButton() {
+  void _showFloorButton(String selectedHall) {
+    print('_showButton: $_showButton');
     setState(() {
-      _showButton = !_showButton;
+      if (selectedHall == "과학관") {
+        if (_showButton == 1)
+          _showButton = 0;
+        else
+          _showButton = 1;
+      } else if (selectedHall == "다향관") {
+        if (_showButton == 2)
+          _showButton = 0;
+        else
+          _showButton = 2;
+      } else if (selectedHall == "대운동장") {
+        if (_showButton == 3)
+          _showButton = 0;
+        else
+          _showButton = 3;
+      } else if (selectedHall == "만해광장") {
+        if (_showButton == 4)
+          _showButton = 0;
+        else
+          _showButton = 4;
+      } else if (selectedHall == "명진관") {
+        if (_showButton == 5)
+          _showButton = 0;
+        else
+          _showButton = 5;
+      } else if (selectedHall == "문화관") {
+        if (_showButton == 6)
+          _showButton = 0;
+        else
+          _showButton = 6;
+      } else if (selectedHall == "법학관_만해관") {
+        if (_showButton == 7)
+          _showButton = 0;
+        else
+          _showButton = 7;
+      } else if (selectedHall == "본관") {
+        if (_showButton == 8)
+          _showButton = 0;
+        else
+          _showButton = 8;
+      } else if (selectedHall == "사회과학관_경영관") {
+        if (_showButton == 9)
+          _showButton = 0;
+        else
+          _showButton = 9;
+      } else if (selectedHall == "상록원") {
+        if (_showButton == 10)
+          _showButton = 0;
+        else
+          _showButton = 10;
+      } else if (selectedHall == "신공학관") {
+        if (_showButton == 11)
+          _showButton = 0;
+        else
+          _showButton = 11;
+      } else if (selectedHall == "원흥관") {
+        if (_showButton == 12)
+          _showButton = 0;
+        else
+          _showButton = 12;
+      } else if (selectedHall == "정p") {
+        if (_showButton == 13)
+          _showButton = 0;
+        else
+          _showButton = 13;
+      } else if (selectedHall == "정q") {
+        if (_showButton == 14)
+          _showButton = 0;
+        else
+          _showButton = 14;
+      } else if (selectedHall == "정각원") {
+        if (_showButton == 15)
+          _showButton = 0;
+        else
+          _showButton = 15;
+      } else if (selectedHall == "중앙도서관") {
+        if (_showButton == 16)
+          _showButton = 0;
+        else
+          _showButton = 16;
+      } else if (selectedHall == "체육관") {
+        if (_showButton == 17)
+          _showButton = 0;
+        else
+          _showButton = 17;
+      } else if (selectedHall == "학림관") {
+        if (_showButton == 18)
+          _showButton = 0;
+        else
+          _showButton = 18;
+      } else if (selectedHall == "학생회관") {
+        if (_showButton == 19)
+          _showButton = 0;
+        else
+          _showButton = 19;
+      } else if (selectedHall == "학술관") {
+        if (_showButton == 20)
+          _showButton = 0;
+        else
+          _showButton = 20;
+      } else if (selectedHall == "혜화관") {
+        if (_showButton == 21)
+          _showButton = 0;
+        else
+          _showButton = 21;
+      }
     });
   }
 
@@ -76,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Offset> startPoints = [];
   List<Offset> endPoints = [];
 
-  void erase(){
+  void erase() {
     startPoints.clear();
     endPoints.clear();
   }
@@ -95,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("명진관", 1320, 2900, "과학관", 1248, 3071, 30, "평지", "차도");
     graph.addEdge("과학관", 1248, 3071, "대운동장앞", 1589, 3421, 20, "평지", "차도");
     graph.addEdge("명진관", 1320, 2900, "법학관", 1656, 2641, 70, "평지", "차도");
-    graph.addEdge("다향관", 6107, 5898, "법학관", 1656, 2641, 70, "평지", "차도");
+    graph.addEdge("다향관", 1451, 2469, "법학관", 1656, 2641, 70, "평지", "차도");
     graph.addEdge("법학관", 1656, 2641, "혜화관", 1990, 2882, 50, "평지", "차도");
     graph.addEdge("법학관", 1656, 2641, "대운동장앞", 1589, 3421, 170, "평지", "차도");
     graph.addEdge("대운동장앞", 1589, 3421, "경영관", 2366, 3214, 200, "평지", "차도");
@@ -106,12 +216,16 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("혜화관", 1990, 2882, "문화관", 2416, 2838, 45, "평지", "도보");
     graph.addEdge("사회과학관", 2274, 2921, "문화관", 2416, 2838, 20, "평지", "도보");
     graph.addEdge("문화관", 2416, 2838, "학술관", 2595, 2722, 20, "평지", "도보");
+
+    for (int i = 0; i < graph.nodes.length; i++) {
+      names.add(graph.nodes[i].name);
+    }
   }
 
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
-    AssetImage('assets/images/du.png').resolve(ImageConfiguration());
+        AssetImage('assets/images/du.png').resolve(ImageConfiguration());
     final listener = ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     });
@@ -174,6 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
       print('imageHeight: $_imageHeight_du, imageWidth: $_imageWidth_du');
       print('screenWidth: $screenWidth, screenHeight: $screenHeight');
       print('minX: $minX, maxX: $maxX, minY: $minY, maxY: $maxY');
+      print('_showButton: $_showButton');
 
       // _position 값을 제한 값으로 설정합니다.
       _position = Offset(
@@ -213,14 +328,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Regular search
     var regularResult =
-    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
+        graph.aStar(graph.nodes, graph.edges, startNode, endNode);
     List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
     List<Node> startNodePoints = [];
     List<Node> endNodePoints = [];
     List<Node> regularPath =
-    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
+        reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
 
     print("Regular path from $startNode to $endNode:");
     for (int i = 0; i < regularPath.length; i++) {
@@ -271,768 +386,1256 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
     return Scaffold(
-        appBar: CustomAppBar(
-          title: '동국대학교',
-        ),
-        body: Stack(
-          children: [
-            GestureDetector(
-              onScaleStart: _onScaleStart,
-              onScaleUpdate: _onScaleUpdate,
-              onScaleEnd: _onScaleEnd,
-              child: Stack(
-                children: [
-                  Scaffold(
-                    body: Center(
-                      child: Stack(
-                        children: [
-                          !_imageLoaded_du
-                              ? Text('지도를 불러오는 중')
-                              : Transform.scale(
-                            scale: _scale,
-                            child: Transform.translate(
-                              offset: _position.scale(scale_offset, scale_offset),
-                              child: ClipRect(
-                                child: Stack(
-                                  children: [
-                                    CustomPaint(
-                                      size: Size(_imageWidth_du, _imageHeight_du),
-                                      foregroundPainter: LinePainter(
-                                        imageInfo: _imageInfo_du,
-                                        startPoints: startPoints,
-                                        endPoints: endPoints,
-                                      ),
-                                      child: Image.asset(
-                                        'assets/images/du.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1102 * scale_offset,
-                                      top: 2973 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '과학관';
-                                        },
-                                        child: Image.asset(
-                                          sciencePath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1337 * scale_offset,
-                                      top: 2379 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '다향관';
-                                        },
-                                        child: Image.asset(
-                                          dhPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1308 * scale_offset,
-                                      top: 3206 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '대운동장';
-                                        },
-                                        child: Image.asset(
-                                          dwPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 972 * scale_offset,
-                                      top: 1880 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '만해광장';
-                                        },
-                                        child: Image.asset(
-                                          mhPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1129 * scale_offset,
-                                      top: 2805 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '명진관';
-                                        },
-                                        child: Image.asset(
-                                          mjPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 2297 * scale_offset,
-                                      top: 2582 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '문화관';
-                                        },
-                                        child: Image.asset(
-                                          culturePath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1528 * scale_offset,
-                                      top: 2563 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '법학관_만해관';
-                                        },
-                                        child: Image.asset(
-                                          bmPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1017 * scale_offset,
-                                      top: 2394 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '본관';
-                                        },
-                                        child: Image.asset(
-                                          bPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 2145 * scale_offset,
-                                      top: 2775 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '사회과학관_경영관';
-                                        },
-                                        child: Image.asset(
-                                          scPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1067 * scale_offset,
-                                      top: 3118 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '상록원';
-                                        },
-                                        child: Image.asset(
-                                          srPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 482 * scale_offset,
-                                      top: 2525 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '신공학관';
-                                        },
-                                        child: Image.asset(
-                                          nePath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 694 * scale_offset,
-                                      top: 2084 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '원흥관';
-                                        },
-                                        child: Image.asset(
-                                          whPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 769 * scale_offset,
-                                      top: 1920 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '정p';
-                                        },
-                                        child: Image.asset(
-                                          ipPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 634 * scale_offset,
-                                      top: 1866 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '정q';
-                                        },
-                                        child: Image.asset(
-                                          iqPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1673 * scale_offset,
-                                      top: 2941 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '정각원';
-                                        },
-                                        child: Image.asset(
-                                          jgPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 897 * scale_offset,
-                                      top: 2663 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '중앙도서관';
-                                        },
-                                        child: Image.asset(
-                                          libraryPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1321 * scale_offset,
-                                      top: 1843 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '체육관';
-                                        },
-                                        child: Image.asset(
-                                          gymPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1078 * scale_offset,
-                                      top: 1636 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '학림관';
-                                        },
-                                        child: Image.asset(
-                                          hlPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 670 * scale_offset,
-                                      top: 1773 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '학생회관';
-                                        },
-                                        child: Image.asset(
-                                          stuPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 2527 * scale_offset,
-                                      top: 2567 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '학술관';
-                                        },
-                                        child: Image.asset(
-                                          hsPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 1804 * scale_offset,
-                                      top: 2694 * scale_offset,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _toggleButton();
-                                          selectedHall = '혜화관';
-                                        },
-                                        child: Image.asset(
-                                          hhPath,
-                                          scale: 1 / scale_offset,
-                                        ),
-                                      ),
-                                    ),
-                                    if(_vendingvisibility)
-                                      Positioned(
-                                        left: 971 * scale_offset,
-                                        top: 2479 * scale_offset,
-                                        child: Image.asset(
-                                          vendingPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_vendingvisibility)
-                                      Positioned(
-                                        left: 725 * scale_offset,
-                                        top: 2770 * scale_offset,
-                                        child: Image.asset(
-                                          vendingPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_vendingvisibility)
-                                      Positioned(
-                                        left: 2360 * scale_offset,
-                                        top: 2940 * scale_offset,
-                                        child: Image.asset(
-                                          vendingPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_vendingvisibility)
-                                      Positioned(
-                                        left: 825 * scale_offset,
-                                        top: 2022 * scale_offset,
-                                        child: Image.asset(
-                                          vendingPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_showervisibility)
-                                      Positioned(
-                                        left: 927 * scale_offset,
-                                        top: 2537 * scale_offset,
-                                        child: Image.asset(
-                                          showerPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_showervisibility)
-                                      Positioned(
-                                        left: 1650 * scale_offset,
-                                        top: 2616 * scale_offset,
-                                        child: Image.asset(
-                                          showerPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_storevisibility)
-                                      Positioned(
-                                        left: 865 * scale_offset,
-                                        top: 2279 * scale_offset,
-                                        child: Image.asset(
-                                          storePath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_storevisibility)
-                                      Positioned(
-                                        left: 694 * scale_offset,
-                                        top: 2596 * scale_offset,
-                                        child: Image.asset(
-                                          storePath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_storevisibility)
-                                      Positioned(
-                                        left: 1028 * scale_offset,
-                                        top: 2736 * scale_offset,
-                                        child: Image.asset(
-                                          storePath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_storevisibility)
-                                      Positioned(
-                                        left: 1123 * scale_offset,
-                                        top: 3168 * scale_offset,
-                                        child: Image.asset(
-                                          storePath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_storevisibility)
-                                      Positioned(
-                                        left: 1955 * scale_offset,
-                                        top: 2891 * scale_offset,
-                                        child: Image.asset(
-                                          storePath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_storevisibility)
-                                      Positioned(
-                                        left: 1107 * scale_offset,
-                                        top: 1719 * scale_offset,
-                                        child: Image.asset(
-                                          storePath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_printervisibility)
-                                      Positioned(
-                                        left: 854 * scale_offset,
-                                        top: 2696 * scale_offset,
-                                        child: Image.asset(
-                                          printerPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_printervisibility)
-                                      Positioned(
-                                        left: 936 * scale_offset,
-                                        top: 2416 * scale_offset,
-                                        child: Image.asset(
-                                          printerPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_printervisibility)
-                                      Positioned(
-                                        left: 838 * scale_offset,
-                                        top: 1988 * scale_offset,
-                                        child: Image.asset(
-                                          printerPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_atmvisibility)
-                                      Positioned(
-                                        left: 2500 * scale_offset,
-                                        top: 1725 * scale_offset,
-                                        child: Image.asset(
-                                          atmPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_atmvisibility)
-                                      Positioned(
-                                        left: 1120 * scale_offset,
-                                        top: 3217 * scale_offset,
-                                        child: Image.asset(
-                                          atmPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_atmvisibility)
-                                      Positioned(
-                                        left: 1469 * scale_offset,
-                                        top: 2956 * scale_offset,
-                                        child: Image.asset(
-                                          atmPath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_loungevisibility)
-                                      Positioned(
-                                        left: 1011 * scale_offset,
-                                        top: 2870 * scale_offset,
-                                        child: Image.asset(
-                                          loungePath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                    if(_loungevisibility)
-                                      Positioned(
-                                        left: 1258 * scale_offset,
-                                        top: 1735 * scale_offset,
-                                        child: Image.asset(
-                                          loungePath,
-                                          scale: 1 / (scale_offset/16),),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (_showButton)
-                            Positioned(
-                              left: 20, // 버튼의 x 좌표를 조절하세요.
-                              bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (selectedHall == "중앙도서관")
-                                    libraryPath = 'assets/images/after/중앙도서관(897,2663).png';
-                                  else if (selectedHall == "과학관")
-                                    sciencePath = 'assets/images/after/과학관(1102,2973).png';
-                                  else if (selectedHall == "대운동장")
-                                    dwPath = 'assets/images/after/대운동장(1308,3206).png';
-                                  else if (selectedHall == "만해광장")
-                                    mhPath = 'assets/images/after/만해광장(972,1880).png';
-                                  else if (selectedHall == "명진관")
-                                    mjPath = 'assets/images/after/명진관(1129,2805).png';
-                                  else if (selectedHall == "문화관")
-                                    culturePath = 'assets/images/after/문화관(2297,2582).png';
-                                  else if (selectedHall == "본관")
-                                    bPath = 'assets/images/after/본관(1017,2394).png';
-                                  else if (selectedHall == "사회과학관_경영관")
-                                    scPath = 'assets/images/after/사회과학관_경영관(2145,2775).png';
-                                  else if (selectedHall == "신공학관")
-                                    nePath = 'assets/images/after/신공학관(482,2525).png';
-                                  else if (selectedHall == "원흥관")
-                                    whPath = 'assets/images/after/원흥관(694,2084).png';
-                                  else if (selectedHall == "정p")
-                                    ipPath = 'assets/images/after/정p(769,1920).png';
-                                  else if (selectedHall == "정q")
-                                    iqPath = 'assets/images/after/정q(634,1866).png';
-                                  else if (selectedHall == "정각원")
-                                    jgPath = 'assets/images/after/정각원(1673,2941).png';
-                                  else if (selectedHall == "체육관")
-                                    gymPath = 'assets/images/after/체육관(1321,1843).png';
-                                  else if (selectedHall == "학림관")
-                                    hlPath = 'assets/images/after/학림관(1078,1636).png';
-                                  else if (selectedHall == "학생회관")
-                                    stuPath = 'assets/images/after/학생회관(670,1773).png';
-                                  else if (selectedHall == "학술관")
-                                    hsPath = 'assets/images/after/학술관(2527,2567).png';
-                                  else if (selectedHall == "혜화관")
-                                    hhPath = 'assets/images/after/혜화관(1804,2694).png';
-                                  _toggleButton();
-                                },
-                                child: Text('1F'),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+      appBar: CustomAppBar(
+        title: '동국대학교',
+      ),
+      body: Stack(
+        children: [
+          GestureDetector(
+            onScaleStart: _onScaleStart,
+            onScaleUpdate: _onScaleUpdate,
+            onScaleEnd: _onScaleEnd,
+            child: Stack(
+              children: [
+                Scaffold(
+                  body: Center(
+                    child: Stack(
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 4.0),
-                                child: GestureDetector(
-                                  onTap: (){
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (_)=> SearchScreen(),)
-                                    );
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white.withOpacity(0.7),
-                                      border: Border.all(
-                                        color: Colors.transparent,
-                                        width: 12.0,
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 1,
-                                          blurRadius: 10,
-                                          offset: Offset(0, 2),
+                        !_imageLoaded_du
+                            ? Text('지도를 불러오는 중')
+                            : Transform.scale(
+                                scale: _scale,
+                                child: Transform.translate(
+                                  offset: _position.scale(
+                                      scale_offset, scale_offset),
+                                  child: ClipRect(
+                                    child: Stack(
+                                      children: [
+                                        CustomPaint(
+                                          size: Size(
+                                              _imageWidth_du, _imageHeight_du),
+                                          foregroundPainter: LinePainter(
+                                            imageInfo: _imageInfo_du,
+                                            startPoints: startPoints,
+                                            endPoints: endPoints,
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              Image.asset(
+                                                'assets/images/du.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                              Positioned(
+                                                left: 1102 * scale_offset,
+                                                top: 2973 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      selectedHall = '과학관';
+                                                      _showFloorButton(
+                                                          selectedHall);
+                                                    });
+                                                  },
+                                                  child: Image.asset(
+                                                    sciencePath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1337 * scale_offset,
+                                                top: 2379 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '다향관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    dhPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1308 * scale_offset,
+                                                top: 3206 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '대운동장';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    dwPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 972 * scale_offset,
+                                                top: 1880 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '만해광장';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    mhPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1129 * scale_offset,
+                                                top: 2805 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '명진관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    mjPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 2297 * scale_offset,
+                                                top: 2582 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '문화관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    culturePath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1528 * scale_offset,
+                                                top: 2563 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '법학관_만해관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    bmPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1017 * scale_offset,
+                                                top: 2394 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '본관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    bPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 2145 * scale_offset,
+                                                top: 2775 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '사회과학관_경영관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    scPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1067 * scale_offset,
+                                                top: 3118 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '상록원';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    srPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 482 * scale_offset,
+                                                top: 2525 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '신공학관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    nePath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 694 * scale_offset,
+                                                top: 2084 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '원흥관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    whPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 769 * scale_offset,
+                                                top: 1920 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '정p';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    ipPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 634 * scale_offset,
+                                                top: 1866 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '정q';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    iqPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1673 * scale_offset,
+                                                top: 2941 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '정각원';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    jgPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 897 * scale_offset,
+                                                top: 2663 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '중앙도서관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    libraryPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1321 * scale_offset,
+                                                top: 1843 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '체육관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    gymPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1078 * scale_offset,
+                                                top: 1636 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '학림관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    hlPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 670 * scale_offset,
+                                                top: 1773 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '학생회관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    stuPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 2527 * scale_offset,
+                                                top: 2567 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '학술관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    hsPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 1804 * scale_offset,
+                                                top: 2694 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '혜화관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    hhPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              if (_vendingvisibility)
+                                                Positioned(
+                                                  left: 971 * scale_offset,
+                                                  top: 2479 * scale_offset,
+                                                  child: Image.asset(
+                                                    vendingPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_vendingvisibility)
+                                                Positioned(
+                                                  left: 725 * scale_offset,
+                                                  top: 2770 * scale_offset,
+                                                  child: Image.asset(
+                                                    vendingPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_vendingvisibility)
+                                                Positioned(
+                                                  left: 2360 * scale_offset,
+                                                  top: 2940 * scale_offset,
+                                                  child: Image.asset(
+                                                    vendingPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_vendingvisibility)
+                                                Positioned(
+                                                  left: 825 * scale_offset,
+                                                  top: 2022 * scale_offset,
+                                                  child: Image.asset(
+                                                    vendingPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_showervisibility)
+                                                Positioned(
+                                                  left: 927 * scale_offset,
+                                                  top: 2537 * scale_offset,
+                                                  child: Image.asset(
+                                                    showerPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_showervisibility)
+                                                Positioned(
+                                                  left: 1650 * scale_offset,
+                                                  top: 2616 * scale_offset,
+                                                  child: Image.asset(
+                                                    showerPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_storevisibility)
+                                                Positioned(
+                                                  left: 865 * scale_offset,
+                                                  top: 2279 * scale_offset,
+                                                  child: Image.asset(
+                                                    storePath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_storevisibility)
+                                                Positioned(
+                                                  left: 694 * scale_offset,
+                                                  top: 2596 * scale_offset,
+                                                  child: Image.asset(
+                                                    storePath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_storevisibility)
+                                                Positioned(
+                                                  left: 1028 * scale_offset,
+                                                  top: 2736 * scale_offset,
+                                                  child: Image.asset(
+                                                    storePath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_storevisibility)
+                                                Positioned(
+                                                  left: 1123 * scale_offset,
+                                                  top: 3168 * scale_offset,
+                                                  child: Image.asset(
+                                                    storePath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_storevisibility)
+                                                Positioned(
+                                                  left: 1955 * scale_offset,
+                                                  top: 2891 * scale_offset,
+                                                  child: Image.asset(
+                                                    storePath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_storevisibility)
+                                                Positioned(
+                                                  left: 1107 * scale_offset,
+                                                  top: 1719 * scale_offset,
+                                                  child: Image.asset(
+                                                    storePath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_printervisibility)
+                                                Positioned(
+                                                  left: 854 * scale_offset,
+                                                  top: 2696 * scale_offset,
+                                                  child: Image.asset(
+                                                    printerPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_printervisibility)
+                                                Positioned(
+                                                  left: 936 * scale_offset,
+                                                  top: 2416 * scale_offset,
+                                                  child: Image.asset(
+                                                    printerPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_printervisibility)
+                                                Positioned(
+                                                  left: 838 * scale_offset,
+                                                  top: 1988 * scale_offset,
+                                                  child: Image.asset(
+                                                    printerPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_atmvisibility)
+                                                Positioned(
+                                                  left: 2500 * scale_offset,
+                                                  top: 1725 * scale_offset,
+                                                  child: Image.asset(
+                                                    atmPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_atmvisibility)
+                                                Positioned(
+                                                  left: 1120 * scale_offset,
+                                                  top: 3217 * scale_offset,
+                                                  child: Image.asset(
+                                                    atmPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_atmvisibility)
+                                                Positioned(
+                                                  left: 1469 * scale_offset,
+                                                  top: 2956 * scale_offset,
+                                                  child: Image.asset(
+                                                    atmPath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_loungevisibility)
+                                                Positioned(
+                                                  left: 1011 * scale_offset,
+                                                  top: 2870 * scale_offset,
+                                                  child: Image.asset(
+                                                    loungePath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                              if (_loungevisibility)
+                                                Positioned(
+                                                  left: 1258 * scale_offset,
+                                                  top: 1735 * scale_offset,
+                                                  child: Image.asset(
+                                                    loungePath,
+                                                    scale:
+                                                        1 / (scale_offset / 16),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
-                                    child: Text(
-                                      '출발지를 입력하세요',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16.0,
+                                  ),
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4.0),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  erase();
+                                  result = await Navigator.pushNamed(
+                                    context,
+                                    '/find',
+                                  );
+                                  if (result['start'] != "" &&
+                                      result['end'] != "") {
+                                    setState(() {
+                                      print("********************************************");
+                                      _startNodeName = result['start'];
+                                      _endNodeName = result['end'];
+                                      a(_startNodeName, _endNodeName);
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white.withOpacity(0.7),
+                                    border: Border.all(
+                                      color: Colors.transparent,
+                                      width: 12.0,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.3),
+                                        spreadRadius: 1,
+                                        blurRadius: 10,
+                                        offset: Offset(0, 2),
                                       ),
+                                    ],
+                                  ),
+                                  child: Text(
+                                    '출발지를 입력하세요',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16.0,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 43.0,
-                              width: 60.0,
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  erase();
-                                  result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SearchScreen(),
-                                    ),
-                                  );
-                                  print(
-                                      '값넘기기실험중.${result['start']} , ${result['end']}, $result');
+                          ),
+                          Container(
+                            height: 43.0,
+                            width: 60.0,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                erase();
+                                result = await Navigator.pushNamed(
+                                  context,
+                                  '/search',
+                                );
+                                print(
+                                    '값넘기기실험중.${result['start']} , ${result['end']}, $result');
 
-                                  if (result['start'] != "" && result['end'] != "") {
-                                    setState(() {
-                                      _startNodeName = result['start'];
-                                      _endNodeName = result['end'];
-                                      a(_startNodeName,_endNodeName);
-
-                                    });
-                                  }
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.search,
+                                if (result['start'] != "" &&
+                                    result['end'] != "") {
+                                  setState(() {
+                                    _startNodeName = result['start'];
+                                    _endNodeName = result['end'];
+                                    a(_startNodeName, _endNodeName);
+                                  });
+                                }
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.search,
+                                  ),
+                                  Text(
+                                    '길찾기',
+                                    style: TextStyle(
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text(
-                                      '길찾기',
-                                      style: TextStyle(
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                _vendingshow();
+                              },
+                              style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  backgroundColor:
+                                      Colors.white //.withOpacity(0.5),
+                                  ),
+                              child: Text(
+                                '자판기',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                _showershow();
+                              },
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                backgroundColor: Colors.white,
+                              ),
+                              child: Text(
+                                '샤워실',
+                                style: TextStyle(
+                                  color: Colors.lightBlueAccent,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                _storeshow();
+                              },
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                backgroundColor: Colors.white,
+                              ),
+                              child: Text(
+                                '편의점',
+                                style: TextStyle(
+                                  color: Colors.purple,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                _printershow();
+                              },
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                backgroundColor: Colors.white,
+                              ),
+                              child: Text(
+                                '프린터',
+                                style: TextStyle(
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                _loungeshow();
+                              },
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                backgroundColor: Colors.white,
+                              ),
+                              child: Text(
+                                '라운지',
+                                style: TextStyle(
+                                  color: Colors.brown,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                _atmshow();
+                              },
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                backgroundColor: Colors.white,
+                              ),
+                              child: Text(
+                                'ATM',
+                                style: TextStyle(
+                                  color: Colors.red,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  _vendingshow();
-                                },
-                                style: OutlinedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    backgroundColor: Colors.white //.withOpacity(0.5),
-                                ),
-                                child: Text(
-                                  '자판기',
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              ElevatedButton(
-                                onPressed: () {
-                                  _showershow();
-                                },
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                ),
-                                child: Text(
-                                  '샤워실',
-                                  style: TextStyle(
-                                    color: Colors.lightBlueAccent,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              ElevatedButton(
-                                onPressed: () {
-                                  _storeshow();
-                                },
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                ),
-                                child: Text(
-                                  '편의점',
-                                  style: TextStyle(
-                                    color: Colors.purple,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              ElevatedButton(
-                                onPressed: () {
-                                  _printershow();
-                                },
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                ),
-                                child: Text(
-                                  '프린터',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              ElevatedButton(
-                                onPressed: () {
-                                  _loungeshow();
-                                },
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                ),
-                                child: Text(
-                                  '라운지',
-                                  style: TextStyle(
-                                    color: Colors.brown,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              ElevatedButton(
-                                onPressed: () {
-                                  _atmshow();
-                                },
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                ),
-                                child: Text(
-                                  'ATM',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ),
+                if (_showButton == 1)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
                     ),
                   ),
-                ],
+                if (_showButton == 2)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 3)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 4)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 5)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 6)
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              culturePath = 'assets/images/floor/문화1.png';
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              culturePath = 'assets/images/floor/문화2.png';
+                            });
+                          },
+                          child: Text('2F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              culturePath = 'assets/images/floor/문화3.png';
+                            });
+                          },
+                          child: Text('3F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              culturePath =
+                                  'assets/images/floor/문화관(2297,2582).png';
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (_showButton == 7)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 8)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 9)
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              scPath = 'assets/images/floor/사과경영1.png';
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              scPath = 'assets/images/floor/사과경영2.png';
+                            });
+                          },
+                          child: Text('2F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              scPath = 'assets/images/floor/사과경영3.png';
+                            });
+                          },
+                          child: Text('3F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              scPath =
+                                  'assets/images/floor/사회과학관_경영관(2145,2775).png';
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (_showButton == 10)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 11)
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nePath = 'assets/images/floor/신공1.png';
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nePath = 'assets/images/floor/신공2.png';
+                            });
+                          },
+                          child: Text('4F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nePath = 'assets/images/floor/신공3.png';
+                            });
+                          },
+                          child: Text('7F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nePath = 'assets/images/floor/신공학관(482,2525).png';
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (_showButton == 12)
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              whPath = 'assets/images/floor/원흥1.png';
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              whPath = 'assets/images/floor/원흥2.png';
+                            });
+                          },
+                          child: Text('2F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              whPath = 'assets/images/floor/원흥3.png';
+                            });
+                          },
+                          child: Text('3F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              whPath = 'assets/images/floor/원흥관(694,2084).png';
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (_showButton == 13)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 14)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 15)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 16)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 17)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 18)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 19)
+                  Positioned(
+                    left: 20, // 버튼의 x 좌표를 조절하세요.
+                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('1F'),
+                    ),
+                  ),
+                if (_showButton == 20)
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              hsPath = 'assets/images/floor/학술1.png';
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              hsPath = 'assets/images/floor/학술2.png';
+                            });
+                          },
+                          child: Text('2F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              hsPath = 'assets/images/floor/학술3.png';
+                            });
+                          },
+                          child: Text('3F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              hsPath = 'assets/images/floor/학술관(2527,2567).png';
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (_showButton == 21)
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              hhPath = 'assets/images/floor/혜화1.png';
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              hhPath = 'assets/images/floor/혜화2.png';
+                            });
+                          },
+                          child: Text('2F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              hhPath = 'assets/images/floor/혜화3.png';
+                            });
+                          },
+                          child: Text('3F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              hhPath = 'assets/images/floor/혜화관(1804,2964).png';
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 50,
+            left: 50,
+            child: Container(
+              child: Text(
+                '값넘기기실험중 $_startNodeName and $_endNodeName',
               ),
             ),
-            Positioned(
-              bottom: 50,
-              left: 50,
-              child: Container(
-                child: Text(
-                  '값넘기기실험중 $_startNodeName and $_endNodeName',
-                ),
-              ),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
