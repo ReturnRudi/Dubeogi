@@ -14,7 +14,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final secondFocus = FocusNode();
   final firstController = TextEditingController();
   final secondController = TextEditingController();
-  int selectOption = 0;
+  int selectOption = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Stack(
                             children: [
                               Center(
-                                child: Text('최소',
+                                child: Text('최단',
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: 'Paybooc',
@@ -76,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Stack(
                             children: [
                               Center(
-                                child: Text('최소',
+                                child: Text('최단',
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: 'Paybooc',
@@ -99,6 +99,9 @@ class _SearchScreenState extends State<SearchScreen> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                         ),
+                      SizedBox(
+                        width: 20,
+                      ),
                       if(selectOption != 2)
                         Container(
                           margin: EdgeInsets.all(10),
@@ -159,6 +162,9 @@ class _SearchScreenState extends State<SearchScreen> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                         ),
+                      SizedBox(
+                        width: 20,
+                      ),
                       if(selectOption != 3)
                         Container(
                           margin: EdgeInsets.all(10),
@@ -166,7 +172,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Stack(
                             children: [
                               Center(
-                                child: Text('큰길',
+                                child: Text('차도',
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: 'Paybooc',
@@ -196,7 +202,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Stack(
                             children: [
                               Center(
-                                child: Text('큰길',
+                                child: Text('차도',
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: 'Paybooc',
