@@ -14,6 +14,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final secondFocus = FocusNode();
   final firstController = TextEditingController();
   final secondController = TextEditingController();
+  int selectOption = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -38,66 +39,186 @@ class _SearchScreenState extends State<SearchScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        width: 80,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Text('최소',
-                                style: TextStyle(
-                                  fontSize: 20,
+                      if(selectOption != 1)
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          width: 80,
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Text('최소',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                            )
-                          ],
+                              InkWell(
+                                  onTap:(){
+                                    setState(() {
+                                      selectOption = 1;
+                                    });
+                                  }
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            //color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        width: 80,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Text('최적',
-                                style: TextStyle(
-                                  fontSize: 20,
+                      if(selectOption == 1)
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          width: 80,
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Text('최소',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    color: Colors.orange,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                            )
-                          ],
+                              InkWell(
+                                  onTap:(){
+                                    setState(() {
+                                      selectOption = 1;
+                                    });
+                                  }
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        width: 80,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Text('큰길',
-                                style: TextStyle(
-                                  fontSize: 20,
+                      if(selectOption != 2)
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          width: 80,
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Text('최적',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                            )
-                          ],
+                              InkWell(
+                                  onTap:(){
+                                    setState(() {
+                                      selectOption = 2;
+                                    });
+                                  }
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            //color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50),
+                      if(selectOption == 2)
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          width: 80,
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Text('최적',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    color: Colors.orange,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              InkWell(
+                                  onTap:(){
+                                    setState(() {
+                                      selectOption = 2;
+                                    });
+                                  }
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
                         ),
-                      ),
+                      if(selectOption != 3)
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          width: 80,
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Text('큰길',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              InkWell(
+                                  onTap:(){
+                                    setState(() {
+                                      selectOption = 3;
+                                    });
+                                  }
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            //color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
+                      if(selectOption == 3)
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          width: 80,
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Text('큰길',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    color: Colors.orange,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              InkWell(
+                                  onTap:(){
+                                    setState(() {
+                                      selectOption = 3;
+                                    });
+                                  }
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
                     ],
                   )
                 ],
