@@ -28,33 +28,122 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
-      body: Row(
+      body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
+          Container(
+              height: 60,
+              color: Colors.orange,
+              child: Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        width: 80,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Text('최소',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        width: 80,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Text('최적',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        width: 80,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Text('큰길',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              )
+          ),
+          Container(
+            //padding: EdgeInsets.all(15),
+            padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+            color: Colors.orange,
+            child: Stack(
               children: [
-                Container(
-                  width: 200.0,
-                  child: TextFormField(
-                    focusNode: firstFocus,
-                    controller: firstController,
-                    onFieldSubmitted: (term) {
-                      FocusScope.of(context).requestFocus(secondFocus);
-                    },
-                    decoration: InputDecoration(
-                      hintText: '출발 지점을 입력하세요',
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextFormField(
+                      focusNode: firstFocus,
+                      controller: firstController,
+                      onFieldSubmitted: (term) {
+                        FocusScope.of(context).requestFocus(secondFocus);
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFF8D4A8),
+                        border: InputBorder.none,
+                        hintText: '출발 지점을 입력하세요',
+                      ),
                     ),
-                  ),
-                ),
-                Container(
-                  width: 200.0,
-                  child: TextFormField(
-                    focusNode: secondFocus,
-                    controller: secondController,
-                    decoration: InputDecoration(hintText: '도착 지점을 입력하세요'),
-                  ),
-                ),
+                    Container(
+                      height: 2,
+                      color: Colors.orange,
+                    ),
+                    TextFormField(
+                      focusNode: secondFocus,
+                      controller: secondController,
+                      onFieldSubmitted: (term) {
+                        FocusScope.of(context).requestFocus(secondFocus);
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFF8D4A8),
+                        border: InputBorder.none,
+                        hintText: '도착 지점을 입력하세요',
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
