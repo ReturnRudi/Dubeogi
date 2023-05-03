@@ -26,3 +26,5 @@ String storePath = 'assets/images/facility/store.png';
 String atmPath = 'assets/images/facility/atm.png';
 String loungePath = 'assets/images/facility/lounge.png';
 String printerPath = 'assets/images/facility/printer.png';
+
+List<String> names = [];
