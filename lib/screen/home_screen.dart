@@ -503,21 +503,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                               ),
                                               Positioned(
-                                                left: 2297 * scale_offset,
-                                                top: 2582 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '문화관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    culturePath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
                                                 left: 1528 * scale_offset,
                                                 top: 2563 * scale_offset,
                                                 child: InkWell(
@@ -558,6 +543,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   },
                                                   child: Image.asset(
                                                     scPath,
+                                                    scale: 1 / scale_offset,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 2297 * scale_offset,
+                                                top: 2582 * scale_offset,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedHall = '문화관';
+                                                    _showFloorButton(
+                                                        selectedHall);
+                                                  },
+                                                  child: Image.asset(
+                                                    culturePath,
                                                     scale: 1 / scale_offset,
                                                   ),
                                                 ),
