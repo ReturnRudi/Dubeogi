@@ -112,34 +112,44 @@ class _SearchScreenState extends State<SearchScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextFormField(
-                      focusNode: firstFocus,
-                      controller: firstController,
-                      onFieldSubmitted: (term) {
-                        FocusScope.of(context).requestFocus(secondFocus);
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xFFF8D4A8),
-                        border: InputBorder.none,
-                        hintText: '출발 지점을 입력하세요',
+                    Container(
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: TextFormField(
+                        focusNode: firstFocus,
+                        controller: firstController,
+                        onFieldSubmitted: (term) {
+                          FocusScope.of(context).requestFocus(secondFocus);
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: '출발 지점을 입력하세요',
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF8D4A8),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                     ),
                     Container(
                       height: 2,
                       color: Colors.orange,
                     ),
-                    TextFormField(
-                      focusNode: secondFocus,
-                      controller: secondController,
-                      onFieldSubmitted: (term) {
-                        FocusScope.of(context).requestFocus(secondFocus);
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xFFF8D4A8),
-                        border: InputBorder.none,
-                        hintText: '도착 지점을 입력하세요',
+                    Container(
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: TextFormField(
+                        focusNode: secondFocus,
+                        controller: secondController,
+                        onFieldSubmitted: (term) {
+                          FocusScope.of(context).requestFocus(secondFocus);
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: '도착 지점을 입력하세요',
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF8D4A8),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                     ),
                   ],
