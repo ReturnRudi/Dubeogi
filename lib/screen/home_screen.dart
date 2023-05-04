@@ -1,10 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:Dubeogi/algorithm/astar.dart';
 import 'package:Dubeogi/component/appbar.dart';
-import 'package:Dubeogi/component/load_map.dart';
-import 'package:Dubeogi/component/draw_line.dart';
-import 'package:Dubeogi/screen/search_screen.dart';
+import 'package:Dubeogi/algorithm/astar.dart';
 import 'package:Dubeogi/save/save.dart';
+import 'package:Dubeogi/component/draw_line.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -16,10 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  dynamic result;
-  Graph graph = Graph();
-  String _startNodeName = "";
-  String _endNodeName = "";
   late ImageInfo _imageInfo_du;
   bool _imageLoaded_du = false;
   late double _imageWidth_du;
@@ -230,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
-        AssetImage('assets/images/du.png').resolve(ImageConfiguration());
+    AssetImage('assets/images/du.png').resolve(ImageConfiguration());
     final listener = ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     });
@@ -380,8 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     //print('Initial _position: $_position');
   }
-  
-  @override
+
   Widget build(BuildContext context) {
     if (!_imageLoaded_du) {
       return Container(
@@ -410,561 +404,555 @@ class _HomeScreenState extends State<HomeScreen> {
                         !_imageLoaded_du
                             ? Text('지도를 불러오는 중')
                             : Transform.scale(
-                                scale: _scale,
-                                child: Transform.translate(
-                                  offset: _position.scale(
-                                      scale_offset, scale_offset),
-                                  child: ClipRect(
+                          scale: _scale,
+                          child: Transform.translate(
+                            offset: _position.scale(
+                                scale_offset, scale_offset),
+                            child: ClipRect(
+                              child: Stack(
+                                children: [
+                                  CustomPaint(
+                                    size: Size(
+                                        _imageWidth_du, _imageHeight_du),
+                                    foregroundPainter: LinePainter(
+                                      imageInfo: _imageInfo_du,
+                                      startPoints: startPoints,
+                                      endPoints: endPoints,
+                                    ),
                                     child: Stack(
                                       children: [
-                                        CustomPaint(
-                                          size: Size(
-                                              _imageWidth_du, _imageHeight_du),
-                                          foregroundPainter: LinePainter(
-                                            imageInfo: _imageInfo_du,
-                                            startPoints: startPoints,
-                                            endPoints: endPoints,
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Image.asset(
-                                                'assets/images/du.png',
-                                                fit: BoxFit.cover,
-                                              ),
-                                              Positioned(
-                                                left: 1102 * scale_offset,
-                                                top: 2973 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      selectedHall = '과학관';
-                                                      _showFloorButton(
-                                                          selectedHall);
-                                                    });
-                                                  },
-                                                  child: Image.asset(
-                                                    sciencePath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1337 * scale_offset,
-                                                top: 2379 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '다향관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    dhPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1308 * scale_offset,
-                                                top: 3206 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '대운동장';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    dwPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 972 * scale_offset,
-                                                top: 1880 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '만해광장';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    mhPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1129 * scale_offset,
-                                                top: 2805 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '명진관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    mjPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1528 * scale_offset,
-                                                top: 2563 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '법학관_만해관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    bmPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1017 * scale_offset,
-                                                top: 2394 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '본관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    bPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 2145 * scale_offset,
-                                                top: 2775 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '사회과학관_경영관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    scPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 2297 * scale_offset,
-                                                top: 2582 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '문화관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    culturePath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1067 * scale_offset,
-                                                top: 3118 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '상록원';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    srPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 482 * scale_offset,
-                                                top: 2525 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '신공학관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    nePath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 694 * scale_offset,
-                                                top: 2084 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '원흥관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    whPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 769 * scale_offset,
-                                                top: 1920 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '정p';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    ipPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 634 * scale_offset,
-                                                top: 1866 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '정q';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    iqPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1673 * scale_offset,
-                                                top: 2941 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '정각원';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    jgPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 897 * scale_offset,
-                                                top: 2663 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '중앙도서관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    libraryPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1321 * scale_offset,
-                                                top: 1843 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '체육관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    gymPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1078 * scale_offset,
-                                                top: 1636 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '학림관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    hlPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 670 * scale_offset,
-                                                top: 1773 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '학생회관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    stuPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 2527 * scale_offset,
-                                                top: 2567 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '학술관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    hsPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                left: 1804 * scale_offset,
-                                                top: 2694 * scale_offset,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    selectedHall = '혜화관';
-                                                    _showFloorButton(
-                                                        selectedHall);
-                                                  },
-                                                  child: Image.asset(
-                                                    hhPath,
-                                                    scale: 1 / scale_offset,
-                                                  ),
-                                                ),
-                                              ),
-                                              if (_vendingvisibility)
-                                                Positioned(
-                                                  left: 971 * scale_offset,
-                                                  top: 2479 * scale_offset,
-                                                  child: Image.asset(
-                                                    vendingPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_vendingvisibility)
-                                                Positioned(
-                                                  left: 725 * scale_offset,
-                                                  top: 2770 * scale_offset,
-                                                  child: Image.asset(
-                                                    vendingPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_vendingvisibility)
-                                                Positioned(
-                                                  left: 2360 * scale_offset,
-                                                  top: 2940 * scale_offset,
-                                                  child: Image.asset(
-                                                    vendingPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_vendingvisibility)
-                                                Positioned(
-                                                  left: 825 * scale_offset,
-                                                  top: 2022 * scale_offset,
-                                                  child: Image.asset(
-                                                    vendingPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_showervisibility)
-                                                Positioned(
-                                                  left: 927 * scale_offset,
-                                                  top: 2537 * scale_offset,
-                                                  child: Image.asset(
-                                                    showerPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_showervisibility)
-                                                Positioned(
-                                                  left: 1650 * scale_offset,
-                                                  top: 2616 * scale_offset,
-                                                  child: Image.asset(
-                                                    showerPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_storevisibility)
-                                                Positioned(
-                                                  left: 865 * scale_offset,
-                                                  top: 2279 * scale_offset,
-                                                  child: Image.asset(
-                                                    storePath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_storevisibility)
-                                                Positioned(
-                                                  left: 694 * scale_offset,
-                                                  top: 2596 * scale_offset,
-                                                  child: Image.asset(
-                                                    storePath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_storevisibility)
-                                                Positioned(
-                                                  left: 1028 * scale_offset,
-                                                  top: 2736 * scale_offset,
-                                                  child: Image.asset(
-                                                    storePath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_storevisibility)
-                                                Positioned(
-                                                  left: 1123 * scale_offset,
-                                                  top: 3168 * scale_offset,
-                                                  child: Image.asset(
-                                                    storePath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_storevisibility)
-                                                Positioned(
-                                                  left: 1955 * scale_offset,
-                                                  top: 2891 * scale_offset,
-                                                  child: Image.asset(
-                                                    storePath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_storevisibility)
-                                                Positioned(
-                                                  left: 1107 * scale_offset,
-                                                  top: 1719 * scale_offset,
-                                                  child: Image.asset(
-                                                    storePath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_printervisibility)
-                                                Positioned(
-                                                  left: 854 * scale_offset,
-                                                  top: 2696 * scale_offset,
-                                                  child: Image.asset(
-                                                    printerPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_printervisibility)
-                                                Positioned(
-                                                  left: 936 * scale_offset,
-                                                  top: 2416 * scale_offset,
-                                                  child: Image.asset(
-                                                    printerPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_printervisibility)
-                                                Positioned(
-                                                  left: 838 * scale_offset,
-                                                  top: 1988 * scale_offset,
-                                                  child: Image.asset(
-                                                    printerPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_atmvisibility)
-                                                Positioned(
-                                                  left: 2500 * scale_offset,
-                                                  top: 1725 * scale_offset,
-                                                  child: Image.asset(
-                                                    atmPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_atmvisibility)
-                                                Positioned(
-                                                  left: 1120 * scale_offset,
-                                                  top: 3217 * scale_offset,
-                                                  child: Image.asset(
-                                                    atmPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_atmvisibility)
-                                                Positioned(
-                                                  left: 1469 * scale_offset,
-                                                  top: 2956 * scale_offset,
-                                                  child: Image.asset(
-                                                    atmPath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_loungevisibility)
-                                                Positioned(
-                                                  left: 1011 * scale_offset,
-                                                  top: 2870 * scale_offset,
-                                                  child: Image.asset(
-                                                    loungePath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                              if (_loungevisibility)
-                                                Positioned(
-                                                  left: 1258 * scale_offset,
-                                                  top: 1735 * scale_offset,
-                                                  child: Image.asset(
-                                                    loungePath,
-                                                    scale:
-                                                        1 / (scale_offset / 16),
-                                                  ),
-                                                ),
-                                            ],
+                                        Image.asset(
+                                          'assets/images/du.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Positioned(
+                                          left: 1102 * scale_offset,
+                                          top: 2973 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedHall = '과학관';
+                                                _showFloorButton(
+                                                    selectedHall);
+                                              });
+                                            },
+                                            child: Image.asset(
+                                              sciencePath,
+                                              scale: 1 / scale_offset,
+                                            ),
                                           ),
                                         ),
+                                        Positioned(
+                                          left: 1337 * scale_offset,
+                                          top: 2379 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '다향관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              dhPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 1308 * scale_offset,
+                                          top: 3206 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '대운동장';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              dwPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 972 * scale_offset,
+                                          top: 1880 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '만해광장';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              mhPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 1129 * scale_offset,
+                                          top: 2805 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '명진관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              mjPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 1528 * scale_offset,
+                                          top: 2563 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '법학관_만해관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              bmPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 1017 * scale_offset,
+                                          top: 2394 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '본관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              bPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 2145 * scale_offset,
+                                          top: 2775 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '사회과학관_경영관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              scPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 2297 * scale_offset,
+                                          top: 2582 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '문화관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              culturePath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 1067 * scale_offset,
+                                          top: 3118 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '상록원';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              srPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 482 * scale_offset,
+                                          top: 2525 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '신공학관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              nePath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 694 * scale_offset,
+                                          top: 2084 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '원흥관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              whPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 769 * scale_offset,
+                                          top: 1920 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '정p';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              ipPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 634 * scale_offset,
+                                          top: 1866 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '정q';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              iqPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 1673 * scale_offset,
+                                          top: 2941 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '정각원';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              jgPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 897 * scale_offset,
+                                          top: 2663 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '중앙도서관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              libraryPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 1321 * scale_offset,
+                                          top: 1843 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '체육관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              gymPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 1078 * scale_offset,
+                                          top: 1636 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '학림관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              hlPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 670 * scale_offset,
+                                          top: 1773 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '학생회관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              stuPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 2527 * scale_offset,
+                                          top: 2567 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '학술관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              hsPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: 1804 * scale_offset,
+                                          top: 2694 * scale_offset,
+                                          child: InkWell(
+                                            onTap: () {
+                                              selectedHall = '혜화관';
+                                              _showFloorButton(
+                                                  selectedHall);
+                                            },
+                                            child: Image.asset(
+                                              hhPath,
+                                              scale: 1 / scale_offset,
+                                            ),
+                                          ),
+                                        ),
+                                        if (_vendingvisibility)
+                                          Positioned(
+                                            left: 971 * scale_offset,
+                                            top: 2479 * scale_offset,
+                                            child: Image.asset(
+                                              vendingPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_vendingvisibility)
+                                          Positioned(
+                                            left: 725 * scale_offset,
+                                            top: 2770 * scale_offset,
+                                            child: Image.asset(
+                                              vendingPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_vendingvisibility)
+                                          Positioned(
+                                            left: 2360 * scale_offset,
+                                            top: 2940 * scale_offset,
+                                            child: Image.asset(
+                                              vendingPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_vendingvisibility)
+                                          Positioned(
+                                            left: 825 * scale_offset,
+                                            top: 2022 * scale_offset,
+                                            child: Image.asset(
+                                              vendingPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_showervisibility)
+                                          Positioned(
+                                            left: 927 * scale_offset,
+                                            top: 2537 * scale_offset,
+                                            child: Image.asset(
+                                              showerPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_showervisibility)
+                                          Positioned(
+                                            left: 1650 * scale_offset,
+                                            top: 2616 * scale_offset,
+                                            child: Image.asset(
+                                              showerPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_storevisibility)
+                                          Positioned(
+                                            left: 865 * scale_offset,
+                                            top: 2279 * scale_offset,
+                                            child: Image.asset(
+                                              storePath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_storevisibility)
+                                          Positioned(
+                                            left: 694 * scale_offset,
+                                            top: 2596 * scale_offset,
+                                            child: Image.asset(
+                                              storePath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_storevisibility)
+                                          Positioned(
+                                            left: 1028 * scale_offset,
+                                            top: 2736 * scale_offset,
+                                            child: Image.asset(
+                                              storePath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_storevisibility)
+                                          Positioned(
+                                            left: 1123 * scale_offset,
+                                            top: 3168 * scale_offset,
+                                            child: Image.asset(
+                                              storePath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_storevisibility)
+                                          Positioned(
+                                            left: 1955 * scale_offset,
+                                            top: 2891 * scale_offset,
+                                            child: Image.asset(
+                                              storePath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_storevisibility)
+                                          Positioned(
+                                            left: 1107 * scale_offset,
+                                            top: 1719 * scale_offset,
+                                            child: Image.asset(
+                                              storePath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_printervisibility)
+                                          Positioned(
+                                            left: 854 * scale_offset,
+                                            top: 2696 * scale_offset,
+                                            child: Image.asset(
+                                              printerPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_printervisibility)
+                                          Positioned(
+                                            left: 936 * scale_offset,
+                                            top: 2416 * scale_offset,
+                                            child: Image.asset(
+                                              printerPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_printervisibility)
+                                          Positioned(
+                                            left: 838 * scale_offset,
+                                            top: 1988 * scale_offset,
+                                            child: Image.asset(
+                                              printerPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_atmvisibility)
+                                          Positioned(
+                                            left: 2500 * scale_offset,
+                                            top: 1725 * scale_offset,
+                                            child: Image.asset(
+                                              atmPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_atmvisibility)
+                                          Positioned(
+                                            left: 1120 * scale_offset,
+                                            top: 3217 * scale_offset,
+                                            child: Image.asset(
+                                              atmPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_atmvisibility)
+                                          Positioned(
+                                            left: 1469 * scale_offset,
+                                            top: 2956 * scale_offset,
+                                            child: Image.asset(
+                                              atmPath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_loungevisibility)
+                                          Positioned(
+                                            left: 1011 * scale_offset,
+                                            top: 2870 * scale_offset,
+                                            child: Image.asset(
+                                              loungePath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (_loungevisibility)
+                                          Positioned(
+                                            left: 1258 * scale_offset,
+                                            top: 1735 * scale_offset,
+                                            child: Image.asset(
+                                              loungePath,
+                                              scale:
+                                              1 / (scale_offset / 16),
+                                            ),
+                                          ),
                                       ],
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                );
-                print('값넘기기실험중.${result['start']} , ${result['end']}, $result');
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30), // 버튼 모서리 둥글기 정도
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -1074,8 +1062,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
                                   backgroundColor:
-                                      Colors.white //.withOpacity(0.5),
-                                  ),
+                                  Colors.white //.withOpacity(0.5),
+                              ),
                               child: Text(
                                 '자판기',
                                 style: TextStyle(
@@ -1270,7 +1258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               culturePath =
-                                  'assets/images/floor/문화관(2297,2582).png';
+                              'assets/images/floor/문화관(2297,2582).png';
                             });
                           },
                           child: Text('기본'),
@@ -1342,7 +1330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               scPath =
-                                  'assets/images/floor/사회과학관_경영관(2145,2775).png';
+                              'assets/images/floor/사회과학관_경영관(2145,2775).png';
                             });
                           },
                           child: Text('기본'),

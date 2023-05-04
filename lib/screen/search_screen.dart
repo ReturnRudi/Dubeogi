@@ -265,60 +265,60 @@ class _SearchScreenState extends State<SearchScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                         decoration: BoxDecoration(
                           color: Color(0xFFF8D4A8),
                           borderRadius: BorderRadius.circular(5),
                         ),
-                      child: Stack(
-                        children: [
-                          TypeAheadField(
-                            textFieldConfiguration: TextFieldConfiguration(
-                              controller: firstController,
-                              focusNode: firstFocus,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                                hintText: '출발 지점을 입력하세요',
-                                filled: true,
-                                fillColor: const Color(0xffF9D5A8),
+                        child: Stack(
+                          children: [
+                            TypeAheadField(
+                              textFieldConfiguration: TextFieldConfiguration(
+                                controller: firstController,
+                                focusNode: firstFocus,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                  hintText: '출발 지점을 입력하세요',
+                                  filled: true,
+                                  fillColor: const Color(0xffF9D5A8),
+                                ),
                               ),
-                            ),
-                            suggestionsCallback: (pattern) {
-                              return buildings.where((text) => text
-                                  .toLowerCase()
-                                  .contains(pattern.toLowerCase()));
-                            },
-                            suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                                color: const Color(0xffF9D5A8)
-                            ),
-                            itemBuilder: (context, suggestion) {
-                              return ListTile(
-                                title: Text(suggestion),
-                              );
-                            },
-                            onSuggestionSelected: (suggestion) {
-                              setState(() {
-                                firstController.text = suggestion;
-                              });
-                            },
-                            noItemsFoundBuilder: (context) {
-                              return Container(
-                                height: 45.0,
-                                child: Center(
-                                  child: Text(
-                                    '건물명을 정확히 입력해주세요.',
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.grey,
+                              suggestionsCallback: (pattern) {
+                                return buildings.where((text) => text
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()));
+                              },
+                              suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                  color: const Color(0xffF9D5A8)
+                              ),
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  title: Text(suggestion),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                setState(() {
+                                  firstController.text = suggestion;
+                                });
+                              },
+                              noItemsFoundBuilder: (context) {
+                                return Container(
+                                  height: 45.0,
+                                  child: Center(
+                                    child: Text(
+                                      '건물명을 정확히 입력해주세요.',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      )
+                                );
+                              },
+                            ),
+                          ],
+                        )
                     ),
                     Container(
                       height: 2,
