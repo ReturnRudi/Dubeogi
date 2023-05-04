@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/component/appbar.dart';
+<<<<<<< Updated upstream
 import 'package:Dubeogi/screen/home_screen.dart';
 
+=======
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+//
+>>>>>>> Stashed changes
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
