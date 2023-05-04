@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/component/appbar.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -15,6 +16,30 @@ class _SearchScreenState extends State<SearchScreen> {
   final firstController = TextEditingController();
   final secondController = TextEditingController();
   int selectOption = 1;
+
+  final List<String> buildings = [
+    '다향관',
+    '명진관',
+    '과학관',
+    '대운동장앞',
+    '법학관',
+    '혜화관',
+    '경영관',
+    '사회과학관',
+    '문화관',
+    '학술관',
+    '중앙도서관',
+    '만해광장',
+    '상록원',
+    '원흥관',
+    '신공학관',
+    '정보문화관p',
+    '정보문화관q',
+    '체육관',
+    '학림관',
+    '정각원',
+    '학생회관'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -241,43 +266,119 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: TextFormField(
-                        focusNode: firstFocus,
-                        controller: firstController,
-                        onFieldSubmitted: (term) {
-                          FocusScope.of(context).requestFocus(secondFocus);
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '출발 지점을 입력하세요',
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF8D4A8),
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF8D4A8),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+                      child: Stack(
+                        children: [
+                          TypeAheadField(
+                            textFieldConfiguration: TextFieldConfiguration(
+                              controller: firstController,
+                              focusNode: firstFocus,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                hintText: '출발 지점을 입력하세요',
+                                filled: true,
+                                fillColor: const Color(0xffF9D5A8),
+                              ),
+                            ),
+                            suggestionsCallback: (pattern) {
+                              return buildings.where((text) => text
+                                  .toLowerCase()
+                                  .contains(pattern.toLowerCase()));
+                            },
+                            suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                color: const Color(0xffF9D5A8)
+                            ),
+                            itemBuilder: (context, suggestion) {
+                              return ListTile(
+                                title: Text(suggestion),
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              setState(() {
+                                firstController.text = suggestion;
+                              });
+                            },
+                            noItemsFoundBuilder: (context) {
+                              return Container(
+                                height: 45.0,
+                                child: Center(
+                                  child: Text(
+                                    '건물명을 정확히 입력해주세요.',
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      )
                     ),
                     Container(
                       height: 2,
                       color: Colors.orange,
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: TextFormField(
-                        focusNode: secondFocus,
-                        controller: secondController,
-                        onFieldSubmitted: (term) {
-                          FocusScope.of(context).requestFocus(secondFocus);
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '도착 지점을 입력하세요',
+                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF8D4A8),
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF8D4A8),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+                        child: Stack(
+                          children: [
+                            TypeAheadField(
+                              textFieldConfiguration: TextFieldConfiguration(
+                                controller: secondController,
+                                focusNode: secondFocus,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                  border: InputBorder.none,
+                                  hintText: '도착 지점을 입력하세요',
+                                  filled: true,
+                                  fillColor: const Color(0xffF9D5A8),
+                                ),
+                              ),
+                              suggestionsCallback: (pattern) {
+                                return buildings.where((text) => text
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()));
+                              },
+                              suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                  color: const Color(0xffF9D5A8)
+                              ),
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  title: Text(suggestion),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                setState(() {
+                                  secondController.text = suggestion;
+                                });
+                              },
+                              noItemsFoundBuilder: (context) {
+                                return Container(
+                                  height: 45.0,
+                                  child: Center(
+                                    child: Text(
+                                      '건물명을 정확히 입력해주세요.',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        )
                     ),
                   ],
                 )
