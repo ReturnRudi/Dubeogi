@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 String sciencePath = 'assets/images/과학관(1102,2973).png';
 String dhPath = 'assets/images/다향관(1337,2379).png';   //new
 String dwPath = 'assets/images/대운동장(1308,3206).png';
@@ -26,5 +28,48 @@ String storePath = 'assets/images/facility/store.png';
 String atmPath = 'assets/images/facility/atm.png';
 String loungePath = 'assets/images/facility/lounge.png';
 String printerPath = 'assets/images/facility/printer.png';
+
+List<Offset> scienceStartList = [];
+List<Offset> scienceEndList = [];
+List<Offset> dhStartList = [];
+List<Offset> dhEndList = [];
+List<Offset> dwStartList = [];
+List<Offset> dwEndList = [];
+List<Offset> mhStartList = [];
+List<Offset> mhEndList = [];
+List<Offset> mjStartList = [];
+List<Offset> mjEndList = [];
+List<Offset> cultureStartList = [];
+List<Offset> cultureEndList = [];
+List<Offset> bmStartList = [];
+List<Offset> bmEndList = [];
+List<Offset> bStartList = [];
+List<Offset> bEndList = [];
+List<Offset> scStartList = [];
+List<Offset> scEndList = [];
+List<Offset> srStartList = [];
+List<Offset> srEndList = [];
+List<Offset> neStartList = [];
+List<Offset> neEndList = [];
+List<Offset> whStartList = [];
+List<Offset> whEndList = [];
+List<Offset> ipStartList = [];
+List<Offset> ipEndList = [];
+List<Offset> iqStartList = [];
+List<Offset> iqEndList = [];
+List<Offset> jgStartList = [];
+List<Offset> jgEndList = [];
+List<Offset> gymStartList = [];
+List<Offset> gymEndList = [];
+List<Offset> libraryStartList = [];
+List<Offset> libraryEndList = [];
+List<Offset> hlStartList = [];
+List<Offset> hlEndList = [];
+List<Offset> stuStartList = [];
+List<Offset> stuEndList = [];
+List<Offset> hsStartList = [];
+List<Offset> hsEndList = [];
+List<Offset> hhStartList = [];
+List<Offset> hhEndList = [];
 
 List<String> names = [];
