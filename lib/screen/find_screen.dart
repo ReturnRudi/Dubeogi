@@ -65,13 +65,14 @@ class _FindScreenState extends State<FindScreen> {
                       if (isExistBuilding(result) == true) {
                         getdata = await Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) => BuildingInfo(
-                              title: result,
-                            ),
+                            builder: (_) =>
+                                BuildingInfo(
+                                  title: result,
+                                ),
                           ),
                         );
                         setState(() {
-                          Navigator.pop(context, getdata);
+                            Navigator.pop(context, getdata);
                         });
                       } else {
                         print('debug: isExistBuilding false');
@@ -221,7 +222,7 @@ class _BuildingInfoState extends State<BuildingInfo> {
                     arguments: {'start': widget.title, 'end': ''},
                   );
                   setState(() {
-                    Navigator.pop(context, getdata);
+                      Navigator.pop(context, getdata);
                   });
                 },
                 style: OutlinedButton.styleFrom(
