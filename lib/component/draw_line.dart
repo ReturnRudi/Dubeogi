@@ -22,12 +22,12 @@ class LinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final scaleX = size.width / imageInfo.image.width;
     final scaleY = size.height / imageInfo.image.height;
-    print(
+/*    print(
         'size.width: ${size.width}, imageInfo.image.width: ${imageInfo.image.width}');
     print(
         'size.height: ${size.height}, imageInfo.image.height: ${imageInfo.image.height}');
 
-    print('scaleX: $scaleX, scaleY: $scaleY');
+    print('scaleX: $scaleX, scaleY: $scaleY');*/
 
     final paint = Paint()
       ..color = Colors.red

@@ -22,6 +22,165 @@ class _HomeScreenState extends State<HomeScreen> {
   late double scale_offset;
   late String selectedHall;
 
+  int nowFloor = 0;
+  String _showButton = "기본";
+  //late String nowBuilding;
+
+  bool _vendingvisibility = false;
+  bool _showervisibility = false;
+  bool _storevisibility = false;
+  bool _atmvisibility = false;
+  bool _loungevisibility = false;
+  bool _printervisibility = false;
+
+  void _vendingshow() {
+    setState(() {
+      _vendingvisibility = !_vendingvisibility;
+    });
+  }
+
+  void _showershow() {
+    setState(() {
+      _showervisibility = !_showervisibility;
+    });
+  }
+
+  void _storeshow() {
+    setState(() {
+      _storevisibility = !_storevisibility;
+    });
+  }
+
+  void _atmshow() {
+    setState(() {
+      _atmvisibility = !_atmvisibility;
+    });
+  }
+
+  void _loungeshow() {
+    setState(() {
+      _loungevisibility = !_loungevisibility;
+    });
+  }
+
+  void _printershow() {
+    setState(() {
+      _printervisibility = !_printervisibility;
+    });
+  }
+
+  void _showFloorButton(String touchedBuilding) {
+    //print('_showButton: $_showButton');
+    setState(() {
+      if (touchedBuilding == "과학관") {
+        if (_showButton == "과학관")
+          _showButton = "기본";
+        else
+          _showButton = "과학관";
+      } else if (touchedBuilding == "다향관") {
+        if (_showButton == "다향관")
+          _showButton = "기본";
+        else
+          _showButton = "다향관";
+      } else if (touchedBuilding == "대운동장앞") {
+        if (_showButton == "대운동장앞")
+          _showButton = "기본";
+        else
+          _showButton = "대운동장앞";
+      } else if (touchedBuilding == "만해광장") {
+        if (_showButton == "만해광장")
+          _showButton = "기본";
+        else
+          _showButton = "만해광장";
+      } else if (touchedBuilding == "명진관") {
+        if (_showButton == "명진관")
+          _showButton = "기본";
+        else
+          _showButton = "명진관";
+      } else if (touchedBuilding == "문화관") {
+        if (_showButton == "문화관")
+          _showButton = "기본";
+        else
+          _showButton = "문화관";
+      } else if (touchedBuilding == "법학관_만해관") {
+        if (_showButton == "법학관_만해관")
+          _showButton = "기본";
+        else
+          _showButton = "법학관_만해관";
+      } else if (touchedBuilding == "본관") {
+        if (_showButton == "본관")
+          _showButton = "기본";
+        else
+          _showButton = "본관";
+      } else if (touchedBuilding == "사회과학관_경영관") {
+        if (_showButton == "사회과학관_경영관")
+          _showButton = "기본";
+        else
+          _showButton = "사회과학관_경영관";
+      } else if (touchedBuilding == "상록원") {
+        if (_showButton == "상록원")
+          _showButton = "기본";
+        else
+          _showButton = "상록원";
+      } else if (touchedBuilding == "신공학관") {
+        if (_showButton == "신공학관")
+          _showButton = "기본";
+        else
+          _showButton = "신공학관";
+      } else if (touchedBuilding == "원흥관") {
+        if (_showButton == "원흥관")
+          _showButton = "기본";
+        else
+          _showButton = "원흥관";
+      } else if (touchedBuilding == "정p") {
+        if (_showButton == "정p")
+          _showButton = "기본";
+        else
+          _showButton = "정p";
+      } else if (touchedBuilding == "정q") {
+        if (_showButton == "정q")
+          _showButton = "기본";
+        else
+          _showButton = "정q";
+      } else if (touchedBuilding == "정각원") {
+        if (_showButton == "정각원")
+          _showButton = "기본";
+        else
+          _showButton = "정각원";
+      } else if (touchedBuilding == "중앙도서관") {
+        if (_showButton == "중앙도서관")
+          _showButton = "기본";
+        else
+          _showButton = "중앙도서관";
+      } else if (touchedBuilding == "체육관") {
+        if (_showButton == "체육관")
+          _showButton = "기본";
+        else
+          _showButton = "체육관";
+      } else if (touchedBuilding == "학림관") {
+        if (_showButton == "학림관")
+          _showButton = "기본";
+        else
+          _showButton = "학림관";
+      } else if (touchedBuilding == "학생회관") {
+        if (_showButton == "학생회관")
+          _showButton = "기본";
+        else
+          _showButton = "학생회관";
+      } else if (touchedBuilding == "학술관") {
+        if (_showButton == "학술관")
+          _showButton = "기본";
+        else
+          _showButton = "학술관";
+      } else if (touchedBuilding == "혜화관") {
+        if (_showButton == "혜화관")
+          _showButton = "기본";
+        else
+          _showButton = "혜화관";
+      }
+    });
+  }
+
   double _scale = 1.3;
   double _previousScale = 1.0;
   Offset _position = Offset.zero;
@@ -30,206 +189,52 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Offset> startPoints = [];
   List<Offset> endPoints = [];
 
+  List<Node> startNodes = [];
+  List<Node> endNodes = [];
+
+  Graph graph = Graph();
+
+  void erase() {
+    startPoints.clear();
+    endPoints.clear();
+  }
+
   String _startNodeName = "";
   String _endNodeName = "";
-  Graph graph = Graph();
   dynamic result;
 
-  int _showButton = 0;
-  bool _vendingvisibility = false;
-  bool _showervisibility = false;
-  bool _storevisibility = false;
-  bool _atmvisibility = false;
-  bool _loungevisibility = false;
-  bool _printervisibility = false;
-
-  // 1. 상단 검색창 밑의 버튼들
-  void _vendingshow() { // 자판기
-    setState(() {
-      _vendingvisibility = !_vendingvisibility;
-    });
-  }
-
-  void _showershow() { // 샤워장
-    setState(() {
-      _showervisibility = !_showervisibility;
-    });
-  }
-
-  void _storeshow() { // 편의점
-    setState(() {
-      _storevisibility = !_storevisibility;
-    });
-  }
-
-  void _atmshow() { // ATM
-    setState(() {
-      _atmvisibility = !_atmvisibility;
-    });
-  }
-
-  void _loungeshow() { // 라운지(휴게실)
-    setState(() {
-      _loungevisibility = !_loungevisibility;
-    });
-  }
-
-  void _printershow() { // 프린터
-    setState(() {
-      _printervisibility = !_printervisibility;
-    });
-  }
-
-  // end 1
-
-  // 2. 건물 터치시 층수 선택 버튼이 보이는 기능
-  void _showFloorButton(String selectedHall) { //
-    print('_showButton: $_showButton');
-    setState(() {
-      if (selectedHall == "과학관") {
-        if (_showButton == 1)
-          _showButton = 0;
-        else
-          _showButton = 1;
-      } else if (selectedHall == "다향관") {
-        if (_showButton == 2)
-          _showButton = 0;
-        else
-          _showButton = 2;
-      } else if (selectedHall == "대운동장") {
-        if (_showButton == 3)
-          _showButton = 0;
-        else
-          _showButton = 3;
-      } else if (selectedHall == "만해광장") {
-        if (_showButton == 4)
-          _showButton = 0;
-        else
-          _showButton = 4;
-      } else if (selectedHall == "명진관") {
-        if (_showButton == 5)
-          _showButton = 0;
-        else
-          _showButton = 5;
-      } else if (selectedHall == "문화관") {
-        if (_showButton == 6)
-          _showButton = 0;
-        else
-          _showButton = 6;
-      } else if (selectedHall == "법학관_만해관") {
-        if (_showButton == 7)
-          _showButton = 0;
-        else
-          _showButton = 7;
-      } else if (selectedHall == "본관") {
-        if (_showButton == 8)
-          _showButton = 0;
-        else
-          _showButton = 8;
-      } else if (selectedHall == "사회과학관_경영관") {
-        if (_showButton == 9)
-          _showButton = 0;
-        else
-          _showButton = 9;
-      } else if (selectedHall == "상록원") {
-        if (_showButton == 10)
-          _showButton = 0;
-        else
-          _showButton = 10;
-      } else if (selectedHall == "신공학관") {
-        if (_showButton == 11)
-          _showButton = 0;
-        else
-          _showButton = 11;
-      } else if (selectedHall == "원흥관") {
-        if (_showButton == 12)
-          _showButton = 0;
-        else
-          _showButton = 12;
-      } else if (selectedHall == "정p") {
-        if (_showButton == 13)
-          _showButton = 0;
-        else
-          _showButton = 13;
-      } else if (selectedHall == "정q") {
-        if (_showButton == 14)
-          _showButton = 0;
-        else
-          _showButton = 14;
-      } else if (selectedHall == "정각원") {
-        if (_showButton == 15)
-          _showButton = 0;
-        else
-          _showButton = 15;
-      } else if (selectedHall == "중앙도서관") {
-        if (_showButton == 16)
-          _showButton = 0;
-        else
-          _showButton = 16;
-      } else if (selectedHall == "체육관") {
-        if (_showButton == 17)
-          _showButton = 0;
-        else
-          _showButton = 17;
-      } else if (selectedHall == "학림관") {
-        if (_showButton == 18)
-          _showButton = 0;
-        else
-          _showButton = 18;
-      } else if (selectedHall == "학생회관") {
-        if (_showButton == 19)
-          _showButton = 0;
-        else
-          _showButton = 19;
-      } else if (selectedHall == "학술관") {
-        if (_showButton == 20)
-          _showButton = 0;
-        else
-          _showButton = 20;
-      } else if (selectedHall == "혜화관") {
-        if (_showButton == 21)
-          _showButton = 0;
-        else
-          _showButton = 21;
-      }
-    });
-  }
- // end 2
-
-  // 3. 처음 애플리케이션이 시작될 때 및 이미지 로딩
   @override
   void initState() {
     super.initState();
-    _getImageInfo(); // load map
+    _getImageInfo();
 
-    graph.addEdge("다향관", 1451, 2469, "명진관", 1320, 2900, 100, "평지", "차도");
-    graph.addEdge("명진관", 1320, 2900, "과학관", 1248, 3071, 30, "평지", "차도");
-    graph.addEdge("과학관", 1248, 3071, "대운동장앞", 1589, 3421, 20, "평지", "차도");
-    graph.addEdge("명진관", 1320, 2900, "법학관", 1656, 2641, 70, "평지", "차도");
-    graph.addEdge("다향관", 1451, 2469, "법학관", 1656, 2641, 70, "평지", "차도");
-    graph.addEdge("법학관", 1656, 2641, "혜화관", 1990, 2882, 50, "평지", "차도");
-    graph.addEdge("법학관", 1656, 2641, "대운동장앞", 1589, 3421, 170, "평지", "차도");
-    graph.addEdge("대운동장앞", 1589, 3421, "경영관", 2366, 3214, 200, "평지", "차도");
-    graph.addEdge("대운동장앞", 1589, 3421, "사회과학관", 2274, 2921, 220, "평지", "차도");
-    graph.addEdge("대운동장앞", 1589, 3421, "혜화관", 1990, 2882, 80, "평지", "차도");
-    graph.addEdge("경영관", 2366, 3214, "사회과학관", 2274, 2921, 10, "평지", "도보");
-    graph.addEdge("사회과학관", 2274, 2921, "혜화관", 1990, 2882, 30, "평지", "차도");
-    graph.addEdge("혜화관", 1990, 2882, "문화관", 2416, 2838, 45, "평지", "도보");
-    graph.addEdge("사회과학관", 2274, 2921, "문화관", 2416, 2838, 20, "평지", "도보");
-    graph.addEdge("문화관", 2416, 2838, "학술관", 2595, 2722, 20, "평지", "도보");
+    graph.addEdge("다향관", "명진관", 100, "평지", "차도", node1X: 1451, node1Y: 2469, inside1: 0, building1: "다향관", building2: "명진관", node2X: 1320, node2Y: 2900, inside2: 0);
+    graph.addEdge("명진관", "과학관", 30, "평지", "차도", node2X: 1248, node2Y: 3071, inside2: 0, building2: "과학관");
+    graph.addEdge("과학관", "대운동장앞", 20, "평지", "차도", node2X: 1589, node2Y: 3421, inside2: 0, building2: "밖");
+    graph.addEdge("명진관", "법학관", 70, "평지", "차도", node2X: 1656, node2Y: 2641, inside2: 0, building2: "법학관");
+    graph.addEdge("다향관", "법학관", 70, "평지", "차도");
+    graph.addEdge("법학관", "혜화관", 50, "평지", "차도", node2X: 1990, node2Y: 2882, inside2: 0, building2: "혜화관");
+    graph.addEdge("법학관", "대운동장앞", 170, "평지", "차도");
+    graph.addEdge("대운동장앞", "경영관", 200, "평지", "차도", node2X: 2366, node2Y: 3214, inside2: 0, building2: "경영관");
+    graph.addEdge("대운동장앞", "명진관", 220, "평지", "차도");
+    graph.addEdge("대운동장앞", "혜화관", 80, "평지", "차도");
+    graph.addEdge("경영관", "사회과학관", 10, "평지", "도보", node2X: 2274, node2Y: 2921, inside2: 0, building2: "사화과학관");
+    graph.addEdge("사회과학관", "혜화관", 30, "평지", "차도");
+    graph.addEdge("혜화관", "문화관", 45, "평지", "도보", node2X: 2416, node2Y: 2838, inside2: 3, building2: "문화관");
+    graph.addEdge("사회과학관", "문화관", 20, "평지", "도보");
+    graph.addEdge("문화관", "학술관", 20, "평지", "도보", node2X: 2595, node2Y: 2722, inside2: 0, building2: "학술관");
 
-    // names에 건물들 추가 -> find_screen에서 사용
+
+
     for (int i = 0; i < graph.nodes.length; i++) {
       names.add(graph.nodes[i].name);
     }
   }
-  // end 3
 
-  // 4. 지도 불러오기
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
-    AssetImage('assets/images/du.png').resolve(ImageConfiguration());
+        AssetImage('assets/images/du.png').resolve(ImageConfiguration());
     final listener = ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     });
@@ -243,9 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     stream.removeListener(listener);
   }
-  // end 4
 
-  // 5. Gesture Detector에 사용되는 함수들 ------------------------
   void _onScaleStart(ScaleStartDetails details) {
     setState(() {
       _previousScale = _scale;
@@ -291,10 +294,10 @@ class _HomeScreenState extends State<HomeScreen> {
       }
 
       // 값을 출력합니다.
-      print('imageHeight: $_imageHeight_du, imageWidth: $_imageWidth_du');
+/*      print('imageHeight: $_imageHeight_du, imageWidth: $_imageWidth_du');
       print('screenWidth: $screenWidth, screenHeight: $screenHeight');
       print('minX: $minX, maxX: $maxX, minY: $minY, maxY: $maxY');
-      print('_showButton: $_showButton');
+      print('_showButton: $_showButton');*/
 
       // _position 값을 제한 값으로 설정합니다.
       _position = Offset(
@@ -303,11 +306,8 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     });
   }
-  // end 5
 
-  // 6. 경로
-  // 지나온 노드를 저장
-  List<Node> reconstructPath(
+  List<Node> reconstructPath( //Astar 결과 지나온 노드들을 반대로 돌아가면서 경로를 path 리스트에 저장한 후 reverse를 통해 경로 순서대로 재배치한다.
       List<int> prev, List<Node> nodes, int startIndex, int endIndex) {
     List<Node> path = [];
     int currentNode = endIndex;
@@ -327,13 +327,35 @@ class _HomeScreenState extends State<HomeScreen> {
     path = path.reversed.toList();
     return path;
   }
-  // 새롭게 경로 검색을 할 때 기존에 그려져 있던 선을 지움.
-  void erase() {
-    startPoints.clear();
-    endPoints.clear();
+
+  void floorButtonPath(int nowFloor, String nowBuilding){
+    //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
+    erase();
+
+    for (int i = 0; i < startNodes.length; i++) {
+      if(startNodes[i].isInside == 0 && endNodes[i].isInside == 0){ //엣지의 출발지, 도착지가 모두 밖이면 그냥 경로 리스트에 추가
+        startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
+        endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
+      }
+      else{
+        if(nowFloor != 0){
+          if((startNodes[i].isInside == nowFloor || endNodes[i].isInside == nowFloor) && (startNodes[i].building == nowBuilding || endNodes[i].building == nowBuilding)){
+            startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
+            endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
+          }
+        }
+      }
+    }
   }
-  // 경로 그리기
-  void draw(String startNodeName, String endNodeName) {
+
+  void Astar_pathMaking(String startNodeName, String endNodeName) {
+    //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
+    //지도 위에 그림을 그릴 수 있도록 start, end 리스트에 x, y값을 각각 넣는다.
+
+    erase();
+    startNodes.clear();
+    endNodes.clear();
+
     Node startNode = graph.findNode(startNodeName);
     Node endNode = graph.findNode(endNodeName);
 
@@ -342,35 +364,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Regular search
     var regularResult =
-    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
+        graph.aStar(graph.nodes, graph.edges, startNode, endNode);
     List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
-    List<Node> startNodePoints = [];
-    List<Node> endNodePoints = [];
     List<Node> regularPath =
-    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
+        reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
 
     print("Regular path from $startNode to $endNode:");
     for (int i = 0; i < regularPath.length; i++) {
       if (i == 0)
-        startNodePoints.add(regularPath[i]);
+        startNodes.add(regularPath[i]);
       else if (i == regularPath.length - 1)
-        endNodePoints.add(regularPath[i]);
+        endNodes.add(regularPath[i]);
       else {
-        endNodePoints.add(regularPath[i]);
-        startNodePoints.add(regularPath[i]);
+        endNodes.add(regularPath[i]);
+        startNodes.add(regularPath[i]);
       }
     }
 
-    for (int i = 0; i < startNodePoints.length; i++) {
+    for (int i = 0; i < startNodes.length; i++) {
       print(
-          "(${startNodePoints[i].x}, ${startNodePoints[i].y}) -> (${endNodePoints[i].x}, ${endNodePoints[i].y})");
+          "(${startNodes[i].x}, ${startNodes[i].y}) -> (${endNodes[i].x}, ${endNodes[i].y})");
     }
 
-    for (int i = 0; i < startNodePoints.length; i++) {
-      startPoints.add(Offset(startNodePoints[i].x, startNodePoints[i].y));
-      endPoints.add(Offset(endNodePoints[i].x, endNodePoints[i].y));
+    for (int i = 0; i < startNodes.length; i++) {  //실내 노드를 넣을 때 이곳을 수정해야함
+      if(startNodes[i].isInside == 0 && endNodes[i].isInside == 0){ //엣지의 출발지, 도착지가 모두 밖일 때만 우선 startPoints, endPoints에 넣어서 외부 경로만 보이도록 한다.
+        startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
+        endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
+      }
     }
 
     for (Node node in regularPath) {
@@ -382,17 +404,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // 프로그램이 실행될 때의 _position 값을 출력합니다.
 
-    for (int i = 0; i < startNodePoints.length; i++) {
+    for (int i = 0; i < startNodes.length; i++) {
       print('startPoints: $startPoints');
       print('endPoints: $endPoints');
     }
 
     //print('Initial _position: $_position');
   }
-  // end 6
 
   Widget build(BuildContext context) {
-    /*
     if (!_imageLoaded_du) {
       return Container(
         color: Color(0xFFDCB6),
@@ -400,7 +420,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: CircularProgressIndicator(),
         ),
       );
-    }*/
+    }
     return Scaffold(
       appBar: CustomAppBar(
         title: '동국대학교',
@@ -417,9 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   body: Center(
                     child: Stack(
                       children: [
-                        !_imageLoaded_du
-                            ? Text('지도를 불러오는 중')
-                            : Transform.scale(
+                        Transform.scale(
                           scale: _scale,
                           child: Transform.translate(
                             offset: _position.scale(
@@ -427,7 +445,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: ClipRect(
                               child: Stack(
                                 children: [
-                                  // 선 그리기
                                   CustomPaint(
                                     size: Size(
                                         _imageWidth_du, _imageHeight_du),
@@ -442,7 +459,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           'assets/images/du.png',
                                           fit: BoxFit.cover,
                                         ),
-                                        // 7. 건물 버튼을 지도 위에 덧붙임.
                                         Positioned(
                                           left: 1102 * scale_offset,
                                           top: 2973 * scale_offset,
@@ -760,8 +776,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                         ),
-                                        // end 7
-                                        // 8. 편의시설들 이미지를 조건에 따라 건물 위에 덧붙임
                                         if (_vendingvisibility)
                                           Positioned(
                                             left: 971 * scale_offset,
@@ -962,7 +976,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                               1 / (scale_offset / 16),
                                             ),
                                           ),
-                                        // end 8
                                       ],
                                     ),
                                   ),
@@ -975,7 +988,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                // 9. 검색창 및 길찾기 버튼
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -986,9 +998,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 4.0),
                               child: GestureDetector(
-                                // 박스 누르면 find screen으로 넘어감
                                 onTap: () async {
-                                  erase(); // 기존 표시된 경로를 지우기 위해 비움
                                   result = await Navigator.pushNamed(
                                     context,
                                     '/find',
@@ -999,11 +1009,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       print("********************************************");
                                       _startNodeName = result['start'];
                                       _endNodeName = result['end'];
-                                      draw(_startNodeName, _endNodeName);
+                                      Astar_pathMaking(_startNodeName, _endNodeName);
                                     });
                                   }
                                 },
-                                // 검색창의 미관적인 요소
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -1032,13 +1041,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          // 검색창 옆 길찾기 버튼
                           Container(
                             height: 43.0,
                             width: 60.0,
                             child: ElevatedButton(
                               onPressed: () async {
-                                erase();
                                 result = await Navigator.pushNamed(
                                   context,
                                   '/search',
@@ -1051,7 +1058,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   setState(() {
                                     _startNodeName = result['start'];
                                     _endNodeName = result['end'];
-                                    draw(_startNodeName, _endNodeName);
+                                    Astar_pathMaking(_startNodeName, _endNodeName);
                                   });
                                 }
                               },
@@ -1192,55 +1199,162 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                // end 9
-
-                // 10. 건물을 터치하면 좌측에 나오는 층수 버튼
-                if (_showButton == 1)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "과학관")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 2)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "다향관")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 3)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "대운동장앞")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 4)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "만해광장")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 5)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "명진관")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 6)
+                if (_showButton == "문화관")
                   Stack(
                     children: [
                       Positioned(
@@ -1250,6 +1364,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               culturePath = 'assets/images/floor/문화1.png';
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('1F'),
@@ -1262,6 +1378,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               culturePath = 'assets/images/floor/문화2.png';
+                              nowFloor = 2;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('2F'),
@@ -1274,6 +1392,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               culturePath = 'assets/images/floor/문화3.png';
+                              nowFloor = 3;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('3F'),
@@ -1287,6 +1407,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() {
                               culturePath =
                               'assets/images/floor/문화관(2297,2582).png';
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('기본'),
@@ -1294,25 +1416,69 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                if (_showButton == 7)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "법학관_만해관")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 8)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "본관")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 9)
+                if (_showButton == "사회과학관_경영관")
                   Stack(
                     children: [
                       Positioned(
@@ -1322,6 +1488,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               scPath = 'assets/images/floor/사과경영1.png';
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('1F'),
@@ -1334,6 +1502,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               scPath = 'assets/images/floor/사과경영2.png';
+                              nowFloor = 2;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('2F'),
@@ -1346,6 +1516,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               scPath = 'assets/images/floor/사과경영3.png';
+                              nowFloor = 3;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('3F'),
@@ -1359,6 +1531,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() {
                               scPath =
                               'assets/images/floor/사회과학관_경영관(2145,2775).png';
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('기본'),
@@ -1366,16 +1540,38 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                if (_showButton == 10)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "상록원")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 11)
+                if (_showButton == "신공학관")
                   Stack(
                     children: [
                       Positioned(
@@ -1385,6 +1581,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               nePath = 'assets/images/floor/신공1.png';
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('1F'),
@@ -1397,6 +1595,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               nePath = 'assets/images/floor/신공2.png';
+                              nowFloor = 4;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('4F'),
@@ -1409,6 +1609,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               nePath = 'assets/images/floor/신공3.png';
+                              nowFloor = 7;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('7F'),
@@ -1421,6 +1623,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               nePath = 'assets/images/floor/신공학관(482,2525).png';
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('기본'),
@@ -1428,7 +1632,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                if (_showButton == 12)
+                if (_showButton == "원흥관")
                   Stack(
                     children: [
                       Positioned(
@@ -1438,6 +1642,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               whPath = 'assets/images/floor/원흥1.png';
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('1F'),
@@ -1450,6 +1656,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               whPath = 'assets/images/floor/원흥2.png';
+                              nowFloor = 2;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('2F'),
@@ -1462,6 +1670,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               whPath = 'assets/images/floor/원흥3.png';
+                              nowFloor = 3;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('3F'),
@@ -1474,6 +1684,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               whPath = 'assets/images/floor/원흥관(694,2084).png';
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('기본'),
@@ -1481,70 +1693,224 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                if (_showButton == 13)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "정p")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 14)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "정q")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 15)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "정각원")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 16)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "중앙도서관")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 17)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "체육관")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 18)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "학림관")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 19)
-                  Positioned(
-                    left: 20, // 버튼의 x 좌표를 조절하세요.
-                    bottom: 20, // 버튼의 y 좌표를 조절하세요.
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('1F'),
-                    ),
+                if (_showButton == "학생회관")
+                  Stack(
+                    children: [
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 20, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('1F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('기본'),
+                        ),
+                      ),
+                    ],
                   ),
-                if (_showButton == 20)
+                if (_showButton == "학술관")
                   Stack(
                     children: [
                       Positioned(
@@ -1554,6 +1920,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hsPath = 'assets/images/floor/학술1.png';
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('1F'),
@@ -1566,6 +1934,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hsPath = 'assets/images/floor/학술2.png';
+                              nowFloor = 2;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('2F'),
@@ -1578,6 +1948,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hsPath = 'assets/images/floor/학술3.png';
+                              nowFloor = 3;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('3F'),
@@ -1590,6 +1962,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hsPath = 'assets/images/floor/학술관(2527,2567).png';
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('기본'),
@@ -1597,7 +1971,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                if (_showButton == 21)
+                if (_showButton == "혜화관")
                   Stack(
                     children: [
                       Positioned(
@@ -1607,6 +1981,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hhPath = 'assets/images/floor/혜화1.png';
+                              nowFloor = 1;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('1F'),
@@ -1619,6 +1995,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hhPath = 'assets/images/floor/혜화2.png';
+                              nowFloor = 2;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('2F'),
@@ -1631,6 +2009,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hhPath = 'assets/images/floor/혜화3.png';
+                              nowFloor = 3;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('3F'),
@@ -1643,6 +2023,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hhPath = 'assets/images/floor/혜화관(1804,2964).png';
+                              nowFloor = 0;
+                              floorButtonPath(nowFloor, _showButton);
                             });
                           },
                           child: Text('기본'),
@@ -1650,12 +2032,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                // end 10
               ],
             ),
           ),
-
-          //---- 개발이 완료되면 없애야 할 부분--------
           Positioned(
             bottom: 50,
             left: 50,
@@ -1665,7 +2044,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          //--------------------=
         ],
       ),
     );
