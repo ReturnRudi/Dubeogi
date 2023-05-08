@@ -155,6 +155,7 @@ class BuildingInfo extends StatefulWidget {
 }
 
 class _BuildingInfoState extends State<BuildingInfo> {
+  dynamic getdata;
   late BuildingInfoDetail _buildingInfoDetail;
   late List<Amenity> _displayedAmenities;
 
@@ -203,7 +204,68 @@ class _BuildingInfoState extends State<BuildingInfo> {
           ),
           SizedBox(height: 15.0, width: 20.0),
           // 2개의 버튼
-          // ...
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OutlinedButton(
+                onPressed: () async {
+                  getdata = await Navigator.pushNamed(
+                    context,
+                    '/search',
+                    arguments: {'start': widget.title, 'end': ''},
+                  );
+                  setState(() {
+                    Navigator.pop(context, getdata);
+                  });
+                },
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: Colors.blue),
+                  backgroundColor: Colors.white,
+                  padding: EdgeInsets.all(12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  minimumSize: Size(100, 0),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.directions_walk, color: Colors.blue),
+                    SizedBox(width: 4),
+                    Text('출발', style: TextStyle(color: Colors.blue)),
+                  ],
+                ),
+              ),
+              SizedBox(width: 25),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/search',
+                    ModalRoute.withName('/'),
+                    arguments: {'start': '', 'end': widget.title},
+                  );
+                },
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: Colors.blue),
+                  backgroundColor: Colors.blue,
+                  padding: EdgeInsets.all(12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  minimumSize: Size(100, 0),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.directions_walk, color: Colors.white),
+                    SizedBox(width: 4),
+                    Text('도착', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
+            ],
+          ),
           SizedBox(height: 10),
           Flexible(
             child: ListView.builder(
