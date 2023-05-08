@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
 class Node {
   final String name;
   final double x, y;
-  final bool isInside;
+  final int isInside;
   final String building;
 
   Node(this.name, this.x, this.y, this.isInside, this.building);
@@ -36,7 +36,7 @@ class Graph {
   List<Node> nodes = [];
   List<Edge> edges = [];
 
-  void addNode(String name, double x, double y, bool inside, String building) {
+  void addNode(String name, double x, double y, int inside, String building) {
     nodes.add(Node(name, x, y, inside, building));
   }
 
@@ -44,7 +44,7 @@ class Graph {
     return nodes.firstWhere((node) => node.name == name, orElse: () => throw Exception("Node not found"));
   }
 
-  void addEdge(String node1Name, String node2Name, int weight, String type, String edgeAttribute, {double? node1X = null, double? node1Y = null, bool? inside1 = null, double? node2X = null, double? node2Y = null, bool? inside2 = null, String? building1 = null, String? building2 = null}) {
+  void addEdge(String node1Name, String node2Name, int weight, String type, String edgeAttribute, {double? node1X = null, double? node1Y = null, int? inside1 = null, double? node2X = null, double? node2Y = null, int? inside2 = null, String? building1 = null, String? building2 = null}) {
     if (!nodeExists(node1Name) && node1X != null && node1Y != null && inside1 != null && building1 != null) {
       addNode(node1Name, node1X, node1Y, inside1, building1);
     }

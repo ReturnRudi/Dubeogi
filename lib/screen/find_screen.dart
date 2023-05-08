@@ -183,13 +183,15 @@ class _BuildingInfoState extends State<BuildingInfo> {
               ),
               SizedBox(width: 25),
               OutlinedButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
+                onPressed: ()  async {
+                  getdata = await Navigator.pushNamed(
                     context,
                     '/search',
-                    ModalRoute.withName('/'),
                     arguments: {'start': '', 'end': widget.title},
                   );
+                  setState(() {
+                    Navigator.pop(context, getdata);
+                  });
                 },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: Colors.blue),
