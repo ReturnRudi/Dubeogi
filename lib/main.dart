@@ -3,6 +3,7 @@ import 'package:Dubeogi/screen/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/screen/home_screen.dart';
 
+// main
 void main() {
   runApp(
     MaterialApp(
