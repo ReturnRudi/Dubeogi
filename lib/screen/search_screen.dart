@@ -16,6 +16,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final firstController = TextEditingController();
   final secondController = TextEditingController();
   int selectOption = 1;
+  int count = 0;
 
   final List<String> buildings = [
     '다향관',
@@ -45,9 +46,10 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
 
-    if (arguments != null) {
+    if (arguments != null && count == 0) {
       firstController.text = arguments['start'] ?? '';
       secondController.text = arguments['end'] ?? '';
+      count++;
     }
 
     return Scaffold(

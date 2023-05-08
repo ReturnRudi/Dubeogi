@@ -22,6 +22,19 @@ class _HomeScreenState extends State<HomeScreen> {
   late double scale_offset;
   late String selectedHall;
 
+  double _scale = 1.3;
+  double _previousScale = 1.0;
+  Offset _position = Offset.zero;
+  Offset _previousPosition = Offset.zero;
+
+  List<Offset> startPoints = [];
+  List<Offset> endPoints = [];
+
+  String _startNodeName = "";
+  String _endNodeName = "";
+  Graph graph = Graph();
+  dynamic result;
+
   int _showButton = 0;
   bool _vendingvisibility = false;
   bool _showervisibility = false;
@@ -30,43 +43,47 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loungevisibility = false;
   bool _printervisibility = false;
 
-  void _vendingshow() {
+  // 1. 상단 검색창 밑의 버튼들
+  void _vendingshow() { // 자판기
     setState(() {
       _vendingvisibility = !_vendingvisibility;
     });
   }
 
-  void _showershow() {
+  void _showershow() { // 샤워장
     setState(() {
       _showervisibility = !_showervisibility;
     });
   }
 
-  void _storeshow() {
+  void _storeshow() { // 편의점
     setState(() {
       _storevisibility = !_storevisibility;
     });
   }
 
-  void _atmshow() {
+  void _atmshow() { // ATM
     setState(() {
       _atmvisibility = !_atmvisibility;
     });
   }
 
-  void _loungeshow() {
+  void _loungeshow() { // 라운지(휴게실)
     setState(() {
       _loungevisibility = !_loungevisibility;
     });
   }
 
-  void _printershow() {
+  void _printershow() { // 프린터
     setState(() {
       _printervisibility = !_printervisibility;
     });
   }
 
-  void _showFloorButton(String selectedHall) {
+  // end 1
+
+  // 2. 건물 터치시 층수 선택 버튼이 보이는 기능
+  void _showFloorButton(String selectedHall) { //
     print('_showButton: $_showButton');
     setState(() {
       if (selectedHall == "과학관") {
@@ -177,29 +194,13 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
+ // end 2
 
-  double _scale = 1.3;
-  double _previousScale = 1.0;
-  Offset _position = Offset.zero;
-  Offset _previousPosition = Offset.zero;
-
-  List<Offset> startPoints = [];
-  List<Offset> endPoints = [];
-
-  void erase() {
-    startPoints.clear();
-    endPoints.clear();
-  }
-
-  String _startNodeName = "";
-  String _endNodeName = "";
-  Graph graph = Graph();
-  dynamic result;
-
+  // 3. 처음 애플리케이션이 시작될 때 및 이미지 로딩
   @override
   void initState() {
     super.initState();
-    _getImageInfo();
+    _getImageInfo(); // load map
 
     graph.addEdge("다향관", 1451, 2469, "명진관", 1320, 2900, 100, "평지", "차도");
     graph.addEdge("명진관", 1320, 2900, "과학관", 1248, 3071, 30, "평지", "차도");
@@ -217,11 +218,14 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("사회과학관", 2274, 2921, "문화관", 2416, 2838, 20, "평지", "도보");
     graph.addEdge("문화관", 2416, 2838, "학술관", 2595, 2722, 20, "평지", "도보");
 
+    // names에 건물들 추가 -> find_screen에서 사용
     for (int i = 0; i < graph.nodes.length; i++) {
       names.add(graph.nodes[i].name);
     }
   }
+  // end 3
 
+  // 4. 지도 불러오기
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
@@ -239,7 +243,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     stream.removeListener(listener);
   }
+  // end 4
 
+  // 5. Gesture Detector에 사용되는 함수들 ------------------------
   void _onScaleStart(ScaleStartDetails details) {
     setState(() {
       _previousScale = _scale;
@@ -297,7 +303,10 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     });
   }
+  // end 5
 
+  // 6. 경로
+  // 지나온 노드를 저장
   List<Node> reconstructPath(
       List<int> prev, List<Node> nodes, int startIndex, int endIndex) {
     List<Node> path = [];
@@ -318,8 +327,13 @@ class _HomeScreenState extends State<HomeScreen> {
     path = path.reversed.toList();
     return path;
   }
-
-  void a(String startNodeName, String endNodeName) {
+  // 새롭게 경로 검색을 할 때 기존에 그려져 있던 선을 지움.
+  void erase() {
+    startPoints.clear();
+    endPoints.clear();
+  }
+  // 경로 그리기
+  void draw(String startNodeName, String endNodeName) {
     Node startNode = graph.findNode(startNodeName);
     Node endNode = graph.findNode(endNodeName);
 
@@ -375,8 +389,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     //print('Initial _position: $_position');
   }
+  // end 6
 
   Widget build(BuildContext context) {
+    /*
     if (!_imageLoaded_du) {
       return Container(
         color: Color(0xFFDCB6),
@@ -384,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: CircularProgressIndicator(),
         ),
       );
-    }
+    }*/
     return Scaffold(
       appBar: CustomAppBar(
         title: '동국대학교',
@@ -411,6 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: ClipRect(
                               child: Stack(
                                 children: [
+                                  // 선 그리기
                                   CustomPaint(
                                     size: Size(
                                         _imageWidth_du, _imageHeight_du),
@@ -425,6 +442,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           'assets/images/du.png',
                                           fit: BoxFit.cover,
                                         ),
+                                        // 7. 건물 버튼을 지도 위에 덧붙임.
                                         Positioned(
                                           left: 1102 * scale_offset,
                                           top: 2973 * scale_offset,
@@ -742,6 +760,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                         ),
+                                        // end 7
+                                        // 8. 편의시설들 이미지를 조건에 따라 건물 위에 덧붙임
                                         if (_vendingvisibility)
                                           Positioned(
                                             left: 971 * scale_offset,
@@ -942,6 +962,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               1 / (scale_offset / 16),
                                             ),
                                           ),
+                                        // end 8
                                       ],
                                     ),
                                   ),
@@ -954,6 +975,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                // 9. 검색창 및 길찾기 버튼
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -964,8 +986,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 4.0),
                               child: GestureDetector(
+                                // 박스 누르면 find screen으로 넘어감
                                 onTap: () async {
-                                  erase();
+                                  erase(); // 기존 표시된 경로를 지우기 위해 비움
                                   result = await Navigator.pushNamed(
                                     context,
                                     '/find',
@@ -976,10 +999,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       print("********************************************");
                                       _startNodeName = result['start'];
                                       _endNodeName = result['end'];
-                                      a(_startNodeName, _endNodeName);
+                                      draw(_startNodeName, _endNodeName);
                                     });
                                   }
                                 },
+                                // 검색창의 미관적인 요소
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -1008,6 +1032,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
+                          // 검색창 옆 길찾기 버튼
                           Container(
                             height: 43.0,
                             width: 60.0,
@@ -1026,7 +1051,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   setState(() {
                                     _startNodeName = result['start'];
                                     _endNodeName = result['end'];
-                                    a(_startNodeName, _endNodeName);
+                                    draw(_startNodeName, _endNodeName);
                                   });
                                 }
                               },
@@ -1167,6 +1192,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+                // end 9
+
+                // 10. 건물을 터치하면 좌측에 나오는 층수 버튼
                 if (_showButton == 1)
                   Positioned(
                     left: 20, // 버튼의 x 좌표를 조절하세요.
@@ -1622,9 +1650,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
+                // end 10
               ],
             ),
           ),
+
+          //---- 개발이 완료되면 없애야 할 부분--------
           Positioned(
             bottom: 50,
             left: 50,
@@ -1634,6 +1665,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          //--------------------=
         ],
       ),
     );

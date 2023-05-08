@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../component/appbar.dart';
 import 'package:Dubeogi/save/save.dart';
 
+// 검색창을 누르면 나오는 스크린.
+
 class FindScreen extends StatefulWidget {
   const FindScreen({Key? key}) : super(key: key);
 
@@ -13,6 +15,9 @@ class _FindScreenState extends State<FindScreen> {
   final Controller = TextEditingController();
   String result = '';
   dynamic getdata;
+
+  // 해당 건물이 존재하는지 확인
+  bool isExistBuilding(String name) => names.contains(name);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +31,7 @@ class _FindScreenState extends State<FindScreen> {
           children: [
             Row(
               children: [
+                // 1. 상단 안내문구/박스
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 4.0),
@@ -47,21 +53,45 @@ class _FindScreenState extends State<FindScreen> {
                     ),
                   ),
                 ),
+                // end 1
+
+                // 2. 건물 검색 버튼
                 Container(
                   height: 50.0,
                   child: ElevatedButton(
                     onPressed: () async {
                       result = Controller.text;
-                      getdata = await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => BuildingInfo(
-                            title: result,
+                      if (isExistBuilding(result) == true) {
+                        getdata = await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => BuildingInfo(
+                              title: result,
+                            ),
                           ),
-                        ),
-                      );
-                      setState(() {
-                        Navigator.pop(context, getdata);
-                      });
+                        );
+                        setState(() {
+                          Navigator.pop(context, getdata);
+                        });
+                      } else {
+                        print('debug: isExistBuilding false');
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Alert"),
+                              content: Text("Content"),
+                              actions: [
+                                TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -80,9 +110,11 @@ class _FindScreenState extends State<FindScreen> {
                     ),
                   ),
                 ),
+                // end 2
               ],
             ),
             SizedBox(height: 16.0),
+            // 3. 검색창 아래 뜨는 터치할 수 있는 리스트뷰(건묾명 등)
             Expanded(
               child: ListView.builder(
                 itemCount: names.length,
@@ -102,12 +134,12 @@ class _FindScreenState extends State<FindScreen> {
                 },
               ),
             ),
+            // end 3
           ],
         ),
       ),
     );
   }
-
 }
 
 //--------------------------------------------------------------
