@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../component/appbar.dart';
 import 'package:Dubeogi/save/save.dart';
+import 'package:Dubeogi/save/building_info.dart';
 
 // 검색창을 누르면 나오는 스크린.
 
@@ -162,10 +163,10 @@ class _BuildingInfoState extends State<BuildingInfo> {
       appBar: CustomAppBar(
         title: "동국대학교",
       ),
-      body: ListView(
+      body: Column(
         children: [
           Image.asset(
-            'assets/images/photo/test.png',
+            'assets/images/photo/${widget.title}.png',
             fit: BoxFit.contain,
           ),
           SizedBox(height: 20),
@@ -244,53 +245,80 @@ class _BuildingInfoState extends State<BuildingInfo> {
             ],
           ),
           SizedBox(height: 10),
-          Container(
-            height: 60.0,
-            child: ListTile(
-              leading: Icon(Icons.access_time), // 아이콘
-              title: Text('이용시간'),
-              subtitle: Text('09:00 ~ 18:00'),
-            ),
-          ),
-          Container(
-            height: 60.0,
-            child: ListTile(
-              leading: Icon(Icons.phone), // 아이콘
-              title: Text('전화번호'),
-              subtitle: Text('02-123-4567'),
-            ),
-          ),
-          Container(
-            height: 60.0,
-            child: ListTile(
-              leading: Icon(Icons.shower), // 아이콘
-              title: Text('샤워실'),
-              subtitle: Text('4층'),
-            ),
-          ),
-          Container(
-            height: 60.0,
-            child: ListTile(
-              leading: Icon(Icons.local_drink), // 아이콘
-              title: Text('자판기'),
-              subtitle: Text('3층'),
-            ),
-          ),
-          Container(
-            height: 60.0,
-            child: ListTile(
-              leading: Icon(Icons.local_drink), // 아이콘
-              title: Text('자판기'),
-              subtitle: Text('4층'),
-            ),
-          ),
-          Container(
-            height: 60.0,
-            child: ListTile(
-              leading: Icon(Icons.local_drink), // 아이콘
-              title: Text('자판기'),
-              subtitle: Text('5층'),
-            ),
+          Flexible(
+            child: ListView.builder(
+              itemCount: b1.amens.length, // 편의시설 개수 + 2(이용시간, 전화번호)
+              itemBuilder: (context, index){
+                return Container(
+                  height: 60.0,
+                  child: ListTile(
+                    leading: Icon(Icons.shower), // 이거 잘 안됨
+                    title: Text('${b1.amens[index][1]}'),
+                    subtitle: Text('${b1.amens[index][2]}'),
+                  ),
+                );
+              },
+            )
+            /*ListView.builder(
+              children: [
+                Container(
+                  height: 60.0,
+                  child: ListTile(
+                    leading: Icon(Icons.access_time), // 아이콘
+                    title: Text('이용시간'),
+                    subtitle: Text('09:00 ~ 18:00'),
+                  ),
+                ),
+                Container(
+                  height: 60.0,
+                  child: ListTile(
+                    leading: Icon(Icons.phone), // 아이콘
+                    title: Text('전화번호'),
+                    subtitle: Text('02-2260-${b1.phoneNumber}'),
+                  ),
+                ),
+                Container(
+                  height: 60.0,
+                  child: ListTile(
+                    leading: Icon(Icons.shower), // 아이콘
+                    title: Text('샤워실'),
+                    subtitle: Text('4층'),
+                  ),
+                ),
+                Container(
+                  height: 60.0,
+                  child: ListTile(
+                    leading: Icon(Icons.local_drink), // 아이콘
+                    title: Text('자판기'),
+                    subtitle: Text('3층'),
+                  ),
+                ),
+                Container(
+                  height: 60.0,
+                  child: ListTile(
+                    leading: Icon(Icons.local_drink), // 아이콘
+                    title: Text('자판기'),
+                    subtitle: Text('4층'),
+                  ),
+                ),
+                Container(
+                  height: 60.0,
+                  child: ListTile(
+                    leading: Icon(Icons.local_drink), // 아이콘
+                    title: Text('자판기'),
+                    subtitle: Text('5층'),
+                  ),
+                ),
+                Container(
+                  height: 60.0,
+                  child: ListTile(
+                    leading: Icon(Icons.local_drink), // 아이콘
+                    title: Text('자판기'),
+                    subtitle: Text('6층'),
+                  ),
+                ),
+              ],
+            ),*/
           ),
         ],
       ),
