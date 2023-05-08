@@ -160,12 +160,18 @@ class _BuildingInfoState extends State<BuildingInfo> {
   late List<Amenity> _displayedAmenities;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _buildingInfoDetail = _getBuildingInfoDetail(widget.title);
     _displayedAmenities = [
-      Amenity(icon: Icon(Icons.phone), name: '전화번호', description: _buildingInfoDetail.teleNumber),
-      Amenity(icon: Icon(Icons.access_time), name: '이용시간', description: _buildingInfoDetail.operatingHours),
+      Amenity(
+          icon: Icon(Icons.phone),
+          name: '전화번호',
+          description: _buildingInfoDetail.teleNumber),
+      Amenity(
+          icon: Icon(Icons.access_time),
+          name: '이용시간',
+          description: _buildingInfoDetail.operatingHours),
       ..._buildingInfoDetail.amenities,
     ];
   }
@@ -176,7 +182,7 @@ class _BuildingInfoState extends State<BuildingInfo> {
         return building;
       }
     }
-    throw Exception("해당하는 건물이 없습니다.");
+    throw Exception("해당 건물이 없습니다.");
   }
 
   @override
