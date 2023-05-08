@@ -155,18 +155,27 @@ class BuildingInfo extends StatefulWidget {
 }
 
 class _BuildingInfoState extends State<BuildingInfo> {
-  dynamic getdata;
-  late BuildingInfoDetails _buildingInfoDetails;
+  late BuildingInfoDetail _buildingInfoDetail;
+  late List<Amenity> _displayedAmenities;
 
   @override
   void initState(){
     super.initState();
-    if(widget.title == "명진관" || widget.title == "대운동장앞") {
-      _buildingInfoDetails = b1;
+    _buildingInfoDetail = _getBuildingInfoDetail(widget.title);
+    _displayedAmenities = [
+      Amenity(icon: Icon(Icons.phone), name: '전화번호', description: _buildingInfoDetail.teleNumber),
+      Amenity(icon: Icon(Icons.access_time), name: '이용시간', description: _buildingInfoDetail.operatingHours),
+      ..._buildingInfoDetail.amenities,
+    ];
+  }
+
+  BuildingInfoDetail _getBuildingInfoDetail(String title) {
+    for (BuildingInfoDetail building in BuildingInfoDetails) {
+      if (building.name == title) {
+        return building;
+      }
     }
-    else{
-      _buildingInfoDetails = b2;
-    }
+    throw Exception("해당하는 건물이 없습니다.");
   }
 
   @override
@@ -194,143 +203,22 @@ class _BuildingInfoState extends State<BuildingInfo> {
           ),
           SizedBox(height: 15.0, width: 20.0),
           // 2개의 버튼
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              OutlinedButton(
-                onPressed: () async {
-                  getdata = await Navigator.pushNamed(
-                    context,
-                    '/search',
-                    arguments: {'start': widget.title, 'end': ''},
-                  );
-                  setState(() {
-                    Navigator.pop(context, getdata);
-                  });
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.blue),
-                  backgroundColor: Colors.white,
-                  padding: EdgeInsets.all(12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  minimumSize: Size(100, 0),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.directions_walk, color: Colors.blue),
-                    SizedBox(width: 4),
-                    Text('출발', style: TextStyle(color: Colors.blue)),
-                  ],
-                ),
-              ),
-              SizedBox(width: 25),
-              OutlinedButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/search',
-                    ModalRoute.withName('/'),
-                    arguments: {'start': '', 'end': widget.title},
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.blue),
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.all(12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  minimumSize: Size(100, 0),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.directions_walk, color: Colors.white),
-                    SizedBox(width: 4),
-                    Text('도착', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          // ...
           SizedBox(height: 10),
           Flexible(
             child: ListView.builder(
-              itemCount: _buildingInfoDetails.amens.length, // 편의시설 개수 + 2(이용시간, 전화번호)
-              itemBuilder: (context, index){
+              itemCount: _displayedAmenities.length,
+              itemBuilder: (context, index) {
                 return Container(
                   height: 60.0,
                   child: ListTile(
-                    leading: Icon(Icons.shower), // 이거 잘 안됨
-                    title: Text('${_buildingInfoDetails.amens[index][1]}'),
-                    subtitle: Text('${_buildingInfoDetails.amens[index][2]}'),
+                    leading: _displayedAmenities[index].icon,
+                    title: Text('${_displayedAmenities[index].name}'),
+                    subtitle: Text('${_displayedAmenities[index].description}'),
                   ),
                 );
               },
-            )
-            /*ListView.builder(
-              children: [
-                Container(
-                  height: 60.0,
-                  child: ListTile(
-                    leading: Icon(Icons.access_time), // 아이콘
-                    title: Text('이용시간'),
-                    subtitle: Text('09:00 ~ 18:00'),
-                  ),
-                ),
-                Container(
-                  height: 60.0,
-                  child: ListTile(
-                    leading: Icon(Icons.phone), // 아이콘
-                    title: Text('전화번호'),
-                    subtitle: Text('02-2260-${b1.phoneNumber}'),
-                  ),
-                ),
-                Container(
-                  height: 60.0,
-                  child: ListTile(
-                    leading: Icon(Icons.shower), // 아이콘
-                    title: Text('샤워실'),
-                    subtitle: Text('4층'),
-                  ),
-                ),
-                Container(
-                  height: 60.0,
-                  child: ListTile(
-                    leading: Icon(Icons.local_drink), // 아이콘
-                    title: Text('자판기'),
-                    subtitle: Text('3층'),
-                  ),
-                ),
-                Container(
-                  height: 60.0,
-                  child: ListTile(
-                    leading: Icon(Icons.local_drink), // 아이콘
-                    title: Text('자판기'),
-                    subtitle: Text('4층'),
-                  ),
-                ),
-                Container(
-                  height: 60.0,
-                  child: ListTile(
-                    leading: Icon(Icons.local_drink), // 아이콘
-                    title: Text('자판기'),
-                    subtitle: Text('5층'),
-                  ),
-                ),
-                Container(
-                  height: 60.0,
-                  child: ListTile(
-                    leading: Icon(Icons.local_drink), // 아이콘
-                    title: Text('자판기'),
-                    subtitle: Text('6층'),
-                  ),
-                ),
-              ],
-            ),*/
+            ),
           ),
         ],
       ),
