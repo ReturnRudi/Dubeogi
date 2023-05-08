@@ -1228,6 +1228,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "다향관")
@@ -1257,6 +1269,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Text('기본'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
                         ),
                       ),
                     ],
@@ -1290,6 +1314,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "만해광장")
@@ -1321,6 +1357,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "명진관")
@@ -1350,6 +1398,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Text('기본'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
                         ),
                       ),
                     ],
@@ -1414,6 +1474,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "법학관_만해관")
@@ -1445,6 +1517,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "본관")
@@ -1474,6 +1558,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Text('기본'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
                         ),
                       ),
                     ],
@@ -1538,6 +1634,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "상록원")
@@ -1567,6 +1675,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Text('기본'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
                         ),
                       ),
                     ],
@@ -1630,6 +1750,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "원흥관")
@@ -1691,6 +1823,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "정p")
@@ -1720,6 +1864,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Text('기본'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
                         ),
                       ),
                     ],
@@ -1753,6 +1909,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "정각원")
@@ -1782,6 +1950,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Text('기본'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
                         ),
                       ),
                     ],
@@ -1815,6 +1995,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "체육관")
@@ -1844,6 +2036,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Text('기본'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
                         ),
                       ),
                     ],
@@ -1877,6 +2081,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "학생회관")
@@ -1906,6 +2122,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Text('기본'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
                         ),
                       ),
                     ],
@@ -1969,6 +2197,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('기본'),
                         ),
                       ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
+                        ),
+                      ),
                     ],
                   ),
                 if (_showButton == "혜화관")
@@ -2028,6 +2268,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Text('기본'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              //시설 정보로 이동하는 코드 구현 위치
+                            });
+                          },
+                          child: Text('시설정보'),
                         ),
                       ),
                     ],
