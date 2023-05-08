@@ -156,6 +156,18 @@ class BuildingInfo extends StatefulWidget {
 
 class _BuildingInfoState extends State<BuildingInfo> {
   dynamic getdata;
+  late BuildingInfoDetails _buildingInfoDetails;
+
+  @override
+  void initState(){
+    super.initState();
+    if(widget.title == "명진관" || widget.title == "대운동장앞") {
+      _buildingInfoDetails = b1;
+    }
+    else{
+      _buildingInfoDetails = b2;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -247,14 +259,14 @@ class _BuildingInfoState extends State<BuildingInfo> {
           SizedBox(height: 10),
           Flexible(
             child: ListView.builder(
-              itemCount: b1.amens.length, // 편의시설 개수 + 2(이용시간, 전화번호)
+              itemCount: _buildingInfoDetails.amens.length, // 편의시설 개수 + 2(이용시간, 전화번호)
               itemBuilder: (context, index){
                 return Container(
                   height: 60.0,
                   child: ListTile(
                     leading: Icon(Icons.shower), // 이거 잘 안됨
-                    title: Text('${b1.amens[index][1]}'),
-                    subtitle: Text('${b1.amens[index][2]}'),
+                    title: Text('${_buildingInfoDetails.amens[index][1]}'),
+                    subtitle: Text('${_buildingInfoDetails.amens[index][2]}'),
                   ),
                 );
               },

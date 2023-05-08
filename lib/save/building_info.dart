@@ -6,18 +6,27 @@
 // 편의시설정보...
 
 class BuildingInfoDetails {
-  final List<List<dynamic>> amens; // Icon_path, 내용, 세부내용
+  final List<dynamic> amens; // Icon_path, 내용, 세부내용
 
   const BuildingInfoDetails({
     required this.amens,
   });
 }
 
-BuildingInfoDetails b1 = BuildingInfoDetails(
+BuildingInfoDetails b1 = const BuildingInfoDetails(
   amens:[
     ['phone','전화번호',1234],
     ['shower','샤워실1',3],
     ['local_drink','자판기',3],
     ['shower','샤워실58',12],
   ]
+);
+
+BuildingInfoDetails b2 = const BuildingInfoDetails(
+    amens:[
+      ['phone','전화번호',5678],
+      ['shower','샤워실372',372],
+      ['local_drink','자판기기',30],
+      ['shower','샤워실58',13],
+    ]
 );
