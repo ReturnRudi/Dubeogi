@@ -6,8 +6,9 @@ class Node {
   final double x, y;
   final int isInside;
   final String building;
+  final bool showRoute;
 
-  Node(this.name, this.x, this.y, this.isInside, this.building);
+  Node(this.name, this.x, this.y, this.isInside, this.building, this.showRoute);
 
   @override
   String toString() => name;
@@ -35,20 +36,20 @@ class Graph {
   List<Node> nodes = [];
   List<Edge> edges = [];
 
-  void addNode(String name, double x, double y, int inside, String building) {
-    nodes.add(Node(name, x, y, inside, building));
+  void addNode(String name, double x, double y, int inside, String building, bool showRoute) {
+    nodes.add(Node(name, x, y, inside, building, showRoute));
   }
 
   Node findNode(String name) {
     return nodes.firstWhere((node) => node.name == name, orElse: () => throw Exception("Node not found"));
   }
 
-  void addEdge(String node1Name, String node2Name, int weight, String type, String edgeAttribute, {double? node1X = null, double? node1Y = null, int? inside1 = null, double? node2X = null, double? node2Y = null, int? inside2 = null, String? building1 = null, String? building2 = null}) {
-    if (!nodeExists(node1Name) && node1X != null && node1Y != null && inside1 != null && building1 != null) {
-      addNode(node1Name, node1X, node1Y, inside1, building1);
+  void addEdge(String node1Name, String node2Name, int weight, String type, String edgeAttribute, {double? node1X = null, double? node1Y = null, int? inside1 = null, double? node2X = null, double? node2Y = null, int? inside2 = null, String? building1 = null, String? building2 = null, bool? showRoute1 = null, bool? showRoute2 = null}) {
+    if (!nodeExists(node1Name) && node1X != null && node1Y != null && inside1 != null && building1 != null && showRoute1 != null) {
+      addNode(node1Name, node1X, node1Y, inside1, building1, showRoute1);
     }
-    if (!nodeExists(node2Name) && node2X != null && node2Y != null && inside2 != null && building2 != null) {
-      addNode(node2Name, node2X, node2Y, inside2, building2);
+    if (!nodeExists(node2Name) && node2X != null && node2Y != null && inside2 != null && building2 != null && showRoute2 != null) {
+      addNode(node2Name, node2X, node2Y, inside2, building2, showRoute2);
     }
     Node node1 = findNode(node1Name);
     Node node2 = findNode(node2Name);

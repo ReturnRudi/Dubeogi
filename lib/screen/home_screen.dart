@@ -204,16 +204,20 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _getImageInfo();
 
-    graph.addEdge("다향관", "명진관", 100, "평지", "차도",
+    graph.addEdge("신공 9층 입구", "신공 중도 갈림길", 100, "평지", "차도",
         node1X: 1451,
         node1Y: 2469,
         inside1: 0,
         building1: "다향관",
-        building2: "명진관",
+        showRoute1: true,
         node2X: 1320,
         node2Y: 2900,
-        inside2: 0,);
-    graph.addEdge("명진관", "과학관", 30, "평지", "차도",
+        inside2: 0,
+        building2: "명진관",
+        showRoute2: false);
+
+
+/*    graph.addEdge("명진관", "과학관", 30, "평지", "차도",
         node2X: 1248, node2Y: 3071, inside2: 0, building2: "과학관");
     graph.addEdge("과학관", "대운동장앞", 20, "평지", "차도",
         node2X: 1589, node2Y: 3421, inside2: 0, building2: "밖");
@@ -234,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
         node2X: 2416, node2Y: 2838, inside2: 3, building2: "문화관");
     graph.addEdge("사회과학관", "문화관", 20, "평지", "도보");
     graph.addEdge("문화관", "학술관", 20, "평지", "도보",
-        node2X: 2595, node2Y: 2722, inside2: 0, building2: "학술관");
+        node2X: 2595, node2Y: 2722, inside2: 0, building2: "학술관");*/
 
     for (int i = 0; i < graph.nodes.length; i++) {
       names.add(graph.nodes[i].name);
