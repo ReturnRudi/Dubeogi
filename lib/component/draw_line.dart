@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:Dubeogi/algorithm/astar.dart';
 
 class LinePainter extends CustomPainter {
   // 지도에 선을 그리는 클래스

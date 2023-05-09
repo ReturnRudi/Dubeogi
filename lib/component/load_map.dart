@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:Dubeogi/algorithm/astar.dart';
 import 'package:Dubeogi/component/draw_line.dart';
 import 'package:flutter/material.dart';
 

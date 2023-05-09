@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:tuple/tuple.dart';
 import 'package:collection/collection.dart';
 
@@ -148,4 +147,33 @@ class Graph {
 
     return Tuple2<List<int>, List<int>>(dist, prev);
   }
+}
+
+Graph graph = Graph();
+List<Node> startNodes = [];
+List<Node> endNodes = [];
+
+List<Node> reconstructPath(
+    //Astar 결과 지나온 노드들을 반대로 돌아가면서 경로를 path 리스트에 저장한 후 reverse를 통해 경로 순서대로 재배치한다.
+    List<int> prev,
+    List<Node> nodes,
+    int startIndex,
+    int endIndex) {
+  List<Node> path = [];
+  int currentNode = endIndex;
+
+  while (currentNode != startIndex) {
+    path.add(nodes[currentNode]);
+    currentNode = prev[currentNode];
+    if (currentNode == -1) {
+      break;
+    }
+  }
+
+  if (currentNode == startIndex) {
+    path.add(nodes[startIndex]);
+  }
+
+  path = path.reversed.toList();
+  return path;
 }

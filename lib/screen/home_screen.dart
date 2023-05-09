@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int nowFloor = 0;
   String _showButton = "기본";
+
   //late String nowBuilding;
 
   bool _vendingvisibility = false;
@@ -189,11 +190,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Offset> startPoints = [];
   List<Offset> endPoints = [];
 
-  List<Node> startNodes = [];
-  List<Node> endNodes = [];
-
-  Graph graph = Graph();
-
   void erase() {
     startPoints.clear();
     endPoints.clear();
@@ -208,23 +204,37 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _getImageInfo();
 
-    graph.addEdge("다향관", "명진관", 100, "평지", "차도", node1X: 1451, node1Y: 2469, inside1: 0, building1: "다향관", building2: "명진관", node2X: 1320, node2Y: 2900, inside2: 0);
-    graph.addEdge("명진관", "과학관", 30, "평지", "차도", node2X: 1248, node2Y: 3071, inside2: 0, building2: "과학관");
-    graph.addEdge("과학관", "대운동장앞", 20, "평지", "차도", node2X: 1589, node2Y: 3421, inside2: 0, building2: "밖");
-    graph.addEdge("명진관", "법학관", 70, "평지", "차도", node2X: 1656, node2Y: 2641, inside2: 0, building2: "법학관");
+    graph.addEdge("다향관", "명진관", 100, "평지", "차도",
+        node1X: 1451,
+        node1Y: 2469,
+        inside1: 0,
+        building1: "다향관",
+        building2: "명진관",
+        node2X: 1320,
+        node2Y: 2900,
+        inside2: 0,);
+    graph.addEdge("명진관", "과학관", 30, "평지", "차도",
+        node2X: 1248, node2Y: 3071, inside2: 0, building2: "과학관");
+    graph.addEdge("과학관", "대운동장앞", 20, "평지", "차도",
+        node2X: 1589, node2Y: 3421, inside2: 0, building2: "밖");
+    graph.addEdge("명진관", "법학관", 70, "평지", "차도",
+        node2X: 1656, node2Y: 2641, inside2: 0, building2: "법학관");
     graph.addEdge("다향관", "법학관", 70, "평지", "차도");
-    graph.addEdge("법학관", "혜화관", 50, "평지", "차도", node2X: 1990, node2Y: 2882, inside2: 0, building2: "혜화관");
+    graph.addEdge("법학관", "혜화관", 50, "평지", "차도",
+        node2X: 1990, node2Y: 2882, inside2: 0, building2: "혜화관");
     graph.addEdge("법학관", "대운동장앞", 170, "평지", "차도");
-    graph.addEdge("대운동장앞", "경영관", 200, "평지", "차도", node2X: 2366, node2Y: 3214, inside2: 0, building2: "경영관");
+    graph.addEdge("대운동장앞", "경영관", 200, "평지", "차도",
+        node2X: 2366, node2Y: 3214, inside2: 0, building2: "경영관");
     graph.addEdge("대운동장앞", "명진관", 220, "평지", "차도");
     graph.addEdge("대운동장앞", "혜화관", 80, "평지", "차도");
-    graph.addEdge("경영관", "사회과학관", 10, "평지", "도보", node2X: 2274, node2Y: 2921, inside2: 0, building2: "사화과학관");
+    graph.addEdge("경영관", "사회과학관", 10, "평지", "도보",
+        node2X: 2274, node2Y: 2921, inside2: 0, building2: "사화과학관");
     graph.addEdge("사회과학관", "혜화관", 30, "평지", "차도");
-    graph.addEdge("혜화관", "문화관", 45, "평지", "도보", node2X: 2416, node2Y: 2838, inside2: 3, building2: "문화관");
+    graph.addEdge("혜화관", "문화관", 45, "평지", "도보",
+        node2X: 2416, node2Y: 2838, inside2: 3, building2: "문화관");
     graph.addEdge("사회과학관", "문화관", 20, "평지", "도보");
-    graph.addEdge("문화관", "학술관", 20, "평지", "도보", node2X: 2595, node2Y: 2722, inside2: 0, building2: "학술관");
-
-
+    graph.addEdge("문화관", "학술관", 20, "평지", "도보",
+        node2X: 2595, node2Y: 2722, inside2: 0, building2: "학술관");
 
     for (int i = 0; i < graph.nodes.length; i++) {
       names.add(graph.nodes[i].name);
@@ -307,39 +317,21 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  List<Node> reconstructPath( //Astar 결과 지나온 노드들을 반대로 돌아가면서 경로를 path 리스트에 저장한 후 reverse를 통해 경로 순서대로 재배치한다.
-      List<int> prev, List<Node> nodes, int startIndex, int endIndex) {
-    List<Node> path = [];
-    int currentNode = endIndex;
-
-    while (currentNode != startIndex) {
-      path.add(nodes[currentNode]);
-      currentNode = prev[currentNode];
-      if (currentNode == -1) {
-        break;
-      }
-    }
-
-    if (currentNode == startIndex) {
-      path.add(nodes[startIndex]);
-    }
-
-    path = path.reversed.toList();
-    return path;
-  }
-
-  void floorButtonPath(int nowFloor, String nowBuilding){
+  void floorButtonPath(int nowFloor, String nowBuilding) {
     //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
     erase();
 
     for (int i = 0; i < startNodes.length; i++) {
-      if(startNodes[i].isInside == 0 && endNodes[i].isInside == 0){ //엣지의 출발지, 도착지가 모두 밖이면 그냥 경로 리스트에 추가
+      if (startNodes[i].isInside == 0 && endNodes[i].isInside == 0) {
+        //엣지의 출발지, 도착지가 모두 밖이면 그냥 경로 리스트에 추가
         startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
         endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
-      }
-      else{
-        if(nowFloor != 0){
-          if((startNodes[i].isInside == nowFloor || endNodes[i].isInside == nowFloor) && (startNodes[i].building == nowBuilding || endNodes[i].building == nowBuilding)){
+      } else {
+        if (nowFloor != 0) {
+          if ((startNodes[i].isInside == nowFloor ||
+                  endNodes[i].isInside == nowFloor) &&
+              (startNodes[i].building == nowBuilding ||
+                  endNodes[i].building == nowBuilding)) {
             startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
             endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
           }
@@ -388,8 +380,10 @@ class _HomeScreenState extends State<HomeScreen> {
           "(${startNodes[i].x}, ${startNodes[i].y}) -> (${endNodes[i].x}, ${endNodes[i].y})");
     }
 
-    for (int i = 0; i < startNodes.length; i++) {  //실내 노드를 넣을 때 이곳을 수정해야함
-      if(startNodes[i].isInside == 0 && endNodes[i].isInside == 0){ //엣지의 출발지, 도착지가 모두 밖일 때만 우선 startPoints, endPoints에 넣어서 외부 경로만 보이도록 한다.
+    for (int i = 0; i < startNodes.length; i++) {
+      //실내 노드를 넣을 때 이곳을 수정해야함
+      if (startNodes[i].isInside == 0 && endNodes[i].isInside == 0) {
+        //엣지의 출발지, 도착지가 모두 밖일 때만 우선 startPoints, endPoints에 넣어서 외부 경로만 보이도록 한다.
         startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
         endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
       }
@@ -412,6 +406,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //print('Initial _position: $_position');
   }
 
+  @override
   Widget build(BuildContext context) {
     if (!_imageLoaded_du) {
       return Container(
@@ -440,14 +435,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         Transform.scale(
                           scale: _scale,
                           child: Transform.translate(
-                            offset: _position.scale(
-                                scale_offset, scale_offset),
+                            offset: _position.scale(scale_offset, scale_offset),
                             child: ClipRect(
                               child: Stack(
                                 children: [
                                   CustomPaint(
-                                    size: Size(
-                                        _imageWidth_du, _imageHeight_du),
+                                    size: Size(_imageWidth_du, _imageHeight_du),
                                     foregroundPainter: LinePainter(
                                       imageInfo: _imageInfo_du,
                                       startPoints: startPoints,
@@ -466,8 +459,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             onTap: () {
                                               setState(() {
                                                 selectedHall = '과학관';
-                                                _showFloorButton(
-                                                    selectedHall);
+                                                _showFloorButton(selectedHall);
                                               });
                                             },
                                             child: Image.asset(
@@ -482,8 +474,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '다향관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               dhPath,
@@ -497,8 +488,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '대운동장';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               dwPath,
@@ -512,8 +502,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '만해광장';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               mhPath,
@@ -527,8 +516,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '명진관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               mjPath,
@@ -542,8 +530,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '법학관_만해관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               bmPath,
@@ -557,8 +544,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '본관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               bPath,
@@ -572,8 +558,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '사회과학관_경영관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               scPath,
@@ -587,8 +572,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '문화관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               culturePath,
@@ -602,8 +586,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '상록원';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               srPath,
@@ -617,8 +600,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '신공학관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               nePath,
@@ -632,8 +614,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '원흥관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               whPath,
@@ -647,8 +628,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '정p';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               ipPath,
@@ -662,8 +642,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '정q';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               iqPath,
@@ -677,8 +656,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '정각원';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               jgPath,
@@ -692,8 +670,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '중앙도서관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               libraryPath,
@@ -707,8 +684,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '체육관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               gymPath,
@@ -722,8 +698,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '학림관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               hlPath,
@@ -737,8 +712,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '학생회관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               stuPath,
@@ -752,8 +726,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '학술관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               hsPath,
@@ -767,8 +740,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '혜화관';
-                                              _showFloorButton(
-                                                  selectedHall);
+                                              _showFloorButton(selectedHall);
                                             },
                                             child: Image.asset(
                                               hhPath,
@@ -782,8 +754,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2479 * scale_offset,
                                             child: Image.asset(
                                               vendingPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_vendingvisibility)
@@ -792,8 +763,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2770 * scale_offset,
                                             child: Image.asset(
                                               vendingPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_vendingvisibility)
@@ -802,8 +772,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2940 * scale_offset,
                                             child: Image.asset(
                                               vendingPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_vendingvisibility)
@@ -812,8 +781,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2022 * scale_offset,
                                             child: Image.asset(
                                               vendingPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_showervisibility)
@@ -822,8 +790,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2537 * scale_offset,
                                             child: Image.asset(
                                               showerPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_showervisibility)
@@ -832,8 +799,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2616 * scale_offset,
                                             child: Image.asset(
                                               showerPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_storevisibility)
@@ -842,8 +808,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2279 * scale_offset,
                                             child: Image.asset(
                                               storePath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_storevisibility)
@@ -852,8 +817,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2596 * scale_offset,
                                             child: Image.asset(
                                               storePath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_storevisibility)
@@ -862,8 +826,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2736 * scale_offset,
                                             child: Image.asset(
                                               storePath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_storevisibility)
@@ -872,8 +835,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 3168 * scale_offset,
                                             child: Image.asset(
                                               storePath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_storevisibility)
@@ -882,8 +844,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2891 * scale_offset,
                                             child: Image.asset(
                                               storePath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_storevisibility)
@@ -892,8 +853,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 1719 * scale_offset,
                                             child: Image.asset(
                                               storePath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_printervisibility)
@@ -902,8 +862,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2696 * scale_offset,
                                             child: Image.asset(
                                               printerPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_printervisibility)
@@ -912,8 +871,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2416 * scale_offset,
                                             child: Image.asset(
                                               printerPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_printervisibility)
@@ -922,8 +880,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 1988 * scale_offset,
                                             child: Image.asset(
                                               printerPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_atmvisibility)
@@ -932,8 +889,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 1725 * scale_offset,
                                             child: Image.asset(
                                               atmPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_atmvisibility)
@@ -942,8 +898,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 3217 * scale_offset,
                                             child: Image.asset(
                                               atmPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_atmvisibility)
@@ -952,8 +907,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2956 * scale_offset,
                                             child: Image.asset(
                                               atmPath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_loungevisibility)
@@ -962,8 +916,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2870 * scale_offset,
                                             child: Image.asset(
                                               loungePath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                         if (_loungevisibility)
@@ -972,8 +925,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 1735 * scale_offset,
                                             child: Image.asset(
                                               loungePath,
-                                              scale:
-                                              1 / (scale_offset / 16),
+                                              scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
                                       ],
@@ -1006,10 +958,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   if (result['start'] != "" &&
                                       result['end'] != "") {
                                     setState(() {
-                                      print("********************************************");
+                                      print(
+                                          "********************************************");
                                       _startNodeName = result['start'];
                                       _endNodeName = result['end'];
-                                      Astar_pathMaking(_startNodeName, _endNodeName);
+                                      Astar_pathMaking(
+                                          _startNodeName, _endNodeName);
                                     });
                                   }
                                 },
@@ -1058,7 +1012,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   setState(() {
                                     _startNodeName = result['start'];
                                     _endNodeName = result['end'];
-                                    Astar_pathMaking(_startNodeName, _endNodeName);
+                                    Astar_pathMaking(
+                                        _startNodeName, _endNodeName);
                                   });
                                 }
                               },
@@ -1094,8 +1049,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
                                   backgroundColor:
-                                  Colors.white //.withOpacity(0.5),
-                              ),
+                                      Colors.white //.withOpacity(0.5),
+                                  ),
                               child: Text(
                                 '자판기',
                                 style: TextStyle(
@@ -1466,7 +1421,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               culturePath =
-                              'assets/images/floor/문화관(2297,2582).png';
+                                  'assets/images/floor/문화관(2297,2582).png';
                               nowFloor = 0;
                               floorButtonPath(nowFloor, _showButton);
                             });
@@ -1626,7 +1581,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               scPath =
-                              'assets/images/floor/사회과학관_경영관(2145,2775).png';
+                                  'assets/images/floor/사회과학관_경영관(2145,2775).png';
                               nowFloor = 0;
                               floorButtonPath(nowFloor, _showButton);
                             });
