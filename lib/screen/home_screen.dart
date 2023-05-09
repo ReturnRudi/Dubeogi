@@ -410,9 +410,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     if (!_imageLoaded_du) {
       return Container(
-        color: Color(0xFFDCB6),
+        color: Colors.white,
         child: Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            valueColor:AlwaysStoppedAnimation<Color>(Colors.orange),
+          ),
         ),
       );
     }
