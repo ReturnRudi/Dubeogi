@@ -18,7 +18,7 @@ class _FindScreenState extends State<FindScreen> {
   dynamic getdata;
 
   // 해당 건물이 존재하는지 확인
-  bool isExistBuilding(String name) => names.contains(name);
+  bool isExistBuilding(String name) => buildings.contains(name);
 
   @override
   Widget build(BuildContext context) {
@@ -119,9 +119,9 @@ class _FindScreenState extends State<FindScreen> {
             // 3. 검색창 아래 뜨는 터치할 수 있는 리스트뷰(건묾명 등)
             Expanded(
               child: ListView.builder(
-                itemCount: names.length,
+                itemCount: buildings.length,
                 itemBuilder: (context, index) {
-                  final name = names[index];
+                  final name = buildings[index];
                   return GestureDetector(
                     onTap: () {
                       setState(() {

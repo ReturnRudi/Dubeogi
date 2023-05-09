@@ -3,6 +3,7 @@ import 'package:Dubeogi/component/appbar.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 import 'line_screen.dart';
+import 'package:Dubeogi/save/save.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -21,30 +22,6 @@ class _SearchScreenState extends State<SearchScreen> {
   int selectOption = 1;
   int count = 0;
   int check = 0;
-
-  final List<String> buildings = [
-    '다향관',
-    '명진관',
-    '과학관',
-    '대운동장앞',
-    '법학관',
-    '혜화관',
-    '경영관',
-    '사회과학관',
-    '문화관',
-    '학술관',
-    '중앙도서관',
-    '만해광장',
-    '상록원',
-    '원흥관',
-    '신공학관',
-    '정보문화관p',
-    '정보문화관q',
-    '체육관',
-    '학림관',
-    '정각원',
-    '학생회관'
-  ];
 
   List<Node> getNodes(String startNodeName,String endNodeName){
     startNodes.clear();

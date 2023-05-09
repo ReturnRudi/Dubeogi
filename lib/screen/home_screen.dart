@@ -204,17 +204,72 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _getImageInfo();
 
-    graph.addEdge("신공 9층 입구", "신공 중도 갈림길", 100, "평지", "차도",
-        node1X: 1451,
-        node1Y: 2469,
+    graph.addEdge("신공 9층 입구", "신공 중도 갈림길", 84, "평지", "도보",
+        node1X: 900,
+        node1Y: 2637,
         inside1: 0,
-        building1: "다향관",
+        building1: "실외",
         showRoute1: true,
-        node2X: 1320,
-        node2Y: 2900,
+        node2X: 980,
+        node2Y: 2661,
         inside2: 0,
-        building2: "명진관",
+        building2: "실외",
         showRoute2: false);
+    graph.addEdge("신공 중도 갈림길", "중도 후문", 12, "평지", "도보",
+        node2X: 979,
+        node2Y: 2673,
+        inside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("신공 중도 갈림길", "중도 옆 계단 아래", 116, "평지", "도보",
+        node2X: 1091,
+        node2Y: 2694,
+        inside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("중도 옆 계단 아래", "중도 옆 계단 위", 52, "계단", "도보",
+        node2X: 1141,
+        node2Y: 2710,
+        inside2: 0,
+        building2: "실외",
+        showRoute2: false);
+
+/*    graph.addEdge("중도 옆 계단 위", "중도 앞", 34, "평지", "도보",
+        node2X: 1146,
+        node2Y: 2744,
+        inside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("중도 앞", "중도 정문", 41, "평지", "도보",
+        node2X: 1111,
+        node2Y: 2765,
+        inside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("중도 정문", "중도에서 상록원 가는길 시작점", 46, "평지", "도보",
+        node2X: 1155,
+        node2Y: 2779,
+        inside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("중도 앞", "중도에서 상록원 가는길 시작점", 36, "평지", "도보",);
+    graph.addEdge("중도 앞", "팔정도 좌측하단 갈림길", 66, "평지", "도보",
+        node2X: 1212,
+        node2Y: 2747,
+        inside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("중도 옆 계단 위", "팔정도 좌측하단 갈림길", 66, "평지", "도보",
+        node2X: 1212,
+        node2Y: 2747,
+        inside2: 0,
+        building2: "실외",
+        showRoute2: false);*/
+
+
+
+
+
 
 
 /*    graph.addEdge("명진관", "과학관", 30, "평지", "차도",
@@ -239,10 +294,6 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("사회과학관", "문화관", 20, "평지", "도보");
     graph.addEdge("문화관", "학술관", 20, "평지", "도보",
         node2X: 2595, node2Y: 2722, inside2: 0, building2: "학술관");*/
-
-    for (int i = 0; i < graph.nodes.length; i++) {
-      names.add(graph.nodes[i].name);
-    }
   }
 
   Future<void> _getImageInfo() async {
