@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:Dubeogi/algorithm/astar.dart';
 
 class LinePainter extends CustomPainter {
   // 지도에 선을 그리는 클래스
@@ -22,12 +21,12 @@ class LinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final scaleX = size.width / imageInfo.image.width;
     final scaleY = size.height / imageInfo.image.height;
-    print(
+/*    print(
         'size.width: ${size.width}, imageInfo.image.width: ${imageInfo.image.width}');
     print(
         'size.height: ${size.height}, imageInfo.image.height: ${imageInfo.image.height}');
 
-    print('scaleX: $scaleX, scaleY: $scaleY');
+    print('scaleX: $scaleX, scaleY: $scaleY');*/
 
     final paint = Paint()
       ..color = Colors.red

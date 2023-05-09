@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:collection/collection.dart';
 
 class Node {
   final String name;
   final double x, y;
+  final int isInside;
+  final String building;
 
-  Node(this.name, this.x, this.y);
+  Node(this.name, this.x, this.y, this.isInside, this.building);
 
   @override
   String toString() => name;
@@ -34,25 +35,27 @@ class Graph {
   List<Node> nodes = [];
   List<Edge> edges = [];
 
-  void addNode(String name, double x, double y) {
-    nodes.add(Node(name, x, y));
+  void addNode(String name, double x, double y, int inside, String building) {
+    nodes.add(Node(name, x, y, inside, building));
   }
 
   Node findNode(String name) {
     return nodes.firstWhere((node) => node.name == name, orElse: () => throw Exception("Node not found"));
   }
 
-  void addEdge(String node1Name, double node1X, double node1Y, String node2Name, double node2X, double node2Y, int weight, String type, String edgeAttribute) {
-    if (!nodeExists(node1Name)) {
-      addNode(node1Name, node1X, node1Y);
+  void addEdge(String node1Name, String node2Name, int weight, String type, String edgeAttribute, {double? node1X = null, double? node1Y = null, int? inside1 = null, double? node2X = null, double? node2Y = null, int? inside2 = null, String? building1 = null, String? building2 = null}) {
+    if (!nodeExists(node1Name) && node1X != null && node1Y != null && inside1 != null && building1 != null) {
+      addNode(node1Name, node1X, node1Y, inside1, building1);
     }
-    if (!nodeExists(node2Name)) {
-      addNode(node2Name, node2X, node2Y);
+    if (!nodeExists(node2Name) && node2X != null && node2Y != null && inside2 != null && building2 != null) {
+      addNode(node2Name, node2X, node2Y, inside2, building2);
     }
     Node node1 = findNode(node1Name);
     Node node2 = findNode(node2Name);
     edges.add(Edge(node1, node2, weight, type, edgeAttribute));
   }
+
+
 
   int findNodeIndex(List<Node> nodes, String targetNodeName) {
     for (int i = 0; i < nodes.length; ++i) {
@@ -144,4 +147,33 @@ class Graph {
 
     return Tuple2<List<int>, List<int>>(dist, prev);
   }
+}
+
+Graph graph = Graph();
+List<Node> startNodes = [];
+List<Node> endNodes = [];
+
+List<Node> reconstructPath(
+    //Astar 결과 지나온 노드들을 반대로 돌아가면서 경로를 path 리스트에 저장한 후 reverse를 통해 경로 순서대로 재배치한다.
+    List<int> prev,
+    List<Node> nodes,
+    int startIndex,
+    int endIndex) {
+  List<Node> path = [];
+  int currentNode = endIndex;
+
+  while (currentNode != startIndex) {
+    path.add(nodes[currentNode]);
+    currentNode = prev[currentNode];
+    if (currentNode == -1) {
+      break;
+    }
+  }
+
+  if (currentNode == startIndex) {
+    path.add(nodes[startIndex]);
+  }
+
+  path = path.reversed.toList();
+  return path;
 }
