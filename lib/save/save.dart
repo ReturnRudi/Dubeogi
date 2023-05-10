@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 String sciencePath = 'assets/images/과학관(1102,2973).png';
 String dhPath = 'assets/images/다향관(1337,2379).png';   //new
 String dwPath = 'assets/images/대운동장(1308,3206).png';
