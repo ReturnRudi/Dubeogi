@@ -56,6 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
@@ -302,6 +303,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   firstController.text = suggestion;
+                                  if (isExistBuilding(firstController.text) &&
+                                      isExistBuilding(secondController.text)) {
+                                    _handleSubmit();
+                                  }
                                 });
                               },
                               noItemsFoundBuilder: (context) {
@@ -373,6 +378,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   secondController.text = suggestion;
+                                  if (isExistBuilding(firstController.text) &&
+                                      isExistBuilding(secondController.text)) {
+                                    _handleSubmit();
+                                  }
                                 });
                               },
                               noItemsFoundBuilder: (context) {
@@ -422,7 +431,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   textAlign: TextAlign.center,
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.orange, // 주황색 배경색
+                  backgroundColor: Colors.orange, // 주황색 배경색
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16), // 버튼 모서리를 둥글게 처리
                   ),

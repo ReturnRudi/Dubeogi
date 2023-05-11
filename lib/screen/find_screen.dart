@@ -23,6 +23,7 @@ class _FindScreenState extends State<FindScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: '동국대학교',
       ),

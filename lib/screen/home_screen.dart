@@ -25,8 +25,19 @@ class _HomeScreenState extends State<HomeScreen> {
   int nowFloor = 0;
   String _showButton = "기본";
 
-  //late String nowBuilding;
+  double _scale = 1.3;
+  double _previousScale = 1.0;
+  Offset _position = Offset.zero;
+  Offset _previousPosition = Offset.zero;
 
+  List<Offset> startPoints = [];
+  List<Offset> endPoints = [];
+
+  String _startNodeName = "";
+  String _endNodeName = "";
+  dynamic result;
+
+  //late String nowBuilding;
   bool _vendingvisibility = false;
   bool _showervisibility = false;
   bool _storevisibility = false;
@@ -181,23 +192,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
-
-  double _scale = 1.3;
-  double _previousScale = 1.0;
-  Offset _position = Offset.zero;
-  Offset _previousPosition = Offset.zero;
-
-  List<Offset> startPoints = [];
-  List<Offset> endPoints = [];
-
-  void erase() {
-    startPoints.clear();
-    endPoints.clear();
-  }
-
-  String _startNodeName = "";
-  String _endNodeName = "";
-  dynamic result;
 
   @override
   void initState() {
@@ -496,6 +490,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void erase() {
+    startPoints.clear();
+    endPoints.clear();
+  }
+
   void floorButtonPath(int nowFloor, String nowBuilding) {
     //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
     erase();
@@ -598,6 +597,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
