@@ -30,7 +30,7 @@ class LinePainter extends CustomPainter {
 
     final paint = Paint()
       ..color = Colors.red
-      ..strokeWidth = 1
+      ..strokeWidth = 0.5
       ..style = PaintingStyle.stroke;
 
     for (int i = 0; i < startPoints.length; i++) {
