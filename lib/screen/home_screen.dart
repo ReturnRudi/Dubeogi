@@ -418,6 +418,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
