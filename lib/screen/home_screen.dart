@@ -731,15 +731,15 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("명진관 왼쪽 계단 위", "팔정도 좌측 하단3", 69, "계단", "도보");
     //70
     graph.addEdge("명진관 왼쪽 계단 위", "명진관 좌측 상단", 58, "평지", "도보",
-        node2X: 1165,
-        node2Y: 2816,
+        node2X: 1167,
+        node2Y: 2815,
         isInside2: 0,
         building2: "실외",
         showRoute2: false);
     graph.addEdge("명진관 좌측 상단", "명진관 왼쪽 계단 위", 58, "평지", "도보");
     //60
     graph.addEdge("명진관 좌측 상단", "명진관 좌측 입구 앞", 61, "평지", "도보",
-        node2X: 1146,
+        node2X: 1147,
         node2Y: 2874,
         isInside2: 0,
         building2: "실외",
@@ -747,15 +747,15 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("명진관 좌측 입구 앞", "명진관 좌측 상단", 61, "평지", "도보");
     //71
     graph.addEdge("명진관 좌측 입구 앞", "명진관 좌측 입구", 6, "평지", "도보",
-        node2X: 1151,
-        node2Y: 2877,
+        node2X: 1153,
+        node2Y: 2876  ,
         isInside2: 0,
         building2: "실외",
         showRoute2: false);
     graph.addEdge("명진관 좌측 입구", "명진관 좌측 입구 앞", 6, "평지", "도보");
     //72
     graph.addEdge("명진관 좌측 입구 앞", "명진관 좌측 하단", 54, "평지", "도보",
-        node2X: 1129,
+        node2X: 1130,
         node2Y: 2925,
         isInside2: 0,
         building2: "실외",
@@ -1724,14 +1724,14 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("팔정도 왼쪽", "팔정도 중앙", 154, "평지", "도보");
     //204 문화관에 씀
     //205 문화관에 씀
-/*    //206
-    graph.addEdge("팔정도9", "팔정도10", 38, "평지", "도보",
-        node2X: 1362,
-        node2Y: 2581,
+    //206
+    graph.addEdge("팔정도 좌측 상단", "팔정도 본관 계단 위", 48, "평지", "차도",
+        node2X: 1320,
+        node2Y: 2423,
         isInside2: 0,
         building2: "실외",
         showRoute2: false);
-    graph.addEdge("팔정도10", "팔정도9", 38, "평지", "도보");*/
+    graph.addEdge("팔정도 본관 계단 위", "팔정도 좌측 상단", 48, "평지", "차도");
 
 
 
