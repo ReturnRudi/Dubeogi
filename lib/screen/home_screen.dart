@@ -3448,8 +3448,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                         Positioned(
-                                          left: 1528 * scale_offset,
-                                          top: 2563 * scale_offset,
+                                          left: 1530 * scale_offset,
+                                          top: 2564 * scale_offset,
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '법학관_만해관';

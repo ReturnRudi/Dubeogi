@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../component/appbar.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/save/building_info.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 // 검색창을 누르면 나오는 스크린.
 
@@ -39,18 +40,34 @@ class _FindScreenState extends State<FindScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 4.0),
                     child: Container(
                       width: 200.0,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.7),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide.none,
+                      child: TypeAheadField(
+                        textFieldConfiguration: TextFieldConfiguration(
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              borderSide: BorderSide.none,
+                            ),
+                            hintText: '검색하거나 아래 목록을 터치하세요',
+                            hintStyle: TextStyle(color: Colors.grey),
                           ),
-                          hintText: '검색하거나 아래 목록을 터치하세요',
-                          hintStyle: TextStyle(color: Colors.grey),
+                          controller: Controller,
                         ),
-                        controller: Controller,
+                        suggestionsCallback: (pattern) {
+                          return buildings.where((building) => building.toLowerCase().contains(pattern.toLowerCase()));
+                        },
+                        itemBuilder: (context, suggestion) {
+                          return ListTile(
+                            title: Text(suggestion),
+                          );
+                        },
+                        onSuggestionSelected: (suggestion) {
+                          print(suggestion);
+                          setState(() {
+                            Controller.text = suggestion;
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -73,7 +90,7 @@ class _FindScreenState extends State<FindScreen> {
                           ),
                         );
                         setState(() {
-                            Navigator.pop(context, getdata);
+                          Navigator.pop(context, getdata);
                         });
                       } else {
                         print('debug: isExistBuilding false');
@@ -223,7 +240,7 @@ class _BuildingInfoState extends State<BuildingInfo> {
                     arguments: {'start': widget.title, 'end': ''},
                   );
                   setState(() {
-                      Navigator.pop(context, getdata);
+                    Navigator.pop(context, getdata);
                   });
                 },
                 style: OutlinedButton.styleFrom(
