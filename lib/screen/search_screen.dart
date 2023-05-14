@@ -3,7 +3,14 @@ import 'package:Dubeogi/component/appbar.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 import 'line_screen.dart';
-import 'package:Dubeogi/save/save.dart';
+
+class Vec {
+  double x;
+  double y;
+
+  Vec(this.x, this.y);
+}
+
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -15,6 +22,10 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
 
   late List<Node> result;
+  List<String> direction = [];
+  List<Vec> vector = [];
+  List<Offset> startPoints = [];
+  List<Offset> endPoints = [];
   final firstFocus = FocusNode();
   final secondFocus = FocusNode();
   final firstController = TextEditingController();
@@ -23,7 +34,36 @@ class _SearchScreenState extends State<SearchScreen> {
   int count = 0;
   int check = 0;
 
-  List<Node> getNodes(String startNodeName,String endNodeName){
+  final List<String> buildings = [
+    '다향관',
+    '명진관',
+    '과학관',
+    '대운동장앞',
+    '법학관',
+    '혜화관',
+    '경영관',
+    '사회과학관',
+    '문화관',
+    '학술관',
+    '중앙도서관',
+    '만해광장',
+    '상록원',
+    '원흥관',
+    '신공학관',
+    '정보문화관p',
+    '정보문화관q',
+    '체육관',
+    '학림관',
+    '정각원',
+    '학생회관'
+  ];
+
+  List<Node> Astar_pathMaking(String startNodeName, String endNodeName) {
+    //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
+    //지도 위에 그림을 그릴 수 있도록 start, end 리스트에 x, y값을 각각 넣는다.
+
+    startPoints.clear();
+    endPoints.clear();
     startNodes.clear();
     endNodes.clear();
 
@@ -34,12 +74,40 @@ class _SearchScreenState extends State<SearchScreen> {
     int endIndex = graph.findNodeIndex(graph.nodes, endNodeName);
 
     // Regular search
-    var regularResult = graph.aStar(graph.nodes, graph.edges, startNode, endNode);
+    var regularResult =
+    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
+    List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
-    List<Node> regularPath = reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
+    List<Node> regularPath =
+    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
 
+    for (int i = 0; i < regularPath.length; i++) {
+      if (i == 0)
+        startNodes.add(regularPath[i]);
+      else if (i == regularPath.length - 1)
+        endNodes.add(regularPath[i]);
+      else {
+        endNodes.add(regularPath[i]);
+        startNodes.add(regularPath[i]);
+      }
+    }
+
+    for (int i = 0; i < startNodes.length; i++) {
+      print(
+          "(${startNodes[i].x}, ${startNodes[i].y}) -> (${endNodes[i].x}, ${endNodes[i].y})");
+      print("!!!!");
+    }
     return regularPath;
+  }
+
+  String getDirection(Vec current, Vec next) {
+    double crossProduct = current.x * next.y - current.y * next.x;
+    if (crossProduct > 0) {
+      return "오른쪽";
+    } else {
+      return "왼쪽";
+    }
   }
 
   bool isExistBuilding(String name) => buildings.contains(name);
@@ -56,7 +124,6 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
@@ -303,10 +370,6 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   firstController.text = suggestion;
-                                  if (isExistBuilding(firstController.text) &&
-                                      isExistBuilding(secondController.text)) {
-                                    _handleSubmit();
-                                  }
                                 });
                               },
                               noItemsFoundBuilder: (context) {
@@ -378,10 +441,6 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   secondController.text = suggestion;
-                                  if (isExistBuilding(firstController.text) &&
-                                      isExistBuilding(secondController.text)) {
-                                    _handleSubmit();
-                                  }
                                 });
                               },
                               noItemsFoundBuilder: (context) {
@@ -411,7 +470,7 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Container(),
             )
           else if (check != 0)
-            CustomListWidget(items: result),
+            CustomListWidget(items: result, direction: direction,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
             child: SizedBox(
@@ -431,7 +490,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   textAlign: TextAlign.center,
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange, // 주황색 배경색
+                  primary: Colors.orange, // 주황색 배경색
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16), // 버튼 모서리를 둥글게 처리
                   ),
@@ -454,10 +513,25 @@ class _SearchScreenState extends State<SearchScreen> {
     // Perform some action with the inputs
     String start_node = firstController.text;
     String end_node = secondController.text;
-    result = getNodes(start_node, end_node);
+    result = Astar_pathMaking(start_node, end_node);
     /*for (Node node in result) {
       print(node.toString());
     }*/
+    vector.clear();
+    direction.clear();
+    for (int i = 0; i < startNodes.length; i++) {
+      double deltaX = endNodes[i].x - startNodes[i].x;
+      double deltaY = endNodes[i].y - startNodes[i].y;
+      vector.add(Vec(deltaX, deltaY));
+    }
+    direction.add("출발지");
+    for (int i = 0; i < vector.length - 1; i++) {
+      print(getDirection(vector[i], vector[i+1]));
+      direction.add(getDirection(vector[i], vector[i+1]));
+      print("????");
+    }
+    direction.add("목적지");
+
     setState(() {
       check = 1;
     });

@@ -3,8 +3,9 @@ import 'package:Dubeogi/algorithm/astar.dart';
 
 class CustomListWidget extends StatefulWidget {
   final List<Node> items;
+  final List<String> direction;
 
-  CustomListWidget({required this.items});
+  CustomListWidget({required this.items, required this.direction});
 
   @override
   _CustomListWidgetState createState() => _CustomListWidgetState();
@@ -26,7 +27,13 @@ class _CustomListWidgetState extends State<CustomListWidget> {
                   width: 20,
                   height: 20,
                 ),
-                Text(widget.items[index].name), // 항목별로 표시되는 텍스트
+                Text(widget.items[index].name),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  width: 20,
+                  height: 5,
+                ),
+                Text(widget.direction[index]),// 항목별로 표시되는 텍스트
               ],
             );
           },

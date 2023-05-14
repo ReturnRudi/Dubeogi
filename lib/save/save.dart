@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 String sciencePath = 'assets/images/과학관(1102,2973).png';
 String dhPath = 'assets/images/다향관(1337,2379).png';   //new
 String dwPath = 'assets/images/대운동장(1308,3206).png';
@@ -27,26 +29,4 @@ String atmPath = 'assets/images/facility/atm.png';
 String loungePath = 'assets/images/facility/lounge.png';
 String printerPath = 'assets/images/facility/printer.png';
 
-final List<String> buildings = [
-  '다향관',
-  '명진관',
-  '과학관',
-  '대운동장앞',
-  '법학관',
-  '혜화관',
-  '경영관',
-  '사회과학관',
-  '문화관',
-  '학술관',
-  '중앙도서관',
-  '만해광장',
-  '상록원',
-  '원흥관',
-  '신공학관',
-  '정보문화관p',
-  '정보문화관q',
-  '체육관',
-  '학림관',
-  '정각원',
-  '학생회관'
-];
+List<String> names = [];
