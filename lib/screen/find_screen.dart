@@ -5,13 +5,13 @@ import 'package:Dubeogi/save/building_info.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 // 검색창을 누르면 나오는 스크린.
-
 class FindScreen extends StatefulWidget {
   const FindScreen({Key? key}) : super(key: key);
 
   @override
   State<FindScreen> createState() => _FindScreenState();
 }
+
 
 class _FindScreenState extends State<FindScreen> {
   final Controller = TextEditingController();
@@ -67,6 +67,20 @@ class _FindScreenState extends State<FindScreen> {
                           setState(() {
                             Controller.text = suggestion;
                           });
+                        },
+                        noItemsFoundBuilder: (context) {
+                          return Container(
+                            height: 45.0,
+                            child: Center(
+                              child: Text(
+                                '건물명을 정확히 입력해주세요.',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          );
                         },
                       ),
                     ),

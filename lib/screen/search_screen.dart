@@ -3,6 +3,7 @@ import 'package:Dubeogi/component/appbar.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 import 'line_screen.dart';
+import 'package:Dubeogi/save/save.dart';
 
 class Vec {
   double x;
@@ -10,7 +11,6 @@ class Vec {
 
   Vec(this.x, this.y);
 }
-
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -33,30 +33,6 @@ class _SearchScreenState extends State<SearchScreen> {
   int selectOption = 1;
   int count = 0;
   int check = 0;
-
-  final List<String> buildings = [
-    '다향관',
-    '명진관',
-    '과학관',
-    '대운동장',
-    '법학관',
-    '혜화관',
-    '경영관',
-    '사회과학관',
-    '문화관',
-    '학술관',
-    '중앙도서관',
-    '만해광장',
-    '상록원',
-    '원흥관',
-    '신공학관',
-    '정보문화관p',
-    '정보문화관q',
-    '체육관',
-    '학림관',
-    '정각원',
-    '학생회관'
-  ];
 
   List<Node> Astar_pathMaking(String startNodeName, String endNodeName) {
     //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
