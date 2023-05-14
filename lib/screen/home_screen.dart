@@ -1071,7 +1071,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isInside2: 0,
         building2: "실외",
         showRoute2: false);
-    graph.addEdge("사회과학관 입구", "정문 혜화관7", 56, "평지", "도보");
+    graph.addEdge("사회과학관 입구", "정문 혜화관8", 56, "평지", "도보");
     //115
     graph.addEdge("정문 혜화관8", "정문 혜화관9", 88, "평지", "차도",
         node2X: 2144,
@@ -2873,8 +2873,8 @@ class _HomeScreenState extends State<HomeScreen> {
     //      원흥관
     //원흥관2 후문
     graph.addEdge("원흥관2 후문", "원흥관", 50, "평지", "도보",
-        node2X: 934,
-        node2Y: 2529,
+        node2X: 953,
+        node2Y: 2405,
         isInside2: 0,
         building2: "실외",
         showRoute2: false);
