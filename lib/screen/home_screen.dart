@@ -2818,7 +2818,7 @@ class _HomeScreenState extends State<HomeScreen> {
         building2: "실외",
         showRoute2: false);
     graph.addEdge("신공학관 1층 입구", "신공학관 1층 입구 앞", 81, "평지", "도보");
-    //------------------------실내 임시 노드-------------------------------
+    //--------------------------------------------실내 임시 노드-------------------------------
     //      신공학관
     //1층 입구
     graph.addEdge("신공학관 1층 입구", "신공학관", 50, "평지", "도보",
@@ -2842,16 +2842,16 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("신공학관", "신공 3층 입구", 50, "평지", "도보");
     //      중앙도서관
     //후문
-    graph.addEdge("중도 후문", "중도", 50, "평지", "도보",
+    graph.addEdge("중도 후문", "중앙도서관", 50, "평지", "도보",
         node2X: 1012,
         node2Y: 2786,
         isInside2: 0,
         building2: "실외",
         showRoute2: false);
-    graph.addEdge("중도", "중도 후문", 50, "평지", "도보");
+    graph.addEdge("중앙도서관", "중도 후문", 50, "평지", "도보");
     //정문
-    graph.addEdge("중도 정문", "중도", 50, "평지", "도보");
-    graph.addEdge("중도", "중도 정문", 50, "평지", "도보");
+    graph.addEdge("중도 정문", "중앙도서관", 50, "평지", "도보");
+    graph.addEdge("중앙도서관", "중도 정문", 50, "평지", "도보");
     //      본관
     //왼쪽 입구
     graph.addEdge("본관 왼쪽 입구", "본관", 50, "평지", "도보",
