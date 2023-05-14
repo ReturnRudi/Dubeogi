@@ -1732,8 +1732,1092 @@ class _HomeScreenState extends State<HomeScreen> {
         building2: "실외",
         showRoute2: false);
     graph.addEdge("팔정도 본관 계단 위", "팔정도 좌측 상단", 48, "평지", "차도");
-
-
+    //207
+    graph.addEdge("팔정도 본관 계단 위", "다향관 2층 입구 앞", 29, "내리막", "차도",
+        node2X: 1321,
+        node2Y: 2387,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("다향관 2층 입구 앞", "팔정도 본관 계단 위", 54, "오르막", "차도");
+    //208
+    graph.addEdge("다향관 2층 입구 앞", "다향관 2층 입구", 53, "평지", "도보",
+        node2X: 1371,
+        node2Y: 2404,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("다향관 2층 입구", "다향관 2층 입구 앞", 53, "평지", "도보");
+    //209
+    graph.addEdge("다향관 2층 입구 앞", "다향관 1층 입구 앞", 26, "내리막", "차도",
+        node2X: 1321,
+        node2Y: 2354,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("다향관 1층 입구 앞", "다향관 2층 입구 앞", 50, "오르막", "차도");
+    //210
+    graph.addEdge("다향관 1층 입구 앞", "다향관 1층 입구 앞2", 30, "내리막", "도보",
+        node2X: 1357,
+        node2Y: 2364,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("다향관 1층 입구 앞2", "다향관 1층 입구 앞", 56, "오르막", "도보");
+    //211
+    graph.addEdge("다향관 1층 입구 앞2", "다향관 1층 입구", 26, "내리막", "도보",
+        node2X: 1380,
+        node2Y: 2387,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("다향관 1층 입구", "다향관 1층 입구 앞2", 49, "오르막", "도보");
+    //212
+    graph.addEdge("다향관 1층 입구 앞", "팔정도 후문 차도1", 80, "내리막", "차도",
+        node2X: 1283,
+        node2Y: 2262,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 후문 차도1", "다향관 1층 입구 앞", 149, "오르막", "차도");
+    //213
+    graph.addEdge("팔정도 후문 차도1", "팔정도 후문 차도2", 24, "내리막", "차도",
+        node2X: 1258,
+        node2Y: 2245,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 후문 차도2", "팔정도 후문 차도1", 45, "오르막", "차도");
+    //214
+    graph.addEdge("팔정도 후문 차도2", "헐떡고개 위", 22, "내리막", "차도",
+        node2X: 1231,
+        node2Y: 2248,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("헐떡고개 위", "팔정도 후문 차도2", 41, "오르막", "차도");
+    //215
+    graph.addEdge("헐떡고개 위", "만해광장 입구", 75, "내리막", "차도",
+        node2X: 1138,
+        node2Y: 2264,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("만해광장 입구", "헐떡고개 위", 142, "오르막", "차도");
+    //216
+    graph.addEdge("만해광장 입구", "팔정도 후문 차도3", 64, "내리막", "차도",
+        node2X: 1059,
+        node2Y: 2278,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 후문 차도3", "만해광장 입구", 120, "오르막", "차도");
+    //217
+    graph.addEdge("팔정도 후문 차도3", "지하주차장 가는길1", 33, "평지", "차도",
+        node2X: 1046,
+        node2Y: 2308,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("지하주차장 가는길1", "팔정도 후문 차도3", 33, "평지", "차도");
+    //218
+    graph.addEdge("지하주차장 가는길1", "지하주차장 가는길2", 81, "평지", "차도",
+        node2X: 1078,
+        node2Y: 2382,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("지하주차장 가는길2", "지하주차장 가는길1", 81, "평지", "차도");
+    //219
+    graph.addEdge("지하주차장 가는길2", "팔정도 본관 계단 아래", 160, "평지", "도보",
+        node2X: 1235,
+        node2Y: 2349,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 본관 계단 아래", "지하주차장 가는길2", 160, "평지", "도보");
+    //220
+    graph.addEdge("팔정도 본관 계단 아래", "팔정도 본관 계단 중간", 102, "계단", "도보",
+        node2X: 1255,
+        node2Y: 2414,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 본관 계단 중간", "팔정도 본관 계단 아래", 54, "계단", "도보");
+    //221
+    graph.addEdge("팔정도 본관 계단 중간", "팔정도 본관 계단 위", 98, "계단", "도보");
+    graph.addEdge("팔정도 본관 계단 위", "팔정도 본관 계단 중간", 52, "계단", "도보");
+    //222 본관 1층인지 불확실
+    graph.addEdge("지하주차장 가는길2", "본관 1층 입구", 44, "평지", "도보",
+        node2X: 1113,
+        node2Y: 2409,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("본관 1층 입구", "지하주차장 가는길2", 44, "평지", "도보");
+    //223
+    graph.addEdge("지하주차장 가는길2", "원흥관2 쪽문", 101, "평지", "도보",
+        node2X: 979,
+        node2Y: 2404,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관2 쪽문", "지하주차장 가는길2", 101, "평지", "도보");
+    //224
+    graph.addEdge("지하주차장 가는길2", "지하주차장 가는길3", 211, "평지", "차도",
+        node2X: 1013,
+        node2Y: 2583,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("지하주차장 가는길3", "지하주차장 가는길2", 211, "평지", "차도");
+    //225
+    graph.addEdge("지하주차장 가는길3", "본관 쪽문", 23, "평지", "도보",
+        node2X: 1035,
+        node2Y: 2590,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("본관 쪽문", "지하주차장 가는길3", 23, "평지", "도보");
+    //226
+    graph.addEdge("지하주차장 가는길3", "지하주차장 앞", 34, "평지", "차도");
+    graph.addEdge("지하주차장 앞", "지하주차장 가는길3", 34, "평지", "차도");
+    //227
+    graph.addEdge("지하주차장 앞", "지하주차장 입구", 64, "평지", "차도",
+        node2X: 939,
+        node2Y: 2624,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("지하주차장 입구", "지하주차장 앞", 64, "평지", "차도");
+    //228
+    graph.addEdge("헐떡고개 위", "헐떡고개 아래", 180, "내리막", "도보",
+        node2X: 1282,
+        node2Y: 2029,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("헐떡고개 아래", "헐떡고개 위", 337, "오르막", "도보");
+    //229
+    graph.addEdge("헐떡고개 아래", "체육관 옆문 앞", 24, "내리막", "도보",
+        node2X: 1288,
+        node2Y: 1999,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("체육관 옆문 앞", "헐떡고개 아래", 46, "오르막", "도보");
+    //230
+    graph.addEdge("체육관 옆문 앞", "체육관 옆문", 52, "평지", "도보",
+        node2X: 1338,
+        node2Y: 2012,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("체육관 옆문", "체육관 옆문 앞", 52, "평지", "도보");
+    //231
+    graph.addEdge("체육관 옆문 앞", "듀이카 가는길1", 128, "내리막", "차도",
+        node2X: 1322,
+        node2Y: 1843,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 가는길1", "체육관 옆문 앞", 239, "오르막", "차도");
+    //232
+    graph.addEdge("듀이카 가는길1", "듀이카 가는길2", 22, "평지", "도보",
+        node2X: 1344,
+        node2Y: 1841,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 가는길2", "듀이카 가는길1", 22, "평지", "도보");
+    //233
+    graph.addEdge("듀이카 가는길2", "학림관 우측 앞문", 27, "평지", "도보",
+        node2X: 1354,
+        node2Y: 1816,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 우측 앞문", "듀이카 가는길2", 27, "평지", "도보");
+    //234
+    graph.addEdge("듀이카 가는길2", "듀이카 가는길3", 42, "평지", "도보",
+        node2X: 1386,
+        node2Y: 1839,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 가는길3", "듀이카 가는길2", 42, "평지", "도보");
+    //235
+    graph.addEdge("듀이카 가는길3", "듀이카 가는길4", 70, "평지", "도보",
+        node2X: 1455,
+        node2Y: 1851,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 가는길4", "듀이카 가는길3", 70, "평지", "도보");
+    //236
+    graph.addEdge("듀이카 가는길4", "체육관 정문", 9, "평지", "도보",
+        node2X: 1453,
+        node2Y: 1860,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("체육관 정문", "듀이카 가는길4", 9, "평지", "도보");
+    //237
+    graph.addEdge("듀이카 가는길4", "반야관 입구 앞", 26, "평지", "도보",
+        node2X: 1480,
+        node2Y: 1859,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("반야관 입구 앞", "듀이카 가는길4", 26, "평지", "도보");
+    //238
+    graph.addEdge("반야관 입구 앞", "반야관 입구", 31, "평지", "도보",
+        node2X: 1495,
+        node2Y: 1832,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("반야관 입구", "반야관 입구 앞", 31, "평지", "도보");
+    //239
+    graph.addEdge("반야관 입구 앞", "듀이카 앞 계단 위", 40, "평지", "도보",
+        node2X: 1517,
+        node2Y: 1873,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 앞 계단 위", "반야관 입구 앞", 40, "평지", "도보");
+    //240
+    graph.addEdge("듀이카 앞 계단 위", "듀이카 앞 계단 중간1", 22, "계단", "도보",
+        node2X: 1541,
+        node2Y: 1886,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 앞 계단 중간1", "듀이카 앞 계단 위", 41, "계단", "도보");
+    //241
+    graph.addEdge("듀이카 앞 계단 중간1", "듀이카 옆 입구", 11, "평지", "도보",
+        node2X: 1550,
+        node2Y: 1892,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 옆 입구", "듀이카 앞 계단 중간1", 11, "평지", "도보");
+    //242
+    graph.addEdge("듀이카 앞 계단 중간1", "듀이카 앞 계단 중간2", 15, "계단", "도보",
+        node2X: 1541,
+        node2Y: 1905,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 앞 계단 중간2", "듀이카 앞 계단 중간1", 29, "계단", "도보");
+    //243
+    graph.addEdge("듀이카 앞 계단 중간2", "듀이카 앞 계단 중간3", 35, "계단", "도보",
+        node2X: 1582,
+        node2Y: 1920,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 앞 계단 중간3", "듀이카 앞 계단 중간2", 65, "계단", "도보");
+    //346
+    graph.addEdge("듀이카 앞 계단 중간3", "듀이카쪽 학교 입구", 37, "계단", "도보",
+        node2X: 1625,
+        node2Y: 1936,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카쪽 학교 입구", "듀이카 앞 계단 중간3", 69, "계단", "도보");
+    //345
+    graph.addEdge("듀이카 앞 계단 중간3", "듀이카 쪽문", 6, "평지", "도보",
+        node2X: 1583,
+        node2Y: 1914,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("듀이카 쪽문", "듀이카 앞 계단 중간3", 6, "평지", "도보");
+    //244
+    graph.addEdge("듀이카 가는길4", "학림관 뒷길1", 101, "평지", "도보",
+        node2X: 1482,
+        node2Y: 1754,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 뒷길1", "듀이카 가는길4", 101, "평지", "도보");
+    //245
+    graph.addEdge("학림관 뒷길1", "반야관 편의점 가는길1", 51, "계단", "도보",
+        node2X: 1541,
+        node2Y: 1731,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("반야관 편의점 가는길1", "학림관 뒷길1", 95, "계단", "도보");
+    //246
+    graph.addEdge("반야관 편의점 가는길1", "반야관 편의점 가는길2", 59, "계단", "도보",
+        node2X: 1600,
+        node2Y: 1775,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("반야관 편의점 가는길2", "반야관 편의점 가는길1", 110, "계단", "도보");
+    //247
+    graph.addEdge("반야관 편의점 가는길2", "반야관 편의점 입구", 42, "계단", "도보",
+        node2X: 1626,
+        node2Y: 1821,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("반야관 편의점 입구", "반야관 편의점 가는길2", 79, "계단", "도보");
+    //248
+    graph.addEdge("학림관 뒷길1", "학림관 뒷길2", 63, "평지", "도보",
+        node2X: 1497,
+        node2Y: 1693,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 뒷길2", "학림관 뒷길1", 63, "평지", "도보");
+    //249
+    graph.addEdge("학림관 뒷길2", "학림관 뒷길3", 125, "평지", "도보",
+        node2X: 1374,
+        node2Y: 1714,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 뒷길3", "학림관 뒷길2", 125, "평지", "도보");
+    //250
+    graph.addEdge("학림관 뒷길3", "학림관 오른쪽 뒷문", 57, "평지", "도보",
+        node2X: 1357,
+        node2Y: 1768,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 오른쪽 뒷문", "학림관 뒷길3", 57, "평지", "도보");
+    //251
+    graph.addEdge("학림관 뒷길3", "학림관 뒷길4", 74, "계단", "도보",
+        node2X: 1282,
+        node2Y: 1705,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 뒷길4", "학림관 뒷길3", 139, "계단", "도보");
+    //252
+    graph.addEdge("학림관 뒷길4", "학림관 뒷문", 30, "계단", "도보",
+        node2X: 1276,
+        node2Y: 1724,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 뒷문", "학림관 뒷길4", 16, "계단", "도보");
+    //253
+    graph.addEdge("학림관 뒷길4", "학림관 뒷길5", 89, "계단", "도보",
+        node2X: 1228,
+        node2Y: 1680,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 뒷길5", "학림관 뒷길4", 48, "계단", "도보");
+    //254 왼쪽 뒷문이 아니고 다른 곳이었음
+    graph.addEdge("학림관 뒷길5", "학림관 왼쪽 뒷문", 74, "계단", "도보",
+        node2X: 1212,
+        node2Y: 1727,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 왼쪽 뒷문", "학림관 뒷길5", 40, "계단", "도보");
+    //255
+    graph.addEdge("학림관 뒷길5", "후문", 123, "내리막", "도보",
+        node2X: 1114,
+        node2Y: 1576,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("후문", "학림관 뒷길5", 231, "오르막", "도보");
+    //256
+    graph.addEdge("후문", "후문 학생회관1", 188, "오르막", "도보",
+        node2X: 993,
+        node2Y: 1608,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("후문 학생회관1", "후문", 100, "내리막", "도보");
+    //257
+    graph.addEdge("후문 학생회관1", "후문 학생회관2", 67, "평지", "도보",
+        node2X: 936,
+        node2Y: 1643,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("후문 학생회관2", "후문 학생회관1", 67, "평지", "도보");
+    //258
+    graph.addEdge("후문 학생회관2", "후문 학생회관3", 98, "평지", "도보",
+        node2X: 882,
+        node2Y: 1725,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("후문 학생회관3", "후문 학생회관2", 98, "평지", "도보");
+    //259
+    graph.addEdge("후문 학생회관3", "학생회관 학림관 계단 아래", 66, "평지", "도보",
+        node2X: 869,
+        node2Y: 1790,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학생회관 학림관 계단 아래", "후문 학생회관3", 66, "평지", "도보");
+    //260
+    graph.addEdge("학생회관 학림관 계단 아래", "학생회관 계단 입구", 69, "계단", "도보",
+        node2X: 832,
+        node2Y: 1817,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학생회관 계단 입구", "학생회관 학림관 계단 아래", 37, "계단", "도보");
+    //261
+    graph.addEdge("학생회관 학림관 계단 아래", "학생회관 학림관 계단 중간", 68, "계단", "도보",
+        node2X: 913,
+        node2Y: 1780,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학생회관 학림관 계단 중간", "학생회관 학림관 계단 아래", 36, "계단", "도보");
+    //262
+    graph.addEdge("학생회관 학림관 계단 중간", "학생회관 학림관 계단 위", 57, "계단", "도보",
+        node2X: 951,
+        node2Y: 1783,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학생회관 학림관 계단 위", "학생회관 학림관 계단 중간", 30, "계단", "도보");
+    //263
+    graph.addEdge("학생회관 학림관 계단 아래", "학생회관 옆 계단 위", 50, "계단", "도보",
+        node2X: 861,
+        node2Y: 1833,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학생회관 옆 계단 위", "학생회관 학림관 계단 아래", 26, "계단", "도보");
+    //264
+    graph.addEdge("학생회관 옆 계단 위", "팔정도 후문 차도6", 61, "평지", "도보",
+        node2X: 879,
+        node2Y: 1891,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 후문 차도6", "학생회관 옆 계단 위", 61, "평지", "도보");
+    //265
+    graph.addEdge("듀이카 가는길1", "학림관 입구 앞", 82, "평지", "차도",
+        node2X: 1244,
+        node2Y: 1819,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 입구 앞", "듀이카 가는길1", 82, "평지", "차도");
+    //266
+    graph.addEdge("학림관 입구 앞", "학림관 입구", 34, "평지", "도보",
+        node2X: 1255,
+        node2Y: 1787,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 입구", "학림관 입구 앞", 34, "평지", "도보");
+    //267
+    graph.addEdge("학림관 입구 앞", "계산관B 입구 앞", 144, "평지", "차도",
+        node2X: 1105,
+        node2Y: 1782,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("계산관B 입구 앞", "학림관 입구 앞", 144, "평지", "차도");
+    //268
+    graph.addEdge("계산관B 입구 앞", "계산관B 입구 앞2", 34, "평지", "도보",
+        node2X: 1097,
+        node2Y: 1815,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("계산관B 입구 앞2", "계산관B 입구 앞", 34, "평지", "도보");
+    //269
+    graph.addEdge("계산관B 입구 앞2", "계산관B 입구", 26, "평지", "도보",
+        node2X: 1071,
+        node2Y: 1810,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("계산관B 입구", "계산관B 입구 앞2", 26, "평지", "도보");
+    //270
+    graph.addEdge("계산관B 입구 앞", "계산관A 계단 위", 71, "평지", "차도",
+        node2X: 1037,
+        node2Y: 1762,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("계산관A 계단 위", "계산관B 입구 앞", 71, "평지", "차도");
+    //271
+    graph.addEdge("계산관A 계단 위", "계산관A 계단 아래", 18, "계단", "도보",
+        node2X: 1044,
+        node2Y: 1740,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("계산관A 계단 아래", "계산관A 계단 위", 35, "계단", "도보");
+    //272
+    graph.addEdge("계산관A 계단 아래", "계산관A 학림관 갈림길", 32, "평지", "도보",
+        node2X: 1053,
+        node2Y: 1709,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("계산관A 학림관 갈림길", "계산관A 계단 아래", 32, "평지", "도보");
+    //273
+    graph.addEdge("계산관A 학림관 갈림길", "학림관 편의점 입구", 39, "평지", "도보",
+        node2X: 1090,
+        node2Y: 1721,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학림관 편의점 입구", "계산관A 학림관 갈림길", 39, "평지", "도보");
+    //274
+    graph.addEdge("계산관A 학림관 갈림길", "계산관A 입구", 17, "평지", "도보",
+        node2X: 1058,
+        node2Y: 1693,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("계산관A 입구", "계산관A 학림관 갈림길", 17, "평지", "도보");
+    //275
+    graph.addEdge("계산관A 계단 위", "팔정도 후문 차도8", 43, "평지", "차도",
+        node2X: 995,
+        node2Y: 1751,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 후문 차도8", "계산관A 계단 위", 43, "평지", "차도");
+    //276
+    graph.addEdge("팔정도 후문 차도8", "팔정도 후문 차도7", 28, "평지", "차도",
+        node2X: 968,
+        node2Y: 1757,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 후문 차도7", "팔정도 후문 차도8", 28, "평지", "차도");
+    //277
+    graph.addEdge("팔정도 후문 차도7", "학생회관 학림관 계단 위", 31, "평지", "차도");
+    graph.addEdge("학생회관 학림관 계단 위", "팔정도 후문 차도7", 31, "평지", "차도");
+    //278
+    graph.addEdge("학생회관 학림관 계단 위", "팔정도 후문 차도6", 130, "평지", "차도");
+    graph.addEdge("팔정도 후문 차도6", "학생회관 학림관 계단 위", 130, "평지", "차도");
+    //279
+    graph.addEdge("팔정도 후문 차도6", "학생회관 입구 앞", 41, "평지", "도보",
+        node2X: 840,
+        node2Y: 1904,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학생회관 입구 앞", "팔정도 후문 차도6", 41, "평지", "도보");
+    //280
+    graph.addEdge("학생회관 입구 앞", "학생회관 입구", 38, "평지", "도보",
+        node2X: 806,
+        node2Y: 1888,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("학생회관 입구", "학생회관 입구 앞", 38, "평지", "도보");
+    //281
+    graph.addEdge("학생회관 입구 앞", "정P 입구 앞", 38, "평지", "도보",
+        node2X: 841,
+        node2Y: 1942,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 입구 앞", "학생회관 입구 앞", 38, "평지", "도보");
+    //282
+    graph.addEdge("정P 입구 앞", "정P 3층 계단", 29, "평지", "도보",
+        node2X: 812,
+        node2Y: 1946,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 3층 계단", "정P 입구 앞", 29, "평지", "도보");
+    //283
+    graph.addEdge("정P 입구 앞", "정P 입구", 32, "평지", "도보",
+        node2X: 842,
+        node2Y: 1974,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 입구", "정P 입구 앞", 32, "평지", "도보");
+    //284
+    graph.addEdge("정P 입구 앞", "팔정도 후문 차도5", 49, "평지", "도보",
+        node2X: 888,
+        node2Y: 1928,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 후문 차도5", "정P 입구 앞", 49, "평지", "도보");
+    //285
+    graph.addEdge("팔정도 후문 차도5", "팔정도 후문 차도6", 38, "평지", "차도");
+    graph.addEdge("팔정도 후문 차도6", "팔정도 후문 차도5", 38, "평지", "차도");
+    //286
+    graph.addEdge("팔정도 후문 차도5", "만해광장 계단 아래", 153, "오르막", "차도",
+        node2X: 913,
+        node2Y: 2027,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("만해광장 계단 아래", "팔정도 후문 차도5", 82, "내리막", "차도");
+    //287
+    graph.addEdge("만해광장 계단 아래", "만해광장 계단 위", 130, "오르막", "도보",
+        node2X: 999,
+        node2Y: 2038,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("만해광장 계단 위", "만해광장 계단 아래", 69, "내리막", "도보");
+    //288
+    graph.addEdge("만해광장 계단 위", "만해광장", 103, "평지", "도보",
+        node2X: 1101,
+        node2Y: 2051,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("만해광장", "만해광장 계단 위", 103, "평지", "도보");
+    //289
+    graph.addEdge("만해광장", "만해광장 입구", 216, "평지", "도보");
+    graph.addEdge("만해광장 입구", "만해광장", 216, "평지", "도보");
+    //290
+    graph.addEdge("만해광장 계단 아래", "팔정도 후문 차도4", 72, "오르막", "차도",
+        node2X: 924,
+        node2Y: 2074,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("팔정도 후문 차도4", "만해광장 계단 아래", 39, "내리막", "차도");
+    //291
+    graph.addEdge("팔정도 후문 차도4", "팔정도 후문 차도3", 367, "오르막", "차도");
+    graph.addEdge("팔정도 후문 차도3", "팔정도 후문 차도4", 196, "내리막", "차도");
+    //292
+    graph.addEdge("팔정도 후문 차도4", "원흥관 앞 계단 아래", 92, "내리막", "차도",
+        node2X: 880,
+        node2Y: 2180,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관 앞 계단 아래", "팔정도 후문 차도4", 172, "오르막", "차도");
+    //293
+    graph.addEdge("원흥관 앞 계단 아래", "원흥관 앞 계단 중간", 114, "계단", "도보",
+        node2X: 953,
+        node2Y: 2158,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관 앞 계단 중간", "원흥관 앞 계단 아래", 61, "계단", "도보");
+    //294
+    graph.addEdge("원흥관 앞 계단 중간", "원흥관 앞 계단 위", 233, "계단", "도보",
+        node2X: 1039,
+        node2Y: 2287,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관 앞 계단 위", "원흥관 앞 계단 중간", 124, "계단", "도보");
+    //295
+    graph.addEdge("원흥관 앞 계단 위", "팔정도 후문 차도3", 22, "평지", "도보");
+    graph.addEdge("팔정도 후문 차도3", "원흥관 앞 계단 위", 22, "평지", "도보");
+    //296
+    graph.addEdge("원흥관 앞 계단 위", "지하주차장 가는길1", 22, "평지", "도보");
+    graph.addEdge("지하주차장 가는길1", "원흥관 앞 계단 위", 22, "평지", "도보");
+    //297
+    graph.addEdge("원흥관 앞 계단 아래", "원흥관 정문 앞", 91, "평지", "차도",
+        node2X: 926,
+        node2Y: 2259,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관 정문 앞", "원흥관 앞 계단 아래", 91, "평지", "차도");
+    //298
+    graph.addEdge("원흥관 정문 앞", "원흥관 정문", 26, "평지", "도보",
+        node2X: 912,
+        node2Y: 2281,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관 정문", "원흥관 정문 앞", 26, "평지", "도보");
+    //299
+    graph.addEdge("원흥관 정문 앞", "정P 후문 앞", 133, "평지", "차도",
+        node2X: 814,
+        node2Y: 2188,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 후문 앞", "원흥관 정문 앞", 133, "평지", "차도");
+    //300
+    graph.addEdge("정P 후문 앞", "원흥관 앞 계단 아래", 66, "평지", "차도");
+    graph.addEdge("원흥관 앞 계단 아래", "정P 후문 앞", 66, "평지", "차도");
+    //301
+    graph.addEdge("정P 후문 앞", "정P 후문", 26, "평지", "도보",
+        node2X: 810,
+        node2Y: 2162,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 후문", "정P 후문 앞", 26, "평지", "도보");
+    //302
+    graph.addEdge("정P 후문 앞", "정P 뒷길1", 20, "평지", "도보",
+        node2X: 794,
+        node2Y: 2188,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 뒷길1", "정P 후문 앞", 20, "평지", "도보");
+    //303
+    graph.addEdge("정P 뒷길1", "원흥관1 쪽문", 11, "평지", "도보",
+        node2X: 784,
+        node2Y: 2193,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관1 쪽문", "정P 뒷길1", 11, "평지", "도보");
+    //304
+    graph.addEdge("정P 뒷길1", "정P 뒷길 계단 위", 76, "평지", "도보",
+        node2X: 785,
+        node2Y: 2111,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 뒷길 계단 위", "정P 뒷길1", 76, "평지", "도보");
+    //305
+    graph.addEdge("정P 뒷길 계단 위", "정P 뒷길 계단 아래", 23, "계단", "도보",
+        node2X: 780,
+        node2Y: 2083,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 뒷길 계단 아래", "정P 뒷길 계단 위", 43, "계단", "도보");
+    //306
+    graph.addEdge("정P 뒷길 계단 아래", "자취촌 학교 입구", 72, "계단", "도보",
+        node2X: 691,
+        node2Y: 2095,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("자취촌 학교 입구", "정P 뒷길 계단 아래", 135, "계단", "도보");
+    //307
+    graph.addEdge("정P 뒷길 계단 아래", "정P 뒷길2", 72, "평지", "도보",
+        node2X: 774,
+        node2Y: 2011,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 뒷길2", "정P 뒷길 계단 아래", 72, "평지", "도보");
+    //308
+    graph.addEdge("정P 뒷길2", "정P 뒷길3", 30, "계단", "도보",
+        node2X: 774,
+        node2Y: 1974,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 뒷길3", "정P 뒷길2", 56, "계단", "도보");
+    //309
+    graph.addEdge("정P 뒷길3", "정P 뒷길4", 22, "평지", "도보",
+        node2X: 793,
+        node2Y: 1963,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 뒷길4", "정P 뒷길3", 22, "평지", "도보");
+    //310
+    graph.addEdge("정P 뒷길4", "정Q 입구 앞", 21, "평지", "도보",
+        node2X: 792,
+        node2Y: 1942,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정Q 입구 앞", "정P 뒷길4", 21, "평지", "도보");
+    //311
+    graph.addEdge("정Q 입구 앞", "정Q 입구", 16, "평지", "도보",
+        node2X: 776,
+        node2Y: 1942,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정Q 입구", "정Q 입구 앞", 16, "평지", "도보");
+    //312
+    graph.addEdge("정Q 입구 앞", "정P 2층 계단", 20, "평지", "도보",
+        node2X: 812,
+        node2Y: 1946,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 2층 계단", "정Q 입구 앞", 20, "평지", "도보");
+    //313
+    graph.addEdge("정P 2층 계단", "정P 2층 입구", 32, "평지", "도보",
+        node2X: 814,
+        node2Y: 1978,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("정P 2층 입구", "정P 2층 계단", 32, "평지", "도보");
+    //314
+    graph.addEdge("원흥관 후문", "원흥관 신공학관1", 20, "평지", "도보",
+        node1X: 799,
+        node1Y: 2311,
+        isInside1: 0,
+        building1: "실외",
+        showRoute1: true,
+        node2X: 786,
+        node2Y: 2326,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관 신공학관1", "원흥관 후문", 20, "평지", "도보");
+    //315
+    graph.addEdge("원흥관 신공학관1", "원흥관 신공학관2", 246, "계단", "도보",
+        node2X: 908,
+        node2Y: 2436,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관 신공학관2", "원흥관 신공학관1", 131, "계단", "도보");
+    //316
+    graph.addEdge("원흥관 신공학관2", "원흥관2 후문", 51, "평지", "도보",
+        node2X: 956,
+        node2Y: 2452,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관2 후문", "원흥관 신공학관2", 51, "평지", "도보");
+    //317
+    graph.addEdge("원흥관 신공학관2", "원흥별관 후문", 36, "평지", "도보",
+        node2X: 873,
+        node2Y: 2442,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥별관 후문", "원흥관 신공학관2", 36, "평지", "도보");
+    //318
+    graph.addEdge("원흥관 신공학관2", "원흥별관 정문 앞", 126, "평지", "도보",
+        node2X: 867,
+        node2Y: 2555,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥별관 정문 앞", "원흥관 신공학관2", 126, "평지", "도보");
+    //319
+    graph.addEdge("원흥별관 정문 앞", "원흥별관 정문", 45, "평지", "도보",
+        node2X: 843,
+        node2Y: 2517,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥별관 정문", "원흥별관 정문 앞", 45, "평지", "도보");
+    //320
+    graph.addEdge("원흥별관 정문 앞", "108계단 중간1", 16, "평지", "도보",
+        node2X: 863,
+        node2Y: 2571,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("108계단 중간1", "원흥별관 정문 앞", 16, "평지", "도보");
+    //321
+    graph.addEdge("108계단 중간1", "신공 7층 입구 앞", 37, "평지", "도보",
+        node2X: 898,
+        node2Y: 2584,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("신공 7층 입구 앞", "108계단 중간1", 37, "평지", "도보");
+    //322   단면도 적용하면 실내로 빼야함
+    graph.addEdge("신공 7층 입구 앞", "신공 7층 입구", 47, "평지", "도보",
+        node2X: 881,
+        node2Y: 2628,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("신공 7층 입구", "신공 7층 입구 앞", 47, "평지", "도보");
+    //323
+    graph.addEdge("신공 7층 입구 앞", "108계단 중간2", 28, "평지", "도보",
+        node2X: 925,
+        node2Y: 2592,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("108계단 중간2", "신공 7층 입구 앞", 28, "평지", "도보");
+    //324
+    graph.addEdge("108계단 중간2", "지하주차장 앞", 125, "계단", "도보");
+    graph.addEdge("지하주차장 앞", "108계단 중간2", 67, "계단", "도보");
+    //325 계단 층수 확인
+    graph.addEdge("신공 9층 입구 앞", "원흥관2 n층 계단", 28, "평지", "도보",
+        node2X: 934,
+        node2Y: 2595,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관2 n층 계단", "신공 9층 입구 앞", 28, "평지", "도보");
+    //326
+    graph.addEdge("원흥관2 n층 계단", "원흥관2 n층 입구", 10, "평지", "도보",
+        node2X: 937,
+        node2Y: 2585,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥관2 n층 입구", "원흥관2 n층 계단", 10, "평지", "도보");
+    //327
+    graph.addEdge("108계단 중간1", "원흥별관 쪽문 앞", 13, "계단", "도보",
+        node2X: 825,
+        node2Y: 2558,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥별관 쪽문 앞", "108계단 중간1", 24, "계단", "도보");
+    //328
+    graph.addEdge("원흥별관 쪽문 앞", "원흥별관 쪽문", 16, "평지", "도보",
+        node2X: 830,
+        node2Y: 2543,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("원흥별관 쪽문", "원흥별관 쪽문 앞", 16, "평지", "도보");
+    //329
+    graph.addEdge("원흥별관 쪽문 앞", "108계단 아래", 55, "계단", "도보",
+        node2X: 760,
+        node2Y: 2536,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("108계단 아래", "원흥별관 쪽문 앞", 103, "계단", "도보");
+    //330
+    graph.addEdge("108계단 아래", "신공 3층 입구 앞", 17, "평지", "도보",
+        node2X: 753,
+        node2Y: 2552,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("신공 3층 입구 앞", "108계단 아래", 17, "평지", "도보");
+    //331
+    graph.addEdge("신공 3층 입구 앞", "신공 3층 입구", 33, "평지", "도보",
+        node2X: 739,
+        node2Y: 2582,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("신공 3층 입구", "신공 3층 입구 앞", 33, "평지", "도보");
+    //332
+    graph.addEdge("신공 3층 입구 앞", "신공 오르막", 94, "내리막", "차도",
+        node2X: 636,
+        node2Y: 2538,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("신공 오르막", "신공 3층 입구 앞", 177, "오르막", "차도");
+    //333
+    graph.addEdge("신공 오르막", "충무로쪽 입구", 51, "내리막", "차도",
+        node2X: 574,
+        node2Y: 2552,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("충무로쪽 입구", "신공 오르막", 95, "오르막", "차도");
+    //334 단면도 적용시 신공 1층으로
+    graph.addEdge("충무로쪽 입구", "남산학사 계단 위", 31, "평지", "도보",
+        node2X: 593,
+        node2Y: 2576,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 계단 위", "충무로쪽 입구", 31, "평지", "도보");
+    //335
+    graph.addEdge("남산학사 계단 위", "남산학사 계단 아래", 16, "계단", "도보",
+        node2X: 598,
+        node2Y: 2595,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 계단 아래", "남산학사 계단 위", 29, "계단", "도보");
+    //336
+    graph.addEdge("남산학사 계단 아래", "남산학사 식당 앞2", 31, "평지", "도보",
+        node2X: 614,
+        node2Y: 2622,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 식당 앞2", "남산학사 계단 아래", 31, "평지", "도보");
+    //337
+    graph.addEdge("남산학사 식당 앞2", "남산학사 식당 앞", 45, "평지", "도보",
+        node2X: 657,
+        node2Y: 2636,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 식당 앞", "남산학사 식당 앞2", 45, "평지", "도보");
+    //338
+    graph.addEdge("남산학사 식당 앞", "남산학사 식당 입구", 56, "평지", "도보",
+        node2X: 618,
+        node2Y: 2676,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 식당 입구", "남산학사 식당 앞", 56, "평지", "도보");
+    //339
+    graph.addEdge("남산학사 식당 앞", "남산학사 입구 앞", 19, "평지", "도보",
+        node2X: 675,
+        node2Y: 2641,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 입구 앞", "남산학사 식당 앞", 19, "평지", "도보");
+    //340
+    graph.addEdge("남산학사 입구 앞", "남산학사 카페 입구", 74, "평지", "도보",
+        node2X: 655,
+        node2Y: 2712,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 카페 입구", "남산학사 입구 앞", 74, "평지", "도보");
+    //341
+    graph.addEdge("남산학사 입구 앞", "남산학사 입구", 18, "평지", "도보",
+        node2X: 681,
+        node2Y: 2624,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 입구", "남산학사 입구 앞", 18, "평지", "도보");
+    //342
+    graph.addEdge("남산학사 입구 앞", "남산학사 편의점 앞", 20, "평지", "도보",
+        node2X: 694,
+        node2Y: 2648,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 편의점 앞", "남산학사 입구 앞", 20, "평지", "도보");
+    //343
+    graph.addEdge("남산학사 편의점 앞", "남산학사 편의점 입구", 72, "평지", "도보",
+        node2X: 671,
+        node2Y: 2716,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("남산학사 편의점 입구", "남산학사 편의점 앞", 72, "평지", "도보");
+    //344
+    graph.addEdge("남산학사 편의점 입구", "신공학관 1층 입구 앞", 27, "평지", "도보",
+        node2X: 720,
+        node2Y: 2656,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("신공학관 1층 입구 앞", "남산학사 편의점 입구", 27, "평지", "도보");
+    //345
+    graph.addEdge("신공학관 1층 입구 앞", "신공학관 1층 옆문", 73, "평지", "도보",
+        node2X: 695,
+        node2Y: 2725,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("신공학관 1층 옆문", "신공학관 1층 입구 앞", 73, "평지", "도보");
+    //346
+    graph.addEdge("신공학관 1층 입구 앞", "신공학관 1층 입구", 81, "평지", "도보",
+        node2X: 797,
+        node2Y: 2681,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
+    graph.addEdge("신공학관 1층 입구", "신공학관 1층 입구 앞", 81, "평지", "도보");
 
 
   }
