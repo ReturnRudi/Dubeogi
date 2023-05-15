@@ -4,6 +4,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 import 'line_screen.dart';
 import 'package:Dubeogi/save/save.dart';
+import 'dart:math';
 
 class Vec {
   double x;
@@ -20,7 +21,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
   late List<Node> result;
   List<String> direction = [];
   List<Vec> vector = [];
@@ -51,12 +51,12 @@ class _SearchScreenState extends State<SearchScreen> {
 
     // Regular search
     var regularResult =
-    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
+        graph.aStar(graph.nodes, graph.edges, startNode, endNode);
     List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
     List<Node> regularPath =
-    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
+        reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
 
     for (int i = 0; i < regularPath.length; i++) {
       if (i == 0)
@@ -79,10 +79,28 @@ class _SearchScreenState extends State<SearchScreen> {
 
   String getDirection(Vec current, Vec next) {
     double crossProduct = current.x * next.y - current.y * next.x;
-    if (crossProduct > 0) {
-      return "오른쪽";
+    double dotProduct = current.x * next.x + current.y * next.y;
+
+    double currentLength = sqrt(current.x * current.x + current.y * current.y);
+    double nextLength = sqrt(next.x * next.x + next.y * next.y);
+
+    double cosTheta = dotProduct / (currentLength * nextLength);
+    double degree = (acos(cosTheta) * 180) / pi;
+
+    if (degree < 45) {
+      return "직진";
+    } else if (degree >= 45 && degree < 90) {
+      if (crossProduct > 0) {
+        return "오른쪽";
+      } else {
+        return "왼쪽";
+      }
     } else {
-      return "왼쪽";
+      if (crossProduct > 0) {
+        return "크게 오른쪽";
+      } else {
+        return "크게 왼쪽";
+      }
     }
   }
 
@@ -91,7 +109,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final arguments =
-    ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
+        ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
 
     if (arguments != null && count == 0) {
       firstController.text = arguments['start'] ?? '';
@@ -100,6 +118,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
@@ -336,8 +355,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     .contains(pattern.toLowerCase()));
                               },
                               suggestionsBoxDecoration:
-                              SuggestionsBoxDecoration(
-                                  color: const Color(0xffF9D5A8)),
+                                  SuggestionsBoxDecoration(
+                                      color: const Color(0xffF9D5A8)),
                               itemBuilder: (context, suggestion) {
                                 return ListTile(
                                   title: Text(suggestion),
@@ -346,6 +365,14 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   firstController.text = suggestion;
+                                  if (isExistBuilding(firstController.text) &&
+                                      isExistBuilding(secondController.text)) {
+                                    _handleSubmit();
+                                  } else {
+                                    setState(() {
+                                      check = 0;
+                                    });
+                                  }
                                 });
                               },
                               noItemsFoundBuilder: (context) {
@@ -383,8 +410,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   if (isExistBuilding(firstController.text) &&
                                       isExistBuilding(secondController.text)) {
                                     _handleSubmit();
-                                  }
-                                  else{
+                                  } else {
                                     setState(() {
                                       check = 0;
                                     });
@@ -407,8 +433,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     .contains(pattern.toLowerCase()));
                               },
                               suggestionsBoxDecoration:
-                              SuggestionsBoxDecoration(
-                                  color: const Color(0xffF9D5A8)),
+                                  SuggestionsBoxDecoration(
+                                      color: const Color(0xffF9D5A8)),
                               itemBuilder: (context, suggestion) {
                                 return ListTile(
                                   title: Text(suggestion),
@@ -417,6 +443,14 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   secondController.text = suggestion;
+                                  if (isExistBuilding(firstController.text) &&
+                                      isExistBuilding(secondController.text)) {
+                                    _handleSubmit();
+                                  } else {
+                                    setState(() {
+                                      check = 0;
+                                    });
+                                  }
                                 });
                               },
                               noItemsFoundBuilder: (context) {
@@ -446,7 +480,10 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Container(),
             )
           else if (check != 0)
-            CustomListWidget(items: result, direction: direction,),
+            CustomListWidget(
+              items: result,
+              direction: direction,
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
             child: SizedBox(
@@ -502,8 +539,8 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     direction.add("출발지");
     for (int i = 0; i < vector.length - 1; i++) {
-      print(getDirection(vector[i], vector[i+1]));
-      direction.add(getDirection(vector[i], vector[i+1]));
+      print(getDirection(vector[i], vector[i + 1]));
+      direction.add(getDirection(vector[i], vector[i + 1]));
       print("????");
     }
     direction.add("목적지");
@@ -511,7 +548,5 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       check = 1;
     });
-
   }
-
 }
