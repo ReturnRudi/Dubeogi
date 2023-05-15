@@ -94,15 +94,14 @@ class _SelectFromMapState extends State<SelectFromMap> {
   Widget build(BuildContext context) {
     if (!_imageLoaded_du) {
       return Container(
-          color: Colors.white,
-          child: Center(
+        color: Colors.white,
+        child: Center(
           child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),
-          ),
+        ),
       );
     }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -116,46 +115,57 @@ class _SelectFromMapState extends State<SelectFromMap> {
             onScaleStart: _onScaleStart,
             onScaleUpdate: _onScaleUpdate,
             onScaleEnd: _onScaleEnd,
-            child: Stack(
-              children: [
-                Scaffold(
-                  body: Center(
-                    child: Stack(
-                      children: [
-                        Transform.scale(
-                          scale: _scale,
-                          child: Transform.translate(
-                            offset: _position.scale(scale_offset, scale_offset),
-                            child: ClipRect(
-                              child: Image.asset(
-                                'assets/images/du.png',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+            child: Scaffold(
+              body: Center(
+                child: Stack(
+                  children: [
+                    Transform.scale(
+                      scale: _scale,
+                      child: Transform.translate(
+                        offset: _position.scale(scale_offset, scale_offset),
+                        child: ClipRect(
+                          child: Image.asset(
+                            'assets/images/du.png',
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Transform.translate(
-                            offset: Offset(0, -15),
-                            child: Image.asset(
-                              'assets/images/marker.png',
-                              width: 30.0,
-                              height: 30.0,
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Transform.translate(
+                        offset: Offset(0, -15),
+                        child: Image.asset(
+                          'assets/images/marker.png',
+                          width: 30.0,
+                          height: 30.0,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            color: Colors.orange, // Change the color to white or any other color
+            width: double.infinity,
+            child: Text(
+              '지도를 움직여 아이콘을 원하는 위치로 옮기세요',
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.white, // Change the text color to black or any other color
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
         ],
       ),
     );
   }
+
+
 }
 
 
