@@ -905,6 +905,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ],
                                     ),
                                   ),
+                                  Stack(  //건물명 띄울 스텍
+                                    children: [
+                                      //if(_scale > 2.5 )
+                                      Positioned(
+                                        width: 40 / _scale / scale_offset,
+                                        height: 20 / _scale / scale_offset,
+                                        left: 774 * scale_offset - 20 / _scale, //- 20 / _scale * scale_offset,
+                                        top: 3326 * scale_offset - 10 / _scale, //- 10 / _scale * scale_offset,
+                                        child: Text("중앙도서관",
+                                          style: TextStyle(
+                                              fontSize: 1 / _scale / scale_offset
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
