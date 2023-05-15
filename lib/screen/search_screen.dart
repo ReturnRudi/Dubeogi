@@ -3,6 +3,8 @@ import 'package:Dubeogi/component/appbar.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 import 'line_screen.dart';
+import 'package:Dubeogi/save/save.dart';
+import 'dart:math';
 
 class Vec {
   double x;
@@ -10,7 +12,6 @@ class Vec {
 
   Vec(this.x, this.y);
 }
-
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -20,7 +21,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
   late List<Node> result;
   List<String> direction = [];
   List<Vec> vector = [];
@@ -33,30 +33,6 @@ class _SearchScreenState extends State<SearchScreen> {
   int selectOption = 1;
   int count = 0;
   int check = 0;
-
-  final List<String> buildings = [
-    '다향관',
-    '명진관',
-    '과학관',
-    '대운동장앞',
-    '법학관',
-    '혜화관',
-    '경영관',
-    '사회과학관',
-    '문화관',
-    '학술관',
-    '중앙도서관',
-    '만해광장',
-    '상록원',
-    '원흥관',
-    '신공학관',
-    '정보문화관p',
-    '정보문화관q',
-    '체육관',
-    '학림관',
-    '정각원',
-    '학생회관'
-  ];
 
   List<Node> Astar_pathMaking(String startNodeName, String endNodeName) {
     //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
@@ -75,12 +51,12 @@ class _SearchScreenState extends State<SearchScreen> {
 
     // Regular search
     var regularResult =
-    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
+        graph.aStar(graph.nodes, graph.edges, startNode, endNode);
     List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
     List<Node> regularPath =
-    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
+        reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
 
     for (int i = 0; i < regularPath.length; i++) {
       if (i == 0)
@@ -103,10 +79,28 @@ class _SearchScreenState extends State<SearchScreen> {
 
   String getDirection(Vec current, Vec next) {
     double crossProduct = current.x * next.y - current.y * next.x;
-    if (crossProduct > 0) {
-      return "오른쪽";
+    double dotProduct = current.x * next.x + current.y * next.y;
+
+    double currentLength = sqrt(current.x * current.x + current.y * current.y);
+    double nextLength = sqrt(next.x * next.x + next.y * next.y);
+
+    double cosTheta = dotProduct / (currentLength * nextLength);
+    double degree = (acos(cosTheta) * 180) / pi;
+
+    if (degree < 45) {
+      return "";
+    } else if (degree >= 45 && degree < 90) {
+      if (crossProduct > 0) {
+        return "오른쪽";
+      } else {
+        return "왼쪽";
+      }
     } else {
-      return "왼쪽";
+      if (crossProduct > 0) {
+        return "크게 오른쪽";
+      } else {
+        return "크게 왼쪽";
+      }
     }
   }
 
@@ -124,6 +118,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
@@ -370,6 +365,14 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   firstController.text = suggestion;
+                                  if (isExistBuilding(firstController.text) &&
+                                      isExistBuilding(secondController.text)) {
+                                    _handleSubmit();
+                                  } else {
+                                    setState(() {
+                                      check = 0;
+                                    });
+                                  }
                                 });
                               },
                               noItemsFoundBuilder: (context) {
@@ -407,8 +410,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   if (isExistBuilding(firstController.text) &&
                                       isExistBuilding(secondController.text)) {
                                     _handleSubmit();
-                                  }
-                                  else{
+                                  } else {
                                     setState(() {
                                       check = 0;
                                     });
@@ -441,6 +443,14 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   secondController.text = suggestion;
+                                  if (isExistBuilding(firstController.text) &&
+                                      isExistBuilding(secondController.text)) {
+                                    _handleSubmit();
+                                  } else {
+                                    setState(() {
+                                      check = 0;
+                                    });
+                                  }
                                 });
                               },
                               noItemsFoundBuilder: (context) {
@@ -470,7 +480,10 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Container(),
             )
           else if (check != 0)
-            CustomListWidget(items: result, direction: direction,),
+            CustomListWidget(
+              items: result,
+              direction: direction,
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
             child: SizedBox(
@@ -526,8 +539,8 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     direction.add("출발지");
     for (int i = 0; i < vector.length - 1; i++) {
-      print(getDirection(vector[i], vector[i+1]));
-      direction.add(getDirection(vector[i], vector[i+1]));
+      print(getDirection(vector[i], vector[i + 1]));
+      direction.add(getDirection(vector[i], vector[i + 1]));
       print("????");
     }
     direction.add("목적지");
@@ -535,7 +548,5 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       check = 1;
     });
-
   }
-
 }

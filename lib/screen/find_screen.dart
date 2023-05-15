@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../component/appbar.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/save/building_info.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 // 검색창을 누르면 나오는 스크린.
-
 class FindScreen extends StatefulWidget {
   const FindScreen({Key? key}) : super(key: key);
 
@@ -12,17 +12,19 @@ class FindScreen extends StatefulWidget {
   State<FindScreen> createState() => _FindScreenState();
 }
 
+
 class _FindScreenState extends State<FindScreen> {
   final Controller = TextEditingController();
   String result = '';
   dynamic getdata;
 
   // 해당 건물이 존재하는지 확인
-  bool isExistBuilding(String name) => names.contains(name);
+  bool isExistBuilding(String name) => buildings.contains(name);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
@@ -38,18 +40,48 @@ class _FindScreenState extends State<FindScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 4.0),
                     child: Container(
                       width: 200.0,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.7),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide.none,
+                      child: TypeAheadField(
+                        textFieldConfiguration: TextFieldConfiguration(
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              borderSide: BorderSide.none,
+                            ),
+                            hintText: '검색하거나 아래 목록을 터치하세요',
+                            hintStyle: TextStyle(color: Colors.grey),
                           ),
-                          hintText: '검색하거나 아래 목록을 터치하세요',
-                          hintStyle: TextStyle(color: Colors.grey),
+                          controller: Controller,
                         ),
-                        controller: Controller,
+                        suggestionsCallback: (pattern) {
+                          return buildings.where((building) => building.toLowerCase().contains(pattern.toLowerCase()));
+                        },
+                        itemBuilder: (context, suggestion) {
+                          return ListTile(
+                            title: Text(suggestion),
+                          );
+                        },
+                        onSuggestionSelected: (suggestion) {
+                          print(suggestion);
+                          setState(() {
+                            Controller.text = suggestion;
+                          });
+                        },
+                        noItemsFoundBuilder: (context) {
+                          return Container(
+                            height: 45.0,
+                            child: Center(
+                              child: Text(
+                                '건물명을 정확히 입력해주세요.',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -72,7 +104,7 @@ class _FindScreenState extends State<FindScreen> {
                           ),
                         );
                         setState(() {
-                            Navigator.pop(context, getdata);
+                          Navigator.pop(context, getdata);
                         });
                       } else {
                         print('debug: isExistBuilding false');
@@ -119,9 +151,9 @@ class _FindScreenState extends State<FindScreen> {
             // 3. 검색창 아래 뜨는 터치할 수 있는 리스트뷰(건묾명 등)
             Expanded(
               child: ListView.builder(
-                itemCount: names.length,
+                itemCount: buildings.length,
                 itemBuilder: (context, index) {
-                  final name = names[index];
+                  final name = buildings[index];
                   return GestureDetector(
                     onTap: () {
                       setState(() {
@@ -222,7 +254,7 @@ class _BuildingInfoState extends State<BuildingInfo> {
                     arguments: {'start': widget.title, 'end': ''},
                   );
                   setState(() {
-                      Navigator.pop(context, getdata);
+                    Navigator.pop(context, getdata);
                   });
                 },
                 style: OutlinedButton.styleFrom(
@@ -280,8 +312,8 @@ class _BuildingInfoState extends State<BuildingInfo> {
             child: ListView.builder(
               itemCount: _displayedAmenities.length,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 60.0,
+                return InkWell(
+                  onTap: (){},
                   child: ListTile(
                     leading: _displayedAmenities[index].icon,
                     title: Text('${_displayedAmenities[index].name}'),

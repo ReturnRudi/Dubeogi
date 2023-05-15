@@ -5,6 +5,7 @@ import 'package:Dubeogi/algorithm/astar.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/component/draw_line.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
@@ -25,14 +26,27 @@ class _HomeScreenState extends State<HomeScreen> {
   int nowFloor = 0;
   String _showButton = "기본";
 
-  //late String nowBuilding;
+  double _scale = 1.3;
+  double _previousScale = 1.0;
+  Offset _position = Offset.zero;
+  Offset _previousPosition = Offset.zero;
 
+  List<Offset> startPoints = [];
+  List<Offset> endPoints = [];
+
+  String _startNodeName = "";
+  String _endNodeName = "";
+  dynamic result;
+
+  //late String nowBuilding;
   bool _vendingvisibility = false;
   bool _showervisibility = false;
   bool _storevisibility = false;
   bool _atmvisibility = false;
   bool _loungevisibility = false;
   bool _printervisibility = false;
+
+  // for drawer widget
 
   void _vendingshow() {
     setState(() {
@@ -182,63 +196,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  double _scale = 1.3;
-  double _previousScale = 1.0;
-  Offset _position = Offset.zero;
-  Offset _previousPosition = Offset.zero;
-
-  List<Offset> startPoints = [];
-  List<Offset> endPoints = [];
-
-  void erase() {
-    startPoints.clear();
-    endPoints.clear();
-  }
-
-  String _startNodeName = "";
-  String _endNodeName = "";
-  dynamic result;
-
   @override
   void initState() {
     super.initState();
     _getImageInfo();
-
-    graph.addEdge("다향관", "명진관", 100, "평지", "차도",
-        node1X: 1451,
-        node1Y: 2469,
-        inside1: 0,
-        building1: "다향관",
-        building2: "명진관",
-        node2X: 1320,
-        node2Y: 2900,
-        inside2: 0,);
-    graph.addEdge("명진관", "과학관", 30, "평지", "차도",
-        node2X: 1248, node2Y: 3071, inside2: 0, building2: "과학관");
-    graph.addEdge("과학관", "대운동장앞", 20, "평지", "차도",
-        node2X: 1589, node2Y: 3421, inside2: 0, building2: "밖");
-    graph.addEdge("명진관", "법학관", 70, "평지", "차도",
-        node2X: 1656, node2Y: 2641, inside2: 0, building2: "법학관");
-    graph.addEdge("다향관", "법학관", 70, "평지", "차도");
-    graph.addEdge("법학관", "혜화관", 50, "평지", "차도",
-        node2X: 1990, node2Y: 2882, inside2: 0, building2: "혜화관");
-    graph.addEdge("법학관", "대운동장앞", 170, "평지", "차도");
-    graph.addEdge("대운동장앞", "경영관", 200, "평지", "차도",
-        node2X: 2366, node2Y: 3214, inside2: 0, building2: "경영관");
-    graph.addEdge("대운동장앞", "명진관", 220, "평지", "차도");
-    graph.addEdge("대운동장앞", "혜화관", 80, "평지", "차도");
-    graph.addEdge("경영관", "사회과학관", 10, "평지", "도보",
-        node2X: 2274, node2Y: 2921, inside2: 0, building2: "사화과학관");
-    graph.addEdge("사회과학관", "혜화관", 30, "평지", "차도");
-    graph.addEdge("혜화관", "문화관", 45, "평지", "도보",
-        node2X: 2416, node2Y: 2838, inside2: 3, building2: "문화관");
-    graph.addEdge("사회과학관", "문화관", 20, "평지", "도보");
-    graph.addEdge("문화관", "학술관", 20, "평지", "도보",
-        node2X: 2595, node2Y: 2722, inside2: 0, building2: "학술관");
-
-    for (int i = 0; i < graph.nodes.length; i++) {
-      names.add(graph.nodes[i].name);
-    }
+    initGraph();
   }
 
   Future<void> _getImageInfo() async {
@@ -317,6 +279,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void erase() {
+    startPoints.clear();
+    endPoints.clear();
+  }
+
   void floorButtonPath(int nowFloor, String nowBuilding) {
     //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
     erase();
@@ -356,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Regular search
     var regularResult =
-        graph.aStar(graph.nodes, graph.edges, startNode, endNode);
+    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
     List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
@@ -406,17 +373,24 @@ class _HomeScreenState extends State<HomeScreen> {
     //print('Initial _position: $_position');
   }
 
+  bool testVar = false;
+  bool isMenuOpen = false;
+
   @override
   Widget build(BuildContext context) {
     if (!_imageLoaded_du) {
       return Container(
-        color: Color(0xFFDCB6),
+        color: Colors.white,
         child: Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+          ),
         ),
       );
     }
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: '동국대학교',
       ),
@@ -525,8 +499,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                         Positioned(
-                                          left: 1528 * scale_offset,
-                                          top: 2563 * scale_offset,
+                                          left: 1530 * scale_offset,
+                                          top: 2564 * scale_offset,
                                           child: InkWell(
                                             onTap: () {
                                               selectedHall = '법학관_만해관';
@@ -965,6 +939,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Astar_pathMaking(
                                           _startNodeName, _endNodeName);
                                     });
+                                    testVar = true;
                                   }
                                 },
                                 child: Container(
@@ -1015,6 +990,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Astar_pathMaking(
                                         _startNodeName, _endNodeName);
                                   });
+                                  testVar = true;
                                 }
                               },
                               child: Column(
@@ -2248,6 +2224,73 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               child: Text(
                 '값넘기기실험중 $_startNodeName and $_endNodeName',
+              ),
+            ),
+          ),
+          testVar
+              ? Positioned(
+                  bottom: 100,
+                  right: 50,
+                  child: isMenuOpen
+                      ? ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              isMenuOpen = !isMenuOpen;
+                            });
+                          },
+                          child: Text("Close"),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              isMenuOpen = !isMenuOpen;
+                            });
+                          },
+                          child: Text("Open"),
+                        ),
+                )
+              : Text("hi"),
+          testVar
+              ? Positioned(
+                  bottom: 50,
+                  right: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        erase();
+                        testVar = false;
+                        isMenuOpen = false;
+                        _startNodeName = "";
+                        _endNodeName = "";
+                      });
+                    },
+                    child: Text("erase"),
+                  ),
+                )
+              : Text("hi"),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            transform: Matrix4.translationValues(isMenuOpen ? 0 : -300, 0, 0),
+            child: Container(
+              width: 200,
+              height: double.infinity,
+              color: Colors.white,
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      print("${items[index]}");
+                      Navigator.pushNamed(
+                        context,
+                        '/detail'
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(items[index]),
+                    ),
+                  );
+                },
               ),
             ),
           ),
