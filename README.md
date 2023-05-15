@@ -57,4 +57,10 @@ LinePainter가 밑에 그려지는 오류 수정
 
 시설 정보 ListView 객체 구현  
 
+<5/14>
+야외 노드 추가  
 
+find_screen.dart에 suggestion 추가
+
+<5/15>
+임시 드로어 페이지 추가  
