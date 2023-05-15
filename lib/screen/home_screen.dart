@@ -3061,8 +3061,8 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("혜화관 입구", "혜화관", 100, "평지", "도보",
         node2X: 1993,
         node2Y: 2884,
-        isInside2: 0,
-        building2: "실외",
+        isInside2: 1,
+        building2: "혜화관",
         showRoute2: false);
     graph.addEdge("혜화관", "혜화관 입구", 100, "평지", "도보");
     //혜화관 4층 입구

@@ -48,7 +48,8 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
       // ... 다른 시설 정보들
     ],
-  ),BuildingInfoDetail(
+  ),
+  BuildingInfoDetail(
     name: '과학관',
     teleNumber: '010-1234-5678',
     operatingHours: '09:00 - 18:00',
@@ -57,7 +58,8 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
       // ... 다른 시설 정보들
     ],
-  ),BuildingInfoDetail(
+  ),
+  BuildingInfoDetail(
     name: '대운동장앞',
     teleNumber: '010-1234-5678',
     operatingHours: '09:00 - 18:00',
@@ -66,7 +68,8 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
       // ... 다른 시설 정보들
     ],
-  ),BuildingInfoDetail(
+  ),
+  BuildingInfoDetail(
     name: '법학관',
     teleNumber: '010-1234-5678',
     operatingHours: '09:00 - 18:00',
@@ -75,7 +78,8 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
       // ... 다른 시설 정보들
     ],
-  ),BuildingInfoDetail(
+  ),
+  BuildingInfoDetail(
     name: '혜화관',
     teleNumber: '010-1234-5678',
     operatingHours: '09:00 - 18:00',
@@ -84,7 +88,8 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
       // ... 다른 시설 정보들
     ],
-  ),BuildingInfoDetail(
+  ),
+  BuildingInfoDetail(
     name: '경영관',
     teleNumber: '010-1234-5678',
     operatingHours: '09:00 - 18:00',
@@ -93,7 +98,8 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
       // ... 다른 시설 정보들
     ],
-  ),BuildingInfoDetail(
+  ),
+  BuildingInfoDetail(
     name: '사회과학관',
     teleNumber: '010-1234-5678',
     operatingHours: '09:00 - 18:00',
@@ -102,7 +108,8 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
       // ... 다른 시설 정보들
     ],
-  ),BuildingInfoDetail(
+  ),
+  BuildingInfoDetail(
     name: '문화관',
     teleNumber: '010-1234-5678',
     operatingHours: '09:00 - 18:00',
@@ -111,7 +118,8 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
       // ... 다른 시설 정보들
     ],
-  ),BuildingInfoDetail(
+  ),
+  BuildingInfoDetail(
     name: '학술관',
     teleNumber: '010-1234-5678',
     operatingHours: '09:00 - 18:00',
@@ -121,8 +129,114 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       // ... 다른 시설 정보들
     ],
   ),
+  BuildingInfoDetail(
+    name: '중앙도서관',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '만해광장',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '상록원',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '원흥관',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '신공학관',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '정보문화관p',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '정보문화관q',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '체육관',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '학림관',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '정각원',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
+  BuildingInfoDetail(
+    name: '학생회관',
+    teleNumber: '010-1234-5678',
+    operatingHours: '09:00 - 18:00',
+    amenities: [
+      Amenity(icon: Icon(Icons.shower), name: '샤워실 1', description: '샤워실 설명 1'),
+      Amenity(icon: Icon(Icons.local_drink), name: '자판기 1', description: '자판기 설명 1'),
+      // ... 다른 시설 정보들
+    ],
+  ),
 ];
-
-
-
-
