@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 late double scale_offset;
 
 class SelectFromMap extends StatefulWidget {
+  final bool destination; //false 출발지, true 도착지
+
+  SelectFromMap({required this.destination});
+
   @override
   State<SelectFromMap> createState() => _SelectFromMapState();
 }
@@ -162,6 +166,17 @@ class _SelectFromMapState extends State<SelectFromMap> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pop(context, _position);
+        },
+        label: Text(
+          widget.destination ? '도착지로' : '출발지로',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.orange,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 

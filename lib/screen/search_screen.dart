@@ -389,12 +389,17 @@ class _SearchScreenState extends State<SearchScreen> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => SelectFromMap()),
-                                );
-                              },
+                                onTap: () async {
+                                  Offset? result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SelectFromMap(destination: false)),
+                                  );
+
+                                  if (result != null) {
+                                    //firstController.text = '${result.dx}, ${result.dy}';
+                                    firstController.text = '지도에서 선택한 출발지';
+                                  }
+                                },
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
                                 padding: EdgeInsets.all(15.0), // Add padding to the container
@@ -488,11 +493,19 @@ class _SearchScreenState extends State<SearchScreen> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
+                                onTap: () async {
+                                  Offset? result = await Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => SelectFromMap()),
+                                    MaterialPageRoute(builder: (context) => SelectFromMap(destination: true)),
                                   );
+
+                                  if (result != null) {
+                                    //secondController.text = '${result.dx}, ${result.dy}';
+                                    secondController.text = '지도에서 선택한 도착지';
+                                  }
+                                  //dx, dy를 픽셀값에 맞게 변환 후 해당 위치와 가장 가까이 있는 노드를 찾는다
+                                  //addEdge를 통해 두 노드를 연결하는 엣지를 그래프에 임시로 추가한 후
+                                  //탐색을 한다
                                 },
                                 child: Container(
                                   margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
