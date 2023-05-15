@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
+import 'dart:math';
 
 class CustomListWidget extends StatefulWidget {
   final List<Node> items;
@@ -20,20 +21,64 @@ class _CustomListWidgetState extends State<CustomListWidget> {
         child: ListView.builder(
           itemCount: widget.items.length,
           itemBuilder: (BuildContext context, int index) {
+            IconData? icon;
+            double angle = 0.0;
+
+            if (widget.direction[index].contains("크게 왼쪽")) {
+              icon = Icons.arrow_back;
+            }
+            else if (widget.direction[index].contains("크게 오른쪽")) {
+              icon = Icons.arrow_forward;
+            }
+            else if (widget.direction[index].contains("왼쪽")) {
+              icon = Icons.arrow_back;
+              angle = pi/4;
+            }
+            else if (widget.direction[index].contains("오른쪽")) {
+              icon = Icons.arrow_forward;
+              angle = -pi/4;
+            }
+
             return Row(
               children: [
+                if (icon != null)
+                  Transform.rotate(
+                    angle: angle, // -90도를 라디안으로 표현한 값
+                    child: Icon(
+                      icon,
+                      color: Colors.blue,
+                    ),
+                  ),
+                SizedBox(width: icon == null ? 24.0 : 0.0),
+                SizedBox(width: 8.0),
                 Container(
-                  margin: EdgeInsets.all(10),
-                  width: 20,
-                  height: 20,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.items[index].name,
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(width: 10.0),
+                          Text(
+                            widget.direction[index],
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8.0),
+                    ],
+                  ),
                 ),
-                Text(widget.items[index].name),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  width: 20,
-                  height: 5,
-                ),
-                Text(widget.direction[index]),// 항목별로 표시되는 텍스트
               ],
             );
           },
