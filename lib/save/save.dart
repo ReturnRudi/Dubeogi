@@ -27,6 +27,7 @@ String atmPath = 'assets/images/facility/atm.png';
 String loungePath = 'assets/images/facility/lounge.png';
 String printerPath = 'assets/images/facility/printer.png';
 
+<<<<<<< Updated upstream
 final List<String> buildings = [
   '다향관',
   '명진관',
@@ -50,3 +51,10 @@ final List<String> buildings = [
   '정각원',
   '학생회관'
 ];
+=======
+List<String> names = [];
+
+
+// for test
+List<String> items = ['a','b','c','d','e'];
+>>>>>>> Stashed changes

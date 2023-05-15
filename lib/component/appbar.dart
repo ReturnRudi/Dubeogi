@@ -11,6 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
       backgroundColor: Colors.orange, // 앱바 색상 설정
       centerTitle: true, // 제목을 가운데 정렬하기 위해 설정
       title: Row(

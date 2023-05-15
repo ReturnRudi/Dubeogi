@@ -312,8 +312,8 @@ class _BuildingInfoState extends State<BuildingInfo> {
             child: ListView.builder(
               itemCount: _displayedAmenities.length,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 60.0,
+                return InkWell(
+                  onTap: (){},
                   child: ListTile(
                     leading: _displayedAmenities[index].icon,
                     title: Text('${_displayedAmenities[index].name}'),

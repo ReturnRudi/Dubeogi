@@ -5,6 +5,7 @@ import 'package:Dubeogi/algorithm/astar.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/component/draw_line.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
@@ -44,6 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _atmvisibility = false;
   bool _loungevisibility = false;
   bool _printervisibility = false;
+
+  // for drawer widget
 
   void _vendingshow() {
     setState(() {
@@ -198,6 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _getImageInfo();
 
+<<<<<<< Updated upstream
 /*    graph.addEdge("Node1 이름", "Node2 이름", 거리, "평지" or "계단" or "오르막", "도보" or "차도",
         node1X: Node1 x 픽셀값,
         node1Y: Node1 y 픽셀값,
@@ -3153,6 +3157,45 @@ class _HomeScreenState extends State<HomeScreen> {
     graph.addEdge("과학관 우측 입구", "과학관", 100, "평지", "도보");
     graph.addEdge("과학관", "과학관 우측 입구", 100, "평지", "도보");
 
+=======
+    graph.addEdge(
+      "다향관",
+      "명진관",
+      100,
+      "평지",
+      "차도",
+      node1X: 1451,
+      node1Y: 2469,
+      inside1: 0,
+      building1: "다향관",
+      building2: "명진관",
+      node2X: 1320,
+      node2Y: 2900,
+      inside2: 0,
+    );
+    graph.addEdge("명진관", "과학관", 30, "평지", "차도",
+        node2X: 1248, node2Y: 3071, inside2: 0, building2: "과학관");
+    graph.addEdge("과학관", "대운동장앞", 20, "평지", "차도",
+        node2X: 1589, node2Y: 3421, inside2: 0, building2: "밖");
+    graph.addEdge("명진관", "법학관", 70, "평지", "차도",
+        node2X: 1656, node2Y: 2641, inside2: 0, building2: "법학관");
+    graph.addEdge("다향관", "법학관", 70, "평지", "차도");
+    graph.addEdge("법학관", "혜화관", 50, "평지", "차도",
+        node2X: 1990, node2Y: 2882, inside2: 0, building2: "혜화관");
+    graph.addEdge("법학관", "대운동장앞", 170, "평지", "차도");
+    graph.addEdge("대운동장앞", "경영관", 200, "평지", "차도",
+        node2X: 2366, node2Y: 3214, inside2: 0, building2: "경영관");
+    graph.addEdge("대운동장앞", "명진관", 220, "평지", "차도");
+    graph.addEdge("대운동장앞", "혜화관", 80, "평지", "차도");
+    graph.addEdge("경영관", "사회과학관", 10, "평지", "도보",
+        node2X: 2274, node2Y: 2921, inside2: 0, building2: "사화과학관");
+    graph.addEdge("사회과학관", "혜화관", 30, "평지", "차도");
+    graph.addEdge("혜화관", "문화관", 45, "평지", "도보",
+        node2X: 2416, node2Y: 2838, inside2: 3, building2: "문화관");
+    graph.addEdge("사회과학관", "문화관", 20, "평지", "도보");
+    graph.addEdge("문화관", "학술관", 20, "평지", "도보",
+        node2X: 2595, node2Y: 2722, inside2: 0, building2: "학술관");
+>>>>>>> Stashed changes
 
   }
 
@@ -3326,6 +3369,9 @@ class _HomeScreenState extends State<HomeScreen> {
     //print('Initial _position: $_position');
   }
 
+  bool testVar = false;
+  bool isMenuOpen = false;
+
   @override
   Widget build(BuildContext context) {
     if (!_imageLoaded_du) {
@@ -3333,11 +3379,12 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.white,
         child: Center(
           child: CircularProgressIndicator(
-            valueColor:AlwaysStoppedAnimation<Color>(Colors.orange),
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),
         ),
       );
     }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
@@ -3888,6 +3935,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Astar_pathMaking(
                                           _startNodeName, _endNodeName);
                                     });
+                                    testVar = true;
                                   }
                                 },
                                 child: Container(
@@ -3938,6 +3986,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Astar_pathMaking(
                                         _startNodeName, _endNodeName);
                                   });
+                                  testVar = true;
                                 }
                               },
                               child: Column(
@@ -5171,6 +5220,73 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               child: Text(
                 '값넘기기실험중 $_startNodeName and $_endNodeName',
+              ),
+            ),
+          ),
+          testVar
+              ? Positioned(
+                  bottom: 100,
+                  right: 50,
+                  child: isMenuOpen
+                      ? ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              isMenuOpen = !isMenuOpen;
+                            });
+                          },
+                          child: Text("Close"),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              isMenuOpen = !isMenuOpen;
+                            });
+                          },
+                          child: Text("Open"),
+                        ),
+                )
+              : Text("hi"),
+          testVar
+              ? Positioned(
+                  bottom: 50,
+                  right: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        erase();
+                        testVar = false;
+                        isMenuOpen = false;
+                        _startNodeName = "";
+                        _endNodeName = "";
+                      });
+                    },
+                    child: Text("erase"),
+                  ),
+                )
+              : Text("hi"),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            transform: Matrix4.translationValues(isMenuOpen ? 0 : -300, 0, 0),
+            child: Container(
+              width: 200,
+              height: double.infinity,
+              color: Colors.white,
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      print("${items[index]}");
+                      Navigator.pushNamed(
+                        context,
+                        '/detail'
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(items[index]),
+                    ),
+                  );
+                },
               ),
             ),
           ),
