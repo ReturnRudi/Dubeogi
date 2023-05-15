@@ -88,7 +88,7 @@ class _SearchScreenState extends State<SearchScreen> {
     double degree = (acos(cosTheta) * 180) / pi;
 
     if (degree < 45) {
-      return "";
+      return "직진";
     } else if (degree >= 45 && degree < 90) {
       if (crossProduct > 0) {
         return "오른쪽";

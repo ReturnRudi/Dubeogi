@@ -38,6 +38,12 @@ class _CustomListWidgetState extends State<CustomListWidget> {
               icon = Icons.arrow_forward;
               angle = -pi/4;
             }
+            else if (widget.direction[index].contains("출발지") || widget.direction[index].contains("목적지")) {
+              icon = Icons.place;
+            }
+            else{
+              icon = Icons.arrow_upward_rounded;
+            }
 
             return Row(
               children: [
