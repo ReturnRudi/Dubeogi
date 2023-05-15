@@ -5,6 +5,7 @@ import 'package:Dubeogi/algorithm/astar.dart';
 import 'line_screen.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'dart:math';
+import 'package:Dubeogi/screen/select_from_map.dart';
 
 class Vec {
   double x;
@@ -326,72 +327,88 @@ class _SearchScreenState extends State<SearchScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF8D4A8),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Stack(
-                          children: [
-                            TypeAheadField(
-                              textFieldConfiguration: TextFieldConfiguration(
-                                  controller: firstController,
-                                  focusNode: firstFocus,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 10),
-                                    hintText: '출발 지점을 입력하세요',
-                                    filled: true,
-                                    fillColor: const Color(0xffF9D5A8),
-                                  ),
-                                  onSubmitted: (_) {
-                                    FocusScope.of(context)
-                                        .requestFocus(secondFocus);
-                                  }),
-                              suggestionsCallback: (pattern) {
-                                return buildings.where((text) => text
-                                    .toLowerCase()
-                                    .contains(pattern.toLowerCase()));
-                              },
-                              suggestionsBoxDecoration:
-                                  SuggestionsBoxDecoration(
-                                      color: const Color(0xffF9D5A8)),
-                              itemBuilder: (context, suggestion) {
-                                return ListTile(
-                                  title: Text(suggestion),
-                                );
-                              },
-                              onSuggestionSelected: (suggestion) {
-                                setState(() {
-                                  firstController.text = suggestion;
-                                  if (isExistBuilding(firstController.text) &&
-                                      isExistBuilding(secondController.text)) {
-                                    _handleSubmit();
-                                  } else {
-                                    setState(() {
-                                      check = 0;
-                                    });
-                                  }
-                                });
-                              },
-                              noItemsFoundBuilder: (context) {
-                                return Container(
-                                  height: 45.0,
-                                  child: Center(
-                                    child: Text(
-                                      '건물명을 정확히 입력해주세요.',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.grey,
-                                      ),
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF8D4A8),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Stack(
+                        children: [
+                          TypeAheadField(
+                            textFieldConfiguration: TextFieldConfiguration(
+                                controller: firstController,
+                                focusNode: firstFocus,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                  hintText: '출발 지점을 입력하세요',
+                                  filled: true,
+                                  fillColor: const Color(0xffF9D5A8),
+                                ),
+                                onSubmitted: (_) {
+                                  FocusScope.of(context).requestFocus(secondFocus);
+                                }),
+                            suggestionsCallback: (pattern) {
+                              return buildings.where((text) => text
+                                  .toLowerCase()
+                                  .contains(pattern.toLowerCase()));
+                            },
+                            suggestionsBoxDecoration: SuggestionsBoxDecoration(color: const Color(0xffF9D5A8)),
+                            itemBuilder: (context, suggestion) {
+                              return ListTile(
+                                title: Text(suggestion),
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              setState(() {
+                                firstController.text = suggestion;
+                                if (isExistBuilding(firstController.text) && isExistBuilding(secondController.text)) {
+                                  _handleSubmit();
+                                } else {
+                                  setState(() {
+                                    check = 0;
+                                  });
+                                }
+                              });
+                            },
+                            noItemsFoundBuilder: (context) {
+                              return Container(
+                                height: 45.0,
+                                child: Center(
+                                  child: Text(
+                                    '건물명을 정확히 입력해주세요.',
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
                                     ),
                                   ),
+                                ),
+                              );
+                            },
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => SelectFromMap()),
                                 );
                               },
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
+                                padding: EdgeInsets.all(15.0), // Add padding to the container
+                                decoration: BoxDecoration(
+                                  color: Colors.orange,
+                                  borderRadius: BorderRadius.circular(10), // Add borderRadius
+                                ),
+                                child: Text('지도', style: TextStyle(color: Colors.white)),
+                              ),
                             ),
-                          ],
-                        )),
+                          ),
+                        ],
+                      ),
+                    ),
                     Container(
                       height: 2,
                       color: Colors.orange,
@@ -467,6 +484,26 @@ class _SearchScreenState extends State<SearchScreen> {
                                   ),
                                 );
                               },
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SelectFromMap()),
+                                  );
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
+                                  padding: EdgeInsets.all(15.0), // Add padding to the container
+                                  decoration: BoxDecoration(
+                                    color: Colors.orange,
+                                    borderRadius: BorderRadius.circular(10), // Add borderRadius
+                                  ),
+                                  child: Text('지도', style: TextStyle(color: Colors.white)),
+                                ),
+                              ),
                             ),
                           ],
                         )),

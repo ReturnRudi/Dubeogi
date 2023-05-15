@@ -245,6 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       // 화면 크기를 얻습니다.
       print('position: $_position');
+      print("_scale: $_scale");
       final ratio = MediaQuery.of(context).size.height /
           MediaQuery.of(context).size.width;
       final screenWidth = _imageWidth_du / _scale; //화면에서 보여지는 너비의 물리적 픽셀값
@@ -363,13 +364,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print("Total distance: ${regularDist[endIndex]}");
 
-    // 프로그램이 실행될 때의 _position 값을 출력합니다.
+
 
     for (int i = 0; i < startNodes.length; i++) {
       print('startPoints: $startPoints');
       print('endPoints: $endPoints');
     }
 
+    // 프로그램이 실행될 때의 _position 값을 출력합니다.
     //print('Initial _position: $_position');
   }
 
