@@ -56,10 +56,32 @@ class _SelectFromMapState extends State<SelectFromMap> {
   void _onScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
       _scale = (_previousScale * details.scale).clamp(3.0, 8.0);
+      final ratio = MediaQuery.of(context).size.height /
+          MediaQuery.of(context).size.width;
+      final screenWidth = _imageWidth_du / _scale;
+      final screenHeight = screenWidth * ratio;
+
+      double minY, maxY;
+
+      double minX = -_imageWidth_du / 2 + screenWidth / 2;
+      double maxX = _imageWidth_du / 2 - screenWidth / 2;
+
+      if (_imageHeight_du > screenHeight) {
+        minY = -_imageHeight_du / 2 + screenHeight / 2;
+        maxY = _imageHeight_du / 2 - screenHeight / 2;
+      } else {
+        minY = _imageHeight_du / 2 - screenHeight / 2;
+        maxY = -_imageHeight_du / 2 + screenHeight / 2;
+      }
 
       _position += (details.focalPoint - _previousPosition) /
           _previousScale /
           scale_offset;
+
+      _position = Offset(
+        _position.dx.clamp(minX, maxX),
+        _position.dy.clamp(minY, maxY),
+      );
 
       _previousPosition = details.focalPoint;
     });
