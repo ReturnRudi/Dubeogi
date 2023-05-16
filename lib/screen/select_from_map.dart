@@ -55,7 +55,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
 
   void _onScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
-      _scale = (_previousScale * details.scale).clamp(3.0, double.infinity);
+      _scale = (_previousScale * details.scale).clamp(3.0, 8.0);
 
       _position += (details.focalPoint - _previousPosition) /
           _previousScale /

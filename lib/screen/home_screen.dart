@@ -230,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
-      _scale = (_previousScale * details.scale).clamp(1.3, double.infinity);
+      _scale = (_previousScale * details.scale).clamp(1.3, 8.0);
 
       _position += (details.focalPoint - _previousPosition) /
           _previousScale /
