@@ -126,7 +126,7 @@ class Graph {
         continue;
       }
 
-/*      for (Edge edge in edges) {
+/*      for (Edge edge in edges) {  //양방향 그래프 주석으로 남겨둠
         if (edge.node1.name == nodes[currentNode].name || edge.node2.name == nodes[currentNode].name) {
           int nextNode;
           if (edge.node1.name == nodes[currentNode].name) {

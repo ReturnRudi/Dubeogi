@@ -396,9 +396,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                   );
 
                                   if (result != null) {
-                                    //firstController.text = '${result.dx}, ${result.dy}';
-                                    firstController.text = '지도에서 선택한 출발지';
+                                    firstController.text = '${result.dx}, ${result.dy}';
+                                    //firstController.text = '지도에서 선택한 출발지';
                                   }
+
+                                  //dx, dy를 픽셀값에 맞게 변환 후 해당 위치와 가장 가까이 있는 노드를 찾는다
+                                  //addEdge를 통해 두 노드를 연결하는 엣지를 그래프에 임시로 추가한 후 탐색을 한다.
+
                                 },
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
