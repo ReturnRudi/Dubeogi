@@ -52,6 +52,9 @@ final List<String> buildings = [
   '학림관',
   '정각원',
   '학생회관',
+];
+
+final List<String> selectFromMap = [
   '지도에서 선택한 출발지',
   '지도에서 선택한 도착지'
 ];

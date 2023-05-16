@@ -187,6 +187,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   bool isExistBuilding(String name) => buildings.contains(name);
+  bool isExistSelectFromMAp(String name) => selectFromMap.contains(name);
 
   @override
   Widget build(BuildContext context) {
@@ -352,7 +353,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             onSuggestionSelected: (suggestion) {
                               setState(() {
                                 firstController.text = suggestion;
-                                if (isExistBuilding(firstController.text) && isExistBuilding(secondController.text)) {
+                                if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
+                                    && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
                                   _handleSubmit();
                                 } else {
                                   setState(() {
@@ -397,7 +399,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       if (newGraph == null) {
                                         newGraph = selectFromMapNewGraph(firstController.text, dx_pixel, dy_pixel, closestNode);
                                       } else {
-                                        double weight = sqrt((dx_pixel - closestNode.x) * (dy_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
+                                        double weight = sqrt((dx_pixel - closestNode.x) * (dx_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
                                         int weight_int = weight.toInt();
 
                                         newGraph!.addEdge(closestNode.name, firstController.text, weight_int, "평지", "도보",
@@ -407,6 +409,14 @@ class _SearchScreenState extends State<SearchScreen> {
                                             building2: "실외",
                                             showRoute2: false);
                                         newGraph!.addEdge(firstController.text, closestNode.name, weight_int, "평지", "도보");
+                                      }
+                                      if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
+                                          && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
+                                        _handleSubmit();
+                                      } else {
+                                        setState(() {
+                                          check = 0;
+                                        });
                                       }
                                     }
                                   }
@@ -442,8 +452,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             TypeAheadField(
                               textFieldConfiguration: TextFieldConfiguration(
                                 onSubmitted: (_) {
-                                  if (isExistBuilding(firstController.text) &&
-                                      isExistBuilding(secondController.text)) {
+                                  if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
+                                      && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
                                     _handleSubmit();
                                   } else {
                                     setState(() {
@@ -478,8 +488,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   secondController.text = suggestion;
-                                  if (isExistBuilding(firstController.text) &&
-                                      isExistBuilding(secondController.text)) {
+                                  if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
+                                      && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
                                     _handleSubmit();
                                   } else {
                                     setState(() {
@@ -506,17 +516,6 @@ class _SearchScreenState extends State<SearchScreen> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: InkWell(
-/*                                onTap: () async {
-                                  Offset? result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => SelectFromMap(destination: true)),
-                                  );
-
-                                  if (result != null) {
-                                    //secondController.text = '${result.dx}, ${result.dy}';
-                                    secondController.text = '지도에서 선택한 도착지';
-                                  }
-                                },*/
                                 onTap: () async {
                                   Offset? result = await Navigator.push(
                                     context,
@@ -535,7 +534,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                         if (newGraph == null) {
                                           newGraph = selectFromMapNewGraph(secondController.text, dx_pixel, dy_pixel, closestNode);
                                         } else {
-                                          double weight = sqrt((dx_pixel - closestNode.x) * (dy_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
+                                          double weight = sqrt((dx_pixel - closestNode.x) * (dx_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
+                                          print("dx_pixel: $dx_pixel   dy_pixel: $dy_pixel   closestNode.x: ${closestNode.x}   closestNode.y: ${closestNode.y}");
+                                          print("weight: $weight");
                                           int weight_int = weight.toInt();
 
                                           newGraph!.addEdge(closestNode.name, secondController.text, weight_int, "평지", "도보",
@@ -545,6 +546,14 @@ class _SearchScreenState extends State<SearchScreen> {
                                               building2: "실외",
                                               showRoute2: false);
                                           newGraph!.addEdge(secondController.text, closestNode.name, weight_int, "평지", "도보");
+                                        }
+                                        if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
+                                            && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
+                                          _handleSubmit();
+                                        } else {
+                                          setState(() {
+                                            check = 0;
+                                          });
                                         }
                                       }
                                     }
