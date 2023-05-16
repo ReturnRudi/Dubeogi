@@ -417,6 +417,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                       } else {
                                         double weight = sqrt((dx_pixel - closestNode.x) * (dx_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
                                         int weight_int = weight.toInt();
+                                        int isExist = newGraph!.findNodeIndex(newGraph!.nodes, '지도에서 선택한 출발지');
+                                        if(isExist != -1) {
+                                          newGraph!.removeNode('지도에서 선택한 출발지');
+                                        }
 
                                         newGraph!.addEdge(closestNode.name, firstController.text, weight_int, "평지", "도보",
                                             node2X: dx_pixel,
@@ -556,9 +560,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                           newGraph = selectFromMapNewGraph(secondController.text, dx_pixel, dy_pixel, closestNode);
                                         } else {
                                           double weight = sqrt((dx_pixel - closestNode.x) * (dx_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
-                                          print("dx_pixel: $dx_pixel   dy_pixel: $dy_pixel   closestNode.x: ${closestNode.x}   closestNode.y: ${closestNode.y}");
-                                          print("weight: $weight");
                                           int weight_int = weight.toInt();
+                                          int isExist = newGraph!.findNodeIndex(newGraph!.nodes, '지도에서 선택한 도착지');
+                                          if(isExist != -1) {
+                                            newGraph!.removeNode('지도에서 선택한 도착지');
+                                          }
 
                                           newGraph!.addEdge(closestNode.name, secondController.text, weight_int, "평지", "도보",
                                               node2X: dx_pixel,

@@ -97,6 +97,11 @@ class Graph {
     return nodes.any((node) => node.name == name);
   }
 
+  void removeNode(String name) {
+    nodes.removeWhere((node) => node.name == name);
+    edges.removeWhere((edge) => edge.node1.name == name || edge.node2.name == name);
+  }
+
   // A* algorithm
   Tuple2<List<int>, List<int>> aStar(List<Node> nodes, List<Edge> edges, Node start, Node end) {
     int startIndex = findNodeIndex(nodes, start.name);
