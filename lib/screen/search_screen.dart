@@ -36,15 +36,21 @@ class _SearchScreenState extends State<SearchScreen> {
   int check = 0;
   Graph? newGraph;
 
-  Graph selectFromMapNewGraph(String newName, num dx, num dy, Node closest) {
+  Graph selectFromMapNewGraph(String newName, double dx, double dy, Node closest) {
     Graph newGraph = Graph();
     newGraph.nodes = List.from(graph.nodes);
     newGraph.edges = List.from(graph.edges);
     double weight = sqrt((dx - closest.x) * (dx - closest.x) + (dy - closest.y) * (dy - closest.y));
     int weight_int = weight.toInt();
 
-    newGraph.addEdge(closest.name, newName, weight_int, "평지", "도보");
+    newGraph.addEdge(closest.name, newName, weight_int, "평지", "도보",
+        node2X: dx,
+        node2Y: dy,
+        isInside2: 0,
+        building2: "실외",
+        showRoute2: false);
     newGraph.addEdge(newName, closest.name, weight_int, "평지", "도보");
+
 
     return newGraph;
   }
@@ -394,7 +400,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                         double weight = sqrt((dx_pixel - closestNode.x) * (dy_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
                                         int weight_int = weight.toInt();
 
-                                        newGraph!.addEdge(closestNode.name, firstController.text, weight_int, "평지", "도보");
+                                        newGraph!.addEdge(closestNode.name, firstController.text, weight_int, "평지", "도보",
+                                            node2X: dx_pixel,
+                                            node2Y: dy_pixel,
+                                            isInside2: 0,
+                                            building2: "실외",
+                                            showRoute2: false);
                                         newGraph!.addEdge(firstController.text, closestNode.name, weight_int, "평지", "도보");
                                       }
                                     }
@@ -527,7 +538,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                           double weight = sqrt((dx_pixel - closestNode.x) * (dy_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
                                           int weight_int = weight.toInt();
 
-                                          newGraph!.addEdge(closestNode.name, secondController.text, weight_int, "평지", "도보");
+                                          newGraph!.addEdge(closestNode.name, secondController.text, weight_int, "평지", "도보",
+                                              node2X: dx_pixel,
+                                              node2Y: dy_pixel,
+                                              isInside2: 0,
+                                              building2: "실외",
+                                              showRoute2: false);
                                           newGraph!.addEdge(secondController.text, closestNode.name, weight_int, "평지", "도보");
                                         }
                                       }
@@ -603,10 +619,12 @@ class _SearchScreenState extends State<SearchScreen> {
     // Perform some action with the inputs
     String start_node = firstController.text;
     String end_node = secondController.text;
+    print("start_node: $start_node   end_node: $end_node");
     result = Astar_pathMaking(start_node, end_node);
-    /*for (Node node in result) {
+    print("result: ");
+    for (Node node in result) {
       print(node.toString());
-    }*/
+    }
     vector.clear();
     direction.clear();
     for (int i = 0; i < startNodes.length; i++) {

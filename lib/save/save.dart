@@ -20,7 +20,7 @@ String libraryPath = 'assets/images/중앙도서관(897,2663).png';
 String hlPath = 'assets/images/학림관(1078,1636).png';
 String stuPath = 'assets/images/학생회관(670,1773).png';
 String hsPath = 'assets/images/학술관(2527,2567).png';
-String hhPath = 'assets/images/혜화관(1804,2694).png';
+String hhPath = 'assets/images/혜화관(1804,2964).png';
 
 String vendingPath = 'assets/images/facility/vending.png';
 String showerPath = 'assets/images/facility/showerbooth.png';
@@ -51,7 +51,9 @@ final List<String> buildings = [
   '체육관',
   '학림관',
   '정각원',
-  '학생회관'
+  '학생회관',
+  '지도에서 선택한 출발지',
+  '지도에서 선택한 도착지'
 ];
 
 List<String> names = [];
