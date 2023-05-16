@@ -155,6 +155,15 @@ class _SearchScreenState extends State<SearchScreen> {
           "(${startNodes[i].x}, ${startNodes[i].y}) -> (${endNodes[i].x}, ${endNodes[i].y})");
       print("!!!!");
     }
+    for (int i = 0; i < startNodes.length; i++) {
+      //실내 노드를 넣을 때 이곳을 수정해야함
+      if (startNodes[i].isInside == 0 && endNodes[i].isInside == 0) {
+        //엣지의 출발지, 도착지가 모두 밖일 때만 우선 startPoints, endPoints에 넣어서 외부 경로만 보이도록 한다.
+        startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
+        endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
+      }
+    }
+
     return regularPath;
   }
 
@@ -364,18 +373,22 @@ class _SearchScreenState extends State<SearchScreen> {
                               });
                             },
                             noItemsFoundBuilder: (context) {
-                              return Container(
-                                height: 45.0,
-                                child: Center(
-                                  child: Text(
-                                    '건물명을 정확히 입력해주세요.',
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.grey,
+                              if (firstController.text == '지도에서 선택한 출발지') {
+                                return Container();
+                              } else {
+                                return Container(
+                                  height: 45.0,
+                                  child: Center(
+                                    child: Text(
+                                      '건물명을 정확히 입력해주세요.',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             },
                           ),
                           Align(
@@ -499,19 +512,24 @@ class _SearchScreenState extends State<SearchScreen> {
                                 });
                               },
                               noItemsFoundBuilder: (context) {
-                                return Container(
-                                  height: 45.0,
-                                  child: Center(
-                                    child: Text(
-                                      '건물명을 정확히 입력해주세요.',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.grey,
+                                if (firstController.text == '지도에서 선택한 도착지') {
+                                  return Container();
+                                } else {
+                                  return Container(
+                                    height: 45.0,
+                                    child: Center(
+                                      child: Text(
+                                        '건물명을 정확히 입력해주세요.',
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.grey,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
                               },
+
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -619,10 +637,11 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void handleInput() {
-    String firstValue = firstController.text;
-    String secondValue = secondController.text;
-    Navigator.pop(context, {'start': firstValue, 'end': secondValue});
+/*    String firstValue = firstController.text;
+    String secondValue = secondController.text;*/
+    Navigator.pop(context, {/*'start': firstValue, 'end': secondValue, */'startPoints': startPoints, 'endPoints': endPoints});
   }
+
 
   void _handleSubmit() {
     // Perform some action with the inputs

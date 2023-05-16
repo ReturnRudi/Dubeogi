@@ -34,8 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Offset> startPoints = [];
   List<Offset> endPoints = [];
 
-  String _startNodeName = "";
-  String _endNodeName = "";
+/*  String _startNodeName = "";
+  String _endNodeName = "";*/
   dynamic result;
 
   //late String nowBuilding;
@@ -308,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void Astar_pathMaking(String startNodeName, String endNodeName) {
+/*  void Astar_pathMaking(String startNodeName, String endNodeName) {
     //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
     //지도 위에 그림을 그릴 수 있도록 start, end 리스트에 x, y값을 각각 넣는다.
 
@@ -373,7 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // 프로그램이 실행될 때의 _position 값을 출력합니다.
     //print('Initial _position: $_position');
-  }
+  }*/
 
   bool testVar = false;
   bool isMenuOpen = false;
@@ -947,18 +947,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     context,
                                     '/find',
                                   );
-                                  if (result['start'] != "" &&
-                                      result['end'] != "") {
-                                    setState(() {
-                                      print(
-                                          "********************************************");
-                                      _startNodeName = result['start'];
-                                      _endNodeName = result['end'];
-                                      Astar_pathMaking(
-                                          _startNodeName, _endNodeName);
-                                    });
-                                    testVar = true;
-                                  }
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -997,16 +985,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   context,
                                   '/search',
                                 );
-                                print(
-                                    '값넘기기실험중.${result['start']} , ${result['end']}, $result');
-
-                                if (result['start'] != "" &&
-                                    result['end'] != "") {
+                                //이곳에서 search_screen.dart에서 돌린 알고리즘의 결과 필요한 정보들을 더 받아오면 됨
+                                if (result['startPoints'].length != 0 &&
+                                    result['endPoints'].length != 0) {
                                   setState(() {
-                                    _startNodeName = result['start'];
-                                    _endNodeName = result['end'];
-                                    Astar_pathMaking(
-                                        _startNodeName, _endNodeName);
+                                    startPoints = List.from(result['startPoints']);
+                                    endPoints = List.from(result['endPoints']);
                                   });
                                   testVar = true;
                                 }
@@ -2236,7 +2220,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Positioned(
+/*          Positioned(
             bottom: 50,
             left: 50,
             child: Container(
@@ -2244,7 +2228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 '값넘기기실험중 $_startNodeName and $_endNodeName',
               ),
             ),
-          ),
+          ),*/
           testVar
               ? Positioned(
                   bottom: 100,
@@ -2278,8 +2262,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         erase();
                         testVar = false;
                         isMenuOpen = false;
-                        _startNodeName = "";
-                        _endNodeName = "";
                       });
                     },
                     child: Text("erase"),

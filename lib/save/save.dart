@@ -537,29 +537,29 @@ void initGraph() {
   graph.addEdge("명진관 오른쪽 아래", "명진관 오른쪽길", 64, "평지", "도보");
 //60, 61 다른곳에
 //62
-  graph.addEdge("명진관 오른쪽 아래", "명진관 우측 입구 앞", 64, "평지", "도보",
-      node2X: 1474,
-      node2Y: 2983,
+  graph.addEdge("명진관 오른쪽 아래", "명진관 우측 입구 앞", 83, "평지", "도보",
+      node2X: 1478,
+      node2Y: 2965,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("명진관 우측 입구 앞", "명진관 오른쪽 아래", 64, "평지", "도보");
+  graph.addEdge("명진관 우측 입구 앞", "명진관 오른쪽 아래", 83, "평지", "도보");
 //63
   graph.addEdge("명진관 우측 입구 앞", "명진관 우측 입구", 9, "평지", "도보",
-      node2X: 1466,
-      node2Y: 2980,
+      node2X: 1469,
+      node2Y: 2963,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
   graph.addEdge("명진관 우측 입구", "명진관 우측 입구 앞", 9, "평지", "도보");
 //64
-  graph.addEdge("명진관 우측 입구 앞", "명진관 오른쪽 위", 66, "평지", "도보",
+  graph.addEdge("명진관 우측 입구 앞", "명진관 오른쪽 위", 48, "평지", "도보",
       node2X: 1495,
       node2Y: 2920,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("명진관 오른쪽 위", "명진관 우측 입구 앞", 66, "평지", "도보");
+  graph.addEdge("명진관 오른쪽 위", "명진관 우측 입구 앞", 48, "평지", "도보");
 //65
   graph.addEdge("명진관 오른쪽 위", "명진관 오른쪽 계단 위", 51, "평지", "도보",
       node2X: 1451,

@@ -156,7 +156,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
             color: Colors.orange, // Change the color to white or any other color
             width: double.infinity,
             child: Text(
-              '지도를 움직여 아이콘을 원하는 위치로 옮기세요',
+              '지도를 움직여 마커를 학교 내의 원하는 길 위로 옮기세요',
               style: TextStyle(
                 fontSize: 14.0,
                 color: Colors.white, // Change the text color to black or any other color
@@ -168,6 +168,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          _position = Offset(_position.dx, _position.dy - 30);
           Navigator.pop(context, _position);
         },
         label: Text(
