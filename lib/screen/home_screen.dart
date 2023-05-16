@@ -414,7 +414,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Transform.translate(
                             offset: _position.scale(scale_offset, scale_offset),
                             child: ClipRect(
-                              child:                               Stack(
+                              child: Stack(
                                 children: [
                                   CustomPaint(
                                     size: Size(_imageWidth_du, _imageHeight_du),
@@ -1296,6 +1296,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: 16.0,
+                                      fontFamily: 'Paybooc',
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ),
@@ -1331,7 +1333,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     '길찾기',
                                     style: TextStyle(
                                       fontSize: 8,
-                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Paybooc',
+                                      fontWeight: FontWeight.w700,
+
                                     ),
                                   ),
                                 ],
@@ -1359,6 +1363,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '자판기',
                                 style: TextStyle(
                                   color: Colors.blue,
+                                  fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
@@ -1377,6 +1383,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '샤워실',
                                 style: TextStyle(
                                   color: Colors.lightBlueAccent,
+                                  fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
@@ -1395,6 +1403,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '편의점',
                                 style: TextStyle(
                                   color: Colors.purple,
+                                  fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
@@ -1413,6 +1423,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '프린터',
                                 style: TextStyle(
                                   color: Colors.green,
+                                  fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
@@ -1431,6 +1443,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '라운지',
                                 style: TextStyle(
                                   color: Colors.brown,
+                                  fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
@@ -1449,6 +1463,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'ATM',
                                 style: TextStyle(
                                   color: Colors.red,
+                                  fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
@@ -2613,7 +2629,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                     child: ListTile(
-                      title: Text(items[index]),
+                      title: Text(items[index],
+                        style: TextStyle(
+                          fontFamily: 'Paybooc',
+                          fontWeight: FontWeight.w400,
+                        ),),
                     ),
                   );
                 },

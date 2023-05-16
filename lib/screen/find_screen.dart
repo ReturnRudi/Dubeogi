@@ -50,7 +50,10 @@ class _FindScreenState extends State<FindScreen> {
                               borderSide: BorderSide.none,
                             ),
                             hintText: '검색하거나 아래 목록을 터치하세요',
-                            hintStyle: TextStyle(color: Colors.grey),
+                            hintStyle: TextStyle(color: Colors.grey,
+                              fontFamily: 'Paybooc',
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                           controller: Controller,
                         ),
@@ -59,7 +62,11 @@ class _FindScreenState extends State<FindScreen> {
                         },
                         itemBuilder: (context, suggestion) {
                           return ListTile(
-                            title: Text(suggestion),
+                            title: Text(suggestion,
+                              style: TextStyle(
+                                fontFamily: 'Paybooc',
+                                fontWeight: FontWeight.w400,
+                              ),),
                           );
                         },
                         onSuggestionSelected: (suggestion) {
@@ -77,6 +84,8 @@ class _FindScreenState extends State<FindScreen> {
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.grey,
+                                  fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
                             ),
@@ -137,7 +146,8 @@ class _FindScreenState extends State<FindScreen> {
                           '건물 검색',
                           style: TextStyle(
                             fontSize: 8,
-                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Paybooc',
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ],
@@ -161,7 +171,11 @@ class _FindScreenState extends State<FindScreen> {
                       });
                     },
                     child: ListTile(
-                      title: Text(name),
+                      title: Text(name,
+                        style: TextStyle(
+                          fontFamily: 'Paybooc',
+                          fontWeight: FontWeight.w400,
+                        ),),
                       //subtitle: Text('$name'),
                     ),
                   );
@@ -238,7 +252,8 @@ class _BuildingInfoState extends State<BuildingInfo> {
               widget.title,
               style: TextStyle(
                 fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontFamily: 'Paybooc',
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -272,7 +287,10 @@ class _BuildingInfoState extends State<BuildingInfo> {
                   children: [
                     Icon(Icons.directions_walk, color: Colors.blue),
                     SizedBox(width: 4),
-                    Text('출발', style: TextStyle(color: Colors.blue)),
+                    Text('출발', style: TextStyle(color: Colors.blue,
+                      fontFamily: 'Paybooc',
+                      fontWeight: FontWeight.w700,
+                    )),
                   ],
                 ),
               ),
@@ -302,7 +320,10 @@ class _BuildingInfoState extends State<BuildingInfo> {
                   children: [
                     Icon(Icons.directions_walk, color: Colors.white),
                     SizedBox(width: 4),
-                    Text('도착', style: TextStyle(color: Colors.white)),
+                    Text('도착', style: TextStyle(color: Colors.white,
+                      fontFamily: 'Paybooc',
+                      fontWeight: FontWeight.w700,
+                    )),
                   ],
                 ),
               ),
@@ -317,8 +338,16 @@ class _BuildingInfoState extends State<BuildingInfo> {
                   onTap: (){},
                   child: ListTile(
                     leading: _displayedAmenities[index].icon,
-                    title: Text('${_displayedAmenities[index].name}'),
-                    subtitle: Text('${_displayedAmenities[index].description}'),
+                    title: Text('${_displayedAmenities[index].name}',
+                      style: TextStyle(
+                        fontFamily: 'Paybooc',
+                        fontWeight: FontWeight.w700,
+                      ),),
+                    subtitle: Text('${_displayedAmenities[index].description}',
+                      style: TextStyle(
+                        fontFamily: 'Paybooc',
+                        fontWeight: FontWeight.w400,
+                      ),),
                   ),
                 );
               },

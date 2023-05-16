@@ -347,6 +347,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                   hintText: '출발 지점을 입력하세요',
                                   filled: true,
                                   fillColor: const Color(0xffF9D5A8),
+                                  hintStyle: TextStyle(
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                                 onSubmitted: (_) {
                                   FocusScope.of(context).requestFocus(secondFocus);
@@ -359,7 +363,11 @@ class _SearchScreenState extends State<SearchScreen> {
                             suggestionsBoxDecoration: SuggestionsBoxDecoration(color: const Color(0xffF9D5A8)),
                             itemBuilder: (context, suggestion) {
                               return ListTile(
-                                title: Text(suggestion),
+                                title: Text(suggestion,
+                                  style: TextStyle(
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w400,
+                                  ),),
                               );
                             },
                             onSuggestionSelected: (suggestion) {
@@ -387,6 +395,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                       style: TextStyle(
                                         fontSize: 15.0,
                                         color: Colors.grey,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ),
@@ -450,7 +460,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                   color: Colors.orange,
                                   borderRadius: BorderRadius.circular(10), // Add borderRadius
                                 ),
-                                child: Text('지도', style: TextStyle(color: Colors.white)),
+                                child: Text('지도', style: TextStyle(color: Colors.white,
+                                  fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w700,
+                                )),
                               ),
                             ),
                           ),
@@ -490,6 +503,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                   hintText: '도착 지점을 입력하세요',
                                   filled: true,
                                   fillColor: const Color(0xffF9D5A8),
+                                  hintStyle: TextStyle(
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
                               suggestionsCallback: (pattern) {
@@ -502,7 +519,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                       color: const Color(0xffF9D5A8)),
                               itemBuilder: (context, suggestion) {
                                 return ListTile(
-                                  title: Text(suggestion),
+                                  title: Text(suggestion,
+                                    style: TextStyle(
+                                      fontFamily: 'Paybooc',
+                                      fontWeight: FontWeight.w400,
+                                    ),),
                                 );
                               },
                               onSuggestionSelected: (suggestion) {
@@ -530,6 +551,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                         style: TextStyle(
                                           fontSize: 15.0,
                                           color: Colors.grey,
+                                          fontFamily: 'Paybooc',
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                     ),
@@ -593,7 +616,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                     color: Colors.orange,
                                     borderRadius: BorderRadius.circular(10), // Add borderRadius
                                   ),
-                                  child: Text('지도', style: TextStyle(color: Colors.white)),
+                                  child: Text('지도', style: TextStyle(color: Colors.white,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w900,
+                                  )),
                                 ),
                               ),
                             ),
