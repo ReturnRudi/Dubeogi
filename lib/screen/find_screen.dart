@@ -221,6 +221,7 @@ class _BuildingInfoState extends State<BuildingInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: "동국대학교",
       ),

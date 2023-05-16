@@ -84,8 +84,10 @@ flutter:
   fonts:
     - family: Paybooc
       fonts:
+        - asset: assets/fonts/paybooc Light.ttf
+        - asset: assets/fonts/paybooc Medium.ttf
+        - asset: assets/fonts/paybooc Bold.ttf
         - asset: assets/fonts/paybooc ExtraBold.ttf
-          weight: 100
   # fonts:
   #   - family: Schyler
   #     fonts:

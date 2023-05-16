@@ -235,6 +235,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w800,
                                   color: selectOption == 1 ? Colors.orange : Colors.white,
                                 ),
                                 textAlign: TextAlign.center,
@@ -266,6 +267,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w800,
                                   color: selectOption == 2 ? Colors.orange : Colors.white,
                                 ),
                                 textAlign: TextAlign.center,
@@ -297,6 +299,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w800,
                                   color: selectOption == 3 ? Colors.orange : Colors.white,
                                 ),
                                 textAlign: TextAlign.center,
@@ -618,6 +621,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Paybooc',
+                    fontWeight: FontWeight.w800,
                     color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
