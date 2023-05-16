@@ -34,8 +34,41 @@ class _SearchScreenState extends State<SearchScreen> {
   int selectOption = 1;
   int count = 0;
   int check = 0;
+  Graph? newGraph;
 
-  List<Node> Astar_pathMaking(String startNodeName, String endNodeName) {
+  Graph selectFromMapNewGraph(String newName, num dx, num dy, Node closest) {
+    Graph newGraph = Graph();
+    newGraph.nodes = List.from(graph.nodes);
+    newGraph.edges = List.from(graph.edges);
+    double weight = sqrt((dx - closest.x) * (dx - closest.x) + (dy - closest.y) * (dy - closest.y));
+    int weight_int = weight.toInt();
+
+    newGraph.addEdge(closest.name, newName, weight_int, "평지", "도보");
+    newGraph.addEdge(newName, closest.name, weight_int, "평지", "도보");
+
+    return newGraph;
+  }
+
+  Node? findClosestNode(List<Node> nodes, double dx, double dy) {
+    Node? closest;
+    double closestDistance = double.infinity;
+
+    for (Node node in nodes) {
+      double distance = (node.x - dx) * (node.x - dx) + (node.y - dy) * (node.y - dy);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closest = node;
+      }
+    }
+
+    if (closest == null) {
+      throw Exception('Node list is empty.');
+    }
+
+    return closest;
+  }
+
+/*  List<Node> Astar_pathMaking(String startNodeName, String endNodeName) {
     //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
     //지도 위에 그림을 그릴 수 있도록 start, end 리스트에 x, y값을 각각 넣는다.
 
@@ -52,12 +85,53 @@ class _SearchScreenState extends State<SearchScreen> {
 
     // Regular search
     var regularResult =
-        graph.aStar(graph.nodes, graph.edges, startNode, endNode);
+    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
     List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
     List<Node> regularPath =
-        reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
+    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
+
+    for (int i = 0; i < regularPath.length; i++) {
+      if (i == 0)
+        startNodes.add(regularPath[i]);
+      else if (i == regularPath.length - 1)
+        endNodes.add(regularPath[i]);
+      else {
+        endNodes.add(regularPath[i]);
+        startNodes.add(regularPath[i]);
+      }
+    }
+
+    for (int i = 0; i < startNodes.length; i++) {
+      print(
+          "(${startNodes[i].x}, ${startNodes[i].y}) -> (${endNodes[i].x}, ${endNodes[i].y})");
+      print("!!!!");
+    }
+    return regularPath;
+  }*/
+
+  List<Node> Astar_pathMaking(String startNodeName, String endNodeName) {
+    Graph activeGraph = newGraph ?? graph;  // Use newGraph if it's not null, otherwise use graph
+
+    startPoints.clear();
+    endPoints.clear();
+    startNodes.clear();
+    endNodes.clear();
+
+    Node startNode = activeGraph.findNode(startNodeName);
+    Node endNode = activeGraph.findNode(endNodeName);
+
+    int startIndex = activeGraph.findNodeIndex(activeGraph.nodes, startNodeName);
+    int endIndex = activeGraph.findNodeIndex(activeGraph.nodes, endNodeName);
+
+    var regularResult =
+    activeGraph.aStar(activeGraph.nodes, activeGraph.edges, startNode, endNode);
+    List<int> regularDist = regularResult.item1;
+    List<int> regularPrev = regularResult.item2;
+
+    List<Node> regularPath =
+    reconstructPath(regularPrev, activeGraph.nodes, startIndex, endIndex);
 
     for (int i = 0; i < regularPath.length; i++) {
       if (i == 0)
@@ -77,6 +151,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     return regularPath;
   }
+
 
   String getDirection(Vec current, Vec next) {
     double crossProduct = current.x * next.y - current.y * next.x;
@@ -130,195 +205,104 @@ class _SearchScreenState extends State<SearchScreen> {
               color: Colors.orange,
               child: Stack(
                 children: [
-                  Row(
+                  Row(  //최단, 최적, 차도 Row
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (selectOption != 1)
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          width: 80,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Text(
-                                  '최단',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'Paybooc',
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        width: 80,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Text(
+                                '최단',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Paybooc',
+                                  color: selectOption == 1 ? Colors.orange : Colors.white,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
-                              InkWell(onTap: () {
-                                setState(() {
-                                  selectOption = 1;
-                                });
-                              })
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            //color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
+                            ),
+                            InkWell(onTap: () {
+                              setState(() {
+                                selectOption = 1;
+                              });
+                            })
+                          ],
                         ),
-                      if (selectOption == 1)
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          width: 80,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Text(
-                                  '최단',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'Paybooc',
-                                    color: Colors.orange,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              InkWell(onTap: () {
-                                setState(() {
-                                  selectOption = 1;
-                                });
-                              })
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
+                        decoration: BoxDecoration(
+                          color: selectOption == 1 ? Colors.white : null,
+                          borderRadius: BorderRadius.circular(50),
                         ),
+                      ),
                       SizedBox(
                         width: 20,
                       ),
-                      if (selectOption != 2)
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          width: 80,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Text(
-                                  '최적',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'Paybooc',
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        width: 80,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Text(
+                                '최적',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Paybooc',
+                                  color: selectOption == 2 ? Colors.orange : Colors.white,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
-                              InkWell(onTap: () {
-                                setState(() {
-                                  selectOption = 2;
-                                });
-                              })
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            //color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
+                            ),
+                            InkWell(onTap: () {
+                              setState(() {
+                                selectOption = 2;
+                              });
+                            })
+                          ],
                         ),
-                      if (selectOption == 2)
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          width: 80,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Text(
-                                  '최적',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'Paybooc',
-                                    color: Colors.orange,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              InkWell(onTap: () {
-                                setState(() {
-                                  selectOption = 2;
-                                });
-                              })
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
+                        decoration: BoxDecoration(
+                          color: selectOption == 2 ? Colors.white : null,
+                          borderRadius: BorderRadius.circular(50),
                         ),
+                      ),
                       SizedBox(
                         width: 20,
                       ),
-                      if (selectOption != 3)
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          width: 80,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Text(
-                                  '차도',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'Paybooc',
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        width: 80,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Text(
+                                '차도',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Paybooc',
+                                  color: selectOption == 3 ? Colors.orange : Colors.white,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
-                              InkWell(onTap: () {
-                                setState(() {
-                                  selectOption = 3;
-                                });
-                              })
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            //color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
+                            ),
+                            InkWell(onTap: () {
+                              setState(() {
+                                selectOption = 3;
+                              });
+                            })
+                          ],
                         ),
-                      if (selectOption == 3)
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          width: 80,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Text(
-                                  '차도',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'Paybooc',
-                                    color: Colors.orange,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              InkWell(onTap: () {
-                                setState(() {
-                                  selectOption = 3;
-                                });
-                              })
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
+                        decoration: BoxDecoration(
+                          color: selectOption == 3 ? Colors.white : null,
+                          borderRadius: BorderRadius.circular(50),
                         ),
+                      ),
                     ],
                   )
                 ],
               )),
-          Container(
-            //padding: EdgeInsets.all(15),
+          Container(  //출발,도착 지점 입력 Container
             padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
             color: Colors.orange,
             child: Stack(
@@ -389,21 +373,35 @@ class _SearchScreenState extends State<SearchScreen> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: InkWell(
-                                onTap: () async {
-                                  Offset? result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => SelectFromMap(destination: false)),
-                                  );
-
+                              onTap: () async {
+                                Offset? result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => SelectFromMap(destination: false)),
+                                );
+                                setState(() {
                                   if (result != null) {
-                                    firstController.text = '${result.dx}, ${result.dy}';
-                                    //firstController.text = '지도에서 선택한 출발지';
+                                    //firstController.text = '${result.dx}, ${result.dy}';
+                                    firstController.text = '지도에서 선택한 출발지';
+                                    double dx_pixel = 1500 - result.dx;
+                                    double dy_pixel = 5333/2 - result.dy;
+                                    Node? closestNode = findClosestNode(graph.nodes, dx_pixel, dy_pixel);
+                                    if (closestNode == null) {
+                                      throw Exception('No closest node found.');
+                                    } else {
+                                      if (newGraph == null) {
+                                        newGraph = selectFromMapNewGraph(firstController.text, dx_pixel, dy_pixel, closestNode);
+                                      } else {
+                                        double weight = sqrt((dx_pixel - closestNode.x) * (dy_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
+                                        int weight_int = weight.toInt();
+
+                                        newGraph!.addEdge(closestNode.name, firstController.text, weight_int, "평지", "도보");
+                                        newGraph!.addEdge(firstController.text, closestNode.name, weight_int, "평지", "도보");
+                                      }
+                                    }
                                   }
+                                });
+                              },
 
-                                  //dx, dy를 픽셀값에 맞게 변환 후 해당 위치와 가장 가까이 있는 노드를 찾는다
-                                  //addEdge를 통해 두 노드를 연결하는 엣지를 그래프에 임시로 추가한 후 탐색을 한다.
-
-                                },
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
                                 padding: EdgeInsets.all(15.0), // Add padding to the container
@@ -497,7 +495,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: InkWell(
-                                onTap: () async {
+/*                                onTap: () async {
                                   Offset? result = await Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => SelectFromMap(destination: true)),
@@ -507,9 +505,34 @@ class _SearchScreenState extends State<SearchScreen> {
                                     //secondController.text = '${result.dx}, ${result.dy}';
                                     secondController.text = '지도에서 선택한 도착지';
                                   }
-                                  //dx, dy를 픽셀값에 맞게 변환 후 해당 위치와 가장 가까이 있는 노드를 찾는다
-                                  //addEdge를 통해 두 노드를 연결하는 엣지를 그래프에 임시로 추가한 후
-                                  //탐색을 한다
+                                },*/
+                                onTap: () async {
+                                  Offset? result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SelectFromMap(destination: true)),
+                                  );
+                                  setState(() {
+                                    if (result != null) {
+                                      //secondController.text = '${result.dx}, ${result.dy}';
+                                      secondController.text = '지도에서 선택한 도착지';
+                                      double dx_pixel = 1500 - result.dx;
+                                      double dy_pixel = 5333/2 - result.dy;
+                                      Node? closestNode = findClosestNode(graph.nodes, dx_pixel, dy_pixel);
+                                      if (closestNode == null) {
+                                        throw Exception('No closest node found.');
+                                      } else {
+                                        if (newGraph == null) {
+                                          newGraph = selectFromMapNewGraph(secondController.text, dx_pixel, dy_pixel, closestNode);
+                                        } else {
+                                          double weight = sqrt((dx_pixel - closestNode.x) * (dy_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
+                                          int weight_int = weight.toInt();
+
+                                          newGraph!.addEdge(closestNode.name, secondController.text, weight_int, "평지", "도보");
+                                          newGraph!.addEdge(secondController.text, closestNode.name, weight_int, "평지", "도보");
+                                        }
+                                      }
+                                    }
+                                  });
                                 },
                                 child: Container(
                                   margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
