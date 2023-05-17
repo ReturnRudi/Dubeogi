@@ -4,6 +4,8 @@ import 'package:Dubeogi/component/appbar.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/component/draw_line.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -30,6 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
   double _previousScale = 1.0;
   Offset _position = Offset.zero;
   Offset _previousPosition = Offset.zero;
+
+  double now_w = 0.0;
+  double now_g = 0.0;
+  bool isTrackingLocation = false;
+  StreamSubscription<Position>? positionStream;
+  Offset gpsToPixel = Offset.zero;
 
   List<Offset> startPoints = [];
   List<Offset> endPoints = [];
@@ -81,6 +89,55 @@ class _HomeScreenState extends State<HomeScreen> {
   void _printershow() {
     setState(() {
       _printervisibility = !_printervisibility;
+    });
+  }
+
+  Offset gps(double w, double g) {
+    double pixel_x = 3000 * (g - 126.9962082464593) / (127.0046597158073 - 126.9962082464593);
+    double pixel_y = 5333 * (37.56424922299378 - w) / (37.56424922299378 - 37.552279443944855);
+
+    return Offset(pixel_x - 12, pixel_y - 5);
+  }
+
+  Future<void> requestLocationPermission() async {
+    var status = await Permission.location.status;
+    if (!status.isGranted) {
+      status = await Permission.location.request();
+      if (!status.isGranted) {
+        return Future.error('Location permission not granted');
+      }
+    }
+  }
+
+  void startLocationStream() async {
+    await requestLocationPermission();
+    positionStream = Geolocator.getPositionStream(
+        desiredAccuracy: LocationAccuracy.high,
+        distanceFilter: 1
+    ).listen((Position position) {
+      setState(() {
+        now_w = position.latitude;
+        now_g = position.longitude;
+        gpsToPixel = gps(now_w, now_g);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    positionStream?.cancel(); // Don't forget to cancel the stream when disposing
+    super.dispose();
+  }
+
+  void toggleLocationTracking() {
+    if (isTrackingLocation) {
+      positionStream?.cancel();
+    } else {
+      startLocationStream();
+    }
+
+    setState(() {
+      isTrackingLocation = !isTrackingLocation;
     });
   }
 
@@ -411,7 +468,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
@@ -924,6 +980,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: Image.asset(
                                               loungePath,
                                               scale: 1 / (scale_offset / 16),
+                                            ),
+                                          ),
+                                        if (isTrackingLocation) //현위치 다른 건물들에 가리지 않고 제대로 뜨는지 확인 필요
+                                          Positioned(
+                                            left: gpsToPixel.dx * scale_offset,
+                                            top: gpsToPixel.dy * scale_offset,
+                                            child: Container(
+                                              width: 10,
+                                              height: 10,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.orange,
+                                                ),
+                                                color: Colors.white,
+                                                shape: BoxShape.circle,
+                                              ),
+                                                child: Image.asset('assets/images/gps.png'),
                                             ),
                                           ),
                                       ],
@@ -2847,6 +2920,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+            ),
+          ),
+          Positioned(
+            right: 20,
+            bottom: 20,
+            child: FloatingActionButton(
+              onPressed: toggleLocationTracking,
+              child: Icon(isTrackingLocation ? Icons.location_off : Icons.location_on),
+              backgroundColor: Colors.blue,
             ),
           ),
         ],

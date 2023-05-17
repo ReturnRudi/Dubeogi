@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 late double scale_offset;
 
@@ -21,6 +23,45 @@ class _SelectFromMapState extends State<SelectFromMap> {
   double _previousScale = 6.0;
   Offset _position = Offset(101, 39);
   Offset _previousPosition = Offset(101, 39);
+  double now_w = 0.0;
+  double now_g = 0.0;
+  Offset gpsToPixel = Offset.zero;
+
+  Offset gps(double w, double g) {
+    double pixel_x = 3000 * (g - 126.9962082464593) / (127.0046597158073 - 126.9962082464593);
+    double pixel_y = 5333 * (37.56424922299378 - w) / (37.56424922299378 - 37.552279443944855);
+
+    return Offset(pixel_x - 12, pixel_y - 5);
+  }
+
+  Future<void> requestLocationPermission() async {
+    var status = await Permission.location.status;
+    if (!status.isGranted) {
+      status = await Permission.location.request();
+      if (!status.isGranted) {
+        return Future.error('Location permission not granted');
+      }
+    }
+  }
+
+  Future<void> getCurrentLocation() async {
+    try {
+      await requestLocationPermission();
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      Offset newGpsToPixel = gps(position.latitude, position.longitude);
+
+      setState(() {
+        now_w = position.latitude;
+        now_g = position.longitude;
+        gpsToPixel = newGpsToPixel;
+        _position = gpsToPixel;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
 
   @override
   void initState() {
@@ -161,519 +202,6 @@ class _SelectFromMapState extends State<SelectFromMap> {
                                 'assets/images/du.png',
                                 fit: BoxFit.cover,
                               ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1294 * scale_offset - 50 / _scale,
-                                top: 3084 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "과학관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1464 * scale_offset - 50 / _scale,
-                                top: 2472 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "다향관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1572 * scale_offset - 50 / _scale,
-                                top: 3436 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "대운동장",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1125 * scale_offset - 50 / _scale,
-                                top: 2085 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "만해광장",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1318 * scale_offset - 50 / _scale,
-                                top: 2907 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "명진관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 2430 * scale_offset - 50 / _scale,
-                                top: 2836 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "문화관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1660 * scale_offset - 50 / _scale,
-                                top: 2745 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "법학관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1639 * scale_offset - 50 / _scale,
-                                top: 2958 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "만해관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1153 * scale_offset - 50 / _scale,
-                                top: 2540 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "본관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 2249 * scale_offset - 50 / _scale,
-                                top: 2954 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "사회과학관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 2361 * scale_offset - 50 / _scale,
-                                top: 3204 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "경영관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1182 * scale_offset - 50 / _scale,
-                                top: 3220 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "상록원",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 716 * scale_offset - 50 / _scale,
-                                top: 2665 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "신공학관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 865 * scale_offset - 50 / _scale,
-                                top: 2300 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "원흥관1",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 947 * scale_offset - 50 / _scale,
-                                top: 2515 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "원흥관2",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 835 * scale_offset - 50 / _scale,
-                                top: 2061 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "정보문화관P",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 739 * scale_offset - 50 / _scale,
-                                top: 1935 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "정보문화관Q",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1747 * scale_offset - 50 / _scale,
-                                top: 3013 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "정각원",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1013 * scale_offset - 50 / _scale,
-                                top: 2778 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "중앙도서관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1431 * scale_offset - 50 / _scale,
-                                top: 1961 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "체육관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1263 * scale_offset - 50 / _scale,
-                                top: 1765 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "학림관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 740 * scale_offset - 50 / _scale,
-                                top: 1844 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "학생회관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 2597 * scale_offset - 50 / _scale,
-                                top: 2741 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "학술관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1983 * scale_offset - 50 / _scale,
-                                top: 2912 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "혜화관",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 2371 * scale_offset - 50 / _scale,
-                                top: 3391 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "정문",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 1120 * scale_offset - 50 / _scale,
-                                top: 1544 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "후문",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                width: 100 / _scale,
-                                height: 40 / _scale,
-                                left: 2550 * scale_offset - 50 / _scale,
-                                top: 2455 * scale_offset - 20 / _scale,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "혜화문",
-                                      style: TextStyle(
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 7 / _scale,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -710,6 +238,22 @@ class _SelectFromMapState extends State<SelectFromMap> {
               textAlign: TextAlign.center,
             ),
           ),
+          Positioned(
+            right: 20,
+            bottom: 80,
+            child: FloatingActionButton(
+              onPressed: (){
+                getCurrentLocation();
+                print("gpsToPixel: $gpsToPixel");
+                setState(() {
+                  _position = gpsToPixel;
+                  print("_position: $_position");
+                });
+              },
+              child: Icon(Icons.location_on),
+              backgroundColor: Colors.red,
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -729,8 +273,4 @@ class _SelectFromMapState extends State<SelectFromMap> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
-
-
 }
-
-
