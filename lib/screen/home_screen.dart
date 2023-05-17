@@ -982,22 +982,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                               scale: 1 / (scale_offset / 16),
                                             ),
                                           ),
-                                        if (isTrackingLocation) //현위치 다른 건물들에 가리지 않고 제대로 뜨는지 확인 필요
-                                          Positioned(
-                                            left: gpsToPixel.dx * scale_offset,
-                                            top: gpsToPixel.dy * scale_offset,
-                                            child: Container(
-                                              width: 10,
-                                              height: 10,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: Colors.orange,
+                                        if (isTrackingLocation) //다른 건물들에 가리지 않고 잘 구현되었는지 확인 필요
+                                          Stack(
+                                            children: [
+                                              Positioned(
+                                                left: (gpsToPixel.dx * scale_offset) - 5,
+                                                top: (gpsToPixel.dy * scale_offset) - 5,
+                                                child: Container(
+                                                  width: 20,
+                                                  height: 20,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Colors.orange.withOpacity(0.3),
+                                                  ),
                                                 ),
-                                                color: Colors.white,
-                                                shape: BoxShape.circle,
                                               ),
-                                                child: Image.asset('assets/images/gps.png'),
-                                            ),
+                                              Positioned(
+                                                left: gpsToPixel.dx * scale_offset,
+                                                top: gpsToPixel.dy * scale_offset,
+                                                child: Container(
+                                                  width: 10,
+                                                  height: 10,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(color: Colors.white, width: 1.5),
+                                                    color: Colors.red,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                       ],
                                     ),
