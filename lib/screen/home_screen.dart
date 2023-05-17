@@ -1294,6 +1294,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     context,
                                     '/find',
                                   );
+                                  if (result['startPoints'].length != 0 &&
+                                      result['endPoints'].length != 0) {
+                                    setState(() {
+                                      startPoints = List.from(result['startPoints']);
+                                      endPoints = List.from(result['endPoints']);
+                                    });
+                                    testVar = true;
+                                  }
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
