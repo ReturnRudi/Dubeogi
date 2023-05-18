@@ -49,13 +49,11 @@ class _SelectFromMapState extends State<SelectFromMap> {
       await requestLocationPermission();
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
-      Offset newGpsToPixel = gps(position.latitude, position.longitude);
-
       setState(() {
         now_w = position.latitude;
         now_g = position.longitude;
-        gpsToPixel = newGpsToPixel;
-        _position = gpsToPixel;
+        gpsToPixel = gps(position.latitude, position.longitude);
+        _position = Offset(1500 - gpsToPixel.dx, 5333/2 - gpsToPixel.dy);
       });
     } catch (e) {
       print(e);
@@ -759,7 +757,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
                 getCurrentLocation();
                 print("gpsToPixel: $gpsToPixel");
                 setState(() {
-                  _position = gpsToPixel.scale(scale_offset, scale_offset);
+                  _position = Offset(1500 - gpsToPixel.dx, 5333/2 - gpsToPixel.dy);
                   print("_position: $_position");
                 });
               },
