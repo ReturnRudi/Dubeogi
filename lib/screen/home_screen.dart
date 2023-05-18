@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double pixel_x = 3000 * (g - 126.9962082464593) / (127.0046597158073 - 126.9962082464593);
     double pixel_y = 5333 * (37.56424922299378 - w) / (37.56424922299378 - 37.552279443944855);
 
-    return Offset(pixel_x - 30, pixel_y - 15);  //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
+    return Offset(pixel_x - 12, pixel_y - 5);  //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
   }
 
   Future<void> requestLocationPermission() async {

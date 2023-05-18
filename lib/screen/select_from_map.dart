@@ -762,7 +762,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
                 });
               },
               child: Icon(Icons.location_on),
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.orange,
             ),
           ),
         ],
