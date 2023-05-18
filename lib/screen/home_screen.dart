@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double pixel_x = 3000 * (g - 126.9962082464593) / (127.0046597158073 - 126.9962082464593);
     double pixel_y = 5333 * (37.56424922299378 - w) / (37.56424922299378 - 37.552279443944855);
 
-    return Offset(pixel_x - 12, pixel_y - 5);
+    return Offset(pixel_x - 30, pixel_y - 15);  //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
   }
 
   Future<void> requestLocationPermission() async {
@@ -985,26 +985,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                         if (isTrackingLocation) //다른 건물들에 가리지 않고 잘 구현되었는지 확인 필요
                                           Stack(
                                             children: [
-                                              Positioned(
-                                                left: (gpsToPixel.dx * scale_offset) - 5,
-                                                top: (gpsToPixel.dy * scale_offset) - 5,
+                                              Positioned( // 투명 큰 원
+                                                left: (gpsToPixel.dx * scale_offset) - 4 * 1.3 /_scale,
+                                                top: (gpsToPixel.dy * scale_offset) - 4 * 1.3 /_scale,
                                                 child: Container(
-                                                  width: 20,
-                                                  height: 20,
+                                                  width: 18 * 1.3 / _scale,
+                                                  height: 18 * 1.3 / _scale,
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     color: Colors.orange.withOpacity(0.3),
                                                   ),
                                                 ),
                                               ),
-                                              Positioned(
+                                              Positioned( //중앙 원
                                                 left: gpsToPixel.dx * scale_offset,
                                                 top: gpsToPixel.dy * scale_offset,
                                                 child: Container(
-                                                  width: 10,
-                                                  height: 10,
+                                                  width: 10 * 1.3 / _scale,
+                                                  height: 10 * 1.3 / _scale,
                                                   decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.white, width: 1.5),
+                                                    border: Border.all(color: Colors.white, width: 1.5 * 1.3 / _scale),
                                                     color: Colors.red,
                                                     shape: BoxShape.circle,
                                                   ),
