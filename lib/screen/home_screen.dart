@@ -113,7 +113,8 @@ class _HomeScreenState extends State<HomeScreen> {
     await requestLocationPermission();
     positionStream = Geolocator.getPositionStream(
         desiredAccuracy: LocationAccuracy.high,
-        distanceFilter: 1
+        //distanceFilter: 1
+        intervalDuration: Duration(milliseconds: 1000)
     ).listen((Position position) {
       setState(() {
         now_w = position.latitude;
