@@ -5,11 +5,13 @@ class LinePainter extends CustomPainter {
   final ImageInfo imageInfo;
   final List<Offset> startPoints;
   final List<Offset> endPoints;
+  final Color lineColor;
 
   LinePainter({
     required this.imageInfo,
     required this.startPoints,
     required this.endPoints,
+    required this.lineColor,
   });
 
   void erase(){
@@ -29,7 +31,7 @@ class LinePainter extends CustomPainter {
     print('scaleX: $scaleX, scaleY: $scaleY');*/
 
     final paint = Paint()
-      ..color = Colors.red
+      ..color = lineColor
       ..strokeWidth = 0.5
       ..style = PaintingStyle.stroke;
 

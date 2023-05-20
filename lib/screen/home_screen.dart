@@ -500,6 +500,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       imageInfo: _imageInfo_du,
                                       startPoints: startPoints,
                                       endPoints: endPoints,
+                                      lineColor: Colors.red,
                                     ),
                                     child: Stack(
                                       children: [

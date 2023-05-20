@@ -51,7 +51,6 @@ class _SearchScreenState extends State<SearchScreen> {
         showRoute2: false);
     newGraph.addEdge(newName, closest.name, weight_int, "평지", "도보");
 
-
     return newGraph;
   }
 
@@ -117,27 +116,29 @@ class _SearchScreenState extends State<SearchScreen> {
     return regularPath;
   }*/
 
-  List<Node> Astar_pathMaking(String startNodeName, String endNodeName) {
-    Graph activeGraph = newGraph ?? graph;  // Use newGraph if it's not null, otherwise use graph
+  List<Node> Astar_pathMaking(Graph graph, String startNodeName, String endNodeName, bool clear) {
+    //clear가 true면 clear(), false면 clear() 안함
+    if(clear == true){
+      startPoints.clear();
+      endPoints.clear();
+      startNodes.clear();
+      endNodes.clear();
+    }
 
-    startPoints.clear();
-    endPoints.clear();
-    startNodes.clear();
-    endNodes.clear();
 
-    Node startNode = activeGraph.findNode(startNodeName);
-    Node endNode = activeGraph.findNode(endNodeName);
+    Node startNode = graph.findNode(startNodeName);
+    Node endNode = graph.findNode(endNodeName);
 
-    int startIndex = activeGraph.findNodeIndex(activeGraph.nodes, startNodeName);
-    int endIndex = activeGraph.findNodeIndex(activeGraph.nodes, endNodeName);
+    int startIndex = graph.findNodeIndex(graph.nodes, startNodeName);
+    int endIndex = graph.findNodeIndex(graph.nodes, endNodeName);
 
     var regularResult =
-    activeGraph.aStar(activeGraph.nodes, activeGraph.edges, startNode, endNode);
+    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
     List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
     List<Node> regularPath =
-    reconstructPath(regularPrev, activeGraph.nodes, startIndex, endIndex);
+    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
 
     for (int i = 0; i < regularPath.length; i++) {
       if (i == 0)
@@ -196,19 +197,17 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   bool isExistBuilding(String name) => buildings.contains(name);
-  bool isExistSelectFromMAp(String name) => selectFromMap.contains(name);
+  bool isExistSelectFromMap(String name) => selectFromMap.contains(name);
 
   @override
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
-
     if (arguments != null && count == 0) {
       firstController.text = arguments['start'] ?? '';
       secondController.text = arguments['end'] ?? '';
       count++;
     }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
@@ -244,6 +243,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             InkWell(onTap: () {
                               setState(() {
                                 selectOption = 1;
+                                if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
+                                    && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
+                                  _handleSubmit();
+                                }
                               });
                             })
                           ],
@@ -276,6 +279,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             InkWell(onTap: () {
                               setState(() {
                                 selectOption = 2;
+                                if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
+                                    && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
+                                  _handleSubmit();
+                                }
                               });
                             })
                           ],
@@ -308,6 +315,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             InkWell(onTap: () {
                               setState(() {
                                 selectOption = 3;
+                                if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
+                                    && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
+                                  _handleSubmit();
+                                }
                               });
                             })
                           ],
@@ -373,8 +384,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             onSuggestionSelected: (suggestion) {
                               setState(() {
                                 firstController.text = suggestion;
-                                if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
-                                    && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
+                                if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
+                                    && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
                                   _handleSubmit();
                                 } else {
                                   setState(() {
@@ -440,8 +451,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                             showRoute2: false);
                                         newGraph!.addEdge(firstController.text, closestNode.name, weight_int, "평지", "도보");
                                       }
-                                      if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
-                                          && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
+                                      if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
+                                          && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
                                         _handleSubmit();
                                       } else {
                                         setState(() {
@@ -452,7 +463,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                   }
                                 });
                               },
-
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
                                 padding: EdgeInsets.all(15.0), // Add padding to the container
@@ -485,8 +495,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             TypeAheadField(
                               textFieldConfiguration: TextFieldConfiguration(
                                 onSubmitted: (_) {
-                                  if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
-                                      && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
+                                  if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
+                                      && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
                                     _handleSubmit();
                                   } else {
                                     setState(() {
@@ -529,8 +539,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               onSuggestionSelected: (suggestion) {
                                 setState(() {
                                   secondController.text = suggestion;
-                                  if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
-                                      && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
+                                  if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
+                                      && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
                                     _handleSubmit();
                                   } else {
                                     setState(() {
@@ -597,8 +607,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                               showRoute2: false);
                                           newGraph!.addEdge(secondController.text, closestNode.name, weight_int, "평지", "도보");
                                         }
-                                        if ((isExistBuilding(firstController.text) || isExistSelectFromMAp(firstController.text))
-                                            && (isExistBuilding(secondController.text) || isExistSelectFromMAp(secondController.text))) {
+                                        if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
+                                            && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
                                           _handleSubmit();
                                         } else {
                                           setState(() {
@@ -679,12 +689,30 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
 
-  void _handleSubmit() {
+  void _handleSubmit() {  //경로 텍스트 안내 영역
     // Perform some action with the inputs
     String start_node = firstController.text;
     String end_node = secondController.text;
+    Graph activeGraph = newGraph ?? graph;
     print("start_node: $start_node   end_node: $end_node");
-    result = Astar_pathMaking(start_node, end_node);
+    if(selectOption == 1 || selectOption == 2){
+      result = Astar_pathMaking(activeGraph, start_node, end_node, true);
+      //추후 Astar_pathMaking이 수정되면 가중치를 selectOption에 따라 지정하게됨
+      //result = Astar_pathMaking(start_node, end_node, selectOption);
+    }
+    else{ //selectOption == 3인 경우 즉 차도 탐색
+      Node start = activeGraph.findNode(start_node);
+      Node End = activeGraph.findNode(end_node);
+      Graph driveway = activeGraph.includeEdgesByType("차도");
+      Node? StartClosest = findClosestNode(driveway.nodes, start.x, start.y);
+      Node? EndClosest = findClosestNode(driveway.nodes, End.x, End.y);
+      result = Astar_pathMaking(activeGraph, start.name, StartClosest!.name, true);
+      result.removeLast();
+      result.addAll(Astar_pathMaking(driveway, StartClosest!.name, EndClosest!.name, false));
+      result.removeLast();
+      result.addAll(Astar_pathMaking(activeGraph, EndClosest!.name, End.name, false));
+    }
+
     print("result: ");
     for (Node node in result) {
       print(node.toString());

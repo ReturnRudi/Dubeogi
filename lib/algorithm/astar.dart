@@ -67,7 +67,7 @@ class Graph {
     return -1;
   }
 
-  Graph excludeEdgesByType(String type) {
+  Graph excludeEdgesByType(String type) { //계단/오르막 제외 메소드
     Graph newGraph = Graph();
     newGraph.nodes = List.from(nodes);
 
@@ -80,18 +80,38 @@ class Graph {
     return newGraph;
   }
 
-  Graph filterEdges(String requiredAttribute) {
+/*  Graph includeEdgesByType(String type) { //도보/차도만 존재하는 그래프 생성 메소드
     Graph newGraph = Graph();
     newGraph.nodes = List.from(nodes);
 
     for (final edge in edges) {
-      if (edge.edgeAttribute == requiredAttribute) {
+      if (edge.edgeAttribute == type) {
         newGraph.edges.add(edge);
       }
     }
 
     return newGraph;
+  }*/
+
+  Graph includeEdgesByType(String type) { //도보/차도만 존재하는 그래프 생성 메소드
+    Graph newGraph = Graph();
+
+    for (final edge in edges) {
+      if (edge.edgeAttribute == type) {
+        newGraph.edges.add(edge);
+        // Add nodes connected by the edge if they are not already in the list
+        if (!newGraph.nodeExists(edge.node1.name)) {
+          newGraph.nodes.add(edge.node1);
+        }
+        if (!newGraph.nodeExists(edge.node2.name)) {
+          newGraph.nodes.add(edge.node2);
+        }
+      }
+    }
+
+    return newGraph;
   }
+
 
   bool nodeExists(String name) {
     return nodes.any((node) => node.name == name);
