@@ -22,7 +22,8 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  late List<Node> result;
+  List<Node> result = [];
+  late List<Node> temp;
   List<String> direction = [];
   List<Vec> vector = [];
   List<Offset> startPoints = [];
@@ -121,10 +122,9 @@ class _SearchScreenState extends State<SearchScreen> {
     if(clear == true){
       startPoints.clear();
       endPoints.clear();
-      startNodes.clear();
-      endNodes.clear();
     }
-
+    startNodes.clear();
+    endNodes.clear();
 
     Node startNode = graph.findNode(startNodeName);
     Node endNode = graph.findNode(endNodeName);
@@ -140,14 +140,16 @@ class _SearchScreenState extends State<SearchScreen> {
     List<Node> regularPath =
     reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
 
-    for (int i = 0; i < regularPath.length; i++) {
-      if (i == 0)
-        startNodes.add(regularPath[i]);
-      else if (i == regularPath.length - 1)
-        endNodes.add(regularPath[i]);
-      else {
-        endNodes.add(regularPath[i]);
-        startNodes.add(regularPath[i]);
+    if(clear == true){
+      for (int i = 0; i < regularPath.length; i++) {
+        if (i == 0)
+          startNodes.add(regularPath[i]);
+        else if (i == regularPath.length - 1)
+          endNodes.add(regularPath[i]);
+        else {
+          endNodes.add(regularPath[i]);
+          startNodes.add(regularPath[i]);
+        }
       }
     }
 
@@ -706,11 +708,32 @@ class _SearchScreenState extends State<SearchScreen> {
       Graph driveway = activeGraph.includeEdgesByType("차도");
       Node? StartClosest = findClosestNode(driveway.nodes, start.x, start.y);
       Node? EndClosest = findClosestNode(driveway.nodes, End.x, End.y);
-      result = Astar_pathMaking(activeGraph, start.name, StartClosest!.name, true);
-      result.removeLast();
-      result.addAll(Astar_pathMaking(driveway, StartClosest!.name, EndClosest!.name, false));
-      result.removeLast();
-      result.addAll(Astar_pathMaking(activeGraph, EndClosest!.name, End.name, false));
+      temp = Astar_pathMaking(activeGraph, start.name, StartClosest!.name, true);
+      //temp.removeLast();
+      temp.addAll(Astar_pathMaking(driveway, StartClosest!.name, EndClosest!.name, false));
+      //temp.removeLast();
+      temp.addAll(Astar_pathMaking(activeGraph, EndClosest!.name, End.name, false));
+
+      for (int i = 0; i < temp.length; i++) {
+        if (!result.any((node) => node.name == temp[i].name)) {
+          result.add(temp[i]);
+        } else {
+          int duplicateIndex = result.indexOf(temp[i]);
+          result.removeRange(duplicateIndex + 1, result.length);
+        }
+      }
+      endNodes.clear();
+      startNodes.clear();
+      for (int i = 0; i < result.length; i++) {
+        if (i == 0)
+          startNodes.add(result[i]);
+        else if (i == result.length - 1)
+          endNodes.add(result[i]);
+        else {
+          endNodes.add(result[i]);
+          startNodes.add(result[i]);
+        }
+      }
     }
 
     print("result: ");
