@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late double _imageHeight_du;
   late double scale_offset;
   late String selectedHall;
-  late int selectOption;
+  int selectOption = 0;
 
   int nowFloor = 0;
   String _showButton = "기본";
@@ -297,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
-      _scale = (_previousScale * details.scale).clamp(1.3, 8.0);
+      _scale = (_previousScale * details.scale).clamp(1.3, 12.0);
       final ratio = MediaQuery.of(context).size.height /
           MediaQuery.of(context).size.width;
       final screenWidth = _imageWidth_du / _scale;
@@ -2441,12 +2441,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              whPath = 'assets/images/floor/원흥3.png';
-                              nowFloor = 3;
+                              whPath = 'assets/images/floor/원흥4.png';
+                              nowFloor = 4;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('3F'),
+                          child: Text('4F'),
                         ),
                       ),
                       Positioned(
@@ -2465,7 +2465,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
-                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -2529,11 +2529,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              nowFloor = 1;
+                              iqPath = 'assets/images/floor/정q_3F.png';
+                              nowFloor = 3;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('1F'),
+                          child: Text('3F'),
                         ),
                       ),
                       Positioned(
@@ -2701,6 +2702,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
+                              hlPath = 'assets/images/floor/학림_1F.png';
                               nowFloor = 1;
                               floorButtonPath(nowFloor, _showButton);
                             });
