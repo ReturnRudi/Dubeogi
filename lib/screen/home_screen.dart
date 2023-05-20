@@ -128,6 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
         now_w = position.latitude;
         now_g = position.longitude;
         gpsToPixel = gps(now_w, now_g);
+        //print("gpsToPixel: $gpsToPixel");
       });
     });
   }
@@ -2488,16 +2489,31 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              nowFloor = 1;
+                              ipPath = 'assets/images/floor/정p_2F.png';
+                              nowFloor = 2;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('1F'),
+                          child: Text('2F'),
                         ),
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
                         bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              ipPath = 'assets/images/floor/정p_3F.png';
+                              nowFloor = 3;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('3F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -2510,7 +2526,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
-                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
