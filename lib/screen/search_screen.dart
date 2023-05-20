@@ -134,24 +134,24 @@ class _SearchScreenState extends State<SearchScreen> {
 
     var regularResult =
     graph.aStar(graph.nodes, graph.edges, startNode, endNode);
-    List<int> regularDist = regularResult.item1;
+    //List<int> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
     List<Node> regularPath =
     reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
 
-    if(clear == true){
-      for (int i = 0; i < regularPath.length; i++) {
-        if (i == 0)
-          startNodes.add(regularPath[i]);
-        else if (i == regularPath.length - 1)
-          endNodes.add(regularPath[i]);
-        else {
-          endNodes.add(regularPath[i]);
-          startNodes.add(regularPath[i]);
-        }
-      }
-    }
+    // if(clear == true){
+    //   for (int i = 0; i < regularPath.length; i++) {
+    //     if (i == 0)
+    //       startNodes.add(regularPath[i]);
+    //     else if (i == regularPath.length - 1)
+    //       endNodes.add(regularPath[i]);
+    //     else {
+    //       endNodes.add(regularPath[i]);
+    //       startNodes.add(regularPath[i]);
+    //     }
+    //   }
+    // }
 
 /*    for (int i = 0; i < startNodes.length; i++) {
       print(
@@ -722,17 +722,18 @@ class _SearchScreenState extends State<SearchScreen> {
           result.removeRange(duplicateIndex + 1, result.length);
         }
       }
-      endNodes.clear();
-      startNodes.clear();
-      for (int i = 0; i < result.length; i++) {
-        if (i == 0)
-          startNodes.add(result[i]);
-        else if (i == result.length - 1)
-          endNodes.add(result[i]);
-        else {
-          endNodes.add(result[i]);
-          startNodes.add(result[i]);
-        }
+    }
+
+    endNodes.clear();
+    startNodes.clear();
+    for (int i = 0; i < result.length; i++) {
+      if (i == 0)
+        startNodes.add(result[i]);
+      else if (i == result.length - 1)
+        endNodes.add(result[i]);
+      else {
+        endNodes.add(result[i]);
+        startNodes.add(result[i]);
       }
     }
 
