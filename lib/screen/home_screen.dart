@@ -384,13 +384,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if(selectOption == 1 || selectOption == 2){
       for (int i = 0; i < startNodes.length; i++) {
-        if (graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "계단" || graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "오르막") {
-          startPointsRed.add(Offset(startNodes[i].x, startNodes[i].y));
-          endPointsRed.add(Offset(endNodes[i].x, endNodes[i].y));
-        }
-        else{
-          startPointsGreen.add(Offset(startNodes[i].x, startNodes[i].y));
-          endPointsGreen.add(Offset(endNodes[i].x, endNodes[i].y));
+        if(startNodes[i].isInside == 0 && endNodes[i].isInside == 0){
+          if (graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "계단" || graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "오르막") {
+            startPointsRed.add(Offset(startNodes[i].x, startNodes[i].y));
+            endPointsRed.add(Offset(endNodes[i].x, endNodes[i].y));
+          }
+          else{
+            startPointsGreen.add(Offset(startNodes[i].x, startNodes[i].y));
+            endPointsGreen.add(Offset(endNodes[i].x, endNodes[i].y));
+          }
         }
       }
     }
@@ -408,7 +410,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void floorButtonPath(int nowFloor, String nowBuilding) {
+/*  void floorButtonPath(int nowFloor, String nowBuilding) {
     //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
     erase();
 
@@ -425,6 +427,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   endNodes[i].building == nowBuilding)) {
             startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
             endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
+          }
+        }
+      }
+    }
+  }*/
+
+  void floorButtonPath(int nowFloor, String nowBuilding) {
+    //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
+
+    ColorPath();
+    for (int i = 0; i < startNodes.length; i++) {
+      if (startNodes[i].isInside != 0 || endNodes[i].isInside != 0) {
+        if(nowFloor != 0){
+          if ((startNodes[i].isInside == nowFloor || endNodes[i].isInside == nowFloor) && (startNodes[i].building == nowBuilding || endNodes[i].building == nowBuilding)) {
+            String? type = graph.findEdge(startNodes[i].name, endNodes[i].name)?.type;
+            if(type == "계단" || type == "오르막"){
+              startPointsRed.add(Offset(startNodes[i].x, startNodes[i].y));
+              endPointsRed.add(Offset(endNodes[i].x, endNodes[i].y));
+            }else if(type == "평지"){
+              startPointsGreen.add(Offset(startNodes[i].x, startNodes[i].y));
+              endPointsGreen.add(Offset(endNodes[i].x, endNodes[i].y));
+            }
           }
         }
       }
@@ -541,6 +565,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   CustomPaint(
                                     size: Size(_imageWidth_du, _imageHeight_du),
                                     foregroundPainter: LinePainter(
+                                      imageInfo: _imageInfo_du,
                                       startPointsRed: startPointsRed, // 빈 리스트 전달
                                       endPointsRed: endPointsRed, // 빈 리스트 전달
                                       startPointsGreen: startPointsGreen, // 초록색 선의 점들 전달

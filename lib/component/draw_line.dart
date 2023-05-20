@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LinePainter extends CustomPainter {
+  final ImageInfo imageInfo;
   final List<Offset> startPointsRed;
   final List<Offset> endPointsRed;
   final List<Offset> startPointsGreen;
@@ -9,6 +10,7 @@ class LinePainter extends CustomPainter {
   final List<Offset> endPointsBlue;
 
   LinePainter({
+    required this.imageInfo,
     required this.startPointsRed,
     required this.endPointsRed,
     required this.startPointsGreen,
@@ -19,12 +21,12 @@ class LinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final scaleX = size.width;
-    final scaleY = size.height;
+    final scaleX = size.width / imageInfo.image.width;
+    final scaleY = size.height / imageInfo.image.height;
 
     final redPaint = Paint()
       ..color = Colors.red
-      ..strokeWidth = 0.5
+      ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
     for (int i = 0; i < startPointsRed.length; i++) {
@@ -37,7 +39,7 @@ class LinePainter extends CustomPainter {
 
     final greenPaint = Paint()
       ..color = Colors.green
-      ..strokeWidth = 0.5
+      ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
     for (int i = 0; i < startPointsGreen.length; i++) {
@@ -50,7 +52,7 @@ class LinePainter extends CustomPainter {
 
     final bluePaint = Paint()
       ..color = Colors.blue
-      ..strokeWidth = 0.5
+      ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
     for (int i = 0; i < startPointsBlue.length; i++) {
