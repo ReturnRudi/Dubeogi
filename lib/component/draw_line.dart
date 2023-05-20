@@ -26,7 +26,7 @@ class LinePainter extends CustomPainter {
 
     final redPaint = Paint()
       ..color = Colors.red
-      ..strokeWidth = 1
+      ..strokeWidth = 0.8
       ..style = PaintingStyle.stroke;
 
     for (int i = 0; i < startPointsRed.length; i++) {
@@ -39,7 +39,7 @@ class LinePainter extends CustomPainter {
 
     final greenPaint = Paint()
       ..color = Colors.green
-      ..strokeWidth = 1
+      ..strokeWidth = 0.8
       ..style = PaintingStyle.stroke;
 
     for (int i = 0; i < startPointsGreen.length; i++) {
@@ -52,7 +52,7 @@ class LinePainter extends CustomPainter {
 
     final bluePaint = Paint()
       ..color = Colors.blue
-      ..strokeWidth = 1
+      ..strokeWidth = 0.8
       ..style = PaintingStyle.stroke;
 
     for (int i = 0; i < startPointsBlue.length; i++) {

@@ -2137,6 +2137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
+                              bmPath = 'assets/images/floor/법학관_만해관_1F.png';
                               nowFloor = 1;
                               floorButtonPath(nowFloor, _showButton);
                             });
@@ -2150,6 +2151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
+                              bmPath = 'assets/images/법학관_만해관(1528,2563).png';
                               nowFloor = 0;
                               floorButtonPath(nowFloor, _showButton);
                             });
