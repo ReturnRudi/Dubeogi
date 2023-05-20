@@ -60,10 +60,12 @@ class _SearchScreenState extends State<SearchScreen> {
     double closestDistance = double.infinity;
 
     for (Node node in nodes) {
-      double distance = (node.x - dx) * (node.x - dx) + (node.y - dy) * (node.y - dy);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closest = node;
+      if(node.isInside == 0){
+        double distance = (node.x - dx) * (node.x - dx) + (node.y - dy) * (node.y - dy);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closest = node;
+        }
       }
     }
 
