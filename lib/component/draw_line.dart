@@ -1,51 +1,70 @@
 import 'package:flutter/material.dart';
 
 class LinePainter extends CustomPainter {
-  // 지도에 선을 그리는 클래스
-  final ImageInfo imageInfo;
-  final List<Offset> startPoints;
-  final List<Offset> endPoints;
-  final Color lineColor;
+  final List<Offset> startPointsRed;
+  final List<Offset> endPointsRed;
+  final List<Offset> startPointsGreen;
+  final List<Offset> endPointsGreen;
+  final List<Offset> startPointsBlue;
+  final List<Offset> endPointsBlue;
 
   LinePainter({
-    required this.imageInfo,
-    required this.startPoints,
-    required this.endPoints,
-    required this.lineColor,
+    required this.startPointsRed,
+    required this.endPointsRed,
+    required this.startPointsGreen,
+    required this.endPointsGreen,
+    required this.startPointsBlue,
+    required this.endPointsBlue,
   });
-
-  void erase(){
-    startPoints.clear();
-    endPoints.clear();
-  }
 
   @override
   void paint(Canvas canvas, Size size) {
-    final scaleX = size.width / imageInfo.image.width;
-    final scaleY = size.height / imageInfo.image.height;
-/*    print(
-        'size.width: ${size.width}, imageInfo.image.width: ${imageInfo.image.width}');
-    print(
-        'size.height: ${size.height}, imageInfo.image.height: ${imageInfo.image.height}');
+    final scaleX = size.width;
+    final scaleY = size.height;
 
-    print('scaleX: $scaleX, scaleY: $scaleY');*/
-
-    final paint = Paint()
-      ..color = lineColor
+    final redPaint = Paint()
+      ..color = Colors.red
       ..strokeWidth = 0.5
       ..style = PaintingStyle.stroke;
 
-    for (int i = 0; i < startPoints.length; i++) {
+    for (int i = 0; i < startPointsRed.length; i++) {
       canvas.drawLine(
-        startPoints[i].scale(scaleX, scaleY),
-        endPoints[i].scale(scaleX, scaleY),
-        paint,
+        startPointsRed[i].scale(scaleX, scaleY),
+        endPointsRed[i].scale(scaleX, scaleY),
+        redPaint,
+      );
+    }
+
+    final greenPaint = Paint()
+      ..color = Colors.green
+      ..strokeWidth = 0.5
+      ..style = PaintingStyle.stroke;
+
+    for (int i = 0; i < startPointsGreen.length; i++) {
+      canvas.drawLine(
+        startPointsGreen[i].scale(scaleX, scaleY),
+        endPointsGreen[i].scale(scaleX, scaleY),
+        greenPaint,
+      );
+    }
+
+    final bluePaint = Paint()
+      ..color = Colors.blue
+      ..strokeWidth = 0.5
+      ..style = PaintingStyle.stroke;
+
+    for (int i = 0; i < startPointsBlue.length; i++) {
+      canvas.drawLine(
+        startPointsBlue[i].scale(scaleX, scaleY),
+        endPointsBlue[i].scale(scaleX, scaleY),
+        bluePaint,
       );
     }
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    // TODO: implement your condition here.
     return true;
   }
 }

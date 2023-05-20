@@ -80,19 +80,6 @@ class Graph {
     return newGraph;
   }
 
-/*  Graph includeEdgesByType(String type) { //도보/차도만 존재하는 그래프 생성 메소드
-    Graph newGraph = Graph();
-    newGraph.nodes = List.from(nodes);
-
-    for (final edge in edges) {
-      if (edge.edgeAttribute == type) {
-        newGraph.edges.add(edge);
-      }
-    }
-
-    return newGraph;
-  }*/
-
   Graph includeEdgesByType(String type) { //도보/차도만 존재하는 그래프 생성 메소드
     Graph newGraph = Graph();
 
@@ -121,6 +108,16 @@ class Graph {
     nodes.removeWhere((node) => node.name == name);
     edges.removeWhere((edge) => edge.node1.name == name || edge.node2.name == name);
   }
+
+  Edge? findEdge(String node1Name, String node2Name) {
+    for (Edge edge in edges) {
+      if ((edge.node1.name == node1Name && edge.node2.name == node2Name)) {
+        return edge;
+      }
+    }
+    return null;  // return null if no edge found
+  }
+
 
   // A* algorithm
   Tuple2<List<int>, List<int>> aStar(List<Node> nodes, List<Edge> edges, Node start, Node end) {
