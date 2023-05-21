@@ -184,11 +184,11 @@ class _HomeScreenState extends State<HomeScreen> {
           _showButton = "기본";
         else
           _showButton = "문화관";
-      } else if (touchedBuilding == "만해관/법학관") {
-        if (_showButton == "만해관/법학관")
+      } else if (touchedBuilding == "만해관[법학관]") {
+        if (_showButton == "만해관[법학관]")
           _showButton = "기본";
         else
-          _showButton = "만해관/법학관";
+          _showButton = "만해관[법학관]";
       } else if (touchedBuilding == "본관") {
         if (_showButton == "본관")
           _showButton = "기본";
@@ -671,7 +671,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2564 * scale_offset,
                                             child: InkWell(
                                               onTap: () {
-                                                selectedHall = '만해관/법학관';
+                                                selectedHall = '만해관[법학관]';
                                                 _showFloorButton(selectedHall);
                                               },
                                               child: Image.asset(
@@ -2131,7 +2131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                if (_showButton == "만해관/법학관")
+                if (_showButton == "만해관[법학관]")
                   Stack(
                     children: [
                       Positioned(
@@ -2533,6 +2533,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
+                              ipPath = 'assets/images/정p(769,1920).png';
                               nowFloor = 0;
                               floorButtonPath(nowFloor, _showButton);
                             });
