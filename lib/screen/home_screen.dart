@@ -184,11 +184,11 @@ class _HomeScreenState extends State<HomeScreen> {
           _showButton = "기본";
         else
           _showButton = "문화관";
-      } else if (touchedBuilding == "법학관_만해관") {
-        if (_showButton == "법학관_만해관")
+      } else if (touchedBuilding == "만해관/법학관") {
+        if (_showButton == "만해관/법학관")
           _showButton = "기본";
         else
-          _showButton = "법학관_만해관";
+          _showButton = "만해관/법학관";
       } else if (touchedBuilding == "본관") {
         if (_showButton == "본관")
           _showButton = "기본";
@@ -386,7 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if(selectOption == 1 || selectOption == 2){
       for (int i = 0; i < startNodes.length; i++) {
         if(startNodes[i].isInside == 0 && endNodes[i].isInside == 0){
-          if (graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "계단" || graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "오르막") {
+          if (graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "계단위" || graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "오르막") {
             startPointsRed.add(Offset(startNodes[i].x, startNodes[i].y));
             endPointsRed.add(Offset(endNodes[i].x, endNodes[i].y));
           }
@@ -443,10 +443,10 @@ class _HomeScreenState extends State<HomeScreen> {
         if(nowFloor != 0){
           if ((startNodes[i].isInside == nowFloor || endNodes[i].isInside == nowFloor) && (startNodes[i].building == nowBuilding || endNodes[i].building == nowBuilding)) {
             String? type = graph.findEdge(startNodes[i].name, endNodes[i].name)?.type;
-            if(type == "계단" || type == "오르막"){
+            if(type == "계단위" || type == "오르막"){
               startPointsRed.add(Offset(startNodes[i].x, startNodes[i].y));
               endPointsRed.add(Offset(endNodes[i].x, endNodes[i].y));
-            }else if(type == "평지"){
+            }else if(type == "평지" || type == "계단아래" || type == "내리막"){
               startPointsGreen.add(Offset(startNodes[i].x, startNodes[i].y));
               endPointsGreen.add(Offset(endNodes[i].x, endNodes[i].y));
             }
@@ -671,7 +671,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             top: 2564 * scale_offset,
                                             child: InkWell(
                                               onTap: () {
-                                                selectedHall = '법학관_만해관';
+                                                selectedHall = '만해관/법학관';
                                                 _showFloorButton(selectedHall);
                                               },
                                               child: Image.asset(
@@ -2129,7 +2129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                if (_showButton == "법학관_만해관")
+                if (_showButton == "만해관/법학관")
                   Stack(
                     children: [
                       Positioned(
@@ -2357,12 +2357,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              nePath = 'assets/images/floor/신공2.png';
-                              nowFloor = 4;
+                              nePath = 'assets/images/floor/신공1.png';
+                              nowFloor = 3;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('4F'),
+                          child: Text('3F'),
                         ),
                       ),
                       Positioned(
@@ -2371,7 +2371,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              nePath = 'assets/images/floor/신공3.png';
+                              nePath = 'assets/images/floor/신공1.png';
                               nowFloor = 7;
                               floorButtonPath(nowFloor, _showButton);
                             });
@@ -2385,6 +2385,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
+                              nePath = 'assets/images/floor/신공1.png';
+                              nowFloor = 9;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('9F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
                               nePath = 'assets/images/floor/신공학관(482,2525).png';
                               nowFloor = 0;
                               floorButtonPath(nowFloor, _showButton);
@@ -2395,7 +2409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
-                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
+                        bottom: 220, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
