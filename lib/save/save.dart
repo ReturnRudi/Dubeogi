@@ -29,29 +29,28 @@ String atmPath = 'assets/images/facility/atm.png';
 String loungePath = 'assets/images/facility/lounge.png';
 String printerPath = 'assets/images/facility/printer.png';
 
-
 final List<String> buildings = [
-  '다향관',
-  '명진관',
   '과학관',
+  '다향관',
   '대운동장',
-  '만해관/법학관',
-  '혜화관',
-  '경영관',
-  '사회과학관',
-  '문화관',
-  '학술관',
-  '중앙도서관',
+  '만해관[법학관]',
   '만해광장',
+  '명진관',
+  '문화관',
+  '본관',
+  '사회과학관',
   '상록원',
-  '원흥관',
   '신공학관',
+  '원흥관',
+  '정각원',
   '정보문화관p',
   '정보문화관q',
+  '중앙도서관',
   '체육관',
   '학림관',
-  '정각원',
   '학생회관',
+  '학술관',
+  '혜화관'
 ];
 
 final List<String> selectFromMap = [

@@ -1637,6 +1637,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   if (result['selectOption'] != Null) {
                                     setState(() { //아예
                                       selectOption = result['selectOption'];
+                                      ColorPath();
+                                      print("startPointsGreen: $startPointsGreen");
                                     });
                                     testVar = true;
                                   }
