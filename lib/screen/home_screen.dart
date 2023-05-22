@@ -1853,6 +1853,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
+                              sciencePath = 'assets/images/floor/과학1.png';
                               nowFloor = 1;
                               floorButtonPath(nowFloor, _showButton);
                             });
@@ -1866,6 +1867,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
+                              sciencePath = 'assets/images/과학관(1102,2973).png';
                               nowFloor = 0;
                               floorButtonPath(nowFloor, _showButton);
                             });
@@ -2186,6 +2188,34 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
+                              nowFloor = 2;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('2F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              bPath = 'assets/images/floor/본관3.png';
+                              nowFloor = 3;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('3F'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              bPath = 'assets/images/본관(1017,2394).png';
                               nowFloor = 0;
                               floorButtonPath(nowFloor, _showButton);
                             });
@@ -2195,7 +2225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
-                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
