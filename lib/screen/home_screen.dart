@@ -2021,7 +2021,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('1F'),
+                          child: Text('B1'),
                         ),
                       ),
                       Positioned(
@@ -2059,7 +2059,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               culturePath = 'assets/images/floor/문화1.png';
-                              nowFloor = 1;
+                              nowFloor = -1;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
@@ -2072,12 +2072,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              culturePath = 'assets/images/floor/문화2.png';
-                              nowFloor = 2;
+                              culturePath = 'assets/images/floor/문화1.png';
+                              nowFloor = 1;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('2F'),
+                          child: Text('1F'),
                         ),
                       ),
                       Positioned(
@@ -2086,12 +2086,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              culturePath = 'assets/images/floor/문화3.png';
-                              nowFloor = 3;
+                              culturePath = 'assets/images/floor/문화1.png';
+                              nowFloor = 4;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('3F'),
+                          child: Text('4F'),
                         ),
                       ),
                       Positioned(
@@ -2751,7 +2751,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('1F'),
+                          child: Text('B1'),
                         ),
                       ),
                       Positioned(
@@ -2789,7 +2789,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hsPath = 'assets/images/floor/학술1.png';
-                              nowFloor = 1;
+                              nowFloor = -1;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
@@ -2802,12 +2802,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              hsPath = 'assets/images/floor/학술2.png';
-                              nowFloor = 2;
+                              hsPath = 'assets/images/floor/학술1.png';
+                              nowFloor = 1;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('2F'),
+                          child: Text('1F'),
                         ),
                       ),
                       Positioned(
@@ -2816,12 +2816,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              hsPath = 'assets/images/floor/학술3.png';
-                              nowFloor = 3;
+                              hsPath = 'assets/images/floor/학술1.png';
+                              nowFloor = 4;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('3F'),
+                          child: Text('4F'),
                         ),
                       ),
                       Positioned(
@@ -2859,7 +2859,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              hhPath = 'assets/images/floor/혜화1.png';
+                              hhPath = 'assets/images/floor/혜화4.png';
                               nowFloor = 1;
                               floorButtonPath(nowFloor, _showButton);
                             });
@@ -2873,31 +2873,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              hhPath = 'assets/images/floor/혜화2.png';
-                              nowFloor = 2;
+                              hhPath = 'assets/images/floor/혜화4.png';
+                              nowFloor = 4;
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('2F'),
+                          child: Text('4F'),
                         ),
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              hhPath = 'assets/images/floor/혜화3.png';
-                              nowFloor = 3;
-                              floorButtonPath(nowFloor, _showButton);
-                            });
-                          },
-                          child: Text('3F'),
-                        ),
-                      ),
-                      Positioned(
-                        left: 20, // 버튼의 x 좌표를 조절하세요.
-                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -2911,7 +2897,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
-                        bottom: 180, // 버튼의 y 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
