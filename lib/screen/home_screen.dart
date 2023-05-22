@@ -2706,6 +2706,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               hlPath = 'assets/images/floor/학림_1F.png';
+                              nowFloor = -1;
+                              floorButtonPath(nowFloor, _showButton);
+                            });
+                          },
+                          child: Text('B1'),
+                        ),
+                      ),
+                      Positioned(
+                        left: 20, // 버튼의 x 좌표를 조절하세요.
+                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              hlPath = 'assets/images/floor/학림_1F.png';
                               nowFloor = 1;
                               floorButtonPath(nowFloor, _showButton);
                             });
@@ -2715,7 +2729,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
-                        bottom: 60, // 버튼의 y 좌표를 조절하세요.
+                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -2728,7 +2742,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
-                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             gotoBuildinginfo(_showButton);

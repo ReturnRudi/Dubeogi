@@ -1996,21 +1996,21 @@ void initGraph() {
       showRoute2: false);
   graph.addEdge("학림관 뒷문", "학림관 뒷길4", 16, "계단아래", "도보");
 //253
-  graph.addEdge("학림관 뒷길4", "학림관 뒷길5", 89, "계단위", "도보",
-      node2X: 1228,
-      node2Y: 1680,
+  graph.addEdge("학림관 뒷길4", "학림관 뒷길5", 77, "계단위", "도보",
+      node2X: 1215,
+      node2Y: 1667,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("학림관 뒷길5", "학림관 뒷길4", 48, "계단아래", "도보");
-//254 왼쪽 뒷문이 아니고 다른 곳이었음
-  graph.addEdge("학림관 뒷길5", "학림관 왼쪽 뒷문", 74, "계단위", "도보",
-      node2X: 1212,
-      node2Y: 1727,
+  graph.addEdge("학림관 뒷길5", "학림관 뒷길4", 77, "계단아래", "도보");
+//254
+  graph.addEdge("학림관 뒷길5", "학림관 왼쪽 뒷문", 87, "계단위", "도보",
+      node2X: 1197,
+      node2Y: 1722,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("학림관 왼쪽 뒷문", "학림관 뒷길5", 40, "계단아래", "도보");
+  graph.addEdge("학림관 왼쪽 뒷문", "학림관 뒷길5", 46, "계단아래", "도보");
 //255
   graph.addEdge("학림관 뒷길5", "후문", 123, "내리막", "도보",
       node2X: 1114,
@@ -3330,13 +3330,51 @@ void initGraph() {
       showRoute2: false);
   graph.addEdge("학림관 우측 계단", "학림관 우측 계단 앞", 6, "평지", "도보");
   //411
-  graph.addEdge("학림관 편의점 입구", "학림관 편의점 입구 안", 6, "평지", "도보",
-      node2X: 1449,
-      node2Y: 1813,
-      isInside2: 1,
+  graph.addEdge("학림관 편의점 입구", "학림관 편의점 입구 안", 11, "평지", "도보",
+      node2X: 1097,
+      node2Y: 1713,
+      isInside2: -1,
       building2: "학림관",
       showRoute2: false);
-  graph.addEdge("학림관 편의점 입구 안", "학림관 편의점 입구", 6, "평지", "도보");
+  graph.addEdge("학림관 편의점 입구 안", "학림관 편의점 입구", 11, "평지", "도보");
+  //412
+  graph.addEdge("학림관 편의점 입구 안", "학림관 B1 왼쪽 끝", 13, "평지", "도보",
+      node2X: 1101,
+      node2Y: 1701,
+      isInside2: -1,
+      building2: "학림관",
+      showRoute2: false);
+  graph.addEdge("학림관 B1 왼쪽 끝", "학림관 편의점 입구 안", 13, "평지", "도보");
+  //413
+  graph.addEdge("학림관 B1 왼쪽 끝", "학림관 B1 엘베 앞", 81, "평지", "도보",
+      node2X: 1179,
+      node2Y: 1723,
+      isInside2: -1,
+      building2: "학림관",
+      showRoute2: false);
+  graph.addEdge("학림관 B1 엘베 앞", "학림관 B1 왼쪽 끝", 81, "평지", "도보");
+  //414
+  graph.addEdge("학림관 B1 엘베 앞", "학림관 B1 엘베", 6, "평지", "도보",
+      node2X: 1181,
+      node2Y: 1717,
+      isInside2: -1,
+      building2: "학림관",
+      showRoute2: false);
+  graph.addEdge("학림관 B1 엘베", "학림관 B1 엘베 앞", 6, "평지", "도보");
+  //학림관 B1 - 1F 엘베 이동
+  graph.addEdge("학림관 B1 엘베", "학림관 1층 엘베", 30, "엘베", "도보");
+  graph.addEdge("학림관 1층 엘베", "학림관 B1 엘베", 30, "엘베", "도보");
+  //415
+  graph.addEdge("학림관 B1 엘베 앞", "학림관 왼쪽 뒷문 안", 14, "계단아래", "도보",
+      node2X: 1195,
+      node2Y: 1729,
+      isInside2: -1,
+      building2: "학림관",
+      showRoute2: false);
+  graph.addEdge("학림관 왼쪽 뒷문 안", "학림관 B1 엘베 앞", 26, "계단위", "도보");
+  //416
+  graph.addEdge("학림관 왼쪽 뒷문 안", "학림관 왼쪽 뒷문", 7, "평지", "도보");
+  graph.addEdge("학림관 왼쪽 뒷문", "학림관 왼쪽 뒷문 안", 7, "평지", "도보");
 
 
 
