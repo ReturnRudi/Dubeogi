@@ -7,6 +7,8 @@ import 'package:Dubeogi/component/draw_line.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'find_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -1876,9 +1878,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -1919,9 +1919,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -1962,9 +1960,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo("대운동장");
                           },
                           child: Text('시설정보'),
                         ),
@@ -2005,9 +2001,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2048,9 +2042,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2122,9 +2114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 180, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2167,9 +2157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2210,9 +2198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2284,9 +2270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 180, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo("사회과학관");
                           },
                           child: Text('시설정보'),
                         ),
@@ -2327,9 +2311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2414,9 +2396,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 220, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2487,9 +2467,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 180, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2546,9 +2524,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 140, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo("정보문화관p");
                           },
                           child: Text('시설정보'),
                         ),
@@ -2590,9 +2566,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo("정보문화관q");
                           },
                           child: Text('시설정보'),
                         ),
@@ -2633,9 +2607,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2676,9 +2648,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2719,9 +2689,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2763,9 +2731,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2806,9 +2772,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 100, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2879,9 +2843,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 180, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -2952,9 +2914,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 180, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              //시설 정보로 이동하는 코드 구현 위치
-                            });
+                            gotoBuildinginfo(_showButton);
                           },
                           child: Text('시설정보'),
                         ),
@@ -3054,5 +3014,24 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  void gotoBuildinginfo(String _showButton) async{
+      result = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) =>
+              BuildingInfo(
+                title: _showButton,
+              ),
+        ),
+      );
+      if (result['selectOption'] != Null) {
+        setState(() { //아예
+          selectOption = result['selectOption'];
+          ColorPath();
+          print("startPointsGreen: $startPointsGreen");
+        });
+        testVar = true;
+      }
   }
 }

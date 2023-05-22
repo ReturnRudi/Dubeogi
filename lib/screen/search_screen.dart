@@ -692,9 +692,7 @@ class _SearchScreenState extends State<SearchScreen> {
     Navigator.pop(context, {'selectOption': selectOption});
   }
 
-
   void _handleSubmit() {  //경로 텍스트 안내 영역
-    // Perform some action with the inputs
     String start_node = firstController.text;
     String end_node = secondController.text;
     Graph activeGraph = newGraph ?? graph;
