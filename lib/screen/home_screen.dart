@@ -2554,6 +2554,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
+                              iqPath = "assets/images/정q(634,1866).png";
                               nowFloor = 0;
                               floorButtonPath(nowFloor, _showButton);
                             });
