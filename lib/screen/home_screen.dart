@@ -597,22 +597,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           Positioned(
-                                            left: 1102 * scale_offset,
-                                            top: 2973 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  selectedHall = '과학관';
-                                                  _showFloorButton(selectedHall);
-                                                });
-                                              },
-                                              child: Image.asset(
-                                                sciencePath,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
                                             left: 1337 * scale_offset,
                                             top: 2379 * scale_offset,
                                             child: InkWell(
@@ -664,6 +648,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                               },
                                               child: Image.asset(
                                                 mjPath,
+                                                scale: 1 / scale_offset,
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            left: 1102 * scale_offset,
+                                            top: 2973 * scale_offset,
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  selectedHall = '과학관';
+                                                  _showFloorButton(selectedHall);
+                                                });
+                                              },
+                                              child: Image.asset(
+                                                sciencePath,
                                                 scale: 1 / scale_offset,
                                               ),
                                             ),
@@ -1880,7 +1880,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('과학관(정보)'),
                         ),
                       ),
                     ],
@@ -1921,12 +1921,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('다향관(정보)'),
                         ),
                       ),
                     ],
                   ),
-                if (_showButton == "대운동장앞")
+                if (_showButton == "대운동장")
                   Stack(
                     children: [
                       Positioned(
@@ -1962,7 +1962,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo("대운동장");
                           },
-                          child: Text('시설정보'),
+                          child: Text('대운동장(정보)'),
                         ),
                       ),
                     ],
@@ -2003,7 +2003,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('만해광장(정보)'),
                         ),
                       ),
                     ],
@@ -2021,7 +2021,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('B1'),
+                          child: Text('1F'),
                         ),
                       ),
                       Positioned(
@@ -2044,7 +2044,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('명진관(정보)'),
                         ),
                       ),
                     ],
@@ -2063,7 +2063,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('1F'),
+                          child: Text('B1'),
                         ),
                       ),
                       Positioned(
@@ -2116,7 +2116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('문화관(정보)'),
                         ),
                       ),
                     ],
@@ -2159,7 +2159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('만해관[법학관](정보)'),
                         ),
                       ),
                     ],
@@ -2200,7 +2200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('본관(정보)'),
                         ),
                       ),
                     ],
@@ -2272,7 +2272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo("사회과학관");
                           },
-                          child: Text('시설정보'),
+                          child: Text('사회과학관[경영관](정보)'),
                         ),
                       ),
                     ],
@@ -2313,7 +2313,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('상록원(정보)'),
                         ),
                       ),
                     ],
@@ -2398,7 +2398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('신공학관(정보)'),
                         ),
                       ),
                     ],
@@ -2469,7 +2469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('원흥관(정보)'),
                         ),
                       ),
                     ],
@@ -2526,7 +2526,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo("정보문화관p");
                           },
-                          child: Text('시설정보'),
+                          child: Text('정보문화관p(정보)'),
                         ),
                       ),
                     ],
@@ -2568,7 +2568,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo("정보문화관q");
                           },
-                          child: Text('시설정보'),
+                          child: Text('정보문화관q(정보)'),
                         ),
                       ),
                     ],
@@ -2609,7 +2609,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('정각원(정보)'),
                         ),
                       ),
                     ],
@@ -2650,7 +2650,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('중앙도서관(정보)'),
                         ),
                       ),
                     ],
@@ -2691,7 +2691,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('체육관(정보)'),
                         ),
                       ),
                     ],
@@ -2733,7 +2733,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('학림관(정보)'),
                         ),
                       ),
                     ],
@@ -2774,7 +2774,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('학생회관(정보)'),
                         ),
                       ),
                     ],
@@ -2793,7 +2793,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               floorButtonPath(nowFloor, _showButton);
                             });
                           },
-                          child: Text('1F'),
+                          child: Text('B1'),
                         ),
                       ),
                       Positioned(
@@ -2845,7 +2845,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('학술관(정보)'),
                         ),
                       ),
                     ],
@@ -2902,7 +2902,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
                           },
-                          child: Text('시설정보'),
+                          child: Text('혜화관(정보)'),
                         ),
                       ),
                     ],
