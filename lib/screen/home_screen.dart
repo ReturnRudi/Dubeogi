@@ -1058,36 +1058,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 scale: 1 / (scale_offset / 16),
                                               ),
                                             ),
-                                          if (isTrackingLocation)
-                                            Stack(
-                                              children: [
-                                                Positioned( // 투명 큰 원
-                                                  left: (gpsToPixel.dx * scale_offset) - 4 * 1.3 /_scale,
-                                                  top: (gpsToPixel.dy * scale_offset) - 4 * 1.3 /_scale,
-                                                  child: Container(
-                                                    width: 18 * 1.3 / _scale,
-                                                    height: 18 * 1.3 / _scale,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.orange.withOpacity(0.3),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned( //중앙 원
-                                                  left: gpsToPixel.dx * scale_offset,
-                                                  top: gpsToPixel.dy * scale_offset,
-                                                  child: Container(
-                                                    width: 10 * 1.3 / _scale,
-                                                    height: 10 * 1.3 / _scale,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.white, width: 1.5 * 1.3 / _scale),
-                                                      color: Colors.red,
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
                                         ],
                                       ),
                                   ),
@@ -1611,6 +1581,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ],
                                     ),
                                   ),
+                                  if (isTrackingLocation)
+                                    Stack(
+                                      children: [
+                                        Positioned( // 투명 큰 원
+                                          left: (gpsToPixel.dx * scale_offset) - 4 * 1.3 /_scale,
+                                          top: (gpsToPixel.dy * scale_offset) - 4 * 1.3 /_scale,
+                                          child: Container(
+                                            width: 18 * 1.3 / _scale,
+                                            height: 18 * 1.3 / _scale,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.orange.withOpacity(0.3),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned( //중앙 원
+                                          left: gpsToPixel.dx * scale_offset,
+                                          top: gpsToPixel.dy * scale_offset,
+                                          child: Container(
+                                            width: 10 * 1.3 / _scale,
+                                            height: 10 * 1.3 / _scale,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: Colors.white, width: 1.5 * 1.3 / _scale),
+                                              color: Colors.red,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                 ],
                               ),
                               //---------------------------------------------------------------
