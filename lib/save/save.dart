@@ -58,6 +58,9 @@ final List<String> selectFromMap = [
   '지도에서 선택한 도착지'
 ];
 
+List<Node> pathguide = [];
+List<String> directions = [];
+
 List<String> names = [];
 
 // for test

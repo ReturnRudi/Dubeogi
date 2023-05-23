@@ -756,6 +756,9 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     direction.add("목적지");
 
+    directions = direction;
+    pathguide = result;
+
     setState(() {
       check = 1;
     });

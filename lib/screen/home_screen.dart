@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Dubeogi/screen/line_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/component/appbar.dart';
 import 'package:Dubeogi/algorithm/astar.dart';
@@ -2995,6 +2996,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       setState(() {
                         erase();
+                        startPointsRed.clear();
+                        endPointsRed.clear();
+                        startPointsGreen.clear();
+                        endPointsGreen.clear();
+                        startPointsBlue.clear();
+                        endPointsBlue.clear();
                         testVar = false;
                         isMenuOpen = false;
                       });
@@ -3010,27 +3017,15 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 200,
               height: double.infinity,
               color: Colors.white,
-              child: ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      print("${items[index]}");
-                      Navigator.pushNamed(
-                        context,
-                        '/detail'
-                      );
-                    },
-                    child: ListTile(
-                      title: Text(items[index],
-                        style: TextStyle(
-                          fontFamily: 'Paybooc',
-                          fontWeight: FontWeight.w400,
-                        ),),
-                    ),
-                  );
-                },
-              ),
+              child: Container(
+                width: 200,
+                height: double.infinity,
+                color: Colors.white,
+                child: CustomListWidget(
+                  items: pathguide,
+                  direction: directions,
+                )
+              )
             ),
           ),
           Positioned(
