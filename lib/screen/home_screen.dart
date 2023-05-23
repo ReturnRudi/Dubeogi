@@ -3002,6 +3002,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         endPointsGreen.clear();
                         startPointsBlue.clear();
                         endPointsBlue.clear();
+                        startNodes.clear();
+                        endNodes.clear();
+
                         testVar = false;
                         isMenuOpen = false;
                       });
@@ -3012,20 +3015,15 @@ class _HomeScreenState extends State<HomeScreen> {
               : Text(""),
           AnimatedContainer(
             duration: Duration(milliseconds: 300),
-            transform: Matrix4.translationValues(isMenuOpen ? 0 : -300, 0, 0),
+            transform: Matrix4.translationValues(isMenuOpen ? 0 : -300, 100, 0),
             child: Container(
-              width: 200,
-              height: double.infinity,
-              color: Colors.white,
-              child: Container(
                 width: 200,
                 height: double.infinity,
-                color: Colors.white,
+                color: Colors.white.withOpacity(0.7),
                 child: CustomListWidget(
                   items: pathguide,
                   direction: directions,
                 )
-              )
             ),
           ),
           Positioned(

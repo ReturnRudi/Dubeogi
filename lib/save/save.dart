@@ -61,10 +61,6 @@ final List<String> selectFromMap = [
 List<Node> pathguide = [];
 List<String> directions = [];
 
-List<String> names = [];
-
-// for test
-List<String> items = ['a','b','c','d','e'];
 void initGraph() {
 /*    graph.addEdge("Node1 이름", "Node2 이름", 거리, "평지" or "계단위" or "계단아래" or "오르막" or "내리막", "도보" or "차도",
         node1X: Node1 x 픽셀값,
@@ -179,13 +175,13 @@ void initGraph() {
       showRoute2: false);
   graph.addEdge("지하주차장 앞", "중도 옆옆 계단 아래", 67, "평지", "도보");
 //12
-  graph.addEdge("중도 옆옆 계단 앞", "본관 쪽문", 77, "평지", "도보",
+  graph.addEdge("중도 옆옆 계단 앞", "본관 중도 쪽문", 77, "평지", "도보",
       node2X: 1161,
       node2Y: 2698,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("본관 쪽문", "중도 옆옆 계단 앞", 77, "평지", "도보");
+  graph.addEdge("본관 중도 쪽문", "중도 옆옆 계단 앞", 77, "평지", "도보");
 //13
   graph.addEdge("중도 옆 계단 위", "팔정도 좌측 하단", 82, "평지", "도보",
       node2X: 1212,
@@ -3378,7 +3374,6 @@ void initGraph() {
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("학림관", "학림관 편의점 입구", 100000, "평지", "도보");
   //입구
   graph.addEdge("학림관 입구", "학림관", 100000, "평지", "도보");
   graph.addEdge("학림관", "학림관 입구", 100000, "평지", "도보");
@@ -3593,28 +3588,28 @@ void initGraph() {
   graph.addEdge("본관", "본관 쪽문", 100, "평지", "도보");
 //      원흥관
 //원흥관2 후문
-  graph.addEdge("원흥관2 후문", "원흥관", 100, "평지", "도보",
+  graph.addEdge("원흥관2 후문", "원흥관", 500, "평지", "도보",
       node2X: 953,
       node2Y: 2405,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("원흥관", "원흥관2 후문", 100, "평지", "도보");
+  graph.addEdge("원흥관", "원흥관2 후문", 500, "평지", "도보");
 //원흥관2 n층 입구
-  graph.addEdge("원흥관2 n층 입구", "원흥관", 100, "평지", "도보");
-  graph.addEdge("원흥관", "원흥관2 n층 입구", 100, "평지", "도보");
+  graph.addEdge("원흥관2 n층 입구", "원흥관", 500, "평지", "도보");
+  graph.addEdge("원흥관", "원흥관2 n층 입구", 500, "평지", "도보");
 //원흥관2 쪽문
-  graph.addEdge("원흥관2 쪽문", "원흥관", 100, "평지", "도보");
-  graph.addEdge("원흥관", "원흥관2 쪽문", 100, "평지", "도보");
+  graph.addEdge("원흥관2 쪽문", "원흥관", 500, "평지", "도보");
+  graph.addEdge("원흥관", "원흥관2 쪽문", 500, "평지", "도보");
 //원흥관 후문
-  graph.addEdge("원흥관 후문", "원흥관", 100, "평지", "도보");
-  graph.addEdge("원흥관", "원흥관 후문", 100, "평지", "도보");
+  graph.addEdge("원흥관 후문", "원흥관", 500, "평지", "도보");
+  graph.addEdge("원흥관", "원흥관 후문", 500, "평지", "도보");
 //원흥관 정문
-  graph.addEdge("원흥관 정문", "원흥관", 100, "평지", "도보");
-  graph.addEdge("원흥관", "원흥관 정문", 100, "평지", "도보");
+  graph.addEdge("원흥관 정문", "원흥관", 500, "평지", "도보");
+  graph.addEdge("원흥관", "원흥관 정문", 500, "평지", "도보");
 //원흥관1 쪽문
-  graph.addEdge("원흥관1 쪽문", "원흥관", 100, "평지", "도보");
-  graph.addEdge("원흥관", "원흥관1 쪽문", 100, "평지", "도보");
+  graph.addEdge("원흥관1 쪽문", "원흥관", 500, "평지", "도보");
+  graph.addEdge("원흥관", "원흥관1 쪽문", 500, "평지", "도보");
 
 //      정q
 //정Q 입구
