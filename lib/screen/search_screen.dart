@@ -234,7 +234,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           children: [
                             Center(
                               child: Text(
-                                '최단',
+                                '최소',
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontFamily: 'Paybooc',

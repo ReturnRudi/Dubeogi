@@ -2942,7 +2942,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Positioned(
                         left: 20, // 버튼의 x 좌표를 조절하세요.
-                        bottom: 100, // 버튼의 y 좌표를 조절하세요.
+                        bottom: 140, // 버튼의 y 좌표를 조절하세요.
                         child: ElevatedButton(
                           onPressed: () {
                             gotoBuildinginfo(_showButton);
@@ -2986,7 +2986,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text("Open"),
                         ),
                 )
-              : Text("hi"),
+              : Text(""),
           testVar
               ? Positioned(
                   bottom: 50,
@@ -3002,7 +3002,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text("erase"),
                   ),
                 )
-              : Text("hi"),
+              : Text(""),
           AnimatedContainer(
             duration: Duration(milliseconds: 300),
             transform: Matrix4.translationValues(isMenuOpen ? 0 : -300, 0, 0),
