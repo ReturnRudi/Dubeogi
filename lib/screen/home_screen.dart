@@ -1563,8 +1563,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Positioned(
                                           width: 100 / _scale,
                                           height: 40 / _scale,
-                                          left: 2550 * scale_offset - 50 / _scale,
-                                          top: 2455 * scale_offset - 20 / _scale,
+                                          left: 2414 * scale_offset - 50 / _scale,
+                                          top: 2540 * scale_offset - 20 / _scale,
                                           child: Container(
                                             child: Align(
                                               alignment: Alignment.center,
