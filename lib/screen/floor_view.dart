@@ -67,9 +67,9 @@ class _CustomFloorViewState extends State<CustomFloorView> {
   }
 
   int floorToint(String input) {
-    if (input.contains('F'))
+    if (input.contains('F') || input.contains('B'))
     {
-      String floor  = input.replaceAll(RegExp(r'[^0-9B]'), '');
+      String floor  = input.replaceAll(RegExp(r'[^0-9]'), '');
       return int.parse(floor);
     }
     else{

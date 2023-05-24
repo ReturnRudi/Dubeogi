@@ -226,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (_showButton == "정보문화관q")
           _showButton = "기본";
         else
-          _showButton = "정q";
+          _showButton = "정보문화관q";
       } else if (touchedBuilding == "정각원") {
         if (_showButton == "정각원")
           _showButton = "기본";
@@ -1849,7 +1849,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   CustomFloorView(showbutton: _showButton,
                     onValueChanged: (String strValue, int intValue) {
                       setState(() {
-                        print(_showButton);
+                        print(intValue);
                         if(intValue != 0)
                           nowFloor = intValue;
                         if(strValue == "시설"){
