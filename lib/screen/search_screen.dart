@@ -649,9 +649,11 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Container(),
             )
           else if (check != 0)
-            CustomListWidget(
-              items: result,
-              direction: direction,
+            Expanded(
+              child: CustomListWidget(
+                items: result,
+                direction: direction,
+              ),
             ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),

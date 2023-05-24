@@ -7,7 +7,6 @@ import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/component/draw_line.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'find_screen.dart';
 
 
