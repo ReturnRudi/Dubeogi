@@ -64,7 +64,6 @@ List<String> allFileNames = [
   '본관3.png',
   '사회과학관_경영관_2F.png',
   '사회과학관_경영관_3F.png',
-  '사회과학관_경영관_4F.png',
   '신공학관1.png',
   '신공학관3.png',
   '신공학관7.png',
