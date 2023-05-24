@@ -1,27 +1,5 @@
 import 'package:Dubeogi/algorithm/astar.dart';
 
-String sciencePath = 'assets/images/과학관(1102,2973).png';
-String dhPath = 'assets/images/다향관(1337,2379).png';   //new
-String dwPath = 'assets/images/대운동장(1308,3206).png';
-String mhPath = 'assets/images/만해광장(972,1880).png';
-String mjPath = 'assets/images/명진관(1129,2805).png';
-String culturePath = 'assets/images/문화관(2297,2582).png';
-String bmPath = 'assets/images/법학관_만해관(1528,2563).png'; //new
-String bPath = 'assets/images/본관(1017,2394).png';
-String scPath = 'assets/images/사회과학관_경영관(2145,2775).png';
-String srPath = 'assets/images/상록원(1067,3118).png';   //new
-String nePath = 'assets/images/신공학관(482,2525).png';
-String whPath = 'assets/images/원흥관(694,2084).png';
-String ipPath = 'assets/images/정p(769,1920).png';
-String iqPath = 'assets/images/정q(634,1866).png';
-String jgPath = 'assets/images/정각원(1673,2941).png';
-String gymPath = 'assets/images/체육관(1321,1843).png';
-String libraryPath = 'assets/images/중앙도서관(897,2663).png';
-String hlPath = 'assets/images/학림관(1078,1636).png';
-String stuPath = 'assets/images/학생회관(670,1773).png';
-String hsPath = 'assets/images/학술관(2527,2567).png';
-String hhPath = 'assets/images/혜화관(1804,2964).png';
-
 String vendingPath = 'assets/images/facility/vending.png';
 String showerPath = 'assets/images/facility/showerbooth.png';
 String storePath = 'assets/images/facility/store.png';
@@ -29,16 +7,95 @@ String atmPath = 'assets/images/facility/atm.png';
 String loungePath = 'assets/images/facility/lounge.png';
 String printerPath = 'assets/images/facility/printer.png';
 
+Map<String, String> OriginalData = {
+  '과학관':'assets/images/과학관(1102,2973).png',
+  '다향관':'assets/images/다향관(1337,2379).png',
+  '대운동장':'assets/images/대운동장(1308,3206).png',
+  '만해관[법학관]':'assets/images/법학관_만해관(1528,2563).png',
+  '만해광장':'assets/images/만해광장(972,1880).png',
+  '명진관':'assets/images/명진관(1129,2805).png',
+  '문화관':'assets/images/문화관(2297,2582).png',
+  '본관':'assets/images/본관(1017,2394).png',
+  '사회과학관':'assets/images/사회과학관_경영관(2145,2775).png',
+  '상록원':'assets/images/상록원(1067,3118).png',
+  '신공학관':'assets/images/신공학관(482,2525).png',
+  '원흥관':'assets/images/원흥관(694,2084).png',
+  '정각원':'assets/images/정각원(1673,2941).png',
+  '정보문화관p':'assets/images/정p(769,1920).png',
+  '정보문화관q':'assets/images/정q(634,1866).png',
+  '중앙도서관':'assets/images/중앙도서관(897,2663).png',
+  '체육관':'assets/images/체육관(1321,1843).png',
+  '학림관':'assets/images/학림관(1078,1636).png',
+  '학생회관':'assets/images/학생회관(670,1773).png',
+  '학술관':'assets/images/학술관(2527,2567).png',
+  '혜화관':'assets/images/혜화관(1804,2964).png'
+};
+
+Map<String, String> LookData = {
+  '과학관':'assets/images/과학관(1102,2973).png',
+  '다향관':'assets/images/다향관(1337,2379).png',
+  '대운동장':'assets/images/대운동장(1308,3206).png',
+  '법학관_만해관':'assets/images/법학관_만해관(1528,2563).png',
+  '만해광장':'assets/images/만해광장(972,1880).png',
+  '명진관':'assets/images/명진관(1129,2805).png',
+  '문화관':'assets/images/문화관(2297,2582).png',
+  '본관':'assets/images/본관(1017,2394).png',
+  '사회과학관_경영관':'assets/images/사회과학관_경영관(2145,2775).png',
+  '상록원':'assets/images/상록원(1067,3118).png',
+  '신공학관':'assets/images/신공학관(482,2525).png',
+  '원흥관':'assets/images/원흥관(694,2084).png',
+  '정각원':'assets/images/정각원(1673,2941).png',
+  '정보문화관p':'assets/images/정p(769,1920).png',
+  '정보문화관q':'assets/images/정q(634,1866).png',
+  '중앙도서관':'assets/images/중앙도서관(897,2663).png',
+  '체육관':'assets/images/체육관(1321,1843).png',
+  '학림관':'assets/images/학림관(1078,1636).png',
+  '학생회관':'assets/images/학생회관(670,1773).png',
+  '학술관':'assets/images/학술관(2527,2567).png',
+  '혜화관':'assets/images/혜화관(1804,2964).png'
+};
+
+List<String> allFileNames = [
+  '과학관1.png',
+  '문화관B1.png',
+  '문화관1.png',
+  '문화관4.png',
+  '법학관_만해관_1F.png',
+  '본관3.png',
+  '사회과학관_경영관1.png',
+  '사회과학관_경영관2.png',
+  '사회과학관_경영관3.png',
+  '신공학관1.png',
+  '신공학관3.png',
+  '신공학관7.png',
+  '신공학관9.png',
+  '원흥관1.png',
+  '원흥관2.png',
+  '원흥관3.png',
+  '원흥관4.png',
+  '정보문화관p_3F.png',
+  '정보문화관q_3F.png',
+  '정보문화관p_2F.png',
+  '학림관_1F.png',
+  '학술관1.png',
+  '학술관2.png',
+  '학술관3.png',
+  '혜화관1.png',
+  '혜화관2.png',
+  '혜화관3.png',
+  '혜화관4.png',
+];
+
 final List<String> buildings = [
   '과학관',
   '다향관',
   '대운동장',
-  '만해관[법학관]',
   '만해광장',
   '명진관',
   '문화관',
+  '법학관_만해관',
   '본관',
-  '사회과학관',
+  '사회과학관_경영관',
   '상록원',
   '신공학관',
   '원흥관',

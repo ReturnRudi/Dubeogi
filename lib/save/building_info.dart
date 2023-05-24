@@ -24,7 +24,7 @@ class BuildingInfoDetail {
 
 List<BuildingInfoDetail> BuildingInfoDetails = [
   BuildingInfoDetail(
-    name: '사회과학관',
+    name: '사회과학관_경영관',
     teleNumber: '02-2260-3502(경영대 학사운영실)',
     operatingHours: '연중무휴',
     amenities: [
@@ -70,7 +70,7 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
     ],
   ),
   BuildingInfoDetail(
-    name: '만해관[법학관]',
+    name: '법학관_만해관',
     teleNumber: '02-2260-3098(불교대학 학사운영실)',
     operatingHours: '연중무휴',
     amenities: [
