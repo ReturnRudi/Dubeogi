@@ -3770,8 +3770,8 @@ void initGraph() {
 //      대운동장
 //대운동장 입구
   graph.addEdge("대운동장 입구", "대운동장", 100, "평지", "도보",
-      node2X: 2298,
-      node2Y: 3096,
+      node2X: 1571,
+      node2Y: 3414,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
