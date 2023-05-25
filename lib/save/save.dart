@@ -2699,21 +2699,21 @@ void initGraph() {
       showRoute2: false);
   graph.addEdge("신공 3층 입구", "신공 3층 입구 앞", 33, "평지", "도보");
 //332
-  graph.addEdge("신공 3층 입구 앞", "신공 오르막", 94, "내리막", "차도",
+  graph.addEdge("신공 3층 입구 앞", "신공 오르막", 94, "내리막", "도보",
       node2X: 636,
       node2Y: 2538,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("신공 오르막", "신공 3층 입구 앞", 177, "오르막", "차도");
+  graph.addEdge("신공 오르막", "신공 3층 입구 앞", 177, "오르막", "도보");
 //333
-  graph.addEdge("신공 오르막", "충무로쪽 입구", 51, "내리막", "차도",
+  graph.addEdge("신공 오르막", "충무로쪽 입구", 51, "내리막", "도보",
       node2X: 574,
       node2Y: 2552,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("충무로쪽 입구", "신공 오르막", 95, "오르막", "차도");
+  graph.addEdge("충무로쪽 입구", "신공 오르막", 95, "오르막", "도보");
 
   //----------------------------실내 노드------------------------------
   //정P(입구: 2층 입구, 3층 입구(3층), 3층 후문)

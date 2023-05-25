@@ -711,9 +711,9 @@ class _SearchScreenState extends State<SearchScreen> {
       Node? StartClosest = findClosestNode(driveway.nodes, start.x, start.y);
       Node? EndClosest = findClosestNode(driveway.nodes, End.x, End.y);
       temp = Astar_pathMaking(activeGraph, start.name, StartClosest!.name, true);
-      //temp.removeLast();
+      temp.removeLast();
       temp.addAll(Astar_pathMaking(driveway, StartClosest!.name, EndClosest!.name, false));
-      //temp.removeLast();
+      temp.removeLast();
       temp.addAll(Astar_pathMaking(activeGraph, EndClosest!.name, End.name, false));
 
       for (int i = 0; i < temp.length; i++) {
