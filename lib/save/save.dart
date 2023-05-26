@@ -59,6 +59,7 @@ List<String> allFileNames = [
   '과학관1.png',
   '문화관B1.png',
   '문화관1.png',
+  '문화관3.png',
   '문화관4.png',
   '법학관_만해관_1F.png',
   '명진관1.png',
@@ -77,9 +78,9 @@ List<String> allFileNames = [
   '정보문화관q_3F.png',
   '정보문화관p_2F.png',
   '학림관_1F.png',
+  '학술관B1.png',
   '학술관1.png',
-  '학술관2.png',
-  '학술관3.png',
+  '학술관4.png',
   '혜화관1.png',
   '혜화관4.png',
 ];
@@ -1081,21 +1082,21 @@ void initGraph() {
       showRoute2: false);
   graph.addEdge("문화관 사회과학관 계단 아래", "문화관 사회과학관 계단 중간2", 138, "계단위", "도보");
 //125
-  graph.addEdge("문화관 사회과학관 계단 아래", "문화관 1층 입구 앞", 72, "평지", "차도",
-      node2X: 2382,
-      node2Y: 2793,
+  graph.addEdge("문화관 사회과학관 계단 아래", "문화관 1층 입구 앞", 61, "평지", "차도",
+      node2X: 2385,
+      node2Y: 2782,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("문화관 1층 입구 앞", "문화관 사회과학관 계단 아래", 72, "평지", "차도");
+  graph.addEdge("문화관 1층 입구 앞", "문화관 사회과학관 계단 아래", 61, "평지", "차도");
 //204
-  graph.addEdge("문화관 1층 입구 앞", "문화관 1층 입구", 8, "평지", "도보",
-      node2X: 2389,
-      node2Y: 2796,
+  graph.addEdge("문화관 1층 입구 앞", "문화관 1층 입구", 7, "평지", "도보",
+      node2X: 2392,
+      node2Y: 2784,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("문화관 1층 입구", "문화관 1층 입구 앞", 8, "평지", "도보");
+  graph.addEdge("문화관 1층 입구", "문화관 1층 입구 앞", 7, "평지", "도보");
 //205
   graph.addEdge("문화관 1층 입구 앞", "사회과학관 B1 엘베 입구", 218, "평지", "차도",
       node2X: 2315,
