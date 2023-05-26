@@ -1241,37 +1241,21 @@ void initGraph() {
       showRoute2: false);
   graph.addEdge("학술관 입구", "학술관 입구 앞", 32, "평지", "도보");
 //135
-  graph.addEdge("학술관 입구 앞", "가든쿡 입구", 42, "계단아래", "도보",
+  graph.addEdge("학술관 입구 앞", "가든쿡 입구 앞", 52, "평지", "도보",
       node2X: 2539,
       node2Y: 2684,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("가든쿡 입구", "학술관 입구 앞", 78, "계단위", "도보");
-//136 가든쿡을 건물로 하면 실내 노드로 전환
-  graph.addEdge("가든쿡 입구", "가든쿡 갈림길", 100, "평지", "도보",
-      node2X: 2522,
-      node2Y: 2783,
+  graph.addEdge("가든쿡 입구 앞", "학술관 입구 앞", 52, "평지", "도보");
+  //136
+  graph.addEdge("가든쿡 입구 앞", "가든쿡 입구", 46, "계단아래", "도보",
+      node2X: 2529,
+      node2Y: 2741,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("가든쿡 갈림길", "가든쿡 입구", 100, "평지", "도보");
-//137 가든쿡을 건물로 하면 실내 노드로 전환
-  graph.addEdge("가든쿡 갈림길", "가든쿡 학술관 입구", 28, "평지", "도보",
-      node2X: 2549,
-      node2Y: 2790,
-      isInside2: 0,
-      building2: "실외",
-      showRoute2: false);
-  graph.addEdge("가든쿡 학술관 입구", "가든쿡 갈림길", 28, "평지", "도보");
-//138 가든쿡을 건물로 하면 실내 노드로 전환
-  graph.addEdge("가든쿡 갈림길", "가든쿡 예술극장 입구", 28, "평지", "도보",
-      node2X: 2494,
-      node2Y: 2778,
-      isInside2: 0,
-      building2: "실외",
-      showRoute2: false);
-  graph.addEdge("가든쿡 예술극장 입구", "가든쿡 갈림길", 28, "평지", "도보");
+  graph.addEdge("가든쿡 입구", "가든쿡 입구 앞", 87, "계단위", "도보");
 //139
   graph.addEdge("동대입구 문화관1", "동대입구 앞", 85, "평지", "차도",
       node2X: 2567,
@@ -3707,37 +3691,37 @@ void initGraph() {
   graph.addEdge("경영관 2층 뒷문 안", "경영관 2층 뒷문", 27, "평지", "도보");
   graph.addEdge("경영관 2층 뒷문", "경영관 2층 뒷문 안", 27, "평지", "도보");
   //444
-  graph.addEdge("경영관 2층 뒷문 안", "경영관 구름다리 앞", 46, "평지", "도보",
+  graph.addEdge("경영관 2층 뒷문 안", "경영관 문화관 구름다리 앞", 46, "평지", "도보",
       node2X: 2340,
       node2Y: 3115,
       isInside2: 2,
       building2: "사회과학관_경영관",
       showRoute2: false);
-  graph.addEdge("경영관 구름다리 앞", "경영관 2층 뒷문 안", 46, "평지", "도보");
+  graph.addEdge("경영관 문화관 구름다리 앞", "경영관 2층 뒷문 안", 46, "평지", "도보");
   //445
-  graph.addEdge("경영관 구름다리 앞", "경영관 구름다리 입구", 38, "평지", "도보",
+  graph.addEdge("경영관 문화관 구름다리 앞", "경영관 문화관 구름다리 입구", 38, "평지", "도보",
       node2X: 2350,
       node2Y: 3078,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("경영관 구름다리 입구", "경영관 구름다리 앞", 38, "평지", "도보");
+  graph.addEdge("경영관 문화관 구름다리 입구", "경영관 문화관 구름다리 앞", 38, "평지", "도보");
   //경영관 문화관 구름다리 이동
-  graph.addEdge("경영관 구름다리 입구", "문화관 구름다리 입구", 14, "평지", "도보",
+  graph.addEdge("경영관 문화관 구름다리 입구", "문화관 경영관 구름다리 입구", 11, "계단아래", "도보",
       node2X: 2354,
       node2Y: 3065,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("문화관 구름다리 입구", "경영관 구름다리 입구", 14, "평지", "도보");
+  graph.addEdge("문화관 경영관 구름다리 입구", "경영관 문화관 구름다리 입구", 20, "계단위", "도보");
   //446
-  graph.addEdge("경영관 구름다리 앞", "사회과학관 2층 옆문 안", 107, "평지", "도보",
+  graph.addEdge("경영관 문화관 구름다리 앞", "사회과학관 2층 옆문 안", 107, "평지", "도보",
       node2X: 2238,
       node2Y: 3082,
       isInside2: 2,
       building2: "사회과학관_경영관",
       showRoute2: false);
-  graph.addEdge("사회과학관 2층 옆문 안", "경영관 구름다리 앞", 107, "평지", "도보");
+  graph.addEdge("사회과학관 2층 옆문 안", "경영관 문화관 구름다리 앞", 107, "평지", "도보");
   //447
   graph.addEdge("사회과학관 2층 옆문 안", "사회과학관 2층 옆문", 39, "평지", "도보");
   graph.addEdge("사회과학관 2층 옆문", "사회과학관 2층 옆문 안", 39, "평지", "도보");
@@ -3841,9 +3825,6 @@ void initGraph() {
       building2: "사회과학관_경영관",
       showRoute2: false);
   graph.addEdge("사회과학관 3층 쪽문 계단", "사회과학관 2층 쪽문 계단", 16, "계단아래", "도보");
-
-
-  //복사ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
   //경영관 쪽문 계단 2층 - 3층 이동
   graph.addEdge("경영관 2층 쪽문 계단", "경영관 3층 쪽문 계단", 30, "계단위", "도보",
       node2X: 2246,
@@ -3961,7 +3942,6 @@ void initGraph() {
   //476
   graph.addEdge("사회과학관 3층 쪽문 계단 앞", "사회과학관 3층 쪽문 계단", 12, "평지", "도보");
   graph.addEdge("사회과학관 3층 쪽문 계단", "사회과학관 3층 쪽문 계단 앞", 12, "평지", "도보");
-
   //사회과학관 3층 입구
   graph.addEdge("사회과학관 3층 입구", "사회과학관_경영관", 100000, "평지", "도보",
       node2X: 2295,
@@ -3988,7 +3968,7 @@ void initGraph() {
   //경영관 2층 입구
   graph.addEdge("경영관 2층 입구", "사회과학관_경영관", 100000, "평지", "도보");
   graph.addEdge("사회과학관_경영관", "경영관 2층 입구", 100000, "평지", "도보");
-
+  //**************************************************************************
   //명진관
   //입구: 정문, 좌측 입구, 왼쪽 후문, 후문, 오른쪽 후문, 우측 입구
   //477
@@ -4105,7 +4085,6 @@ void initGraph() {
   //494
   graph.addEdge("명진관 오른쪽 후문 안", "명진관 오른쪽 후문", 9, "평지", "도보");
   graph.addEdge("명진관 오른쪽 후문", "명진관 오른쪽 후문 안", 9, "평지", "도보");
-
 //명진관 정문
   graph.addEdge("명진관 정문", "명진관", 100000, "평지", "도보",
       node2X: 1323,
@@ -4129,7 +4108,436 @@ void initGraph() {
 //명진관 우측 입구
   graph.addEdge("명진관 우측 입구", "명진관", 100000, "평지", "도보");
   graph.addEdge("명진관", "명진관 우측 입구", 100000, "평지", "도보");
+  //**************************************************************************
+  //문화관
+  //입구: 쪽문, 1층 입구, 후문, , 가든쿡 입구 ,가든쿡 문화관 입구, 예술극장 입구
+  //495
+  graph.addEdge("문화관 1층 입구", "문화관 1층 입구 안", 53, "평지", "도보",
+      node2X: 2442,
+      node2Y: 2800,
+      isInside2: 1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 1층 입구 안", "문화관 1층 입구", 53, "평지", "도보");
+  //496
+  graph.addEdge("문화관 1층 입구 안", "문화관 후문", 42, "평지", "도보");
+  graph.addEdge("문화관 후문", "문화관 1층 입구 안", 42, "평지", "도보");
+  //497
+  graph.addEdge("문화관 1층 입구 안", "문화관 1층 계단 앞", 18, "평지", "도보",
+      node2X: 2436,
+      node2Y: 2817,
+      isInside2: 1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 1층 계단 앞", "문화관 1층 입구 안", 18, "평지", "도보");
+  //498
+  graph.addEdge("문화관 1층 계단 앞", "문화관 1층 계단", 9, "평지", "도보",
+      node2X: 2427,
+      node2Y: 2814,
+      isInside2: 1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 1층 계단", "문화관 1층 계단 앞", 9, "평지", "도보");
+  //문화관 계단 1층 - 3층 이동
+  graph.addEdge("문화관 1층 계단", "문화관 3층 계단", 60, "계단위", "도보",
+      node2X: 2427,
+      node2Y: 2814,
+      isInside2: 3,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 3층 계단", "문화관 1층 계단", 32, "계단아래", "도보");
+  //문화관 계단 1층 - B1 이동
+  graph.addEdge("문화관 1층 계단", "문화관 B1 계단", 16, "계단아래", "도보",
+      node2X: 2427,
+      node2Y: 2814,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 B1 계단", "문화관 1층 계단", 30, "계단위", "도보");
+  //문화관 계단 3층 - 4층 이동
+  graph.addEdge("문화관 3층 계단", "문화관 4층 계단", 30, "계단위", "도보",
+      node2X: 2427,
+      node2Y: 2814,
+      isInside2: 4,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 4층 계단", "문화관 3층 계단", 16, "계단아래", "도보");
+  //499
+  graph.addEdge("문화관 1층 계단 앞", "문화관 쪽문 안", 226, "평지", "도보",
+      node2X: 2366,
+      node2Y: 3032,
+      isInside2: 1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 쪽문 안", "문화관 1층 계단 앞", 226, "평지", "도보");
+  //500
+  graph.addEdge("문화관 쪽문 안", "문화관 1층 쪽문 계단", 25, "평지", "도보",
+      node2X: 2342,
+      node2Y: 3025,
+      isInside2: 1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 1층 쪽문 계단", "문화관 쪽문 안", 25, "평지", "도보");
+  //문화관 쪽문 계단 1층 - 3층
+  graph.addEdge("문화관 1층 쪽문 계단", "문화관 3층 쪽문 계단", 60, "계단위", "도보",
+      node2X: 2342,
+      node2Y: 3025,
+      isInside2: 3,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 3층 쪽문 계단", "문화관 1층 쪽문 계단", 32, "계단아래", "도보");
+  //문화관 쪽문 계단 1층 - B1
+  graph.addEdge("문화관 1층 쪽문 계단", "문화관 B1 쪽문 계단", 16, "계단아래", "도보",
+      node2X: 2342,
+      node2Y: 3025,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 B1 쪽문 계단", "문화관 1층 쪽문 계단", 30, "계단위", "도보");
+  //문화관 쪽문 계단 3층 - 4층
+  graph.addEdge("문화관 3층 쪽문 계단", "문화관 4층 쪽문 계단", 30, "계단위", "도보",
+      node2X: 2342,
+      node2Y: 3025,
+      isInside2: 4,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 4층 쪽문 계단", "문화관 3층 쪽문 계단", 16, "계단아래", "도보");
 
+  //501
+  graph.addEdge("문화관 쪽문 안", "문화관 쪽문", 15, "평지", "도보");
+  graph.addEdge("문화관 쪽문", "문화관 쪽문 안", 15, "평지", "도보");
+  //502
+  graph.addEdge("문화관 3층 계단", "문화관 3층 계단 앞", 9, "평지", "도보",
+      node2X: 2436,
+      node2Y: 2817,
+      isInside2: 3,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 3층 계단 앞", "문화관 3층 계단", 9, "평지", "도보");
+  //503
+  graph.addEdge("문화관 3층 계단 앞", "문화관 경영관 구름다리 앞", 226, "평지", "도보",
+      node2X: 2366,
+      node2Y: 3032,
+      isInside2: 3,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 경영관 구름다리 앞", "문화관 3층 계단 앞", 226, "평지", "도보");
+  //504
+  graph.addEdge("문화관 경영관 구름다리 앞", "문화관 3층 쪽문 계단", 25, "평지", "도보");
+  graph.addEdge("문화관 3층 쪽문 계단", "문화관 경영관 구름다리 앞", 25, "평지", "도보");
+  //505
+  graph.addEdge("문화관 경영관 구름다리 앞", "문화관 경영관 구름다리 입구", 35, "평지", "도보");
+  graph.addEdge("문화관 경영관 구름다리 입구", "문화관 경영관 구름다리 앞", 35, "평지", "도보");
+  //506
+  graph.addEdge("문화관 4층 계단", "문화관 4층 계단 앞", 9, "평지", "도보",
+      node2X: 2436,
+      node2Y: 2817,
+      isInside2: 4,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 4층 계단 앞", "문화관 4층 계단", 9, "평지", "도보");
+  //507
+  graph.addEdge("문화관 4층 계단 앞", "문화관 4층 쪽문 계단 앞", 226, "평지", "도보",
+      node2X: 2366,
+      node2Y: 3032,
+      isInside2: 4,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 4층 쪽문 계단 앞", "문화관 4층 계단 앞", 226, "평지", "도보");
+  //508
+  graph.addEdge("문화관 4층 쪽문 계단 앞", "문화관 4층 쪽문 계단", 25, "평지", "도보");
+  graph.addEdge("문화관 4층 쪽문 계단", "문화관 4층 쪽문 계단 앞", 25, "평지", "도보");
+  //509
+  graph.addEdge("문화관 4층 계단 앞", "문화관 학술관 구름다리 앞", 83, "평지", "도보",
+      node2X: 2463,
+      node2Y: 2738,
+      isInside2: 4,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 학술관 구름다리 앞", "문화관 4층 계단 앞", 83, "평지", "도보");
+  //510
+  graph.addEdge("문화관 학술관 구름다리 앞", "문화관 학술관 구름다리 입구", 42, "평지", "도보",
+      node2X: 2503,
+      node2Y: 2751,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("문화관 학술관 구름다리 입구", "문화관 학술관 구름다리 앞", 42, "평지", "도보");
+  //문화관 - 학술관 구름다리 이동
+  graph.addEdge("문화관 학술관 구름다리 입구", "학술관 문화관 구름다리 입구", 48, "평지", "도보",
+      node2X: 2550,
+      node2Y: 2761,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("학술관 문화관 구름다리 입구", "문화관 학술관 구름다리 입구", 48, "평지", "도보");
+  //511
+  graph.addEdge("문화관 B1 계단", "문화관 B1 계단 앞", 9, "평지", "도보",
+      node2X: 2436,
+      node2Y: 2817,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 B1 계단 앞", "문화관 B1 계단", 9, "평지", "도보");
+  //512
+  graph.addEdge("문화관 B1 계단 앞", "문화관 B1 쪽문 계단 앞", 226, "평지", "도보",
+      node2X: 2366,
+      node2Y: 3032,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 B1 쪽문 계단 앞", "문화관 B1 계단 앞", 226, "평지", "도보");
+  //513
+  graph.addEdge("문화관 B1 쪽문 계단 앞", "문화관 B1 쪽문 계단", 25, "평지", "도보");
+  graph.addEdge("문화관 B1 쪽문 계단", "문화관 B1 쪽문 계단 앞", 25, "평지", "도보");
+  //137
+  graph.addEdge("가든쿡 입구", "가든쿡 갈림길", 63, "평지", "도보",
+      node2X: 2519,
+      node2Y: 2803,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("가든쿡 갈림길", "가든쿡 입구", 63, "평지", "도보");
+  //138
+  graph.addEdge("가든쿡 갈림길", "가든쿡 학술관 입구", 32, "평지", "도보",
+      node2X: 2551,
+      node2Y: 2804,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("가든쿡 학술관 입구", "가든쿡 갈림길", 32, "평지", "도보");
+  //514
+  graph.addEdge("가든쿡 갈림길", "가든쿡 문화관 입구", 28, "평지", "도보",
+      node2X: 2494,
+      node2Y: 2778,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("가든쿡 문화관 입구", "가든쿡 갈림길", 28, "평지", "도보");
+  //515
+  graph.addEdge("가든쿡 문화관 입구", "가든쿡 문화관 입구 안", 43, "평지", "도보",
+      node2X: 2451,
+      node2Y: 2774,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("가든쿡 문화관 입구 안", "가든쿡 문화관 입구", 43, "평지", "도보");
+  //516
+  graph.addEdge("문화관 B1 계단 앞", "가든쿡 문화관 입구", 226, "평지", "도보");
+  graph.addEdge("가든쿡 문화관 입구", "문화관 B1 계단 앞", 226, "평지", "도보");
+  //517
+  graph.addEdge("가든쿡 문화관 입구 안", "이해랑 학술관 가는길1", 18, "평지", "도보",
+      node2X: 2456,
+      node2Y: 2757,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("이해랑 학술관 가는길1", "가든쿡 문화관 입구 안", 18, "평지", "도보");
+  //518
+  graph.addEdge("이해랑 학술관 가는길1", "이해랑 학술관 가는길2", 52, "평지", "도보",
+      node2X: 2506,
+      node2Y: 2772,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("이해랑 학술관 가는길2", "이해랑 학술관 가는길1", 52, "평지", "도보");
+  //519
+  graph.addEdge("이해랑 학술관 가는길2", "이해랑 학술관 가는길3", 117, "평지", "도보",
+      node2X: 2540,
+      node2Y: 2660,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("이해랑 학술관 가는길3", "이해랑 학술관 가는길2", 117, "평지", "도보");
+  //520
+  graph.addEdge("이해랑 학술관 가는길3", "문화관 학술관 B1 경계", 12, "평지", "도보",
+      node2X: 2551,
+      node2Y: 2655,
+      isInside2: -1,
+      building2: "문화관",
+      showRoute2: false);
+  graph.addEdge("문화관 학술관 B1 경계", "이해랑 학술관 가는길3", 12, "평지", "도보");
+  //문화관 쪽문
+  graph.addEdge("문화관 쪽문", "문화관", 100000, "평지", "도보",
+      node2X: 2422,
+      node2Y: 2841,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("문화관", "문화관 쪽문", 100000, "평지", "도보");
+  //문화관 1층 입구
+  graph.addEdge("문화관 1층 입구", "문화관", 100000, "평지", "도보");
+  graph.addEdge("문화관", "문화관 1층 입구", 100000, "평지", "도보");
+  //문화관 후문
+  graph.addEdge("문화관 후문", "문화관", 100000, "평지", "도보");
+  graph.addEdge("문화관", "문화관 후문", 100000, "평지", "도보");
+  //가든쿡 문화관 입구
+  graph.addEdge("가든쿡 문화관 입구", "문화관", 100000, "평지", "도보");
+  graph.addEdge("문화관", "가든쿡 문화관 입구", 100000, "평지", "도보");
+  //문화관 학술관 B1 경계
+  graph.addEdge("문화관 학술관 B1 경계", "문화관", 100000, "평지", "도보");
+  graph.addEdge("문화관", "문화관 학술관 B1 경계", 100000, "평지", "도보");
+  //문화관 학술관 구름다리 입구
+  graph.addEdge("문화관 학술관 구름다리 입구", "문화관", 100000, "평지", "도보");
+  graph.addEdge("문화관", "문화관 학술관 구름다리 입구", 100000, "평지", "도보");
+  //**************************************************************************
+  //학술관
+  //입구: 학술관 입구, 가든쿡 학술관 입구, 가든쿡 학술관 옆문
+  //521
+  graph.addEdge("문화관 학술관 B1 경계", "학술관 B1 계단 앞", 100, "평지", "도보",
+      node2X: 2591,
+      node2Y: 2655,
+      isInside2: -1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 B1 계단 앞", "문화관 학술관 B1 경계", 100, "평지", "도보");
+  //522
+  graph.addEdge("학술관 B1 계단 앞", "학술관 B1 계단", 30, "평지", "도보",
+      node2X: 2591,
+      node2Y: 2625,
+      isInside2: -1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 B1 계단", "학술관 B1 계단 앞", 30, "평지", "도보");
+  //학술관 계단 B1 - 1층 이동
+  graph.addEdge("학술관 B1 계단", "학술관 1층 계단", 30, "계단위", "도보",
+      node2X: 2591,
+      node2Y: 2625,
+      isInside2: 1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 1층 계단", "학술관 B1 계단", 16, "계단아래", "도보");
+  //학술관 계단 1층 - 4층 이동
+  graph.addEdge("학술관 1층 계단", "학술관 4층 계단", 90, "계단위", "도보",
+      node2X: 2591,
+      node2Y: 2625,
+      isInside2: 4,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 4층 계단", "학술관 1층 계단", 48, "계단아래", "도보");
+  //523
+  graph.addEdge("학술관 B1 계단 앞", "학술관 B1 뒷계단 앞", 141, "평지", "도보",
+      node2X: 2591,
+      node2Y: 2766,
+      isInside2: -1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 B1 뒷계단 앞", "학술관 B1 계단 앞", 141, "평지", "도보");
+  //524
+  graph.addEdge("학술관 B1 뒷계단 앞", "학술관 B1 뒷계단", 12, "평지", "도보",
+      node2X: 2602,
+      node2Y: 2770,
+      isInside2: -1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 B1 뒷계단", "학술관 B1 뒷계단 앞", 12, "평지", "도보");
+  //학술관 뒷계단 B1 - 1층 이동
+  graph.addEdge("학술관 B1 뒷계단", "학술관 1층 뒷계단", 30, "평지", "도보",
+      node2X: 2602,
+      node2Y: 2770,
+      isInside2: 1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 1층 뒷계단", "학술관 B1 뒷계단", 16, "평지", "도보");
+  //학술관 뒷계단 1층 - 4층 이동
+  graph.addEdge("학술관 1층 뒷계단", "학술관 4층 뒷계단", 90, "평지", "도보",
+      node2X: 2602,
+      node2Y: 2770,
+      isInside2: 4,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 4층 뒷계단", "학술관 1층 뒷계단", 48, "평지", "도보");
+  //525
+  graph.addEdge("학술관 B1 뒷계단 앞", "가든쿡 학술관 입구 안", 37, "평지", "도보",
+      node2X: 2589,
+      node2Y: 2803,
+      isInside2: -1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("가든쿡 학술관 입구 안", "학술관 B1 뒷계단 앞", 37, "평지", "도보");
+  //526
+  graph.addEdge("가든쿡 학술관 입구 안", "가든쿡 학술관 입구", 38, "평지", "도보");
+  graph.addEdge("가든쿡 학술관 입구", "가든쿡 학술관 입구 안", 38, "평지", "도보");
+  //527
+  graph.addEdge("학술관 입구", "학술관 입구 안", 11, "평지", "도보",
+      node2X: 2569,
+      node2Y: 2670,
+      isInside2: 1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 입구 안", "학술관 입구", 11, "평지", "도보");
+  //528
+  graph.addEdge("학술관 입구 안", "학술관 1층 계단 앞", 22, "평지", "도보",
+      node2X: 2591,
+      node2Y: 2670,
+      isInside2: 1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 1층 계단 앞", "학술관 입구 안", 22, "평지", "도보");
+  //529
+  graph.addEdge("학술관 1층 계단 앞", "학술관 1층 계단", 45, "평지", "도보");
+  graph.addEdge("학술관 1층 계단", "학술관 1층 계단 앞", 45, "평지", "도보");
+  //530
+  graph.addEdge("학술관 1층 계단 앞", "학술관 1층 뒷계단 앞", 96, "평지", "도보",
+      node2X: 2591,
+      node2Y: 2766,
+      isInside2: 1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 1층 뒷계단 앞", "학술관 1층 계단 앞", 96, "평지", "도보");
+  //531
+  graph.addEdge("학술관 1층 뒷계단 앞", "학술관 1층 뒷계단", 12, "평지", "도보");
+  graph.addEdge("학술관 1층 뒷계단", "학술관 1층 뒷계단 앞", 12, "평지", "도보");
+  //532
+  graph.addEdge("학술관 1층 뒷계단 앞", "학술관 옆문 안", 60, "평지", "도보",
+      node2X: 2589,
+      node2Y: 2826,
+      isInside2: 1,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 옆문 안", "학술관 1층 뒷계단 앞", 60, "평지", "도보");
+  //533
+  graph.addEdge("학술관 옆문 안", "학술관 옆문", 40, "평지", "도보");
+  graph.addEdge("학술관 옆문", "학술관 옆문 안", 40, "평지", "도보");
+  //534
+  graph.addEdge("학술관 4층 계단", "학술관 4층 뒷계단 앞", 139, "평지", "도보",
+      node2X: 2591,
+      node2Y: 2764,
+      isInside2: 4,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 4층 뒷계단 앞", "학술관 4층 계단", 139, "평지", "도보");
+  //535
+  graph.addEdge("학술관 4층 뒷계단 앞", "학술관 4층 뒷계단", 13, "평지", "도보",
+      node2X: 2591,
+      node2Y: 2764,
+      isInside2: 4,
+      building2: "학술관",
+      showRoute2: false);
+  graph.addEdge("학술관 4층 뒷계단", "학술관 4층 뒷계단 앞", 13, "평지", "도보");
+  //536
+  graph.addEdge("학술관 4층 뒷계단 앞", "학술관 문화관 구름다리 입구", 40, "평지", "도보");
+  graph.addEdge("학술관 문화관 구름다리 입구", "학술관 4층 뒷계단 앞", 40, "평지", "도보");
+  //학술관 입구
+  graph.addEdge("학술관 입구", "학술관", 100000, "평지", "도보",
+      node2X: 2597,
+      node2Y: 2719,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("학술관", "학술관 입구", 100000, "평지", "도보");
+  //가든쿡 학술관 입구
+  graph.addEdge("가든쿡 학술관 입구", "학술관", 100000, "평지", "도보");
+  graph.addEdge("학술관", "가든쿡 학술관 입구", 100000, "평지", "도보");
+  //가든쿡 학술관 옆문
+  graph.addEdge("학술관 옆문", "학술관", 100000, "평지", "도보");
+  graph.addEdge("학술관", "학술관 옆문", 100000, "평지", "도보");
+  //문화관 학술관 B1 경계
+  graph.addEdge("문화관 학술관 B1 경계", "학술관", 100000, "평지", "도보");
+  graph.addEdge("학술관", "문화관 학술관 B1 경계", 100000, "평지", "도보");
+  //학술관 문화관 구름다리 입구
+  graph.addEdge("학술관 문화관 구름다리 입구", "학술관", 100000, "평지", "도보");
+  graph.addEdge("학술관", "학술관 문화관 구름다리 입구", 100000, "평지", "도보");
 
 //--------------------------------------------실내 임시 노드-------------------------------
 //      중앙도서관
@@ -4271,40 +4679,4 @@ void initGraph() {
       building2: "실외",
       showRoute2: false);
   graph.addEdge("대운동장", "대운동장 입구", 100, "평지", "도보");
-//      문화관
-//문화관 쪽문
-  graph.addEdge("문화관 쪽문", "문화관", 100, "평지", "도보",
-      node2X: 2422,
-      node2Y: 2841,
-      isInside2: 0,
-      building2: "실외",
-      showRoute2: false);
-  graph.addEdge("문화관", "문화관 쪽문", 100, "평지", "도보");
-//문화관 1층 입구
-  graph.addEdge("문화관 1층 입구", "문화관", 100, "평지", "도보");
-  graph.addEdge("문화관", "문화관 1층 입구", 100, "평지", "도보");
-//문화관 후문
-  graph.addEdge("문화관 후문", "문화관", 100, "평지", "도보");
-  graph.addEdge("문화관", "문화관 후문", 100, "평지", "도보");
-//가든쿡 예술극장 입구
-  graph.addEdge("가든쿡 예술극장 입구", "문화관", 100, "평지", "도보");
-  graph.addEdge("문화관", "가든쿡 예술극장 입구", 100, "평지", "도보");
-//예술극장 입구
-  graph.addEdge("예술극장 입구", "문화관", 100, "평지", "도보");
-  graph.addEdge("문화관", "예술극장 입구", 100, "평지", "도보");
-//      학술관
-//학술관 입구
-  graph.addEdge("학술관 입구", "학술관", 100, "평지", "도보",
-      node2X: 2597,
-      node2Y: 2719,
-      isInside2: 0,
-      building2: "실외",
-      showRoute2: false);
-  graph.addEdge("학술관", "학술관 입구", 100, "평지", "도보");
-//가든쿡 학술관 입구
-  graph.addEdge("가든쿡 학술관 입구", "학술관", 100, "평지", "도보");
-  graph.addEdge("학술관", "가든쿡 학술관 입구", 100, "평지", "도보");
-//가든쿡 학술관 옆문
-  graph.addEdge("학술관 옆문", "학술관", 100, "평지", "도보");
-  graph.addEdge("학술관", "학술관 옆문", 100, "평지", "도보");
 }
