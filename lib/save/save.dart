@@ -4308,24 +4308,24 @@ void initGraph() {
       showRoute2: false);
   graph.addEdge("가든쿡 학술관 입구", "가든쿡 갈림길", 32, "평지", "도보");
   //514
-  graph.addEdge("가든쿡 갈림길", "가든쿡 문화관 입구", 28, "평지", "도보",
-      node2X: 2494,
-      node2Y: 2778,
+  graph.addEdge("가든쿡 갈림길", "가든쿡 문화관 입구", 41, "평지", "도보",
+      node2X: 2483,
+      node2Y: 2783,
       isInside2: -1,
       building2: "문화관",
       showRoute2: false);
-  graph.addEdge("가든쿡 문화관 입구", "가든쿡 갈림길", 28, "평지", "도보");
+  graph.addEdge("가든쿡 문화관 입구", "가든쿡 갈림길", 41, "평지", "도보");
   //515
-  graph.addEdge("가든쿡 문화관 입구", "가든쿡 문화관 입구 안", 43, "평지", "도보",
+  graph.addEdge("가든쿡 문화관 입구", "가든쿡 문화관 입구 안", 33, "평지", "도보",
       node2X: 2451,
       node2Y: 2774,
       isInside2: -1,
       building2: "문화관",
       showRoute2: false);
-  graph.addEdge("가든쿡 문화관 입구 안", "가든쿡 문화관 입구", 43, "평지", "도보");
+  graph.addEdge("가든쿡 문화관 입구 안", "가든쿡 문화관 입구", 33, "평지", "도보");
   //516
-  graph.addEdge("문화관 B1 계단 앞", "가든쿡 문화관 입구", 226, "평지", "도보");
-  graph.addEdge("가든쿡 문화관 입구", "문화관 B1 계단 앞", 226, "평지", "도보");
+  graph.addEdge("문화관 B1 계단 앞", "가든쿡 문화관 입구 안", 46, "평지", "도보");
+  graph.addEdge("가든쿡 문화관 입구 안", "문화관 B1 계단 앞", 46, "평지", "도보");
   //517
   graph.addEdge("가든쿡 문화관 입구 안", "이해랑 학술관 가는길1", 18, "평지", "도보",
       node2X: 2456,
