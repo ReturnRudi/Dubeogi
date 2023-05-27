@@ -756,10 +756,6 @@ class _SelectFromMapState extends State<SelectFromMap> {
               onPressed: (){
                 getCurrentLocation();
                 print("gpsToPixel: $gpsToPixel");
-                setState(() {
-                  _position = Offset(1500 - gpsToPixel.dx, 5333/2 - gpsToPixel.dy);
-                  print("_position: $_position");
-                });
               },
               child: Icon(Icons.location_on),
               backgroundColor: Colors.orange,

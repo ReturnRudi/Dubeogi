@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../component/appbar.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/save/building_info.dart';
+import 'package:Dubeogi/screen/building_info_screen.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 // 검색창을 누르면 나오는 스크린.
@@ -11,7 +11,6 @@ class FindScreen extends StatefulWidget {
   @override
   State<FindScreen> createState() => _FindScreenState();
 }
-
 
 class _FindScreenState extends State<FindScreen> {
   final Controller = TextEditingController();
@@ -25,8 +24,8 @@ class _FindScreenState extends State<FindScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        title: '동국대학교',
+      appBar: AppBar(
+        title: Text('동국대학교'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -50,7 +49,8 @@ class _FindScreenState extends State<FindScreen> {
                               borderSide: BorderSide.none,
                             ),
                             hintText: '검색하거나 아래 목록을 터치하세요',
-                            hintStyle: TextStyle(color: Colors.grey,
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
                               fontFamily: 'Paybooc',
                               fontWeight: FontWeight.w400,
                             ),
@@ -58,15 +58,18 @@ class _FindScreenState extends State<FindScreen> {
                           controller: Controller,
                         ),
                         suggestionsCallback: (pattern) {
-                          return buildings.where((building) => building.toLowerCase().contains(pattern.toLowerCase()));
+                          return buildings.where((building) => building
+                              .toLowerCase()
+                              .contains(pattern.toLowerCase()));
                         },
                         itemBuilder: (context, suggestion) {
                           return ListTile(
                             title: Text(suggestion,
                               style: TextStyle(
-                                fontFamily: 'Paybooc',
-                                fontWeight: FontWeight.w400,
-                              ),),
+                              fontFamily: 'Paybooc',
+                              fontWeight: FontWeight.w400,
+                              ),
+                            ),
                           );
                         },
                         onSuggestionSelected: (suggestion) {
@@ -84,8 +87,6 @@ class _FindScreenState extends State<FindScreen> {
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.grey,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
                             ),
@@ -101,22 +102,18 @@ class _FindScreenState extends State<FindScreen> {
                 Container(
                   height: 50.0,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      result = Controller.text;
+                    onPressed: () {
+                      result = Controller.text; // 박스 안의 텍스트
                       if (isExistBuilding(result) == true) {
-                        getdata = await Navigator.of(context).push(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) =>
-                                BuildingInfo(
-                                  title: result,
-                                ),
+                            builder: (_) => BuildingInfoScreen(
+                              title: result,
+                            ),
                           ),
                         );
-                        setState(() {
-                          Navigator.pop(context, getdata);
-                        });
-                      } else {
-                        print('debug: isExistBuilding false');
+                      }
+                      else {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -146,8 +143,7 @@ class _FindScreenState extends State<FindScreen> {
                           '건물 검색',
                           style: TextStyle(
                             fontSize: 8,
-                            fontFamily: 'Paybooc',
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
@@ -175,8 +171,8 @@ class _FindScreenState extends State<FindScreen> {
                         style: TextStyle(
                           fontFamily: 'Paybooc',
                           fontWeight: FontWeight.w400,
-                        ),),
-                      //subtitle: Text('$name'),
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -185,175 +181,6 @@ class _FindScreenState extends State<FindScreen> {
             // end 3
           ],
         ),
-      ),
-    );
-  }
-}
-
-//--------------------------------------------------------------
-
-class BuildingInfo extends StatefulWidget {
-  final String title;
-
-  const BuildingInfo({Key? key, required this.title}) : super(key: key);
-
-  @override
-  State<BuildingInfo> createState() => _BuildingInfoState();
-}
-
-class _BuildingInfoState extends State<BuildingInfo> {
-  dynamic getdata;
-  late BuildingInfoDetail _buildingInfoDetail;
-  late List<Amenity> _displayedAmenities;
-
-  @override
-  void initState() {
-    super.initState();
-    _buildingInfoDetail = _getBuildingInfoDetail(widget.title);
-    _displayedAmenities = [
-      Amenity(
-          icon: Icon(Icons.phone),
-          name: '전화번호',
-          description: _buildingInfoDetail.teleNumber),
-      Amenity(
-          icon: Icon(Icons.access_time),
-          name: '이용시간',
-          description: _buildingInfoDetail.operatingHours),
-      ..._buildingInfoDetail.amenities,
-    ];
-  }
-
-  BuildingInfoDetail _getBuildingInfoDetail(String title) {
-    for (BuildingInfoDetail building in BuildingInfoDetails) {
-      if (building.name == title) {
-        return building;
-      }
-    }
-    throw Exception("해당 건물이 없습니다.");
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        title: "동국대학교",
-      ),
-      body: Column(
-        children: [
-          Image.asset(
-            'assets/images/photo/${widget.title}.png',
-            fit: BoxFit.contain,
-          ),
-          SizedBox(height: 20),
-          Container(
-            alignment: Alignment.center,
-            child: Text(
-              widget.title,
-              style: TextStyle(
-                fontSize: 24,
-                fontFamily: 'Paybooc',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          SizedBox(height: 15.0, width: 20.0),
-          // 2개의 버튼
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              OutlinedButton(
-                onPressed: () async {
-                  getdata = await Navigator.pushNamed(
-                    context,
-                    '/search',
-                    arguments: {'start': widget.title, 'end': ''},
-                  );
-                  setState(() {
-                    Navigator.pop(context, getdata);
-                  });
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.blue),
-                  backgroundColor: Colors.white,
-                  padding: EdgeInsets.all(12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  minimumSize: Size(100, 0),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.directions_walk, color: Colors.blue),
-                    SizedBox(width: 4),
-                    Text('출발', style: TextStyle(color: Colors.blue,
-                      fontFamily: 'Paybooc',
-                      fontWeight: FontWeight.w700,
-                    )),
-                  ],
-                ),
-              ),
-              SizedBox(width: 25),
-              OutlinedButton(
-                onPressed: ()  async {
-                  getdata = await Navigator.pushNamed(
-                    context,
-                    '/search',
-                    arguments: {'start': '', 'end': widget.title},
-                  );
-                  setState(() {
-                    Navigator.pop(context, getdata);
-                  });
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.blue),
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.all(12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  minimumSize: Size(100, 0),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.directions_walk, color: Colors.white),
-                    SizedBox(width: 4),
-                    Text('도착', style: TextStyle(color: Colors.white,
-                      fontFamily: 'Paybooc',
-                      fontWeight: FontWeight.w700,
-                    )),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10),
-          Flexible(
-            child: ListView.builder(
-              itemCount: _displayedAmenities.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: (){},
-                  child: ListTile(
-                    leading: _displayedAmenities[index].icon,
-                    title: Text('${_displayedAmenities[index].name}',
-                      style: TextStyle(
-                        fontFamily: 'Paybooc',
-                        fontWeight: FontWeight.w700,
-                      ),),
-                    subtitle: Text('${_displayedAmenities[index].description}',
-                      style: TextStyle(
-                        fontFamily: 'Paybooc',
-                        fontWeight: FontWeight.w400,
-                      ),),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
       ),
     );
   }

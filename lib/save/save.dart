@@ -1,5 +1,27 @@
-import 'package:Dubeogi/algorithm/astar.dart';
-
+import 'package:Dubeogi/save/astar.dart';
+/*
+String sciencePath = 'assets/images/building/과학관(1102,2973).png';
+String dhPath = 'assets/images/building/다향관(1337,2379).png';   //new
+String dwPath = 'assets/images/building/대운동장(1308,3206).png';
+String mhPath = 'assets/images/building/만해광장(972,1880).png';
+String mjPath = 'assets/images/building/명진관(1129,2805).png';
+String culturePath = 'assets/images/building/문화관(2297,2582).png';
+String bmPath = 'assets/images/building/법학관_만해관(1528,2563).png'; //new
+String bPath = 'assets/images/building/본관(1017,2394).png';
+String scPath = 'assets/images/building/사회과학관_경영관(2145,2775).png';
+String srPath = 'assets/images/building/상록원(1067,3118).png';   //new
+String nePath = 'assets/images/building/신공학관(482,2525).png';
+String whPath = 'assets/images/building/원흥관(694,2084).png';
+String ipPath = 'assets/images/building/정p(769,1920).png';
+String iqPath = 'assets/images/building/정q(634,1866).png';
+String jgPath = 'assets/images/building/정각원(1673,2941).png';
+String gymPath = 'assets/images/building/체육관(1321,1843).png';
+String libraryPath = 'assets/images/building/중앙도서관(897,2663).png';
+String hlPath = 'assets/images/building/학림관(1078,1636).png';
+String stuPath = 'assets/images/building/학생회관(670,1773).png';
+String hsPath = 'assets/images/building/학술관(2527,2567).png';
+String hhPath = 'assets/images/building/혜화관(1804,2694).png';
+*/
 String vendingPath = 'assets/images/facility/vending.png';
 String showerPath = 'assets/images/facility/showerbooth.png';
 String storePath = 'assets/images/facility/store.png';
@@ -7,52 +29,53 @@ String atmPath = 'assets/images/facility/atm.png';
 String loungePath = 'assets/images/facility/lounge.png';
 String printerPath = 'assets/images/facility/printer.png';
 
+
 Map<String, String> OriginalData = {
-  '과학관':'assets/images/과학관(1102,2973).png',
-  '다향관':'assets/images/다향관(1337,2379).png',
-  '대운동장':'assets/images/대운동장(1308,3206).png',
-  '법학관_만해관':'assets/images/법학관_만해관(1528,2563).png',
-  '만해광장':'assets/images/만해광장(972,1880).png',
-  '명진관':'assets/images/명진관(1129,2805).png',
-  '문화관':'assets/images/문화관(2297,2582).png',
-  '본관':'assets/images/본관(1017,2394).png',
-  '사회과학관_경영관':'assets/images/사회과학관_경영관(2145,2775).png',
-  '상록원':'assets/images/상록원(1067,3118).png',
-  '신공학관':'assets/images/신공학관(482,2525).png',
-  '원흥관':'assets/images/원흥관(694,2084).png',
-  '정각원':'assets/images/정각원(1673,2941).png',
-  '정보문화관p':'assets/images/정p(769,1920).png',
-  '정보문화관q':'assets/images/정q(634,1866).png',
-  '중앙도서관':'assets/images/중앙도서관(897,2663).png',
-  '체육관':'assets/images/체육관(1321,1843).png',
-  '학림관':'assets/images/학림관(1078,1636).png',
-  '학생회관':'assets/images/학생회관(670,1773).png',
-  '학술관':'assets/images/학술관(2527,2567).png',
-  '혜화관':'assets/images/혜화관(1804,2964).png'
+  '과학관':'assets/images/building/과학관(1102,2973).png',
+  '다향관':'assets/images/building/다향관(1337,2379).png',
+  '대운동장':'assets/images/building/대운동장(1308,3206).png',
+  '법학관_만해관':'assets/images/building/법학관_만해관(1528,2563).png',
+  '만해광장':'assets/images/building/만해광장(972,1880).png',
+  '명진관':'assets/images/building/명진관(1129,2805).png',
+  '문화관':'assets/images/building/문화관(2297,2582).png',
+  '본관':'assets/images/building/본관(1017,2394).png',
+  '사회과학관_경영관':'assets/images/building/사회과학관_경영관(2145,2775).png',
+  '상록원':'assets/images/building/상록원(1067,3118).png',
+  '신공학관':'assets/images/building/신공학관(482,2525).png',
+  '원흥관':'assets/images/building/원흥관(694,2084).png',
+  '정각원':'assets/images/building/정각원(1673,2941).png',
+  '정보문화관p':'assets/images/building/정p(769,1920).png',
+  '정보문화관q':'assets/images/building/정q(634,1866).png',
+  '중앙도서관':'assets/images/building/중앙도서관(897,2663).png',
+  '체육관':'assets/images/building/체육관(1321,1843).png',
+  '학림관':'assets/images/building/학림관(1078,1636).png',
+  '학생회관':'assets/images/building/학생회관(670,1773).png',
+  '학술관':'assets/images/building/학술관(2527,2567).png',
+  '혜화관':'assets/images/building/혜화관(1804,2694).png'
 };
 
 Map<String, String> LookData = {
-  '과학관':'assets/images/과학관(1102,2973).png',
-  '다향관':'assets/images/다향관(1337,2379).png',
-  '대운동장':'assets/images/대운동장(1308,3206).png',
-  '법학관_만해관':'assets/images/법학관_만해관(1528,2563).png',
-  '만해광장':'assets/images/만해광장(972,1880).png',
-  '명진관':'assets/images/명진관(1129,2805).png',
-  '문화관':'assets/images/문화관(2297,2582).png',
-  '본관':'assets/images/본관(1017,2394).png',
-  '사회과학관_경영관':'assets/images/사회과학관_경영관(2145,2775).png',
-  '상록원':'assets/images/상록원(1067,3118).png',
-  '신공학관':'assets/images/신공학관(482,2525).png',
-  '원흥관':'assets/images/원흥관(694,2084).png',
-  '정각원':'assets/images/정각원(1673,2941).png',
-  '정보문화관p':'assets/images/정p(769,1920).png',
-  '정보문화관q':'assets/images/정q(634,1866).png',
-  '중앙도서관':'assets/images/중앙도서관(897,2663).png',
-  '체육관':'assets/images/체육관(1321,1843).png',
-  '학림관':'assets/images/학림관(1078,1636).png',
-  '학생회관':'assets/images/학생회관(670,1773).png',
-  '학술관':'assets/images/학술관(2527,2567).png',
-  '혜화관':'assets/images/혜화관(1804,2964).png'
+  '과학관':'assets/images/building/과학관(1102,2973).png',
+  '다향관':'assets/images/building/다향관(1337,2379).png',
+  '대운동장':'assets/images/building/대운동장(1308,3206).png',
+  '법학관_만해관':'assets/images/building/법학관_만해관(1528,2563).png',
+  '만해광장':'assets/images/building/만해광장(972,1880).png',
+  '명진관':'assets/images/building/명진관(1129,2805).png',
+  '문화관':'assets/images/building/문화관(2297,2582).png',
+  '본관':'assets/images/building/본관(1017,2394).png',
+  '사회과학관_경영관':'assets/images/building/사회과학관_경영관(2145,2775).png',
+  '상록원':'assets/images/building/상록원(1067,3118).png',
+  '신공학관':'assets/images/building/신공학관(482,2525).png',
+  '원흥관':'assets/images/building/원흥관(694,2084).png',
+  '정각원':'assets/images/building/정각원(1673,2941).png',
+  '정보문화관p':'assets/images/building/정p(769,1920).png',
+  '정보문화관q':'assets/images/building/정q(634,1866).png',
+  '중앙도서관':'assets/images/building/중앙도서관(897,2663).png',
+  '체육관':'assets/images/building/체육관(1321,1843).png',
+  '학림관':'assets/images/building/학림관(1078,1636).png',
+  '학생회관':'assets/images/building/학생회관(670,1773).png',
+  '학술관':'assets/images/building/학술관(2527,2567).png',
+  '혜화관':'assets/images/building/혜화관(1804,2694).png'
 };
 
 List<String> allFileNames = [
@@ -114,10 +137,9 @@ final List<String> selectFromMap = [
   '지도에서 선택한 도착지'
 ];
 
-List<Node> pathguide = [];
-List<String> directions = [];
+List<String> names = [];
 
-void initGraph() {
+void initGraph(Graph graph) {
 /*    graph.addEdge("Node1 이름", "Node2 이름", 거리, "평지" or "계단위" or "계단아래" or "오르막" or "내리막", "도보" or "차도",
         node1X: Node1 x 픽셀값,
         node1Y: Node1 y 픽셀값,
@@ -3058,11 +3080,11 @@ void initGraph() {
   graph.addEdge("신공학관 1층 뒷계단 앞3", "신공학관 1층 뒷엘베 앞", 12, "평지", "도보");
   //378
   graph.addEdge("신공학관 1층 뒷계단 앞3", "신공학관 1층 뒷계단 앞4", 12, "평지", "도보",
-  node2X: 716,
-  node2Y: 2754,
-  isInside2: 1,
-  building2: "신공학관",
-  showRoute2: false);
+      node2X: 716,
+      node2Y: 2754,
+      isInside2: 1,
+      building2: "신공학관",
+      showRoute2: false);
   graph.addEdge("신공학관 1층 뒷계단 앞4", "신공학관 1층 뒷계단 앞3", 12, "평지", "도보");
   //379
   graph.addEdge("신공학관 1층 뒷계단 앞4", "신공학관 1층 뒤편1", 72, "평지", "도보",
@@ -3482,7 +3504,7 @@ void initGraph() {
   graph.addEdge("학림관 뒷문", "학림관", 100000, "평지", "도보");
   graph.addEdge("학림관", "학림관 뒷문", 100000, "평지", "도보");
   //좌측 앞문
- graph.addEdge("학림관 좌측 앞문", "학림관", 100000, "평지", "도보");
+  graph.addEdge("학림관 좌측 앞문", "학림관", 100000, "평지", "도보");
   graph.addEdge("학림관", "학림관 좌측 앞문", 100000, "평지", "도보");
   //**************************************************************************
   //과학관(입구: 좌측 입구, 정문, 우측 입구)
@@ -4680,4 +4702,23 @@ void initGraph() {
       building2: "실외",
       showRoute2: false);
   graph.addEdge("대운동장", "대운동장 입구", 100, "평지", "도보");
+}
+
+Graph initDriveWayGraph(){
+  Graph graph = Graph(); // for init
+  Graph newGraph = Graph(); // for return
+  initGraph(graph);
+
+  for (Edge edge in graph.edges){
+    if (edge.edgeAttribute == "차도"){
+      newGraph.edges.add(edge);
+      if(!newGraph.nodeExists(edge.node1.name)){
+        newGraph.nodes.add(edge.node1);
+      }
+      if (!newGraph.nodeExists(edge.node2.name)) {
+        newGraph.nodes.add(edge.node2);
+      }
+    }
+  }
+  return newGraph;
 }

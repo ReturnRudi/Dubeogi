@@ -1,15 +1,22 @@
 import 'dart:async';
-import 'package:Dubeogi/screen/floor_view.dart';
-import 'package:Dubeogi/screen/line_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:Dubeogi/component/appbar.dart';
-import 'package:Dubeogi/algorithm/astar.dart';
-import 'package:Dubeogi/save/save.dart';
-import 'package:Dubeogi/component/draw_line.dart';
+import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'find_screen.dart';
 
+import 'package:Dubeogi/components/building_positioned_list.dart';
+import 'package:Dubeogi/components/buildingname_positioned_list.dart';
+import 'package:Dubeogi/components/detail_list.dart';
+import 'package:Dubeogi/components/end_alert.dart';
+import 'package:Dubeogi/components/facility_button.dart';
+import 'package:Dubeogi/components/facility_offsets.dart';
+import 'package:Dubeogi/components/floor_view.dart';
+import 'package:Dubeogi/components/linepainter.dart';
+
+import 'package:Dubeogi/provider/algo_value.dart';
+import 'package:Dubeogi/save/save.dart';
+
+import 'package:Dubeogi/screen/building_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -21,43 +28,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // map load
   late ImageInfo _imageInfo_du;
   bool _imageLoaded_du = false;
-  late double _imageWidth_du;
-  late double _imageHeight_du;
-  late double scale_offset;
-  late String selectedHall;
-  int selectOption = 0;
 
-  int nowFloor = 0;
-  String _showButton = "기본";
-
+  // 지도 확대축소
   double _scale = 1.3;
   double _previousScale = 1.0;
   Offset _position = Offset.zero;
   Offset _previousPosition = Offset.zero;
+  late double _imageWidth_du;
+  late double _imageHeight_du;
+  late double scale_offset;
 
-  double now_w = 0.0;
-  double now_g = 0.0;
-  bool isTrackingLocation = false;
-  StreamSubscription<Position>? positionStream;
-  Offset gpsToPixel = Offset.zero;
+  // 건물 및 편의시설 관련
+  int nowFloor = 0;
+  late List<Widget> buildingPositions;
+  late List<Widget> buildingNames;
+  late List<Widget> vendings;
+  late List<Widget> showers;
+  late List<Widget> stores;
+  late List<Widget> printers;
+  late List<Widget> atms;
+  late List<Widget> lounges;
 
-  List<Offset> startPoints = [];
-  List<Offset> endPoints = [];
-  List<Offset> startPointsRed = [];
-  List<Offset> endPointsRed = [];
-  List<Offset> startPointsGreen = [];
-  List<Offset> endPointsGreen = [];
-  List<Offset> startPointsBlue = [];
-  List<Offset> endPointsBlue = [];
-
-
-/*  String _startNodeName = "";
-  String _endNodeName = "";*/
-  dynamic result;
-
-  //late String nowBuilding;
+  String _showButton = "기본";
   bool _vendingvisibility = false;
   bool _showervisibility = false;
   bool _storevisibility = false;
@@ -65,214 +60,18 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loungevisibility = false;
   bool _printervisibility = false;
 
-  // for drawer widget
+  // drawer
 
-  void _vendingshow() {
-    setState(() {
-      _vendingvisibility = !_vendingvisibility;
-    });
-  }
+  // gps
+  double now_w = 0.0;
+  double now_g = 0.0;
+  bool isTrackingLocation = false;
+  StreamSubscription<Position>? positionStream;
+  Offset gpsToPixel = Offset.zero;
 
-  void _showershow() {
-    setState(() {
-      _showervisibility = !_showervisibility;
-    });
-  }
-
-  void _storeshow() {
-    setState(() {
-      _storevisibility = !_storevisibility;
-    });
-  }
-
-  void _atmshow() {
-    setState(() {
-      _atmvisibility = !_atmvisibility;
-    });
-  }
-
-  void _loungeshow() {
-    setState(() {
-      _loungevisibility = !_loungevisibility;
-    });
-  }
-
-  void _printershow() {
-    setState(() {
-      _printervisibility = !_printervisibility;
-    });
-  }
-
-  Offset gps(double w, double g) {
-    double pixel_x = 3000 * (g - 126.9962082464593) / (127.0046597158073 - 126.9962082464593);
-    double pixel_y = 5333 * (37.56424922299378 - w) / (37.56424922299378 - 37.552279443944855);
-
-    return Offset(pixel_x - 12, pixel_y - 5);  //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
-  }
-
-  Future<void> requestLocationPermission() async {
-    var status = await Permission.location.status;
-    if (!status.isGranted) {
-      status = await Permission.location.request();
-      if (!status.isGranted) {
-        return Future.error('Location permission not granted');
-      }
-    }
-  }
-
-  void startLocationStream() async {
-    await requestLocationPermission();
-    positionStream = Geolocator.getPositionStream(
-        desiredAccuracy: LocationAccuracy.high,
-        //distanceFilter: 1
-        intervalDuration: Duration(milliseconds: 1000)
-    ).listen((Position position) {
-      setState(() {
-        now_w = position.latitude;
-        now_g = position.longitude;
-        gpsToPixel = gps(now_w, now_g);
-        //print("gpsToPixel: $gpsToPixel");
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    positionStream?.cancel(); // Don't forget to cancel the stream when disposing
-    super.dispose();
-  }
-
-  void toggleLocationTracking() {
-    if (isTrackingLocation) {
-      positionStream?.cancel();
-    } else {
-      startLocationStream();
-    }
-
-    setState(() {
-      isTrackingLocation = !isTrackingLocation;
-    });
-  }
-
-  void _showFloorButton(String touchedBuilding) {
-    //print('_showButton: $_showButton');
-    setState(() {
-      if (touchedBuilding == "과학관") {
-        if (_showButton == "과학관")
-          _showButton = "기본";
-        else
-          _showButton = "과학관";
-      } else if (touchedBuilding == "다향관") {
-        if (_showButton == "다향관")
-          _showButton = "기본";
-        else
-          _showButton = "다향관";
-      } else if (touchedBuilding == "대운동장앞") {
-        if (_showButton == "대운동장앞")
-          _showButton = "기본";
-        else
-          _showButton = "대운동장앞";
-      } else if (touchedBuilding == "만해광장") {
-        if (_showButton == "만해광장")
-          _showButton = "기본";
-        else
-          _showButton = "만해광장";
-      } else if (touchedBuilding == "명진관") {
-        if (_showButton == "명진관")
-          _showButton = "기본";
-        else
-          _showButton = "명진관";
-      } else if (touchedBuilding == "문화관") {
-        if (_showButton == "문화관")
-          _showButton = "기본";
-        else
-          _showButton = "문화관";
-      } else if (touchedBuilding == "법학관_만해관") {
-        if (_showButton == "법학관_만해관")
-          _showButton = "기본";
-        else
-          _showButton = "법학관_만해관";
-      } else if (touchedBuilding == "본관") {
-        if (_showButton == "본관")
-          _showButton = "기본";
-        else
-          _showButton = "본관";
-      } else if (touchedBuilding == "사회과학관_경영관") {
-        if (_showButton == "사회과학관_경영관")
-          _showButton = "기본";
-        else
-          _showButton = "사회과학관_경영관";
-      } else if (touchedBuilding == "상록원") {
-        if (_showButton == "상록원")
-          _showButton = "기본";
-        else
-          _showButton = "상록원";
-      } else if (touchedBuilding == "신공학관") {
-        if (_showButton == "신공학관")
-          _showButton = "기본";
-        else
-          _showButton = "신공학관";
-      } else if (touchedBuilding == "원흥관") {
-        if (_showButton == "원흥관")
-          _showButton = "기본";
-        else
-          _showButton = "원흥관";
-      } else if (touchedBuilding == "정보문화관p") {
-        if (_showButton == "정보문화관p")
-          _showButton = "기본";
-        else
-          _showButton = "정보문화관p";
-      } else if (touchedBuilding == "정보문화관q") {
-        if (_showButton == "정보문화관q")
-          _showButton = "기본";
-        else
-          _showButton = "정보문화관q";
-      } else if (touchedBuilding == "정각원") {
-        if (_showButton == "정각원")
-          _showButton = "기본";
-        else
-          _showButton = "정각원";
-      } else if (touchedBuilding == "중앙도서관") {
-        if (_showButton == "중앙도서관")
-          _showButton = "기본";
-        else
-          _showButton = "중앙도서관";
-      } else if (touchedBuilding == "체육관") {
-        if (_showButton == "체육관")
-          _showButton = "기본";
-        else
-          _showButton = "체육관";
-      } else if (touchedBuilding == "학림관") {
-        if (_showButton == "학림관")
-          _showButton = "기본";
-        else
-          _showButton = "학림관";
-      } else if (touchedBuilding == "학생회관") {
-        if (_showButton == "학생회관")
-          _showButton = "기본";
-        else
-          _showButton = "학생회관";
-      } else if (touchedBuilding == "학술관") {
-        if (_showButton == "학술관")
-          _showButton = "기본";
-        else
-          _showButton = "학술관";
-      } else if (touchedBuilding == "혜화관") {
-        if (_showButton == "혜화관")
-          _showButton = "기본";
-        else
-          _showButton = "혜화관";
-      }
-    });
-  }
-
-
-  @override
-  void initState() {
-    super.initState();
-    _getImageInfo();
-    initGraph();
-  }
+  // .
+  dynamic result;
+  late AlgoValue algovalue;
 
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
@@ -292,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
     stream.removeListener(listener);
   }
 
+  // ================================================
   void _onScaleStart(ScaleStartDetails details) {
     setState(() {
       _previousScale = _scale;
@@ -372,162 +172,181 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void erase() {
-    startPoints.clear();
-    endPoints.clear();
+  // ================================================
+  void _vendingshow() {
+    setState(() {
+      _vendingvisibility = !_vendingvisibility;
+      print('check: vendingvisibility: ${_vendingvisibility}');
+    });
   }
 
-  void ColorPath(){
-    erase();
-    startPointsRed.clear();
-    endPointsRed.clear();
-    startPointsGreen.clear();
-    endPointsGreen.clear();
-    startPointsBlue.clear();
-    endPointsBlue.clear();
+  void _showershow() {
+    setState(() {
+      _showervisibility = !_showervisibility;
+    });
+  }
 
-    if(selectOption == 1 || selectOption == 2){
-      for (int i = 0; i < startNodes.length; i++) {
-        if(startNodes[i].isInside == 0 && endNodes[i].isInside == 0){
-          if (graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "계단위" || graph.findEdge(startNodes[i].name, endNodes[i].name)?.type == "오르막") {
-            startPointsRed.add(Offset(startNodes[i].x, startNodes[i].y));
-            endPointsRed.add(Offset(endNodes[i].x, endNodes[i].y));
-          }
-          else{
-            startPointsGreen.add(Offset(startNodes[i].x, startNodes[i].y));
-            endPointsGreen.add(Offset(endNodes[i].x, endNodes[i].y));
-          }
-        }
-      }
-    }
-    else{
-      for (int i = 0; i < startNodes.length; i++) {
-        if (graph.findEdge(startNodes[i].name, endNodes[i].name)?.edgeAttribute == "차도") {
-          startPointsBlue.add(Offset(startNodes[i].x, startNodes[i].y));
-          endPointsBlue.add(Offset(endNodes[i].x, endNodes[i].y));
-        }
-        else{
-          startPointsGreen.add(Offset(startNodes[i].x, startNodes[i].y));
-          endPointsGreen.add(Offset(endNodes[i].x, endNodes[i].y));
-        }
-      }
+  void _storeshow() {
+    setState(() {
+      _storevisibility = !_storevisibility;
+    });
+  }
+
+  void _atmshow() {
+    setState(() {
+      _atmvisibility = !_atmvisibility;
+    });
+  }
+
+  void _loungeshow() {
+    setState(() {
+      _loungevisibility = !_loungevisibility;
+    });
+  }
+
+  void _printershow() {
+    setState(() {
+      _printervisibility = !_printervisibility;
+    });
+  }
+
+  void _showFloorButton(String touchedBuilding) {
+    String name = "기본";
+    setState(() {
+      _showButton != touchedBuilding
+          ? _showButton = touchedBuilding
+          : _showButton = name;
+    });
+    print('check: showButton: ${_showButton}');
+  }
+
+  void gotoBuildingInfo({required String buildingname}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BuildingInfoScreen(
+          title: buildingname,
+        ),
+      ),
+    );
+  }
+
+  // ================================================
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getImageInfo();
+  }
+
+  @override
+  void dispose() {
+    positionStream
+        ?.cancel(); // Don't forget to cancel the stream when disposing
+    super.dispose();
+  }
+
+  // ====================================================
+  Offset gps(double w, double g) {
+    double pixel_x = 3000 *
+        (g - 126.9962082464593) /
+        (127.0046597158073 - 126.9962082464593);
+    double pixel_y = 5333 *
+        (37.56424922299378 - w) /
+        (37.56424922299378 - 37.552279443944855);
+
+    return Offset(pixel_x - 12, pixel_y - 5); //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
+  }
+
+  Future<void> requestLocationPermission() async {
+    print('check: requestLocationPermission();');
+    var status = await Permission.location.request();
+    if (!status.isGranted) {
+      //status = await Permission.location.request();
+      //if (!status.isGranted) {
+      //return Future.error('Location permission not granted');
+      //}
+      print('check: GPS permission failed.');
     }
   }
 
-/*  void floorButtonPath(int nowFloor, String nowBuilding) {
-    //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
-    erase();
-
-    for (int i = 0; i < startNodes.length; i++) {
-      if (startNodes[i].isInside == 0 && endNodes[i].isInside == 0) {
-        //엣지의 출발지, 도착지가 모두 밖이면 그냥 경로 리스트에 추가
-        startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
-        endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
-      } else {
-        if (nowFloor != 0) {
-          if ((startNodes[i].isInside == nowFloor ||
-                  endNodes[i].isInside == nowFloor) &&
-              (startNodes[i].building == nowBuilding ||
-                  endNodes[i].building == nowBuilding)) {
-            startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
-            endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
-          }
-        }
-      }
-    }
-  }*/
-
-  void floorButtonPath(int nowFloor, String nowBuilding) {
-    //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
-
-    ColorPath();
-    for (int i = 0; i < startNodes.length; i++) {
-      if (startNodes[i].isInside != 0 || endNodes[i].isInside != 0) {
-        if(nowFloor != 0){
-          if ((startNodes[i].isInside == nowFloor || endNodes[i].isInside == nowFloor) && (startNodes[i].building == nowBuilding || endNodes[i].building == nowBuilding)) {
-            String? type = graph.findEdge(startNodes[i].name, endNodes[i].name)?.type;
-            if(type == "계단위" || type == "오르막"){
-              startPointsRed.add(Offset(startNodes[i].x, startNodes[i].y));
-              endPointsRed.add(Offset(endNodes[i].x, endNodes[i].y));
-            }else if(type == "평지" || type == "계단아래" || type == "내리막"){
-              startPointsGreen.add(Offset(startNodes[i].x, startNodes[i].y));
-              endPointsGreen.add(Offset(endNodes[i].x, endNodes[i].y));
-            }
-          }
-        }
-      }
-    }
+  void startLocationStream() async {
+    print('check: startLocationStream();');
+    await requestLocationPermission();
+    positionStream = Geolocator.getPositionStream(
+            desiredAccuracy: LocationAccuracy.high,
+            //distanceFilter: 1
+            intervalDuration: Duration(milliseconds: 1000))
+        .listen((Position position) {
+      setState(() {
+        now_w = position.latitude;
+        now_g = position.longitude;
+        gpsToPixel = gps(now_w, now_g);
+        //print("gpsToPixel: $gpsToPixel");
+      });
+    });
   }
 
-/*  void Astar_pathMaking(String startNodeName, String endNodeName) {
-    //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
-    //지도 위에 그림을 그릴 수 있도록 start, end 리스트에 x, y값을 각각 넣는다.
-
-    erase();
-    startNodes.clear();
-    endNodes.clear();
-
-    Node startNode = graph.findNode(startNodeName);
-    Node endNode = graph.findNode(endNodeName);
-
-    int startIndex = graph.findNodeIndex(graph.nodes, startNodeName);
-    int endIndex = graph.findNodeIndex(graph.nodes, endNodeName);
-
-    // Regular search
-    var regularResult =
-    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
-    List<int> regularDist = regularResult.item1;
-    List<int> regularPrev = regularResult.item2;
-
-    List<Node> regularPath =
-        reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
-
-    print("Regular path from $startNode to $endNode:");
-    for (int i = 0; i < regularPath.length; i++) {
-      if (i == 0)
-        startNodes.add(regularPath[i]);
-      else if (i == regularPath.length - 1)
-        endNodes.add(regularPath[i]);
-      else {
-        endNodes.add(regularPath[i]);
-        startNodes.add(regularPath[i]);
-      }
+  void toggleLocationTracking() {
+    if (isTrackingLocation) {
+      positionStream?.cancel();
+    } else {
+      startLocationStream();
     }
 
-    for (int i = 0; i < startNodes.length; i++) {
-      print(
-          "(${startNodes[i].x}, ${startNodes[i].y}) -> (${endNodes[i].x}, ${endNodes[i].y})");
-    }
+    setState(() {
+      isTrackingLocation = !isTrackingLocation;
+    });
+  }
 
-    for (int i = 0; i < startNodes.length; i++) {
-      //실내 노드를 넣을 때 이곳을 수정해야함
-      if (startNodes[i].isInside == 0 && endNodes[i].isInside == 0) {
-        //엣지의 출발지, 도착지가 모두 밖일 때만 우선 startPoints, endPoints에 넣어서 외부 경로만 보이도록 한다.
-        startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
-        endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
-      }
-    }
+  // ====================================================
+  void endGuide(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return EndAlert(
+            title: '종료?',
+            message: '진짜로?',
+            onOption1Pressed: () {
+              algovalue.erase();
+              algovalue.isRequired = false;
+              algovalue.isMenuOpen = false;
+              Navigator.pop(context);
+            },
+            onOption2Pressed: () {
+              Navigator.pop(context);
+            },
+          );
+        });
+  }
 
-    for (Node node in regularPath) {
-      print("$node -> ");
-    }
-    print("END\n\n");
+  Future<bool> _onBackPressed() async {
+    bool? confirmExit = await showDialog<bool>(
+      context: context,
+      builder: (context) =>
+          AlertDialog(
+            title: Text("앱 종료?"),
+            content: Text("진짜로?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: Text('확인'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text('취소'),
+              ),
+            ],
+          ),
+    );
+    return confirmExit ?? false;
+  }
 
-    print("Total distance: ${regularDist[endIndex]}");
-
-
-
-    for (int i = 0; i < startNodes.length; i++) {
-      print('startPoints: $startPoints');
-      print('endPoints: $endPoints');
-    }
-
-    // 프로그램이 실행될 때의 _position 값을 출력합니다.
-    //print('Initial _position: $_position');
-  }*/
-
-  bool testVar = false;
-  bool isMenuOpen = false;
+  bool _isInitialized = false;
 
   @override
   Widget build(BuildContext context) {
@@ -541,1432 +360,337 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        title: '동국대학교',
-      ),
-      body: Stack(
-        children: [
-          GestureDetector(
-            onScaleStart: _onScaleStart,
-            onScaleUpdate: _onScaleUpdate,
-            onScaleEnd: _onScaleEnd,
-            child: Stack(
-              children: [
-                Scaffold(
-                  resizeToAvoidBottomInset: false,
-                  body: Center(
-                    child: Stack(
-                      children: [
-                        Transform.scale(
-                          scale: _scale,
-                          child: Transform.translate(
-                            offset: _position.scale(scale_offset, scale_offset),
-                            child: ClipRect(
+
+    algovalue = Provider.of<AlgoValue>(context, listen: true);
+    buildingPositions = buildingPositionedList(
+        scale_offset: scale_offset, showFloorButton: _showFloorButton);
+    vendings = vendingPositionedList(scale_offset: scale_offset);
+    showers = showerPositionedList(scale_offset: scale_offset);
+    stores = storePositionedList(scale_offset: scale_offset);
+    printers = printerPositionedList(scale_offset: scale_offset);
+    atms = atmPositionedList(scale_offset: scale_offset);
+    lounges = loungePositionedList(scale_offset: scale_offset);
+    buildingNames = buildingnamePositionedList(
+      scale: _scale,
+      scale_offset: scale_offset,
+    );
+    if (_isInitialized == false) {
+      algovalue.initialize();
+      _isInitialized = true;
+    }
+
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("동국대학교"),
+          backgroundColor: Colors.orange,
+        ),
+        body: Stack(
+          children: [
+            GestureDetector(
+              onScaleStart: _onScaleStart,
+              onScaleUpdate: _onScaleUpdate,
+              onScaleEnd: _onScaleEnd,
+              child: Stack(
+                children: [
+                  Transform.scale(
+                    scale: _scale,
+                    child: Transform.translate(
+                      offset: _position.scale(scale_offset, scale_offset),
+                      child: ClipRect(
+                        child: Stack(
+                          children: [
+                            CustomPaint(
+                              size: Size(_imageWidth_du, _imageHeight_du),
+                              foregroundPainter: LinePainter(
+                                imageInfo: _imageInfo_du,
+                                startPointsRed: algovalue.startPointsRed,
+                                // 빈 리스트 전달
+                                endPointsRed: algovalue.endPointsRed,
+                                // 빈 리스트 전달
+                                startPointsGreen: algovalue.startPointsGreen,
+                                // 초록색 선의 점들 전달
+                                endPointsGreen: algovalue.endPointsGreen,
+                                // 초록색 선의 점들 전달
+                                startPointsBlue: algovalue.startPointsBlue,
+                                // 빈 리스트 전달
+                                endPointsBlue:
+                                algovalue.endPointsBlue, // 빈 리스트 전달
+                              ),
                               child: Stack(
                                 children: [
-                                  CustomPaint(
-                                    size: Size(_imageWidth_du, _imageHeight_du),
-                                    foregroundPainter: LinePainter(
-                                      imageInfo: _imageInfo_du,
-                                      startPointsRed: startPointsRed, // 빈 리스트 전달
-                                      endPointsRed: endPointsRed, // 빈 리스트 전달
-                                      startPointsGreen: startPointsGreen, // 초록색 선의 점들 전달
-                                      endPointsGreen: endPointsGreen, // 초록색 선의 점들 전달
-                                      startPointsBlue: startPointsBlue, // 빈 리스트 전달
-                                      endPointsBlue: endPointsBlue, // 빈 리스트 전달
-                                    ),
-                                      child: Stack(
-                                        children: [
-                                          Image.asset(
-                                            'assets/images/du.png',
-                                            fit: BoxFit.cover,
-                                          ),
-                                          Positioned(
-                                            left: 1804 * scale_offset,
-                                            top: 2694 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '혜화관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['혜화관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1337 * scale_offset,
-                                            top: 2379 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '다향관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['다향관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1308 * scale_offset,
-                                            top: 3206 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '대운동장';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['대운동장']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 972 * scale_offset,
-                                            top: 1880 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '만해광장';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['만해광장']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1129 * scale_offset,
-                                            top: 2805 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '명진관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['명진관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1102 * scale_offset,
-                                            top: 2973 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  selectedHall = '과학관';
-                                                  _showFloorButton(selectedHall);
-                                                });
-                                              },
-                                              child: Image.asset(
-                                                LookData['과학관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1530 * scale_offset,
-                                            top: 2564 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '법학관_만해관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['법학관_만해관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1017 * scale_offset,
-                                            top: 2394 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '본관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['본관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 2145 * scale_offset,
-                                            top: 2775 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '사회과학관_경영관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['사회과학관_경영관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 2297 * scale_offset,
-                                            top: 2582 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '문화관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['문화관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1067 * scale_offset,
-                                            top: 3118 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '상록원';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['상록원']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 482 * scale_offset,
-                                            top: 2525 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '신공학관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['신공학관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 694 * scale_offset,
-                                            top: 2084 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '원흥관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['원흥관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 769 * scale_offset,
-                                            top: 1920 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '정보문화관p';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['정보문화관p']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 634 * scale_offset,
-                                            top: 1866 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '정보문화관q';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['정보문화관q']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1673 * scale_offset,
-                                            top: 2941 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '정각원';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['정각원']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 897 * scale_offset,
-                                            top: 2663 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '중앙도서관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['중앙도서관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1321 * scale_offset,
-                                            top: 1843 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '체육관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['체육관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 1078 * scale_offset,
-                                            top: 1636 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '학림관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['학림관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 670 * scale_offset,
-                                            top: 1773 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '학생회관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['학생회관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 2527 * scale_offset,
-                                            top: 2567 * scale_offset,
-                                            child: InkWell(
-                                              onTap: () {
-                                                selectedHall = '학술관';
-                                                _showFloorButton(selectedHall);
-                                              },
-                                              child: Image.asset(
-                                                LookData['학술관']!,
-                                                scale: 1 / scale_offset,
-                                              ),
-                                            ),
-                                          ),
-                                          if (_vendingvisibility)
-                                            Positioned(
-                                              left: 971 * scale_offset,
-                                              top: 2479 * scale_offset,
-                                              child: Image.asset(
-                                                vendingPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_vendingvisibility)
-                                            Positioned(
-                                              left: 725 * scale_offset,
-                                              top: 2770 * scale_offset,
-                                              child: Image.asset(
-                                                vendingPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_vendingvisibility)
-                                            Positioned(
-                                              left: 2360 * scale_offset,
-                                              top: 2940 * scale_offset,
-                                              child: Image.asset(
-                                                vendingPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_vendingvisibility)
-                                            Positioned(
-                                              left: 825 * scale_offset,
-                                              top: 2022 * scale_offset,
-                                              child: Image.asset(
-                                                vendingPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_showervisibility)
-                                            Positioned(
-                                              left: 927 * scale_offset,
-                                              top: 2537 * scale_offset,
-                                              child: Image.asset(
-                                                showerPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_showervisibility)
-                                            Positioned(
-                                              left: 1650 * scale_offset,
-                                              top: 2616 * scale_offset,
-                                              child: Image.asset(
-                                                showerPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_storevisibility)
-                                            Positioned(
-                                              left: 865 * scale_offset,
-                                              top: 2279 * scale_offset,
-                                              child: Image.asset(
-                                                storePath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_storevisibility)
-                                            Positioned(
-                                              left: 694 * scale_offset,
-                                              top: 2596 * scale_offset,
-                                              child: Image.asset(
-                                                storePath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_storevisibility)
-                                            Positioned(
-                                              left: 1028 * scale_offset,
-                                              top: 2736 * scale_offset,
-                                              child: Image.asset(
-                                                storePath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_storevisibility)
-                                            Positioned(
-                                              left: 1123 * scale_offset,
-                                              top: 3168 * scale_offset,
-                                              child: Image.asset(
-                                                storePath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_storevisibility)
-                                            Positioned(
-                                              left: 1955 * scale_offset,
-                                              top: 2891 * scale_offset,
-                                              child: Image.asset(
-                                                storePath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_storevisibility)
-                                            Positioned(
-                                              left: 1107 * scale_offset,
-                                              top: 1719 * scale_offset,
-                                              child: Image.asset(
-                                                storePath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_printervisibility)
-                                            Positioned(
-                                              left: 854 * scale_offset,
-                                              top: 2696 * scale_offset,
-                                              child: Image.asset(
-                                                printerPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_printervisibility)
-                                            Positioned(
-                                              left: 936 * scale_offset,
-                                              top: 2416 * scale_offset,
-                                              child: Image.asset(
-                                                printerPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_printervisibility)
-                                            Positioned(
-                                              left: 838 * scale_offset,
-                                              top: 1988 * scale_offset,
-                                              child: Image.asset(
-                                                printerPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_atmvisibility)
-                                            Positioned(
-                                              left: 2500 * scale_offset,
-                                              top: 1725 * scale_offset,
-                                              child: Image.asset(
-                                                atmPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_atmvisibility)
-                                            Positioned(
-                                              left: 1120 * scale_offset,
-                                              top: 3217 * scale_offset,
-                                              child: Image.asset(
-                                                atmPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_atmvisibility)
-                                            Positioned(
-                                              left: 1469 * scale_offset,
-                                              top: 2956 * scale_offset,
-                                              child: Image.asset(
-                                                atmPath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_loungevisibility)
-                                            Positioned(
-                                              left: 1011 * scale_offset,
-                                              top: 2870 * scale_offset,
-                                              child: Image.asset(
-                                                loungePath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                          if (_loungevisibility)
-                                            Positioned(
-                                              left: 1258 * scale_offset,
-                                              top: 1735 * scale_offset,
-                                              child: Image.asset(
-                                                loungePath,
-                                                scale: 1 / (scale_offset / 16),
-                                              ),
-                                            ),
-                                        ],
-                                      ),
+                                  Image.asset(
+                                    'assets/images/du.png',
+                                    fit: BoxFit.cover,
                                   ),
-                                  IgnorePointer(
-                                    ignoring: true,
-                                    child: Stack(
-                                      children: [
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1294 * scale_offset - 50 / _scale,
-                                          top: 3084 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "과학관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1464 * scale_offset - 50 / _scale,
-                                          top: 2472 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "다향관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1572 * scale_offset - 50 / _scale,
-                                          top: 3436 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "대운동장",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1125 * scale_offset - 50 / _scale,
-                                          top: 2085 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "만해광장",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1318 * scale_offset - 50 / _scale,
-                                          top: 2907 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "명진관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 2430 * scale_offset - 50 / _scale,
-                                          top: 2836 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "문화관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1660 * scale_offset - 50 / _scale,
-                                          top: 2745 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "법학관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1639 * scale_offset - 50 / _scale,
-                                          top: 2958 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "만해관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1153 * scale_offset - 50 / _scale,
-                                          top: 2540 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "본관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 2249 * scale_offset - 50 / _scale,
-                                          top: 2954 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "사회과학관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 2361 * scale_offset - 50 / _scale,
-                                          top: 3204 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "경영관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1182 * scale_offset - 50 / _scale,
-                                          top: 3220 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "상록원",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 716 * scale_offset - 50 / _scale,
-                                          top: 2665 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "신공학관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 865 * scale_offset - 50 / _scale,
-                                          top: 2300 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "원흥관1",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 947 * scale_offset - 50 / _scale,
-                                          top: 2515 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "원흥관2",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 835 * scale_offset - 50 / _scale,
-                                          top: 2061 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "정보문화관P",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 739 * scale_offset - 50 / _scale,
-                                          top: 1935 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "정보문화관Q",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1747 * scale_offset - 50 / _scale,
-                                          top: 3013 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "정각원",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1013 * scale_offset - 50 / _scale,
-                                          top: 2778 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "중앙도서관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1431 * scale_offset - 50 / _scale,
-                                          top: 1961 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "체육관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1263 * scale_offset - 50 / _scale,
-                                          top: 1765 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "학림관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 740 * scale_offset - 50 / _scale,
-                                          top: 1844 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "학생회관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 2597 * scale_offset - 50 / _scale,
-                                          top: 2741 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "학술관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1983 * scale_offset - 50 / _scale,
-                                          top: 2912 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "혜화관",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 2371 * scale_offset - 50 / _scale,
-                                          top: 3391 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "정문",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 1120 * scale_offset - 50 / _scale,
-                                          top: 1544 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "후문",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          width: 100 / _scale,
-                                          height: 40 / _scale,
-                                          left: 2414 * scale_offset - 50 / _scale,
-                                          top: 2540 * scale_offset - 20 / _scale,
-                                          child: Container(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "혜화문",
-                                                style: TextStyle(
-                                                  fontFamily: 'Paybooc',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 7 / _scale,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  if (isTrackingLocation)
-                                    Stack(
-                                      children: [
-                                        Positioned( // 투명 큰 원
-                                          left: (gpsToPixel.dx * scale_offset) - 4 * 1.3 /_scale,
-                                          top: (gpsToPixel.dy * scale_offset) - 4 * 1.3 /_scale,
-                                          child: Container(
-                                            width: 18 * 1.3 / _scale,
-                                            height: 18 * 1.3 / _scale,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.orange.withOpacity(0.3),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned( //중앙 원
-                                          left: gpsToPixel.dx * scale_offset,
-                                          top: gpsToPixel.dy * scale_offset,
-                                          child: Container(
-                                            width: 10 * 1.3 / _scale,
-                                            height: 10 * 1.3 / _scale,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.white, width: 1.5 * 1.3 / _scale),
-                                              color: Colors.red,
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  ...buildingPositions,
+                                  if (_vendingvisibility) ...vendings,
+                                  if (_showervisibility) ...showers,
+                                  if (_storevisibility) ...stores,
+                                  if (_printervisibility) ...printers,
+                                  if (_atmvisibility) ...atms,
+                                  if (_loungevisibility) ...lounges,
                                 ],
                               ),
-                              //---------------------------------------------------------------
                             ),
-                          ),
+                            IgnorePointer(
+                              ignoring: true,
+                              child: Stack(
+                                children: [
+                                  ...buildingNames,
+                                ],
+                              ),
+                            ),
+                            if (isTrackingLocation)
+                              Stack(
+                                children: [
+                                  Positioned(
+                                    // 투명 큰 원
+                                    left: (gpsToPixel.dx * scale_offset) -
+                                        4 * 1.3 / _scale,
+                                    top: (gpsToPixel.dy * scale_offset) -
+                                        4 * 1.3 / _scale,
+                                    child: Container(
+                                      width: 18 * 1.3 / _scale,
+                                      height: 18 * 1.3 / _scale,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.orange.withOpacity(0.3),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    //중앙 원
+                                    left: gpsToPixel.dx * scale_offset,
+                                    top: gpsToPixel.dy * scale_offset,
+                                    child: Container(
+                                      width: 10 * 1.3 / _scale,
+                                      height: 10 * 1.3 / _scale,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.white,
+                                            width: 1.5 * 1.3 / _scale),
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 4.0),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  result = await Navigator.pushNamed(
-                                    context,
-                                    '/find',
-                                  );
-                                  if (result['selectOption'] != Null) {
-                                    setState(() { //아예
-                                      selectOption = result['selectOption'];
-                                      ColorPath();
-                                      print("startPointsGreen: $startPointsGreen");
-                                    });
-                                    testVar = true;
-                                  }
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white.withOpacity(0.7),
-                                    border: Border.all(
-                                      color: Colors.transparent,
-                                      width: 12.0,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.3),
-                                        spreadRadius: 1,
-                                        blurRadius: 10,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Text(
-                                    '출발지를 입력하세요',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 16.0,
-                                      fontFamily: 'Paybooc',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 43.0,
-                            width: 60.0,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                result = await Navigator.pushNamed(
-                                  context,
-                                  '/search',
-                                );
-                                //이곳에서 search_screen.dart에서 돌린 알고리즘의 결과 필요한 정보들을 더 받아오면 됨
-                                if (result['selectOption'] != Null) {
-                                  setState(() { //아예
-                                    selectOption = result['selectOption'];
-                                    ColorPath();
-                                    print("startPointsGreen: $startPointsGreen");
-                                  });
-                                  testVar = true;
-                                }
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.search,
-                                  ),
-                                  Text(
-                                    '길찾기',
-                                    style: TextStyle(
-                                      fontSize: 8,
-                                      fontFamily: 'Paybooc',
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Row(
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                _vendingshow();
-                              },
-                              style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
+                            // 검색하고 싶은 건물 입력
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 4.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/find');
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white.withOpacity(0.7),
+                                      border: Border.all(
+                                        color: Colors.transparent,
+                                        width: 12.0,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          spreadRadius: 1,
+                                          blurRadius: 10,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Text(
+                                      '검색하고 싶은 건물 입력',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
                                   ),
-                                  backgroundColor:
-                                      Colors.white //.withOpacity(0.5),
-                                  ),
-                              child: Text(
-                                '자판기',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
-                            ElevatedButton(
-                              onPressed: () {
-                                _showershow();
-                              },
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                backgroundColor: Colors.white,
-                              ),
-                              child: Text(
-                                '샤워실',
-                                style: TextStyle(
-                                  color: Colors.lightBlueAccent,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            ElevatedButton(
-                              onPressed: () {
-                                _storeshow();
-                              },
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                backgroundColor: Colors.white,
-                              ),
-                              child: Text(
-                                '편의점',
-                                style: TextStyle(
-                                  color: Colors.purple,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            ElevatedButton(
-                              onPressed: () {
-                                _printershow();
-                              },
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                backgroundColor: Colors.white,
-                              ),
-                              child: Text(
-                                '프린터',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            ElevatedButton(
-                              onPressed: () {
-                                _loungeshow();
-                              },
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                backgroundColor: Colors.white,
-                              ),
-                              child: Text(
-                                '라운지',
-                                style: TextStyle(
-                                  color: Colors.brown,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            ElevatedButton(
-                              onPressed: () {
-                                _atmshow();
-                              },
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                backgroundColor: Colors.white,
-                              ),
-                              child: Text(
-                                'ATM',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w700,
+                            // 길찾기 버튼
+                            Container(
+                              height: 43.0,
+                              width: 60.0,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/search',
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.search,
+                                    ),
+                                    Text(
+                                      '길찾기',
+                                      style: TextStyle(
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        // 자판기 샤워실 편의점 ...
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              FacilityButton(
+                                text: '자판기',
+                                textColor: Colors.blue,
+                                onPressed: _vendingshow,
+                                onoff: _vendingvisibility,
+                              ),
+                              SizedBox(width: 10),
+                              FacilityButton(
+                                text: '샤워실',
+                                textColor: Colors.lightBlueAccent,
+                                onPressed: _showershow,
+                                onoff: _showervisibility,
+                              ),
+                              SizedBox(width: 10),
+                              FacilityButton(
+                                text: '편의점',
+                                textColor: Colors.purple,
+                                onPressed: _storeshow,
+                                onoff: _storevisibility,
+                              ),
+                              SizedBox(width: 10),
+                              FacilityButton(
+                                text: '프린터',
+                                textColor: Colors.green,
+                                onPressed: _printershow,
+                                onoff: _printervisibility,
+                              ),
+                              SizedBox(width: 10),
+                              FacilityButton(
+                                text: '라운지',
+                                textColor: Colors.brown,
+                                onPressed: _loungeshow,
+                                onoff: _loungevisibility,
+                              ),
+                              SizedBox(width: 10),
+                              FacilityButton(
+                                text: 'ATM',
+                                textColor: Colors.red,
+                                onPressed: _atmshow,
+                                onoff: _atmvisibility,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                if (_showButton != "기본")
-                  CustomFloorView(showbutton: _showButton,
-                    onValueChanged: (String strValue, int intValue) {
-                      setState(() {
-                        print(intValue);
-                        if(intValue != 0)
-                          nowFloor = intValue;
-                        if(strValue == "시설"){
-                          gotoBuildinginfo(_showButton);
-                        }
-                        else{
-                          LookData[_showButton] = strValue;
-                          floorButtonPath(nowFloor, _showButton);
-                        }
-                        if(intValue == 0)
-                          _showButton = "기본";
-                        floorButtonPath(intValue, _showButton);
-                      });
-                    },)
-              ],
-            ),
-          ),
-/*          Positioned(
-            bottom: 50,
-            left: 50,
-            child: Container(
-              child: Text(
-                '값넘기기실험중 $_startNodeName and $_endNodeName',
+                  if (_showButton != "기본")
+                    FloorView(
+                      showbutton: _showButton,
+                      onValueChanged: (String strValue, int intValue) {
+                        setState(() {
+                          print(intValue);
+                          if (intValue != 0) nowFloor = intValue;
+                          if (strValue == "시설") {
+                            gotoBuildingInfo(
+                              buildingname: _showButton,
+                            );
+                          } else {
+                            LookData[_showButton] = strValue;
+                            algovalue.floorButtonPath(nowFloor, _showButton);
+                          }
+                          if (intValue == 0) _showButton = "기본";
+                          algovalue.floorButtonPath(intValue, _showButton);
+                        });
+                      },
+                    ),
+                ],
               ),
             ),
-          ),*/
-          testVar
-              ? Positioned(
-                  bottom: 100,
-                  right: 50,
-                  child: isMenuOpen
-                      ? ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isMenuOpen = !isMenuOpen;
-                            });
-                          },
-                          child: Text("Close"),
-                        )
-                      : ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isMenuOpen = !isMenuOpen;
-                            });
-                          },
-                          child: Text("Open"),
-                        ),
-                )
-              : Text(""),
-          testVar
-              ? Positioned(
-                  bottom: 50,
-                  right: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        erase();
-                        startPointsRed.clear();
-                        endPointsRed.clear();
-                        startPointsGreen.clear();
-                        endPointsGreen.clear();
-                        startPointsBlue.clear();
-                        endPointsBlue.clear();
-                        startNodes.clear();
-                        endNodes.clear();
-
-                        testVar = false;
-                        isMenuOpen = false;
-                      });
-                    },
-                    child: Text("erase"),
-                  ),
-                )
-              : Text(""),
-          AnimatedContainer(
-            duration: Duration(milliseconds: 300),
-            transform: Matrix4.translationValues(isMenuOpen ? 0 : -300, 100, 0),
-            child: Container(
-                width: 200,
+            algovalue.isRequired
+                ? Positioned(
+              bottom: 100,
+              right: 50,
+              child: algovalue.isMenuOpen
+                  ? ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    algovalue.changeDrawerState();
+                  });
+                },
+                child: Text("Close"),
+              )
+                  : ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    algovalue.changeDrawerState();
+                  });
+                },
+                child: Text("Open"),
+              ),
+            )
+                : Text(""),
+            algovalue.isRequired
+                ? Positioned(
+              bottom: 50,
+              right: 50,
+              child: ElevatedButton(
+                onPressed: () => endGuide(context),
+                child: Text("erase"),
+              ),
+            )
+                : Text(""),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              transform: Matrix4.translationValues(
+                  algovalue.isMenuOpen ? 0 : -300, 100, 0),
+              child: Container(
+                width: 250,
                 height: double.infinity,
                 color: Colors.white.withOpacity(0.7),
-                child: CustomListWidget(
-                  items: pathguide,
-                  direction: directions,
-                )
+                child: DetailList(
+                  items: algovalue.finalPath,
+                  // List<Node> : 경로에 속하는 모든 노드의 이름들이 들어가있는 리스트
+                  direction: algovalue.direction, // List<String> : 방향 설명
+                ),
+              ),
             ),
-          ),
-          Positioned(
-            right: 20,
-            bottom: 20,
-            child: FloatingActionButton(
-              onPressed: toggleLocationTracking,
-              child: Icon(isTrackingLocation ? Icons.location_off : Icons.location_on),
-              backgroundColor: Colors.blue,
+            Positioned(
+              right: 20,
+              bottom: 20,
+              child: FloatingActionButton(
+                onPressed: toggleLocationTracking,
+                child: Icon(
+                    isTrackingLocation ? Icons.location_off : Icons.location_on),
+                backgroundColor: Colors.blue,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
-  }
-
-  void gotoBuildinginfo(String _showButton) async{
-      result = await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) =>
-              BuildingInfo(
-                title: _showButton,
-              ),
-        ),
-      );
-      if (result['selectOption'] != Null) {
-        setState(() { //아예
-          selectOption = result['selectOption'];
-          ColorPath();
-          print("startPointsGreen: $startPointsGreen");
-        });
-        testVar = true;
-      }
   }
 }

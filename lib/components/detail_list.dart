@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/save/astar.dart';
 import 'dart:math';
-
-class CustomListWidget extends StatefulWidget {
+// 노드 이름들과 방향을 받으면 이에 해당하는 리스트를 반환함
+// = screen/line_screen
+class DetailList extends StatefulWidget {
   final List<Node> items;
   final List<String> direction;
 
-  CustomListWidget({required this.items, required this.direction});
+  DetailList({required this.items, required this.direction});
 
   @override
-  _CustomListWidgetState createState() => _CustomListWidgetState();
+  State<DetailList> createState() => _DetailListState();
 }
 
-class _CustomListWidgetState extends State<CustomListWidget> {
+class _DetailListState extends State<DetailList> {
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,7 +48,7 @@ class _CustomListWidgetState extends State<CustomListWidget> {
 
           return Row(
             children: [
-              if (icon != null)
+              if (icon != null) // icon
                 Transform.rotate(
                   angle: angle, // -90도를 라디안으로 표현한 값
                   child: Icon(
@@ -61,13 +63,14 @@ class _CustomListWidgetState extends State<CustomListWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.items[index].name,
+                      widget.items[index].name, // node 이름
                       style: TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 15.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    // direction 부분 : 오른쪽, 출발지 ,등등
                     Row(
                       children: [
                         SizedBox(width: 10.0),

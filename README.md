@@ -96,3 +96,6 @@ Home_screen에 텍스트 길안내 드로어 구현
 
 건물 터치 버튼 ListView식으로 변경  
 
+<5/27>  
+
+코드 세분화 및 Provider 이식  

@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:Dubeogi/component/appbar.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:Dubeogi/algorithm/astar.dart';
-import 'line_screen.dart';
-import 'package:Dubeogi/save/save.dart';
-import 'dart:math';
+import 'package:Dubeogi/components/detail_list.dart';
 import 'package:Dubeogi/screen/select_from_map.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:Dubeogi/save/astar.dart';
+import 'package:Dubeogi/save/save.dart';
+import 'package:Dubeogi/provider/algo_value.dart';
+import 'dart:math';
+
+import 'package:provider/provider.dart';
 
 class Vec {
   double x;
@@ -22,156 +24,32 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<Node> result = [];
-  late List<Node> temp;
+  late List<Node> result;
+  late AlgoValue algovalue;
   List<String> direction = [];
   List<Vec> vector = [];
-  List<Offset> startPoints = [];
-  List<Offset> endPoints = [];
   final firstFocus = FocusNode();
   final secondFocus = FocusNode();
   final firstController = TextEditingController();
   final secondController = TextEditingController();
-  int selectOption = 1;
   int count = 0;
   int check = 0;
-  Graph? newGraph;
 
-  Graph selectFromMapNewGraph(String newName, double dx, double dy, Node closest) {
-    Graph newGraph = Graph();
-    newGraph.nodes = List.from(graph.nodes);
-    newGraph.edges = List.from(graph.edges);
-    double weight = sqrt((dx - closest.x) * (dx - closest.x) + (dy - closest.y) * (dy - closest.y));
-    int weight_int = weight.toInt();
-
-    newGraph.addEdge(closest.name, newName, weight_int, "평지", "도보",
-        node2X: dx,
-        node2Y: dy,
-        isInside2: 0,
-        building2: "실외",
-        showRoute2: false);
-    newGraph.addEdge(newName, closest.name, weight_int, "평지", "도보");
-
-    return newGraph;
+  @override
+  void initState() {
+    super.initState();
+    firstController.addListener(_handleSubmit);
+    secondController.addListener(_handleSubmit);
   }
 
-  Node? findClosestNode(List<Node> nodes, double dx, double dy) {
-    Node? closest;
-    double closestDistance = double.infinity;
-
-    for (Node node in nodes) {
-      if(node.isInside == 0){
-        double distance = (node.x - dx) * (node.x - dx) + (node.y - dy) * (node.y - dy);
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closest = node;
-        }
-      }
-    }
-
-    if (closest == null) {
-      throw Exception('Node list is empty.');
-    }
-
-    return closest;
+  @override
+  void dispose() {
+    super.dispose();
+    firstController.removeListener(_handleSubmit);
+    firstController.dispose();
+    secondController.removeListener(_handleSubmit);
+    secondController.dispose();
   }
-
-/*  List<Node> Astar_pathMaking(String startNodeName, String endNodeName) {
-    //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
-    //지도 위에 그림을 그릴 수 있도록 start, end 리스트에 x, y값을 각각 넣는다.
-
-    startPoints.clear();
-    endPoints.clear();
-    startNodes.clear();
-    endNodes.clear();
-
-    Node startNode = graph.findNode(startNodeName);
-    Node endNode = graph.findNode(endNodeName);
-
-    int startIndex = graph.findNodeIndex(graph.nodes, startNodeName);
-    int endIndex = graph.findNodeIndex(graph.nodes, endNodeName);
-
-    // Regular search
-    var regularResult =
-    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
-    List<int> regularDist = regularResult.item1;
-    List<int> regularPrev = regularResult.item2;
-
-    List<Node> regularPath =
-    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
-
-    for (int i = 0; i < regularPath.length; i++) {
-      if (i == 0)
-        startNodes.add(regularPath[i]);
-      else if (i == regularPath.length - 1)
-        endNodes.add(regularPath[i]);
-      else {
-        endNodes.add(regularPath[i]);
-        startNodes.add(regularPath[i]);
-      }
-    }
-
-    for (int i = 0; i < startNodes.length; i++) {
-      print(
-          "(${startNodes[i].x}, ${startNodes[i].y}) -> (${endNodes[i].x}, ${endNodes[i].y})");
-      print("!!!!");
-    }
-    return regularPath;
-  }*/
-
-  List<Node> Astar_pathMaking(Graph graph, String startNodeName, String endNodeName, bool clear) {
-    //clear가 true면 clear(), false면 clear() 안함
-    if(clear == true){
-      startPoints.clear();
-      endPoints.clear();
-    }
-    startNodes.clear();
-    endNodes.clear();
-
-    Node startNode = graph.findNode(startNodeName);
-    Node endNode = graph.findNode(endNodeName);
-
-    int startIndex = graph.findNodeIndex(graph.nodes, startNodeName);
-    int endIndex = graph.findNodeIndex(graph.nodes, endNodeName);
-
-    var regularResult =
-    graph.aStar(graph.nodes, graph.edges, startNode, endNode);
-    //List<int> regularDist = regularResult.item1;
-    List<int> regularPrev = regularResult.item2;
-
-    List<Node> regularPath =
-    reconstructPath(regularPrev, graph.nodes, startIndex, endIndex);
-
-    // if(clear == true){
-    //   for (int i = 0; i < regularPath.length; i++) {
-    //     if (i == 0)
-    //       startNodes.add(regularPath[i]);
-    //     else if (i == regularPath.length - 1)
-    //       endNodes.add(regularPath[i]);
-    //     else {
-    //       endNodes.add(regularPath[i]);
-    //       startNodes.add(regularPath[i]);
-    //     }
-    //   }
-    // }
-
-/*    for (int i = 0; i < startNodes.length; i++) {
-      print(
-          "(${startNodes[i].x}, ${startNodes[i].y}) -> (${endNodes[i].x}, ${endNodes[i].y})");
-      print("!!!!");
-    }*/
-/*    for (int i = 0; i < startNodes.length; i++) {
-      //실내 노드를 넣을 때 이곳을 수정해야함
-      if (startNodes[i].isInside == 0 && endNodes[i].isInside == 0) {
-        //엣지의 출발지, 도착지가 모두 밖일 때만 우선 startPoints, endPoints에 넣어서 외부 경로만 보이도록 한다.
-        startPoints.add(Offset(startNodes[i].x, startNodes[i].y));
-        endPoints.add(Offset(endNodes[i].x, endNodes[i].y));
-      }
-    }*/
-
-    return regularPath;
-  }
-
 
   String getDirection(Vec current, Vec next) {
     double crossProduct = current.x * next.y - current.y * next.x;
@@ -201,142 +79,138 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   bool isExistBuilding(String name) => buildings.contains(name);
+
   bool isExistSelectFromMap(String name) => selectFromMap.contains(name);
 
   @override
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
+    algovalue = Provider.of<AlgoValue>(context, listen: true);
+
     if (arguments != null && count == 0) {
       firstController.text = arguments['start'] ?? '';
       secondController.text = arguments['end'] ?? '';
       count++;
     }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        title: '동국대학교',
+      appBar: AppBar(
+        title: Text('동국대학교'),
       ),
       body: Column(
         children: [
+          // 최단.최적.차도
           Container(
-              height: 60,
-              color: Colors.orange,
-              child: Stack(
-                children: [
-                  Row(  //최단, 최적, 차도 Row
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        width: 80,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Text(
-                                '최소',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w800,
-                                  color: selectOption == 1 ? Colors.orange : Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
+            height: 60,
+            color: Colors.orange,
+            child: Stack(
+              children: [
+                // 버튼 속성
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      width: 80,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Text(
+                              '최단',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Paybooc',
+                                fontWeight: FontWeight.w800,
+                                color: algovalue.selectOption == 1
+                                    ? Colors.orange
+                                    : Colors.white,
                               ),
+                              textAlign: TextAlign.center,
                             ),
-                            InkWell(onTap: () {
-                              setState(() {
-                                selectOption = 1;
-                                if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
-                                    && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
-                                  _handleSubmit();
-                                }
-                              });
-                            })
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          color: selectOption == 1 ? Colors.white : null,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+                          ),
+                          InkWell(onTap: () {
+                            algovalue.selectOption = 1;
+                            _handleSubmit();
+                          })
+                        ],
                       ),
-                      SizedBox(
-                        width: 20,
+                      decoration: BoxDecoration(
+                        color: algovalue.selectOption == 1 ? Colors.white : null,
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        width: 80,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Text(
-                                '최적',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w800,
-                                  color: selectOption == 2 ? Colors.orange : Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
+                    ),
+                    SizedBox(width: 20),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      width: 80,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Text(
+                              '최적',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Paybooc',
+                                fontWeight: FontWeight.w800,
+                                color: algovalue.selectOption == 2
+                                    ? Colors.orange
+                                    : Colors.white,
                               ),
+                              textAlign: TextAlign.center,
                             ),
-                            InkWell(onTap: () {
-                              setState(() {
-                                selectOption = 2;
-                                if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
-                                    && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
-                                  _handleSubmit();
-                                }
-                              });
-                            })
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          color: selectOption == 2 ? Colors.white : null,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+                          ),
+                          InkWell(onTap: () {
+                            algovalue.selectOption = 2;
+                            _handleSubmit();
+                          })
+                        ],
                       ),
-                      SizedBox(
-                        width: 20,
+                      decoration: BoxDecoration(
+                        color: algovalue.selectOption == 2 ? Colors.white : null,
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        width: 80,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Text(
-                                '차도',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w800,
-                                  color: selectOption == 3 ? Colors.orange : Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
+                    ),
+                    SizedBox(width: 20),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      width: 80,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Text(
+                              '차도',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Paybooc',
+                                fontWeight: FontWeight.w800,
+                                color: algovalue.selectOption == 3
+                                    ? Colors.orange
+                                    : Colors.white,
                               ),
+                              textAlign: TextAlign.center,
                             ),
-                            InkWell(onTap: () {
-                              setState(() {
-                                selectOption = 3;
-                                if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
-                                    && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
-                                  _handleSubmit();
-                                }
-                              });
-                            })
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          color: selectOption == 3 ? Colors.white : null,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+                          ),
+                          InkWell(onTap: () {
+                            algovalue.selectOption = 3;
+                            _handleSubmit();
+                          })
+                        ],
                       ),
-                    ],
-                  )
-                ],
-              )),
-          Container(  //출발,도착 지점 입력 Container
+                      decoration: BoxDecoration(
+                        color: algovalue.selectOption == 3 ? Colors.white : null,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+
+          // 출발지 목적지 box
+          Container(
             padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
             color: Colors.orange,
             child: Stack(
@@ -344,6 +218,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // 츌발지
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                       decoration: BoxDecoration(
@@ -358,48 +233,39 @@ class _SearchScreenState extends State<SearchScreen> {
                                 focusNode: firstFocus,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 10),
                                   hintText: '출발 지점을 입력하세요',
-                                  filled: true,
-                                  fillColor: const Color(0xffF9D5A8),
                                   hintStyle: TextStyle(
                                     fontFamily: 'Paybooc',
                                     fontWeight: FontWeight.w400,
                                   ),
+                                  filled: true,
+                                  fillColor: const Color(0xffF9D5A8),
                                 ),
                                 onSubmitted: (_) {
-                                  FocusScope.of(context).requestFocus(secondFocus);
+                                  FocusScope.of(context)
+                                      .requestFocus(secondFocus);
                                 }),
                             suggestionsCallback: (pattern) {
                               return buildings.where((text) => text
                                   .toLowerCase()
                                   .contains(pattern.toLowerCase()));
                             },
-                            suggestionsBoxDecoration: SuggestionsBoxDecoration(color: const Color(0xffF9D5A8)),
+                            suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                color: const Color(0xffF9D5A8)),
                             itemBuilder: (context, suggestion) {
                               return ListTile(
-                                title: Text(suggestion,
-                                  style: TextStyle(
-                                    fontFamily: 'Paybooc',
-                                    fontWeight: FontWeight.w400,
-                                  ),),
+                                title: Text(suggestion),
                               );
                             },
                             onSuggestionSelected: (suggestion) {
                               setState(() {
                                 firstController.text = suggestion;
-                                if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
-                                    && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
-                                  _handleSubmit();
-                                } else {
-                                  setState(() {
-                                    check = 0;
-                                  });
-                                }
                               });
                             },
                             noItemsFoundBuilder: (context) {
-                              if (firstController.text == '지도에서 선택한 출발지') {
+                              if (firstController.text == '') {
                                 return Container();
                               } else {
                                 return Container(
@@ -410,8 +276,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                       style: TextStyle(
                                         fontSize: 15.0,
                                         color: Colors.grey,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ),
@@ -425,59 +289,34 @@ class _SearchScreenState extends State<SearchScreen> {
                               onTap: () async {
                                 Offset? result = await Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => SelectFromMap(destination: false)),
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SelectFromMap(destination: false)),
                                 );
                                 setState(() {
                                   if (result != null) {
-                                    //firstController.text = '${result.dx}, ${result.dy}';
+                                    firstController.text = "";
+                                    algovalue.pickandUpdateGraph(result, '지도에서 선택한 출발지');
                                     firstController.text = '지도에서 선택한 출발지';
-                                    double dx_pixel = 1500 - result.dx;
-                                    double dy_pixel = 5333/2 - result.dy;
-                                    Node? closestNode = findClosestNode(graph.nodes, dx_pixel, dy_pixel);
-                                    if (closestNode == null) {
-                                      throw Exception('No closest node found.');
-                                    } else {
-                                      if (newGraph == null) {
-                                        newGraph = selectFromMapNewGraph(firstController.text, dx_pixel, dy_pixel, closestNode);
-                                      } else {
-                                        double weight = sqrt((dx_pixel - closestNode.x) * (dx_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
-                                        int weight_int = weight.toInt();
-                                        int isExist = newGraph!.findNodeIndex(newGraph!.nodes, '지도에서 선택한 출발지');
-                                        if(isExist != -1) {
-                                          newGraph!.removeNode('지도에서 선택한 출발지');
-                                        }
-
-                                        newGraph!.addEdge(closestNode.name, firstController.text, weight_int, "평지", "도보",
-                                            node2X: dx_pixel,
-                                            node2Y: dy_pixel,
-                                            isInside2: 0,
-                                            building2: "실외",
-                                            showRoute2: false);
-                                        newGraph!.addEdge(firstController.text, closestNode.name, weight_int, "평지", "도보");
-                                      }
-                                      if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
-                                          && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
-                                        _handleSubmit();
-                                      } else {
-                                        setState(() {
-                                          check = 0;
-                                        });
-                                      }
-                                    }
                                   }
                                 });
                               },
                               child: Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
-                                padding: EdgeInsets.all(15.0), // Add padding to the container
+                                margin: EdgeInsets.fromLTRB(5, 5, 10, 5),
+                                // Add margin to all sides
+                                padding: EdgeInsets.all(15.0),
+                                // Add padding to the container
                                 decoration: BoxDecoration(
                                   color: Colors.orange,
-                                  borderRadius: BorderRadius.circular(10), // Add borderRadius
+                                  borderRadius: BorderRadius.circular(
+                                      10), // Add borderRadius
                                 ),
-                                child: Text('지도', style: TextStyle(color: Colors.white,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w700,
-                                )),
+                                child: Text('지도',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Paybooc',
+                                      fontWeight: FontWeight.w700,
+                                    )),
                               ),
                             ),
                           ),
@@ -488,171 +327,128 @@ class _SearchScreenState extends State<SearchScreen> {
                       height: 2,
                       color: Colors.orange,
                     ),
+                    // 목적지
                     Container(
-                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF8D4A8),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Stack(
-                          children: [
-                            TypeAheadField(
-                              textFieldConfiguration: TextFieldConfiguration(
-                                onSubmitted: (_) {
-                                  if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
-                                      && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
-                                    _handleSubmit();
-                                  } else {
-                                    setState(() {
-                                      check = 0;
-                                    });
-                                  }
-                                },
-                                controller: secondController,
-                                focusNode: secondFocus,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 10),
-                                  border: InputBorder.none,
-                                  hintText: '도착 지점을 입력하세요',
-                                  filled: true,
-                                  fillColor: const Color(0xffF9D5A8),
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Paybooc',
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF8D4A8),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Stack(
+                        children: [
+                          TypeAheadField(
+                            textFieldConfiguration: TextFieldConfiguration(
+                              controller: secondController,
+                              focusNode: secondFocus,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 10),
+                                border: InputBorder.none,
+                                hintText: '도착 지점을 입력하세요',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Paybooc',
+                                  fontWeight: FontWeight.w400,
                                 ),
+                                filled: true,
+                                fillColor: const Color(0xffF9D5A8),
                               ),
-                              suggestionsCallback: (pattern) {
-                                return buildings.where((text) => text
-                                    .toLowerCase()
-                                    .contains(pattern.toLowerCase()));
-                              },
-                              suggestionsBoxDecoration:
-                                  SuggestionsBoxDecoration(
-                                      color: const Color(0xffF9D5A8)),
-                              itemBuilder: (context, suggestion) {
-                                return ListTile(
-                                  title: Text(suggestion,
-                                    style: TextStyle(
-                                      fontFamily: 'Paybooc',
-                                      fontWeight: FontWeight.w400,
-                                    ),),
+                            ),
+                            suggestionsCallback: (pattern) {
+                              return buildings.where((text) => text
+                                  .toLowerCase()
+                                  .contains(pattern.toLowerCase()));
+                            },
+                            suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                color: const Color(0xffF9D5A8)),
+                            itemBuilder: (context, suggestion) {
+                              return ListTile(
+                                title: Text(suggestion),
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              setState(() {
+                                secondController.text = suggestion;
+                              });
+                            },
+                            noItemsFoundBuilder: (context) {
+                              if (secondController.text == '지도에서 선택한 도착지') {
+                                return Container();
+                              } else {
+                                return Container(
+                                  height: 45.0,
+                                  child: Center(
+                                    child: Text(
+                                      '건물명을 정확히 입력해주세요.',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
                                 );
-                              },
-                              onSuggestionSelected: (suggestion) {
+                              }
+                            },
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              onTap: () async {
+                                Offset? result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SelectFromMap(destination: true)),
+                                );
                                 setState(() {
-                                  secondController.text = suggestion;
-                                  if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
-                                      && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
-                                    _handleSubmit();
-                                  } else {
-                                    setState(() {
-                                      check = 0;
-                                    });
+                                  if (result != null) {
+                                    secondController.text = "";
+                                    algovalue.pickandUpdateGraph(result, '지도에서 선택한 도착지');
+                                    secondController.text = '지도에서 선택한 도착지';
                                   }
                                 });
                               },
-                              noItemsFoundBuilder: (context) {
-                                if (firstController.text == '지도에서 선택한 도착지') {
-                                  return Container();
-                                } else {
-                                  return Container(
-                                    height: 45.0,
-                                    child: Center(
-                                      child: Text(
-                                        '건물명을 정확히 입력해주세요.',
-                                        style: TextStyle(
-                                          fontSize: 15.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: InkWell(
-                                onTap: () async {
-                                  Offset? result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => SelectFromMap(destination: true)),
-                                  );
-                                  setState(() {
-                                    if (result != null) {
-                                      //secondController.text = '${result.dx}, ${result.dy}';
-                                      secondController.text = '지도에서 선택한 도착지';
-                                      double dx_pixel = 1500 - result.dx;
-                                      double dy_pixel = 5333/2 - result.dy;
-                                      Node? closestNode = findClosestNode(graph.nodes, dx_pixel, dy_pixel);
-                                      if (closestNode == null) {
-                                        throw Exception('No closest node found.');
-                                      } else {
-                                        if (newGraph == null) {
-                                          newGraph = selectFromMapNewGraph(secondController.text, dx_pixel, dy_pixel, closestNode);
-                                        } else {
-                                          double weight = sqrt((dx_pixel - closestNode.x) * (dx_pixel - closestNode.x) + (dy_pixel - closestNode.y) * (dy_pixel - closestNode.y));
-                                          int weight_int = weight.toInt();
-                                          int isExist = newGraph!.findNodeIndex(newGraph!.nodes, '지도에서 선택한 도착지');
-                                          if(isExist != -1) {
-                                            newGraph!.removeNode('지도에서 선택한 도착지');
-                                          }
-
-                                          newGraph!.addEdge(closestNode.name, secondController.text, weight_int, "평지", "도보",
-                                              node2X: dx_pixel,
-                                              node2Y: dy_pixel,
-                                              isInside2: 0,
-                                              building2: "실외",
-                                              showRoute2: false);
-                                          newGraph!.addEdge(secondController.text, closestNode.name, weight_int, "평지", "도보");
-                                        }
-                                        if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text))
-                                            && (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
-                                          _handleSubmit();
-                                        } else {
-                                          setState(() {
-                                            check = 0;
-                                          });
-                                        }
-                                      }
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(5, 5, 10, 5), // Add margin to all sides
-                                  padding: EdgeInsets.all(15.0), // Add padding to the container
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius: BorderRadius.circular(10), // Add borderRadius
-                                  ),
-                                  child: Text('지도', style: TextStyle(color: Colors.white,
-                                    fontFamily: 'Paybooc',
-                                    fontWeight: FontWeight.w900,
-                                  )),
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 10, 5),
+                                // Add margin to all sides
+                                padding: EdgeInsets.all(15.0),
+                                // Add padding to the container
+                                decoration: BoxDecoration(
+                                  color: Colors.orange,
+                                  borderRadius: BorderRadius.circular(
+                                      10), // Add borderRadius
                                 ),
+                                child: Text('지도',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Paybooc',
+                                      fontWeight: FontWeight.w900,
+                                    )),
                               ),
                             ),
-                          ],
-                        )),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
-          if (check == 0)
+          // 출발/목적지 설정 x -> 빈칸
+          if (algovalue.isFind == false)
             Expanded(
-              child: Container(),
+              child: Container(
+                child: Center(
+                  child: ((firstController.text == secondController.text)&& isExistBuilding(firstController.text)) ? Text("출발지와 목적지가 같음.") : Text(""),
+                ),
+              ),
             )
-          else if (check != 0)
+          // else 경로 미리 표시
+          else if (algovalue.isFind == true)
             Expanded(
-              child: CustomListWidget(
-                items: result,
-                direction: direction,
+              child: DetailList(
+                items: algovalue.finalPath, // List<Node> : 경로에 속하는 모든 노드의 이름들이 들어가있는 리스트
+                direction: algovalue.direction, // List<String> : 방향 설명
               ),
             ),
           Padding(
@@ -662,7 +458,12 @@ class _SearchScreenState extends State<SearchScreen> {
               height: 35.0,
               child: ElevatedButton(
                 onPressed: () {
-                  handleInput();
+                  if (algovalue.isFind == false){ // 경로를 찾지 않은 경우
+                    notHandleInput(context);
+                  }
+                  else{
+                    handleInput();
+                  }
                 },
                 child: Text(
                   '경로 안내 시작하기',
@@ -688,81 +489,147 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
+  void notHandleInput(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("경로탐색 실패"),
+          content: Text("다시 입력"),
+          actions: [
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   void handleInput() {
-/*    String firstValue = firstController.text;
-    String secondValue = secondController.text;*/
-    Navigator.pop(context, {'selectOption': selectOption});
+    // # TextField에 값을 넣는 순간부터 경로를 다 찾아놔서 다시 돌릴 필요가 없어서 일단 주석처리 해놓았음
+    // # search_screen과 home_screen + drawer에 차별점을 주려면 놔둘 필요는 있음.
+    // # reconstruct path를 새로하면 됨.
+
+    /*
+    var nodelist = Provider.of<NodeList>(context, listen: false);
+    nodelist.StartNodeName = firstController.text;
+    nodelist.EndNodeName = secondController.text;
+    nodelist.Astar_pathMaking();
+    */
+    algovalue.colorPath();
+    
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    algovalue.isFind = false; // searchscreen에서의 값
+    algovalue.isRequired = true; // drawer 쓸건지 안쓸건지
+    //dispose();
   }
 
-  void _handleSubmit() {  //경로 텍스트 안내 영역
-    String start_node = firstController.text;
-    String end_node = secondController.text;
-    Graph activeGraph = newGraph ?? graph;
-    print("start_node: $start_node   end_node: $end_node");
-    if(selectOption == 1 || selectOption == 2){
-      result = Astar_pathMaking(activeGraph, start_node, end_node, true);
-      //추후 Astar_pathMaking이 수정되면 가중치를 selectOption에 따라 지정하게됨
-      //result = Astar_pathMaking(start_node, end_node, selectOption);
+  void _handleSubmit() {
+    int selectOption = algovalue.selectOption;
+    List<Node> result = [];
+    if (firstController.text == secondController.text){
+      algovalue.erase();
+      algovalue.isFind = false;
+      return;
     }
-    else{ //selectOption == 3인 경우 즉 차도 탐색
-      Node start = activeGraph.findNode(start_node);
-      Node End = activeGraph.findNode(end_node);
-      Graph driveway = activeGraph.includeEdgesByType("차도");
-      Node? StartClosest = findClosestNode(driveway.nodes, start.x, start.y);
-      Node? EndClosest = findClosestNode(driveway.nodes, End.x, End.y);
-      temp = Astar_pathMaking(activeGraph, start.name, StartClosest!.name, true);
-      temp.removeLast();
-      temp.addAll(Astar_pathMaking(driveway, StartClosest!.name, EndClosest!.name, false));
-      temp.removeLast();
-      temp.addAll(Astar_pathMaking(activeGraph, EndClosest!.name, End.name, false));
 
-      for (int i = 0; i < temp.length; i++) {
-        if (!result.any((node) => node.name == temp[i].name)) {
-          result.add(temp[i]);
-        } else {
-          int duplicateIndex = result.indexOf(temp[i]);
-          result.removeRange(duplicateIndex + 1, result.length);
+    if (firstController.text != '지도에서 선택한 출발지') {
+      algovalue.removePickedPointFromGraph('지도에서 선택한 출발지');
+    } // 지우기
+    if (secondController.text != '지도에서 선택한 도착지') {
+      algovalue.removePickedPointFromGraph('지도에서 선택한 도착지');
+    } // 지우기
+
+    if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text)) &&
+        (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
+      print("check: function handleSubmit start\n");
+
+      if(selectOption == 1 || selectOption == 2) {
+        algovalue.startNodeName = firstController.text;
+        algovalue.endNodeName = secondController.text;
+
+        result = algovalue.astarPathMaking(
+          usingGraph: algovalue.graph,
+        );
+      }
+      else{ // option 3
+        List<Node> temp;
+        Node start = algovalue.graph.findNode(firstController.text);
+        Node end = algovalue.graph.findNode(secondController.text);
+        Graph driveWayGraph = initDriveWayGraph();
+        Node? startClosest = algovalue.findClosestNode(driveWayGraph.nodes, start.x, start.y);
+        Node? endClosest = algovalue.findClosestNode(driveWayGraph.nodes, end.x, end.y);
+
+        // 시작 -> 가까운 차도
+        algovalue.startNodeName = start.name;
+        algovalue.endNodeName = startClosest.name;
+        temp = algovalue.astarPathMaking(
+          usingGraph: algovalue.graph,
+        );
+        // 차도
+        algovalue.startNodeName = startClosest.name;
+        algovalue.endNodeName = endClosest.name;
+        temp.addAll(algovalue.astarPathMaking(
+            usingGraph: driveWayGraph));
+        // 차도 끝 -> 도착
+        algovalue.startNodeName = endClosest.name;
+        algovalue.endNodeName = end.name;
+        temp.addAll(algovalue.astarPathMaking(
+            usingGraph: algovalue.graph));
+
+        // temp 바탕으로 result 정리
+        for (int i = 0; i < temp.length; i++) {
+          if (!result.any((node) => node.name == temp[i].name)) {
+            result.add(temp[i]);
+          } else {
+            int duplicateIndex = result.indexOf(temp[i]);
+            result.removeRange(duplicateIndex + 1, result.length);
+          }
         }
       }
-    }
+      algovalue.isFind = true;
 
-    endNodes.clear();
-    startNodes.clear();
-    for (int i = 0; i < result.length; i++) {
-      if (i == 0)
-        startNodes.add(result[i]);
-      else if (i == result.length - 1)
-        endNodes.add(result[i]);
-      else {
-        endNodes.add(result[i]);
-        startNodes.add(result[i]);
+      List<Node> startNodes = [];
+      List<Node> endNodes = [];
+
+      for (int i = 0; i < result.length; i++) {
+        if (i == 0)
+          startNodes.add(result[i]);
+        else if (i == result.length - 1)
+          endNodes.add(result[i]);
+        else {
+          endNodes.add(result[i]);
+          startNodes.add(result[i]);
+        }
       }
-    }
 
-    print("result: ");
-    for (Node node in result) {
-      print(node.toString());
-    }
-    vector.clear();
-    direction.clear();
-    for (int i = 0; i < startNodes.length; i++) {
-      double deltaX = endNodes[i].x - startNodes[i].x;
-      double deltaY = endNodes[i].y - startNodes[i].y;
-      vector.add(Vec(deltaX, deltaY));
-    }
-    direction.add("출발지");
-    for (int i = 0; i < vector.length - 1; i++) {
-      print(getDirection(vector[i], vector[i + 1]));
-      direction.add(getDirection(vector[i], vector[i + 1]));
-      print("????");
-    }
-    direction.add("목적지");
+      for (Node str in result) {
+        print("print name: ${str.name}");
+      }
+      vector.clear();
+      direction.clear();
+      for (int i = 0; i < startNodes.length; i++) {
+        double deltaX = endNodes[i].x - startNodes[i].x;
+        double deltaY = endNodes[i].y - startNodes[i].y;
+        vector.add(Vec(deltaX, deltaY));
+      }
+      direction.add("출발지");
+      for (int i = 0; i < vector.length - 1; i++) {
+        direction.add(getDirection(vector[i], vector[i + 1]));
+      }
+      direction.add("목적지");
 
-    directions = direction;
-    pathguide = result;
-
-    setState(() {
-      check = 1;
-    });
+      algovalue.startNodes = startNodes;
+      algovalue.endNodes = endNodes;
+      algovalue.finalPath = result;
+      algovalue.direction = direction;
+    }
+    else{
+      algovalue.erase();
+      algovalue.isFind = false;
+    }
   }
 }

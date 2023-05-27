@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// 지도에 그림을 그리기 위함.
 
 class LinePainter extends CustomPainter {
   final ImageInfo imageInfo;

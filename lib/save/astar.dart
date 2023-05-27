@@ -67,7 +67,7 @@ class Graph {
     return -1;
   }
 
-  Graph excludeEdgesByType(String type) { //계단/오르막 제외 메소드
+  Graph excludeEdgesByType(String type) {
     Graph newGraph = Graph();
     newGraph.nodes = List.from(nodes);
 
@@ -99,14 +99,21 @@ class Graph {
     return newGraph;
   }
 
+  Graph filterEdges(String requiredAttribute) {
+    Graph newGraph = Graph();
+    newGraph.nodes = List.from(nodes);
+
+    for (final edge in edges) {
+      if (edge.edgeAttribute == requiredAttribute) {
+        newGraph.edges.add(edge);
+      }
+    }
+
+    return newGraph;
+  }
 
   bool nodeExists(String name) {
     return nodes.any((node) => node.name == name);
-  }
-
-  void removeNode(String name) {
-    nodes.removeWhere((node) => node.name == name);
-    edges.removeWhere((edge) => edge.node1.name == name || edge.node2.name == name);
   }
 
   Edge? findEdge(String node1Name, String node2Name) {
@@ -118,6 +125,10 @@ class Graph {
     return null;  // return null if no edge found
   }
 
+  void removeNode(String name) {
+    nodes.removeWhere((node) => node.name == name);
+    edges.removeWhere((edge) => edge.node1.name == name || edge.node2.name == name);
+  }
 
   // A* algorithm
   Tuple2<List<int>, List<int>> aStar(List<Node> nodes, List<Edge> edges, Node start, Node end) {
@@ -148,7 +159,7 @@ class Graph {
         continue;
       }
 
-/*      for (Edge edge in edges) {  //양방향 그래프 주석으로 남겨둠
+/*      for (Edge edge in edges) {
         if (edge.node1.name == nodes[currentNode].name || edge.node2.name == nodes[currentNode].name) {
           int nextNode;
           if (edge.node1.name == nodes[currentNode].name) {
@@ -186,10 +197,6 @@ class Graph {
     return Tuple2<List<int>, List<int>>(dist, prev);
   }
 }
-
-Graph graph = Graph();
-List<Node> startNodes = [];
-List<Node> endNodes = [];
 
 List<Node> reconstructPath(
     //Astar 결과 지나온 노드들을 반대로 돌아가면서 경로를 path 리스트에 저장한 후 reverse를 통해 경로 순서대로 재배치한다.
