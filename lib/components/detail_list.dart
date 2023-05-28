@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/save/astar.dart';
+import 'package:Dubeogi/save/custom_text.dart';
 import 'dart:math';
+
 // 노드 이름들과 방향을 받으면 이에 해당하는 리스트를 반환함
 // = screen/line_screen
 class DetailList extends StatefulWidget {
@@ -62,24 +64,21 @@ class _DetailListState extends State<DetailList> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.items[index].name, // node 이름
-                      style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    CustomText(
+                      text: widget.items[index].name,
+                      color: Colors.blueAccent,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
                     ),
                     // direction 부분 : 오른쪽, 출발지 ,등등
                     Row(
                       children: [
                         SizedBox(width: 10.0),
-                        Text(
-                          widget.direction[index],
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12.0,
-                          ),
+                        CustomText(
+                          text: widget.direction[index],
+                          color: Colors.grey,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w800,
                         ),
                       ],
                     ),

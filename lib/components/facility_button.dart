@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:Dubeogi/save/custom_text.dart';
 // 검색창 아래에 있는 버튼들
 
 class FacilityButton extends StatelessWidget {
@@ -19,11 +20,11 @@ class FacilityButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: TextStyle(
-          color: textColor,
-        ),
+      child: CustomText(
+        text: text,
+        color: textColor,
+        fontSize: 12.0,
+        fontWeight: FontWeight.w700,
       ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(

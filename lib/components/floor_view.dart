@@ -134,7 +134,12 @@ class _FloorViewState extends State<FloorView> {
                     ),
                     child: ListTile(
                       title: Center(
-                        child: CustomText(text: fileName, color: Colors.black),
+                        child: CustomText(
+                          text: fileName,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),

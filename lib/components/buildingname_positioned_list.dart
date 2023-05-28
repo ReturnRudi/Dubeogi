@@ -1,3 +1,4 @@
+import 'package:Dubeogi/save/custom_text.dart';
 import 'package:flutter/material.dart';
 
 List<Widget> buildingnamePositionedList({required double scale, required double scale_offset}){
@@ -10,13 +11,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "과학관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '과학관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -29,13 +28,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "다향관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '다향관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -48,13 +45,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "대운동장",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '대운동장',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -67,13 +62,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "만해광장",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '만해광장',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -86,13 +79,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "명진관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '명진관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -105,13 +96,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "문화관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '문화관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -124,13 +113,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "법학관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '법학관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -143,13 +130,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "만해관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '만해관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -162,13 +147,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "본관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '본관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -181,13 +164,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "사회과학관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '사회과학관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -200,13 +181,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "경영관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '경영관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -219,13 +198,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "상록원",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '상록원',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -238,13 +215,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "신공학관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '신공학관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -257,13 +232,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "원흥관1",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '원흥관1',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -276,13 +249,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "원흥관2",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '원흥관2',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -295,13 +266,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "정보문화관P",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '정보문화관P',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -314,13 +283,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "정보문화관Q",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '정보문화관Q',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -333,13 +300,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "정각원",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '정각원',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -352,13 +317,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "중앙도서관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '중앙도서관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -371,13 +334,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "체육관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '체육관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -390,13 +351,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "학림관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '학림관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -409,13 +368,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "학생회관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '학생회관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -428,13 +385,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "학술관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '학술관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -447,13 +402,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "혜화관",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '혜화관',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -466,13 +419,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "정문",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '정문',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -485,13 +436,11 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "후문",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child: CustomText(
+            text: '후문',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
@@ -504,18 +453,16 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Text(
-            "혜화문",
-            style: TextStyle(
-              fontFamily: 'Paybooc',
-              fontWeight: FontWeight.w700,
-              fontSize: 7 / scale,
-            ),
+          child:CustomText(
+            text: '혜화문',
+            fontSize: 7 / scale,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ),
     ),
   ];
-  
+
   return widgets;
 }

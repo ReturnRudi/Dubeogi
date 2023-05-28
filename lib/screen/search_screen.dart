@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:Dubeogi/save/astar.dart';
 import 'package:Dubeogi/save/save.dart';
+import 'package:Dubeogi/save/custom_text.dart';
 import 'package:Dubeogi/provider/algo_value.dart';
 import 'dart:math';
 
@@ -117,17 +118,13 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Stack(
                         children: [
                           Center(
-                            child: Text(
-                              '최단',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Paybooc',
-                                fontWeight: FontWeight.w800,
-                                color: algovalue.selectOption == 1
-                                    ? Colors.orange
-                                    : Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
+                            child: CustomText(
+                              text: '최소',
+                              fontWeight: FontWeight.w800,
+                              fontSize: 15.0,
+                              color: algovalue.selectOption == 1
+                                  ? Colors.orange
+                                  : Colors.white,
                             ),
                           ),
                           InkWell(onTap: () {
@@ -137,7 +134,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         ],
                       ),
                       decoration: BoxDecoration(
-                        color: algovalue.selectOption == 1 ? Colors.white : null,
+                        color:
+                            algovalue.selectOption == 1 ? Colors.white : null,
                         borderRadius: BorderRadius.circular(50),
                       ),
                     ),
@@ -148,17 +146,13 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Stack(
                         children: [
                           Center(
-                            child: Text(
-                              '최적',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Paybooc',
-                                fontWeight: FontWeight.w800,
-                                color: algovalue.selectOption == 2
-                                    ? Colors.orange
-                                    : Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
+                            child: CustomText(
+                              text: '최적',
+                              fontWeight: FontWeight.w800,
+                              fontSize: 15.0,
+                              color: algovalue.selectOption == 2
+                                  ? Colors.orange
+                                  : Colors.white,
                             ),
                           ),
                           InkWell(onTap: () {
@@ -168,7 +162,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         ],
                       ),
                       decoration: BoxDecoration(
-                        color: algovalue.selectOption == 2 ? Colors.white : null,
+                        color:
+                            algovalue.selectOption == 2 ? Colors.white : null,
                         borderRadius: BorderRadius.circular(50),
                       ),
                     ),
@@ -179,17 +174,13 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Stack(
                         children: [
                           Center(
-                            child: Text(
-                              '차도',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Paybooc',
-                                fontWeight: FontWeight.w800,
-                                color: algovalue.selectOption == 3
-                                    ? Colors.orange
-                                    : Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
+                            child: CustomText(
+                              text: '차도',
+                              fontWeight: FontWeight.w800,
+                              fontSize: 15.0,
+                              color: algovalue.selectOption == 3
+                                  ? Colors.orange
+                                  : Colors.white,
                             ),
                           ),
                           InkWell(onTap: () {
@@ -199,7 +190,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         ],
                       ),
                       decoration: BoxDecoration(
-                        color: algovalue.selectOption == 3 ? Colors.white : null,
+                        color:
+                            algovalue.selectOption == 3 ? Colors.white : null,
                         borderRadius: BorderRadius.circular(50),
                       ),
                     ),
@@ -211,7 +203,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
           // 출발지 목적지 box
           Container(
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+            padding: EdgeInsets.fromLTRB(15, 0, 15, 5),
             color: Colors.orange,
             child: Stack(
               children: [
@@ -219,30 +211,33 @@ class _SearchScreenState extends State<SearchScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // 츌발지
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF8D4A8),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Stack(
-                        children: [
-                          TypeAheadField(
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TypeAheadField(
                             textFieldConfiguration: TextFieldConfiguration(
                                 controller: firstController,
                                 focusNode: firstFocus,
                                 decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 10),
-                                  hintText: '출발 지점을 입력하세요',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Paybooc',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0xffF9D5A8),
-                                ),
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 16, horizontal: 10),
+                                    hintText: '출발 지점을 입력하세요',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Paybooc',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    filled: true,
+                                    fillColor: const Color(0xffF9D5A8),
+                                    suffixIcon: InkWell(
+                                      onTap: () {
+                                        firstController.text = "";
+                                      },
+                                      child: Icon(
+                                        Icons.cancel,
+                                        size: 20.0,
+                                      ),
+                                    )),
                                 onSubmitted: (_) {
                                   FocusScope.of(context)
                                       .requestFocus(secondFocus);
@@ -256,7 +251,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                 color: const Color(0xffF9D5A8)),
                             itemBuilder: (context, suggestion) {
                               return ListTile(
-                                title: Text(suggestion),
+                                title: CustomText(
+                                  text: suggestion,
+                                  color: Colors.black,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               );
                             },
                             onSuggestionSelected: (suggestion) {
@@ -271,87 +271,90 @@ class _SearchScreenState extends State<SearchScreen> {
                                 return Container(
                                   height: 45.0,
                                   child: Center(
-                                    child: Text(
-                                      '건물명을 정확히 입력해주세요.',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.grey,
-                                      ),
+                                    child: CustomText(
+                                      text: '건물명을 정확히 입력해주세요',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
                                     ),
                                   ),
                                 );
                               }
                             },
                           ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: InkWell(
-                              onTap: () async {
-                                Offset? result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SelectFromMap(destination: false)),
-                                );
-                                setState(() {
-                                  if (result != null) {
-                                    firstController.text = "";
-                                    algovalue.pickandUpdateGraph(result, '지도에서 선택한 출발지');
-                                    firstController.text = '지도에서 선택한 출발지';
-                                  }
-                                });
-                              },
-                              child: Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 10, 5),
-                                // Add margin to all sides
-                                padding: EdgeInsets.all(15.0),
-                                // Add padding to the container
-                                decoration: BoxDecoration(
-                                  color: Colors.orange,
-                                  borderRadius: BorderRadius.circular(
-                                      10), // Add borderRadius
-                                ),
-                                child: Text('지도',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Paybooc',
-                                      fontWeight: FontWeight.w700,
-                                    )),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            onTap: () async {
+                              Offset? result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SelectFromMap(destination: false)),
+                              );
+                              setState(() {
+                                if (result != null) {
+                                  firstController.text = "";
+                                  algovalue.pickandUpdateGraph(
+                                      result, '지도에서 선택한 출발지');
+                                  firstController.text = '지도에서 선택한 출발지';
+                                }
+                              });
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(5, 5, 10, 5),
+                              // Add margin to all sides
+                              padding: EdgeInsets.all(15.0),
+                              // Add padding to the container
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(
+                                    10), // Add borderRadius
+                              ),
+                              child: CustomText(
+                                text: '지도',
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13.0,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Container(
                       height: 2,
                       color: Colors.orange,
                     ),
                     // 목적지
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF8D4A8),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Stack(
-                        children: [
-                          TypeAheadField(
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TypeAheadField(
                             textFieldConfiguration: TextFieldConfiguration(
                               controller: secondController,
                               focusNode: secondFocus,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 10),
-                                border: InputBorder.none,
-                                hintText: '도착 지점을 입력하세요',
-                                hintStyle: TextStyle(
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                filled: true,
-                                fillColor: const Color(0xffF9D5A8),
-                              ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 16, horizontal: 10),
+                                  border: InputBorder.none,
+                                  hintText: '도착 지점을 입력하세요',
+                                  hintStyle: TextStyle(
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0xffF9D5A8),
+                                  suffixIcon: InkWell(
+                                    onTap: () {
+                                      secondController.text = "";
+                                    },
+                                    child: Icon(
+                                      Icons.cancel,
+                                      size: 20.0,
+                                    ),
+                                  )),
                             ),
                             suggestionsCallback: (pattern) {
                               return buildings.where((text) => text
@@ -362,7 +365,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                 color: const Color(0xffF9D5A8)),
                             itemBuilder: (context, suggestion) {
                               return ListTile(
-                                title: Text(suggestion),
+                                title: CustomText(
+                                  text: suggestion,
+                                  color: Colors.black,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               );
                             },
                             onSuggestionSelected: (suggestion) {
@@ -377,57 +385,57 @@ class _SearchScreenState extends State<SearchScreen> {
                                 return Container(
                                   height: 45.0,
                                   child: Center(
-                                    child: Text(
-                                      '건물명을 정확히 입력해주세요.',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.grey,
-                                      ),
+                                    child: CustomText(
+                                      text: '건물명을 정확히 입력해주세요',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
                                     ),
                                   ),
                                 );
                               }
                             },
                           ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: InkWell(
-                              onTap: () async {
-                                Offset? result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SelectFromMap(destination: true)),
-                                );
-                                setState(() {
-                                  if (result != null) {
-                                    secondController.text = "";
-                                    algovalue.pickandUpdateGraph(result, '지도에서 선택한 도착지');
-                                    secondController.text = '지도에서 선택한 도착지';
-                                  }
-                                });
-                              },
-                              child: Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 10, 5),
-                                // Add margin to all sides
-                                padding: EdgeInsets.all(15.0),
-                                // Add padding to the container
-                                decoration: BoxDecoration(
-                                  color: Colors.orange,
-                                  borderRadius: BorderRadius.circular(
-                                      10), // Add borderRadius
-                                ),
-                                child: Text('지도',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Paybooc',
-                                      fontWeight: FontWeight.w900,
-                                    )),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            onTap: () async {
+                              Offset? result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SelectFromMap(destination: true)),
+                              );
+                              setState(() {
+                                if (result != null) {
+                                  secondController.text = "";
+                                  algovalue.pickandUpdateGraph(
+                                      result, '지도에서 선택한 도착지');
+                                  secondController.text = '지도에서 선택한 도착지';
+                                }
+                              });
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(5, 5, 10, 5),
+                              // Add margin to all sides
+                              padding: EdgeInsets.all(15.0),
+                              // Add padding to the container
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(
+                                    10), // Add borderRadius
+                              ),
+                              child: CustomText(
+                                text: '지도',
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13.0,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -439,7 +447,20 @@ class _SearchScreenState extends State<SearchScreen> {
             Expanded(
               child: Container(
                 child: Center(
-                  child: ((firstController.text == secondController.text)&& isExistBuilding(firstController.text)) ? Text("출발지와 목적지가 같음.") : Text(""),
+                  child: ((firstController.text == secondController.text) &&
+                          isExistBuilding(firstController.text))
+                      ? CustomText(
+                          text: "출발지와 목적지가 같음.",
+                          color: Colors.black,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w700,
+                        )
+                      : CustomText(
+                          text: "출발지와 목적지를 입력하세요.",
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.0,
+                        ),
                 ),
               ),
             )
@@ -447,7 +468,8 @@ class _SearchScreenState extends State<SearchScreen> {
           else if (algovalue.isFind == true)
             Expanded(
               child: DetailList(
-                items: algovalue.finalPath, // List<Node> : 경로에 속하는 모든 노드의 이름들이 들어가있는 리스트
+                items: algovalue.finalPath,
+                // List<Node> : 경로에 속하는 모든 노드의 이름들이 들어가있는 리스트
                 direction: algovalue.direction, // List<String> : 방향 설명
               ),
             ),
@@ -458,22 +480,18 @@ class _SearchScreenState extends State<SearchScreen> {
               height: 35.0,
               child: ElevatedButton(
                 onPressed: () {
-                  if (algovalue.isFind == false){ // 경로를 찾지 않은 경우
+                  if (algovalue.isFind == false) {
+                    // 경로를 찾지 않은 경우
                     notHandleInput(context);
-                  }
-                  else{
+                  } else {
                     handleInput();
                   }
                 },
-                child: Text(
-                  '경로 안내 시작하기',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'Paybooc',
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
+                child: CustomText(
+                  text: '경로 안내 시작하기',
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
                 ),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.orange, // 주황색 배경색
@@ -489,7 +507,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  void notHandleInput(BuildContext context){
+  void notHandleInput(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -508,6 +526,7 @@ class _SearchScreenState extends State<SearchScreen> {
       },
     );
   }
+
   void handleInput() {
     // # TextField에 값을 넣는 순간부터 경로를 다 찾아놔서 다시 돌릴 필요가 없어서 일단 주석처리 해놓았음
     // # search_screen과 home_screen + drawer에 차별점을 주려면 놔둘 필요는 있음.
@@ -520,7 +539,7 @@ class _SearchScreenState extends State<SearchScreen> {
     nodelist.Astar_pathMaking();
     */
     algovalue.colorPath();
-    
+
     Navigator.of(context).popUntil((route) => route.isFirst);
     algovalue.isFind = false; // searchscreen에서의 값
     algovalue.isRequired = true; // drawer 쓸건지 안쓸건지
@@ -530,7 +549,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void _handleSubmit() {
     int selectOption = algovalue.selectOption;
     List<Node> result = [];
-    if (firstController.text == secondController.text){
+    if (firstController.text == secondController.text) {
       algovalue.erase();
       algovalue.isFind = false;
       return;
@@ -543,25 +562,29 @@ class _SearchScreenState extends State<SearchScreen> {
       algovalue.removePickedPointFromGraph('지도에서 선택한 도착지');
     } // 지우기
 
-    if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text)) &&
-        (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
+    if ((isExistBuilding(firstController.text) ||
+            isExistSelectFromMap(firstController.text)) &&
+        (isExistBuilding(secondController.text) ||
+            isExistSelectFromMap(secondController.text))) {
       print("check: function handleSubmit start\n");
 
-      if(selectOption == 1 || selectOption == 2) {
+      if (selectOption == 1 || selectOption == 2) {
         algovalue.startNodeName = firstController.text;
         algovalue.endNodeName = secondController.text;
 
         result = algovalue.astarPathMaking(
           usingGraph: algovalue.graph,
         );
-      }
-      else{ // option 3
+      } else {
+        // option 3
         List<Node> temp;
         Node start = algovalue.graph.findNode(firstController.text);
         Node end = algovalue.graph.findNode(secondController.text);
         Graph driveWayGraph = initDriveWayGraph();
-        Node? startClosest = algovalue.findClosestNode(driveWayGraph.nodes, start.x, start.y);
-        Node? endClosest = algovalue.findClosestNode(driveWayGraph.nodes, end.x, end.y);
+        Node? startClosest =
+            algovalue.findClosestNode(driveWayGraph.nodes, start.x, start.y);
+        Node? endClosest =
+            algovalue.findClosestNode(driveWayGraph.nodes, end.x, end.y);
 
         // 시작 -> 가까운 차도
         algovalue.startNodeName = start.name;
@@ -572,13 +595,11 @@ class _SearchScreenState extends State<SearchScreen> {
         // 차도
         algovalue.startNodeName = startClosest.name;
         algovalue.endNodeName = endClosest.name;
-        temp.addAll(algovalue.astarPathMaking(
-            usingGraph: driveWayGraph));
+        temp.addAll(algovalue.astarPathMaking(usingGraph: driveWayGraph));
         // 차도 끝 -> 도착
         algovalue.startNodeName = endClosest.name;
         algovalue.endNodeName = end.name;
-        temp.addAll(algovalue.astarPathMaking(
-            usingGraph: algovalue.graph));
+        temp.addAll(algovalue.astarPathMaking(usingGraph: algovalue.graph));
 
         // temp 바탕으로 result 정리
         for (int i = 0; i < temp.length; i++) {
@@ -626,8 +647,7 @@ class _SearchScreenState extends State<SearchScreen> {
       algovalue.endNodes = endNodes;
       algovalue.finalPath = result;
       algovalue.direction = direction;
-    }
-    else{
+    } else {
       algovalue.erase();
       algovalue.isFind = false;
     }

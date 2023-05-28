@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/save/building_info.dart';
+import 'package:Dubeogi/save/custom_text.dart';
 
 class BuildingInfoScreen extends StatefulWidget {
   final String title;
@@ -56,12 +57,11 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
           SizedBox(height: 20),
           Container(
             alignment: Alignment.center,
-            child: Text(
-              widget.title,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            child: CustomText(
+              text: widget.title,
+              color: Colors.black,
+              fontSize: 24.0,
+              fontWeight: FontWeight.w700,
             ),
           ),
           SizedBox(height: 15.0, width: 20.0),
@@ -76,16 +76,6 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                     '/search',
                     arguments: {'start': widget.title, 'end': ''},
                   );
-                  /*
-                //async
-                  getdata = await Navigator.pushNamed(
-                    context,
-                    '/search',
-                    arguments: {'start': widget.title, 'end': ''},
-                  );
-                  setState(() {
-                    Navigator.pop(context, getdata);
-                  });*/
                 },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: Colors.blue),
@@ -101,26 +91,20 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                   children: [
                     Icon(Icons.directions_walk, color: Colors.blue),
                     SizedBox(width: 4),
-                    Text('출발', style: TextStyle(color: Colors.blue)),
+                    CustomText(
+                      text: '출발',
+                      color: Colors.blue,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ],
                 ),
               ),
               SizedBox(width: 25),
               OutlinedButton(
                 onPressed: () {
-                  Navigator.pushNamed(
-                      context,
-                      '/search',
+                  Navigator.pushNamed(context, '/search',
                       arguments: {'start': '', 'end': widget.title});
-                  /*
-                  getdata = await Navigator.pushNamed(
-                    context,
-                    '/search',
-                    arguments: {'start': '', 'end': widget.title},
-                  );
-                  setState(() {
-                    Navigator.pop(context, getdata);
-                  });*/
                 },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: Colors.blue),
@@ -136,7 +120,12 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                   children: [
                     Icon(Icons.directions_walk, color: Colors.white),
                     SizedBox(width: 4),
-                    Text('도착', style: TextStyle(color: Colors.white)),
+                    CustomText(
+                      text: '도착',
+                      color: Colors.white,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ],
                 ),
               ),
@@ -148,11 +137,21 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
               itemCount: _displayedAmenities.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: (){},
+                  onTap: () {},
                   child: ListTile(
                     leading: _displayedAmenities[index].icon,
-                    title: Text('${_displayedAmenities[index].name}'),
-                    subtitle: Text('${_displayedAmenities[index].description}'),
+                    title: CustomText(
+                      text: '${_displayedAmenities[index].name}',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16.0,
+                    ),
+                    subtitle: CustomText(
+                      text: '${_displayedAmenities[index].description}',
+                      color: Colors.grey,
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 );
               },

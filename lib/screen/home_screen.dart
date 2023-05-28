@@ -15,8 +15,11 @@ import 'package:Dubeogi/components/linepainter.dart';
 
 import 'package:Dubeogi/provider/algo_value.dart';
 import 'package:Dubeogi/save/save.dart';
+import 'package:Dubeogi/save/custom_text.dart';
 
 import 'package:Dubeogi/screen/building_info_screen.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -514,12 +517,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ],
                                     ),
-                                    child: Text(
-                                      '검색하고 싶은 건물 입력',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16.0,
-                                      ),
+                                    child: CustomText(
+                                      text: '검색하고 싶은 건물을 입력하세요.',
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -542,12 +544,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Icon(
                                       Icons.search,
                                     ),
-                                    Text(
-                                      '길찾기',
-                                      style: TextStyle(
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    CustomText(
+                                      text: '길찾기',
+                                      fontSize: 8.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
                                     ),
                                   ],
                                 ),

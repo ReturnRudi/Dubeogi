@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/save/save.dart';
-import 'package:Dubeogi/save/building_info.dart';
+import 'package:Dubeogi/save/custom_text.dart';
 import 'package:Dubeogi/screen/building_info_screen.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
@@ -64,11 +64,11 @@ class _FindScreenState extends State<FindScreen> {
                         },
                         itemBuilder: (context, suggestion) {
                           return ListTile(
-                            title: Text(suggestion,
-                              style: TextStyle(
-                              fontFamily: 'Paybooc',
+                            title: CustomText(
+                              text: suggestion,
+                              color: Colors.grey,
+                              fontSize: 12.0,
                               fontWeight: FontWeight.w400,
-                              ),
                             ),
                           );
                         },
@@ -82,12 +82,11 @@ class _FindScreenState extends State<FindScreen> {
                           return Container(
                             height: 45.0,
                             child: Center(
-                              child: Text(
-                                '건물명을 정확히 입력해주세요.',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.grey,
-                                ),
+                              child: CustomText(
+                                text: '건물명을 정확히 입력해주세요.',
+                                color: Colors.grey,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           );
@@ -139,12 +138,11 @@ class _FindScreenState extends State<FindScreen> {
                         Icon(
                           Icons.apartment_rounded,
                         ),
-                        Text(
-                          '건물 검색',
-                          style: TextStyle(
-                            fontSize: 8,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        CustomText(
+                          text: '건물 검색',
+                          color: Colors.white,
+                          fontSize: 8.0,
+                          fontWeight: FontWeight.w700,
                         ),
                       ],
                     ),
@@ -167,11 +165,11 @@ class _FindScreenState extends State<FindScreen> {
                       });
                     },
                     child: ListTile(
-                      title: Text(name,
-                        style: TextStyle(
-                          fontFamily: 'Paybooc',
-                          fontWeight: FontWeight.w400,
-                        ),
+                      title: CustomText(
+                        text: name,
+                        color: Colors.black,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   );
