@@ -139,7 +139,14 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                 return InkWell(
                   onTap: () {},
                   child: ListTile(
-                    leading: _displayedAmenities[index].icon,
+                    leading: Column(
+                      children: [
+                        SizedBox(
+                          height: 14,
+                        ),
+                        _displayedAmenities[index].icon,
+                      ],
+                    ),
                     title: CustomText(
                       text: '${_displayedAmenities[index].name}',
                       color: Colors.black,

@@ -203,7 +203,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
           // 출발지 목적지 box
           Container(
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 5),
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
             color: Colors.orange,
             child: Stack(
               children: [
@@ -303,7 +303,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               });
                             },
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 10, 5),
+                              margin: EdgeInsets.fromLTRB(10, 5, 0, 5),
                               // Add margin to all sides
                               padding: EdgeInsets.all(15.0),
                               // Add padding to the container
@@ -417,7 +417,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               });
                             },
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 10, 5),
+                              margin: EdgeInsets.fromLTRB(10, 5, 0, 5),
                               // Add margin to all sides
                               padding: EdgeInsets.all(15.0),
                               // Add padding to the container
