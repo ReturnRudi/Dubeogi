@@ -51,14 +51,6 @@ class AlgoValue with ChangeNotifier{
   //bool get isInitialized => _isInitialized;
   bool get isFind => _isFind;
 
-  /*
-  set showButton(String str){
-    _showButton = str;
-    print('check: set showButton: ${_showButton}');
-    notifyListeners();
-  }
-   */
-
   set startNodeName(String str){
     _startNodeName = str;
     //print('check: set startNodeName: ${_startNodeName}');
@@ -135,16 +127,10 @@ class AlgoValue with ChangeNotifier{
     notifyListeners();
   }
   // ==============================================
-  List<Node> astarPathMaking({required Graph usingGraph}) {
-    print('function starPathMaking start');
+  List<Node> astarPathMaking({required Graph usingGraph, required String weight_select}) {
     //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
     //지도 위에 그림을 그릴 수 있도록 start, end 리스트에 x, y값을 각각 넣는다.
-    /*
-    if (erase == true) {
-      erase_nolisten();
-    }
-     */
-
+    print('function starPathMaking start');
     Node startNode = usingGraph.findNode(_startNodeName);
     Node endNode = usingGraph.findNode(_endNodeName);
 
@@ -153,44 +139,17 @@ class AlgoValue with ChangeNotifier{
 
     // Regular search
     var regularResult =
-    usingGraph.aStar(usingGraph.nodes, usingGraph.edges, startNode, endNode);
-    List<int> regularDist = regularResult.item1;
+    usingGraph.aStar(usingGraph.nodes, usingGraph.edges, startNode, endNode, weight_select);
+    List<double> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 
     _regularPath = reconstructPath(regularPrev, usingGraph.nodes, startIndex, endIndex);
 
-    /*
-    print("Regular path from $startNode to $endNode:");
-    for (int i = 0; i < _regularPath.length; i++) {
-      if (i == 0) {
-        _startNodes.add(_regularPath[i]);
-      }
-      else if (i == _regularPath.length - 1) {
-        _endNodes.add(_regularPath[i]);
-      }
-      else {
-        _endNodes.add(_regularPath[i]);
-        _startNodes.add(_regularPath[i]);
-      }
-    }
-
-    for (int i = 0; i < _startNodes.length; i++) {
-      print(
-          "(${_startNodes[i].x}, ${_startNodes[i].y}) -> (${_endNodes[i].x}, ${_endNodes[i].y})");
-    }
-
-    for (int i = 0; i < _startNodes.length; i++) {
-      //실내 노드를 넣을 때 이곳을 수정해야함
-      if (_startNodes[i].isInside == 0 && _endNodes[i].isInside == 0) {
-        //엣지의 출발지, 도착지가 모두 밖일 때만 우선 startPoints, endPoints에 넣어서 외부 경로만 보이도록 한다.
-        _startPoints.add(Offset(_startNodes[i].x, _startNodes[i].y));
-        _endPoints.add(Offset(_endNodes[i].x, _endNodes[i].y));
-      }
-    }
-    */
     notifyListeners();
     return _regularPath;
   }
+
+
   void colorPath(){
     _startPointsRed.clear();
     _endPointsRed.clear();
@@ -226,38 +185,6 @@ class AlgoValue with ChangeNotifier{
       }
     }
   }
-  /*void floorButtonPath() {
-    //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
-    // 수정 필요
-
-    colorPath();
-    if(_selectOption == 1 || _selectOption == 2){
-      for (int i = 0; i < _startNodes.length; i++) {
-        if(_startNodes[i].isInside == 0 && _endNodes[i].isInside == 0){
-          if (_graph.findEdge(_startNodes[i].name, _endNodes[i].name)?.type == "계단위" || _graph.findEdge(_startNodes[i].name, _endNodes[i].name)?.type == "오르막") {
-            _startPointsRed.add(Offset(_startNodes[i].x, _startNodes[i].y));
-            _endPointsRed.add(Offset(_endNodes[i].x, _endNodes[i].y));
-          }
-          else{
-            _startPointsGreen.add(Offset(_startNodes[i].x, _startNodes[i].y));
-            _endPointsGreen.add(Offset(_endNodes[i].x, _endNodes[i].y));
-          }
-        }
-      }
-    }
-    else{
-      for (int i = 0; i < _startNodes.length; i++) {
-        if (_graph.findEdge(_startNodes[i].name, _endNodes[i].name)?.edgeAttribute == "차도") {
-          _startPointsBlue.add(Offset(_startNodes[i].x, _startNodes[i].y));
-          _endPointsBlue.add(Offset(_endNodes[i].x, _endNodes[i].y));
-        }
-        else{
-          _startPointsGreen.add(Offset(_startNodes[i].x, _startNodes[i].y));
-          _endPointsGreen.add(Offset(_endNodes[i].x, _endNodes[i].y));
-        }
-      }
-    }
-  }*/
   void floorButtonPath(int nowFloor, String nowBuilding) {
     //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
 
@@ -284,15 +211,14 @@ class AlgoValue with ChangeNotifier{
     newGraph.nodes = List.from(graph.nodes);
     newGraph.edges = List.from(graph.edges);
     double weight = sqrt((dx - closest.x) * (dx - closest.x) + (dy - closest.y) * (dy - closest.y));
-    int weightInt = weight.toInt();
 
-    newGraph.addEdge(closest.name, newName, weightInt, "평지", "도보",
+    newGraph.addEdge(closest.name, newName, weight, weight, "평지", "도보",
         node2X: dx,
         node2Y: dy,
         isInside2: 0,
         building2: "실외",
         showRoute2: false);
-    newGraph.addEdge(newName, closest.name, weightInt, "평지", "도보");
+    newGraph.addEdge(newName, closest.name, weight, weight, "평지", "도보");
 
 
     return newGraph;

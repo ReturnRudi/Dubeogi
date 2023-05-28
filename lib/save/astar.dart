@@ -25,11 +25,12 @@ class Node {
 
 class Edge {
   Node node1, node2;
-  int weight;
+  double time_weight;
+  double comfy_weight;
   String type;
   String edgeAttribute;
 
-  Edge(this.node1, this.node2, this.weight, this.type, this.edgeAttribute);
+  Edge(this.node1, this.node2, this.time_weight, this.comfy_weight, this.type, this.edgeAttribute);
 }
 
 class Graph {
@@ -44,7 +45,7 @@ class Graph {
     return nodes.firstWhere((node) => node.name == name, orElse: () => throw Exception("Node not found"));
   }
 
-  void addEdge(String node1Name, String node2Name, int weight, String type, String edgeAttribute, {double? node1X = null, double? node1Y = null, int? isInside1 = null, double? node2X = null, double? node2Y = null, int? isInside2 = null, String? building1 = null, String? building2 = null, bool? showRoute1 = null, bool? showRoute2 = null}) {
+  void addEdge(String node1Name, String node2Name, double weight1, double weight2, String type, String edgeAttribute, {double? node1X = null, double? node1Y = null, int? isInside1 = null, double? node2X = null, double? node2Y = null, int? isInside2 = null, String? building1 = null, String? building2 = null, bool? showRoute1 = null, bool? showRoute2 = null}) {
     if (!nodeExists(node1Name) && node1X != null && node1Y != null && isInside1 != null && building1 != null && showRoute1 != null) {
       addNode(node1Name, node1X, node1Y, isInside1, building1, showRoute1);
     }
@@ -53,7 +54,7 @@ class Graph {
     }
     Node node1 = findNode(node1Name);
     Node node2 = findNode(node2Name);
-    edges.add(Edge(node1, node2, weight, type, edgeAttribute));
+    edges.add(Edge(node1, node2, weight1, weight2, type, edgeAttribute));
   }
 
 
@@ -131,24 +132,24 @@ class Graph {
   }
 
   // A* algorithm
-  Tuple2<List<int>, List<int>> aStar(List<Node> nodes, List<Edge> edges, Node start, Node end) {
+/*  Tuple2<List<double>, List<int>> aStar(List<Node> nodes, List<Edge> edges, Node start, Node end) {
     int startIndex = findNodeIndex(nodes, start.name);
     int endIndex = findNodeIndex(nodes, end.name);
 
-    List<int> dist = List<int>.filled(nodes.length, 1 << 32);
+    List<double> dist = List<double>.filled(nodes.length, double.infinity);
     List<int> prev = List<int>.filled(nodes.length, -1);
 
     dist[startIndex] = 0;
 
-    PriorityQueue<Tuple2<int, int>> pq = PriorityQueue<Tuple2<int, int>>(
+    PriorityQueue<Tuple2<double, int>> pq = PriorityQueue<Tuple2<double, int>>(
           (a, b) => a.item1.compareTo(b.item1),
     );
 
-    pq.add(Tuple2<int, int>(0, startIndex));
+    pq.add(Tuple2<double, int>(0, startIndex));
 
     while (pq.isNotEmpty) {
-      Tuple2<int, int> currentPair = pq.removeFirst();
-      int currentDist = currentPair.item1;
+      Tuple2<double, int> currentPair = pq.removeFirst();
+      double currentDist = currentPair.item1;
       int currentNode = currentPair.item2;
 
       if (currentNode == endIndex) {
@@ -159,43 +160,73 @@ class Graph {
         continue;
       }
 
-/*      for (Edge edge in edges) {
-        if (edge.node1.name == nodes[currentNode].name || edge.node2.name == nodes[currentNode].name) {
+      for (Edge edge in edges) {
+        if (edge.node1.name == nodes[currentNode].name) {
           int nextNode;
-          if (edge.node1.name == nodes[currentNode].name) {
-            nextNode = findNodeIndex(nodes, edge.node2.name);
-          } else { // This should be an else block, not an if block
-            nextNode = findNodeIndex(nodes, edge.node1.name);
-          }
+          nextNode = findNodeIndex(nodes, edge.node2.name);
 
-          int candidateDist = dist[currentNode] + edge.weight;
+          double candidateDist = dist[currentNode] + edge.time_weight;
 
           if (candidateDist < dist[nextNode]) {
             dist[nextNode] = candidateDist;
             prev[nextNode] = currentNode;
-            pq.add(Tuple2<int, int>(candidateDist, nextNode));
+            pq.add(Tuple2<double, int>(candidateDist, nextNode));
           }
         }
-      }*/
+      }
+    }
+
+    return Tuple2<List<double>, List<int>>(dist, prev);
+  }*/
+  Tuple2<List<double>, List<int>> aStar(List<Node> nodes, List<Edge> edges, Node start, Node end, String weight_select) {
+    int startIndex = findNodeIndex(nodes, start.name);
+    int endIndex = findNodeIndex(nodes, end.name);
+
+    List<double> dist = List<double>.filled(nodes.length, double.infinity);
+    List<int> prev = List<int>.filled(nodes.length, -1);
+
+    dist[startIndex] = 0;
+
+    PriorityQueue<Tuple2<double, int>> pq = PriorityQueue<Tuple2<double, int>>(
+          (a, b) => a.item1.compareTo(b.item1),
+    );
+
+    pq.add(Tuple2<double, int>(0, startIndex));
+
+    while (pq.isNotEmpty) {
+      Tuple2<double, int> currentPair = pq.removeFirst();
+      double currentDist = currentPair.item1;
+      int currentNode = currentPair.item2;
+
+      if (currentNode == endIndex) {
+        break;
+      }
+
+      if (currentDist > dist[currentNode]) {
+        continue;
+      }
 
       for (Edge edge in edges) {
         if (edge.node1.name == nodes[currentNode].name) {
           int nextNode;
           nextNode = findNodeIndex(nodes, edge.node2.name);
 
-          int candidateDist = dist[currentNode] + edge.weight;
+          double weight = weight_select == "최단" ? edge.time_weight : edge.comfy_weight; // Select weight based on useTimeWeight
+
+          double candidateDist = dist[currentNode] + weight;
 
           if (candidateDist < dist[nextNode]) {
             dist[nextNode] = candidateDist;
             prev[nextNode] = currentNode;
-            pq.add(Tuple2<int, int>(candidateDist, nextNode));
+            pq.add(Tuple2<double, int>(dist[nextNode], nextNode));
           }
         }
       }
     }
 
-    return Tuple2<List<int>, List<int>>(dist, prev);
+    return Tuple2<List<double>, List<int>>(dist, prev);
   }
+
 }
 
 List<Node> reconstructPath(

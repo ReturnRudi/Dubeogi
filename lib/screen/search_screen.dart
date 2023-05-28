@@ -548,6 +548,13 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void _handleSubmit() {
     int selectOption = algovalue.selectOption;
+    String weight_select;
+    if(selectOption == 1 || selectOption == 3){
+      weight_select = "최단";
+    }
+    else{
+      weight_select = "최적";
+    }
     List<Node> result = [];
     if (firstController.text == secondController.text) {
       algovalue.erase();
@@ -574,6 +581,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
         result = algovalue.astarPathMaking(
           usingGraph: algovalue.graph,
+          weight_select: weight_select,
         );
       } else {
         // option 3
@@ -591,15 +599,16 @@ class _SearchScreenState extends State<SearchScreen> {
         algovalue.endNodeName = startClosest.name;
         temp = algovalue.astarPathMaking(
           usingGraph: algovalue.graph,
+          weight_select: weight_select,
         );
         // 차도
         algovalue.startNodeName = startClosest.name;
         algovalue.endNodeName = endClosest.name;
-        temp.addAll(algovalue.astarPathMaking(usingGraph: driveWayGraph));
+        temp.addAll(algovalue.astarPathMaking(usingGraph: driveWayGraph, weight_select: weight_select));
         // 차도 끝 -> 도착
         algovalue.startNodeName = endClosest.name;
         algovalue.endNodeName = end.name;
-        temp.addAll(algovalue.astarPathMaking(usingGraph: algovalue.graph));
+        temp.addAll(algovalue.astarPathMaking(usingGraph: algovalue.graph, weight_select: weight_select));
 
         // temp 바탕으로 result 정리
         for (int i = 0; i < temp.length; i++) {
