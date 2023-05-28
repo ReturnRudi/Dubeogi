@@ -100,7 +100,8 @@ List<String> allFileNames = [
   '정보문화관p_3F.png',
   '정보문화관q_3F.png',
   '정보문화관p_2F.png',
-  '학림관_1F.png',
+  '학림관1.png',
+  '학림관B1.png',
   '학술관B1.png',
   '학술관1.png',
   '학술관4.png',
@@ -3442,21 +3443,21 @@ void initGraph(Graph graph) {
       showRoute2: false);
   graph.addEdge("학림관 우측 계단", "학림관 우측 계단 앞", 6, 6, "평지", "도보");
   //411
-  graph.addEdge("학림관 편의점 입구", "학림관 편의점 입구 안", 11, 11, "평지", "도보",
-      node2X: 1097,
-      node2Y: 1713,
+  graph.addEdge("학림관 편의점 입구", "학림관 편의점 입구 안", 6.082, 6.082, "평지", "도보",
+      node2X: 1096,
+      node2Y: 1722,
       isInside2: -1,
       building2: "학림관",
       showRoute2: false);
-  graph.addEdge("학림관 편의점 입구 안", "학림관 편의점 입구", 11, 11, "평지", "도보");
+  graph.addEdge("학림관 편의점 입구 안", "학림관 편의점 입구", 6.082, 6.082, "평지", "도보");
   //412
-  graph.addEdge("학림관 편의점 입구 안", "학림관 B1 왼쪽 끝", 13, 13, "평지", "도보",
+  graph.addEdge("학림관 편의점 입구 안", "학림관 B1 왼쪽 끝", 21.587, 21.587, "평지", "도보",
       node2X: 1101,
       node2Y: 1701,
       isInside2: -1,
       building2: "학림관",
       showRoute2: false);
-  graph.addEdge("학림관 B1 왼쪽 끝", "학림관 편의점 입구 안", 13, 13, "평지", "도보");
+  graph.addEdge("학림관 B1 왼쪽 끝", "학림관 편의점 입구 안", 21.587, 21.587, "평지", "도보");
   //413
   graph.addEdge("학림관 B1 왼쪽 끝", "학림관 B1 엘베 앞", 81, 81, "평지", "도보",
       node2X: 1179,
