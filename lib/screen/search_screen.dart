@@ -38,6 +38,11 @@ class _SearchScreenState extends State<SearchScreen> {
   String? previousFirstValue;
   String? previousSecondValue;
 
+  List<String> direction_alpha = [];
+  List<Node> result_alpha = [];
+  List<Node> startNodes_alpha = [];
+  List<Node> endNodes_alpha =[];
+
   void _handleFirstTextChange() {
     if (firstController.text != previousFirstValue) {
       previousFirstValue = firstController.text;
@@ -80,7 +85,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     if (degree < 45) {
       return "직진";
-    } else if (degree >= 45 && degree < 90) {
+    } else if (degree >= 45 && degree < 80) {
       if (crossProduct > 0) {
         return "오른쪽";
       } else {
@@ -484,9 +489,9 @@ class _SearchScreenState extends State<SearchScreen> {
           else if (algovalue.isFind == true)
             Expanded(
               child: DetailList(
-                items: algovalue.finalPath,
+                items: result_alpha,
                 // List<Node> : 경로에 속하는 모든 노드의 이름들이 들어가있는 리스트
-                direction: algovalue.direction, // List<String> : 방향 설명
+                direction: direction_alpha, // List<String> : 방향 설명
               ),
             ),
           Padding(
@@ -672,6 +677,37 @@ class _SearchScreenState extends State<SearchScreen> {
       algovalue.endNodes = endNodes;
       algovalue.finalPath = result;
       algovalue.direction = direction;
+
+      vector.clear();
+      direction_alpha.clear();
+      result_alpha.clear();
+      startNodes_alpha.clear();
+      endNodes_alpha.clear();
+      for (int i = 0; i < result.length; i++) {
+        if (direction[i] == "출발지"){
+          startNodes_alpha.add(result[i]);
+          result_alpha.add(result[i]);
+        }
+        else if (direction[i] == "목적지") {
+          endNodes_alpha.add(result[i]);
+          result_alpha.add(result[i]);
+        }
+        else if(direction[i] == "크게 왼쪽" || direction[i] == "크게 오른쪽"){
+          endNodes_alpha.add(result[i]);
+          startNodes_alpha.add(result[i]);
+          result_alpha.add(result[i]);
+        }
+      }
+      for (int i = 0; i < startNodes_alpha.length; i++) {
+        double deltaX = endNodes_alpha[i].x - startNodes_alpha[i].x;
+        double deltaY = endNodes_alpha[i].y - startNodes_alpha[i].y;
+        vector.add(Vec(deltaX, deltaY));
+      }
+      direction_alpha.add("출발지");
+      for (int i = 0; i < vector.length-1; i++) {
+        direction_alpha.add(getDirection(vector[i], vector[i + 1]));
+      }
+      direction_alpha.add("목적지");
     } else {
       algovalue.erase();
       algovalue.isFind = false;
