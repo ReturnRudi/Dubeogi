@@ -35,20 +35,36 @@ class _SearchScreenState extends State<SearchScreen> {
   final secondController = TextEditingController();
   int count = 0;
   int check = 0;
+  String? previousFirstValue;
+  String? previousSecondValue;
+
+  void _handleFirstTextChange() {
+    if (firstController.text != previousFirstValue) {
+      previousFirstValue = firstController.text;
+      _handleSubmit();
+    }
+  }
+
+  void _handleSecondTextChange() {
+    if (secondController.text != previousSecondValue) {
+      previousSecondValue = secondController.text;
+      _handleSubmit();
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    firstController.addListener(_handleSubmit);
-    secondController.addListener(_handleSubmit);
+    firstController.addListener(_handleFirstTextChange);
+    secondController.addListener(_handleSecondTextChange);
   }
 
   @override
   void dispose() {
     super.dispose();
-    firstController.removeListener(_handleSubmit);
+    firstController.removeListener(_handleFirstTextChange);
     firstController.dispose();
-    secondController.removeListener(_handleSubmit);
+    secondController.removeListener(_handleSecondTextChange);
     secondController.dispose();
   }
 

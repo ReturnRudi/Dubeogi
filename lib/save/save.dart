@@ -107,6 +107,9 @@ List<String> allFileNames = [
   '학술관4.png',
   '혜화관1.png',
   '혜화관4.png',
+  '다향관1.png',
+  '다향관2.png',
+  '다향관3.png',
 ];
 
 final List<String> buildings = [
