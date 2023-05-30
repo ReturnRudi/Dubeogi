@@ -643,6 +643,13 @@ class _SearchScreenState extends State<SearchScreen> {
       }
       algovalue.isFind = true;
 
+      if (isExistBuilding(firstController.text)){
+        result.removeAt(0);
+      }
+      if(isExistBuilding(secondController.text)){
+        result.removeLast();
+      }
+
       List<Node> startNodes = [];
       List<Node> endNodes = [];
 
