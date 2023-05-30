@@ -188,7 +188,7 @@ class AlgoValue with ChangeNotifier{
   void floorButtonPath(int nowFloor, String nowBuilding) {
     //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
 
-    colorPath();  //이 부분에서 clear()를 호출하고 실외 경로를 RGB 리스트에 넣어주어
+    //colorPath();  //이 부분에서 clear()를 호출하고 실외 경로를 RGB 리스트에 넣어주어
                   //층 버튼을 누를 때마다 이전의 보였던 층의 실내 경로를 보이지 않게함
                   //이 부분을 수정하면 아마 이전의 실내 경로를 유지할 수 있을 듯
     for (int i = 0; i < _startNodes.length; i++) {

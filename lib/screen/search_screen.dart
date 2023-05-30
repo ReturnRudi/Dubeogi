@@ -505,6 +505,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     // 경로를 찾지 않은 경우
                     notHandleInput(context);
                   } else {
+                    for (String key in FloorData.keys) {
+                      if (FloorData[key] != 0)
+                        FloorData[key] = 0;
+                    }
+                    for (String key in LookData.keys) {
+                      LookData[key] = OriginalData[key]!;
+                    }
                     handleInput();
                   }
                 },
