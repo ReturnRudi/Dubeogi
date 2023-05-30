@@ -613,7 +613,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       showbutton: _showButton,
                       onValueChanged: (String strValue, int intValue) {
                         setState(() {
-                          if (intValue != 0) FloorData[_showButton] = intValue;
+                          FloorData[_showButton] = intValue;
                           if (strValue == "시설") {
                             gotoBuildingInfo(
                               buildingname: _showButton,
@@ -627,7 +627,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 algovalue.floorButtonPath(FloorData[key]!, key);
                             }
                           }
-                          if (intValue == 0) _showButton = "기본";
+                          if (intValue == 0){
+                            _showButton = "기본";
+                          }
                           //algovalue.floorButtonPath(intValue, _showButton);
                         });
                       },
