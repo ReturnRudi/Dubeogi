@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
-    AssetImage('assets/images/du.png').resolve(ImageConfiguration());
+        AssetImage('assets/images/du.png').resolve(ImageConfiguration());
     final listener = ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     });
@@ -89,10 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _imageLoaded_du = true;
       _imageWidth_du = _imageInfo_du.image.width.toDouble();
       _imageHeight_du = _imageInfo_du.image.height.toDouble();
-      scale_offset = MediaQuery
-          .of(context)
-          .size
-          .width / _imageWidth_du;
+      scale_offset = MediaQuery.of(context).size.width / _imageWidth_du;
     });
     stream.removeListener(listener);
   }
@@ -108,14 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
       _scale = (_previousScale * details.scale).clamp(1.3, 12.0);
-      final ratio = MediaQuery
-          .of(context)
-          .size
-          .height /
-          MediaQuery
-              .of(context)
-              .size
-              .width;
+      final ratio = MediaQuery.of(context).size.height /
+          MediaQuery.of(context).size.width;
       final screenWidth = _imageWidth_du / _scale;
       final screenHeight = screenWidth * ratio;
 
@@ -150,14 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
       // 화면 크기를 얻습니다.
       print('position: $_position');
       print("_scale: $_scale");
-      final ratio = MediaQuery
-          .of(context)
-          .size
-          .height /
-          MediaQuery
-              .of(context)
-              .size
-              .width;
+      final ratio = MediaQuery.of(context).size.height /
+          MediaQuery.of(context).size.width;
       final screenWidth = _imageWidth_du / _scale; //화면에서 보여지는 너비의 물리적 픽셀값
       final screenHeight = screenWidth * ratio; //화면에서 보여지는 높이의 물리적 픽셀값
 
@@ -242,10 +227,9 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            BuildingInfoScreen(
-              title: buildingname,
-            ),
+        builder: (context) => BuildingInfoScreen(
+          title: buildingname,
+        ),
       ),
     );
   }
@@ -293,9 +277,9 @@ class _HomeScreenState extends State<HomeScreen> {
     print('check: startLocationStream();');
     await requestLocationPermission();
     positionStream = Geolocator.getPositionStream(
-        desiredAccuracy: LocationAccuracy.high,
-        //distanceFilter: 1
-        intervalDuration: Duration(milliseconds: 1000))
+            desiredAccuracy: LocationAccuracy.high,
+            //distanceFilter: 1
+            intervalDuration: Duration(milliseconds: 1000))
         .listen((Position position) {
       setState(() {
         now_w = position.latitude;
@@ -323,25 +307,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<bool> _onBackPressed() async {
     bool? confirmExit = await showDialog<bool>(
       context: context,
-      builder: (context) =>
-          AlertDialog(
-            title: Text("앱 종료?"),
-            content: Text("진짜로?"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-                child: Text('확인'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-                child: Text('취소'),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Text("앱 종료?"),
+        content: Text("진짜로?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: Text('확인'),
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text('취소'),
+          ),
+        ],
+      ),
     );
     return confirmExit ?? false;
   }
@@ -414,7 +397,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   startPointsBlue: algovalue.startPointsBlue,
                                   // 빈 리스트 전달
                                   endPointsBlue:
-                                  algovalue.endPointsBlue, // 빈 리스트 전달
+                                      algovalue.endPointsBlue, // 빈 리스트 전달
                                 ),
                                 child: Stack(
                                   children: [
@@ -491,7 +474,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               // 검색하고 싶은 건물 입력
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 4.0),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 4.0),
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(context, '/find');
@@ -603,8 +587,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Expanded(
-                            child: algovalue.isRequired ?
-                            ExampleSidebarX(controller: _controller) : Text(""),
+                            child: algovalue.isRequired
+                                ? ExampleSidebarX(controller: _controller)
+                                : Text(""),
                           )
                         ],
                       ),
@@ -624,7 +609,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               algovalue.colorPath();
                               for (String key in FloorData.keys) {
                                 if (FloorData[key] != 0)
-                                  algovalue.floorButtonPath(FloorData[key]!, key);
+                                  algovalue.floorButtonPath(
+                                      FloorData[key]!, key);
                               }
                             }
                             if (intValue == 0) {
@@ -634,11 +620,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                       ),
-
                   ],
                 ),
               ),
-
               Positioned(
                 right: 20,
                 bottom: 20,
@@ -664,8 +648,7 @@ class ExampleSidebarX extends StatelessWidget {
   ExampleSidebarX({
     Key? key,
     required SidebarXController controller,
-  })
-      : _controller = controller,
+  })  : _controller = controller,
         super(key: key);
 
   void endGuide(BuildContext context) {
@@ -695,37 +678,37 @@ class ExampleSidebarX extends StatelessWidget {
     for (int i = 0; i < algovalue.homeResult.length; i++) {
       if (algovalue.homeDirection[i].contains("크게 왼쪽")) {
         icon = Icons.arrow_back;
-      }
-      else if (algovalue.homeDirection[i].contains("크게 오른쪽")) {
+      } else if (algovalue.homeDirection[i].contains("크게 오른쪽")) {
         icon = Icons.arrow_forward;
-      }
-      else if (algovalue.homeDirection[i].contains("왼쪽")) {
+      } else if (algovalue.homeDirection[i].contains("왼쪽")) {
         icon = Icons.arrow_back;
         angle = pi / 4;
-      }
-      else if (algovalue.homeDirection[i].contains("오른쪽")) {
+      } else if (algovalue.homeDirection[i].contains("오른쪽")) {
         icon = Icons.arrow_forward;
         angle = -pi / 4;
-      }
-      else if (algovalue.homeDirection[i].contains("출발지") ||
+      } else if (algovalue.homeDirection[i].contains("출발지") ||
           algovalue.homeDirection[i].contains("목적지")) {
         icon = Icons.place;
-      }
-      else {
+        angle = 0.0;
+      } else {
         icon = Icons.arrow_upward_rounded;
       }
-
       items.add(
-          SidebarXItem(
-            icon: icon,
-            label: algovalue.homeResult[i].name,
-            onTap: (){},
+        SidebarXItem(
+          iconWidget: Transform.rotate(
+            angle: angle,
+            child: Icon(
+              icon,
+              color: Colors.blue,
+            ),
           ),
+          label: algovalue.homeResult[i].name,
+          onTap: () {},
+        ),
       );
     }
     return items;
   }
-
 
   final SidebarXController _controller;
 
@@ -799,7 +782,7 @@ class ExampleSidebarX extends StatelessWidget {
       items: [
         ...makelist(),
       ],
-      footerBuilder: (context, extended){
+      footerBuilder: (context, extended) {
         return ElevatedButton(
           onPressed: () => endGuide(context),
           child: CustomText(
@@ -814,5 +797,11 @@ class ExampleSidebarX extends StatelessWidget {
   }
 }
 
-
 final divider = Divider(color: Colors.white.withOpacity(0.3), height: 1);
+
+
+
+
+
+
+
