@@ -141,7 +141,7 @@ List<BuildingInfoDetail> BuildingInfoDetails = [
       Amenity(icon: Icon(Icons.shop), name: '매점(CU)', description: '1층'),
       Amenity(icon: Icon(Icons.restaurant), name: '식당(아워홈)', description: '1층'),
       Amenity(icon: Icon(Icons.restaurant), name: '식당(탐나는 식탁)', description: '1층'),
-      Amenity(icon: Icon(Icons.restaurant), name: '식당(돈가스(?) - 수정필요)', description: '1층'),
+      Amenity(icon: Icon(Icons.restaurant), name: '식당(아임카츠)', description: '1층'),
       Amenity(icon: Icon(Icons.local_print_shop), name: '프린터', description: '3층'),
       Amenity(icon: Icon(Icons.shower), name: '샤워실(남자)', description: '5층'),
       Amenity(icon: Icon(Icons.shower), name: '샤워실(여자)', description: '7층'),
