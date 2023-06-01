@@ -27,6 +27,7 @@ class _DetailListState extends State<DetailList> {
           IconData? icon;
           double angle = 0.0;
 
+          // icon 정하고
           if (widget.direction[index].contains("크게 왼쪽")) {
             icon = Icons.arrow_back;
           }
@@ -47,46 +48,29 @@ class _DetailListState extends State<DetailList> {
           else{
             icon = Icons.arrow_upward_rounded;
           }
+          // ----
 
-          return Row(
-            children: [
-              if (icon != null) // icon
-                Transform.rotate(
-                  angle: angle, // -90도를 라디안으로 표현한 값
-                  child: Icon(
-                    icon,
-                    color: Colors.blue,
-                  ),
-                ),
-              SizedBox(width: icon == null ? 24.0 : 0.0),
-              SizedBox(width: 8.0),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      text: widget.items[index].name,
-                      color: Colors.blueAccent,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    // direction 부분 : 오른쪽, 출발지 ,등등
-                    Row(
-                      children: [
-                        SizedBox(width: 10.0),
-                        CustomText(
-                          text: widget.direction[index],
-                          color: Colors.grey,
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8.0),
-                  ],
-                ),
+          return ListTile(
+            onTap: (){},
+            leading: Transform.rotate(
+              angle: angle,
+              child: Icon(
+                icon,
+                color: Colors.blue,
               ),
-            ],
+            ),
+            title: CustomText(
+              text: widget.items[index].name,
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.bold,
+              fontSize: 15.0,
+            ),
+            subtitle: CustomText(
+              text: widget.direction[index],
+              color: Colors.grey,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w800,
+            ),
           );
         },
       ),

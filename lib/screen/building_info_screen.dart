@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:Dubeogi/save/building_info.dart';
 import 'package:Dubeogi/save/custom_text.dart';
+import 'package:Dubeogi/provider/algo_value.dart';
 
 class BuildingInfoScreen extends StatefulWidget {
   final String title;
@@ -15,6 +18,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
   dynamic getdata;
   late BuildingInfoDetail _buildingInfoDetail;
   late List<Amenity> _displayedAmenities;
+  late AlgoValue algovalue;
 
   @override
   void initState() {
@@ -44,6 +48,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    algovalue = Provider.of<AlgoValue>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         title: Text("동국대학교"),
@@ -71,6 +76,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
             children: [
               OutlinedButton(
                 onPressed: () {
+                  algovalue.isFind = false;
                   Navigator.pushNamed(
                     context,
                     '/search',
@@ -103,6 +109,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
               SizedBox(width: 25),
               OutlinedButton(
                 onPressed: () {
+                  algovalue.isFind = false;
                   Navigator.pushNamed(context, '/search',
                       arguments: {'start': '', 'end': widget.title});
                 },

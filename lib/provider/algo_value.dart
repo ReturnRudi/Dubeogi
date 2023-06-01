@@ -23,9 +23,14 @@ class AlgoValue with ChangeNotifier{
   List<Node> _finalPath = [];
   List<String> _direction = []; // 경로의 안내를 위한 설명 리스트
   int _selectOption = 1; // 탐색 옵션
+  List<String> _direction_alpha = [];
+  List<Node> _result_alpha = [];
+  List<Node> _startNodes_alpha = [];
+  List<Node> _endNodes_alpha =[];
+  List<String> _homeDirection = [];
+  List<Node> _homeResult = [];
 
   bool _isRequired = false; // 길을 찾는 중인지
-  bool _isMenuOpen = false; // 옆의 drawer위젯이 화면이 있는지 없는지
   //bool _isInitialized = false; // 처음 한번만 실행되도록하게하는 변수
   bool _isFind = false; // astar 알고리즘이 작동했는지 안했는지
 
@@ -45,9 +50,14 @@ class AlgoValue with ChangeNotifier{
   List<Node> get finalPath => _finalPath;
   List<String> get direction => _direction;
   int get selectOption => _selectOption;
+  List<String> get direction_alpha => _direction_alpha;
+  List<Node> get result_alpha => _result_alpha;
+  List<Node> get startNodes_alpha => _startNodes_alpha;
+  List<Node> get endNodes_alpha => _endNodes_alpha;
+  List<String> get homeDirection => _homeDirection;
+  List<Node> get homeResult => _homeResult;
 
   bool get isRequired => _isRequired;
-  bool get isMenuOpen => _isMenuOpen;
   //bool get isInitialized => _isInitialized;
   bool get isFind => _isFind;
 
@@ -86,17 +96,35 @@ class AlgoValue with ChangeNotifier{
     print('check: set selectOption: ${_selectOption}');
     notifyListeners();
   }
+  set direction_alpha(List<String> strlist){
+    _direction_alpha = strlist;
+    notifyListeners();
+  }
+  set result_alpha(List<Node> nodelist){
+    _result_alpha = nodelist;
+    notifyListeners();
+  }
+  set startNodes_alpha(List<Node> nodelist){
+    _startNodes_alpha = nodelist;
+    notifyListeners();
+  }
+  set endNodes_alpha(List<Node> nodelist){
+    _endNodes_alpha = nodelist;
+    notifyListeners();
+  }
+  set homeDirection(List<String> strlist){
+    _homeDirection = strlist;
+    notifyListeners();
+  }
+  set homeResult(List<Node> nodelist){
+    _homeResult = nodelist;
+    notifyListeners();
+  }
   set isRequired(bool tf){
     _isRequired = tf;
     //print('check: set isRequired: ${_isRequired}');
     notifyListeners();
   }
-  set isMenuOpen(bool tf){
-    _isMenuOpen = tf;
-    //print('check: set isMenuOpen: ${_isMenuOpen}');
-    notifyListeners();
-  }
-
   set isFind(bool tf){
     _isFind = tf;
     print('check: set isFind: ${_isFind}');
@@ -269,8 +297,4 @@ class AlgoValue with ChangeNotifier{
   }
 
   // ==============================================
-  void changeDrawerState(){
-    _isMenuOpen = !_isMenuOpen;
-    notifyListeners();
-  }
 }

@@ -28,6 +28,8 @@ class _SearchScreenState extends State<SearchScreen> {
   late List<Node> result;
   late AlgoValue algovalue;
   List<String> direction = [];
+  late List<Node> detail_items; // result
+  late List<String> detail_direction; // direction
   List<Vec> vector = [];
   final firstFocus = FocusNode();
   final secondFocus = FocusNode();
@@ -489,9 +491,9 @@ class _SearchScreenState extends State<SearchScreen> {
           else if (algovalue.isFind == true)
             Expanded(
               child: DetailList(
-                items: result_alpha,
+                items: algovalue.result_alpha,
                 // List<Node> : 경로에 속하는 모든 노드의 이름들이 들어가있는 리스트
-                direction: direction_alpha, // List<String> : 방향 설명
+                direction: algovalue.direction_alpha, // List<String> : 방향 설명
               ),
             ),
           Padding(
@@ -560,14 +562,13 @@ class _SearchScreenState extends State<SearchScreen> {
     // # search_screen과 home_screen + drawer에 차별점을 주려면 놔둘 필요는 있음.
     // # reconstruct path를 새로하면 됨.
 
-    /*
-    var nodelist = Provider.of<NodeList>(context, listen: false);
-    nodelist.StartNodeName = firstController.text;
-    nodelist.EndNodeName = secondController.text;
-    nodelist.Astar_pathMaking();
-    */
     algovalue.colorPath();
-
+    //
+    algovalue.startNodeName = firstController.text;
+    algovalue.endNodeName = secondController.text;
+    algovalue.homeDirection = algovalue.direction_alpha;
+    algovalue.homeResult = algovalue.result_alpha;
+    //
     Navigator.of(context).popUntil((route) => route.isFirst);
     algovalue.isFind = false; // searchscreen에서의 값
     algovalue.isRequired = true; // drawer 쓸건지 안쓸건지
@@ -577,18 +578,20 @@ class _SearchScreenState extends State<SearchScreen> {
   void _handleSubmit() {
     int selectOption = algovalue.selectOption;
     String weight_select;
+
     if(selectOption == 1 || selectOption == 3){
       weight_select = "최단";
     }
     else{
       weight_select = "최적";
     }
+
     List<Node> result = [];
-    if (firstController.text == secondController.text) {
+    /*if (firstController.text == secondController.text) {
       algovalue.erase();
       algovalue.isFind = false;
       return;
-    }
+    }*/
 
     if (firstController.text != '지도에서 선택한 출발지') {
       algovalue.removePickedPointFromGraph('지도에서 선택한 출발지');
@@ -618,9 +621,9 @@ class _SearchScreenState extends State<SearchScreen> {
         Node end = algovalue.graph.findNode(secondController.text);
         Graph driveWayGraph = initDriveWayGraph();
         Node? startClosest =
-            algovalue.findClosestNode(driveWayGraph.nodes, start.x, start.y);
+        algovalue.findClosestNode(driveWayGraph.nodes, start.x, start.y);
         Node? endClosest =
-            algovalue.findClosestNode(driveWayGraph.nodes, end.x, end.y);
+        algovalue.findClosestNode(driveWayGraph.nodes, end.x, end.y);
 
         // 시작 -> 가까운 차도
         algovalue.startNodeName = start.name;
@@ -632,11 +635,13 @@ class _SearchScreenState extends State<SearchScreen> {
         // 차도
         algovalue.startNodeName = startClosest.name;
         algovalue.endNodeName = endClosest.name;
-        temp.addAll(algovalue.astarPathMaking(usingGraph: driveWayGraph, weight_select: weight_select));
+        temp.addAll(algovalue.astarPathMaking(
+            usingGraph: driveWayGraph, weight_select: weight_select));
         // 차도 끝 -> 도착
         algovalue.startNodeName = endClosest.name;
         algovalue.endNodeName = end.name;
-        temp.addAll(algovalue.astarPathMaking(usingGraph: algovalue.graph, weight_select: weight_select));
+        temp.addAll(algovalue.astarPathMaking(
+            usingGraph: algovalue.graph, weight_select: weight_select));
 
         // temp 바탕으로 result 정리
         for (int i = 0; i < temp.length; i++) {
@@ -650,10 +655,10 @@ class _SearchScreenState extends State<SearchScreen> {
       }
       algovalue.isFind = true;
 
-      if (isExistBuilding(firstController.text)){
+      if (isExistBuilding(firstController.text)) {
         result.removeAt(0);
       }
-      if(isExistBuilding(secondController.text)){
+      if (isExistBuilding(secondController.text)) {
         result.removeLast();
       }
 
@@ -689,41 +694,38 @@ class _SearchScreenState extends State<SearchScreen> {
 
       algovalue.startNodes = startNodes;
       algovalue.endNodes = endNodes;
+      //
       algovalue.finalPath = result;
       algovalue.direction = direction;
-
-      vector.clear();
+      //
       direction_alpha.clear();
       result_alpha.clear();
       startNodes_alpha.clear();
       endNodes_alpha.clear();
       for (int i = 0; i < result.length; i++) {
-        if (direction[i] == "출발지"){
+        if (direction[i] == "출발지") {
           startNodes_alpha.add(result[i]);
           result_alpha.add(result[i]);
+          direction_alpha.add("출발지");
         }
         else if (direction[i] == "목적지") {
           endNodes_alpha.add(result[i]);
           result_alpha.add(result[i]);
+          direction_alpha.add("목적지");
         }
-        else if(direction[i] == "크게 왼쪽" || direction[i] == "크게 오른쪽"){
+        else if (result[i].showRoute == true) {
           endNodes_alpha.add(result[i]);
           startNodes_alpha.add(result[i]);
           result_alpha.add(result[i]);
+          direction_alpha.add(direction[i]);
         }
       }
-      for (int i = 0; i < startNodes_alpha.length; i++) {
-        double deltaX = endNodes_alpha[i].x - startNodes_alpha[i].x;
-        double deltaY = endNodes_alpha[i].y - startNodes_alpha[i].y;
-        vector.add(Vec(deltaX, deltaY));
-      }
-      direction_alpha.add("출발지");
-      for (int i = 0; i < vector.length-1; i++) {
-        direction_alpha.add(getDirection(vector[i], vector[i + 1]));
-      }
-      direction_alpha.add("목적지");
-    } else {
-      algovalue.erase();
+      algovalue.endNodes_alpha = endNodes_alpha;
+      algovalue.startNodes_alpha = startNodes_alpha;
+      algovalue.result_alpha = result_alpha;
+      algovalue.direction_alpha = direction_alpha;
+    }
+    else {
       algovalue.isFind = false;
     }
   }
