@@ -80,11 +80,11 @@ class HomeSidebarX extends StatelessWidget {
               tapcount++;
             }
             if (tapcount % 2 == 0) {
-              mapvalue.scale = 4.0;
+              mapvalue.scale = 8.0;
               print('check: (${algovalue.homeResult[i].x},${algovalue
                   .homeResult[i].y})');
               mapvalue.position = Offset(1500 - algovalue.homeResult[i].x,
-                  5333 / 1.8 - algovalue.homeResult[i].y);
+                  5333 / 2 - algovalue.homeResult[i].y);
             }
             Timer(Duration(milliseconds: 500), () {
               tapcount = 0;
