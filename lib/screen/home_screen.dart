@@ -466,7 +466,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Transform.translate(
                         offset: mapvalue.position
                                 .scale(scale_offset, scale_offset) +
-                            Offset(0, 59.0 / scale_offset / mapvalue.scale)
+                            Offset(0, 56.0 / scale_offset)
                                 .scale(scale_offset, scale_offset),
                         child: ClipRect(
                           child: Stack(
