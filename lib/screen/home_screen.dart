@@ -62,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loungevisibility = false;
   bool _printervisibility = false;
 
-
   // drawer
 
   // gps
@@ -99,7 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onScaleStart(ScaleStartDetails details) {
     mapvalue.previousScale = mapvalue.scale;
     mapvalue.previousPosition = details.focalPoint;
-    print("MediaQuery.of(context).padding.top: ${MediaQuery.of(context).padding.top}");
+    print(
+        "MediaQuery.of(context).padding.top: ${MediaQuery.of(context).padding.top}");
     /*
     setState(() {
       _previousScale = _scale;
@@ -464,9 +464,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Transform.scale(
                       scale: mapvalue.scale,
                       child: Transform.translate(
-                        offset:
-                            mapvalue.position.scale(scale_offset, scale_offset) +
-                                Offset(0, 59.0 / scale_offset / _scale).scale(scale_offset, scale_offset),
+                        offset: mapvalue.position
+                                .scale(scale_offset, scale_offset) +
+                            Offset(0, 59.0 / scale_offset / mapvalue.scale)
+                                .scale(scale_offset, scale_offset),
                         child: ClipRect(
                           child: Stack(
                             children: [
@@ -679,6 +680,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: algovalue.isRequired
                                 ? HomeSidebarX(
                                     controller: _controller,
+                                    scale_offset: scale_offset,
                                   )
                                 : Text(""),
                           )

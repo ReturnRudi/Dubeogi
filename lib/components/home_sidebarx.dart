@@ -14,12 +14,14 @@ class HomeSidebarX extends StatelessWidget {
   late MapValue mapvalue;
 
   final SidebarXController _controller;
+  final double scale_offset;
   int tapcount = 0;
   int previous = -1;
 
   HomeSidebarX({
     Key? key,
     required SidebarXController controller,
+    required this.scale_offset,
   })
       : _controller = controller,
         super(key: key);
@@ -80,11 +82,11 @@ class HomeSidebarX extends StatelessWidget {
               tapcount++;
             }
             if (tapcount % 2 == 0) {
-              mapvalue.scale = 8.0;
+              mapvalue.scale = 6.0;
               print('check: (${algovalue.homeResult[i].x},${algovalue
                   .homeResult[i].y})');
               mapvalue.position = Offset(1500 - algovalue.homeResult[i].x,
-                  5333 / 2 - algovalue.homeResult[i].y);
+                  5333 / 2 - algovalue.homeResult[i].y + 59.0 / scale_offset / mapvalue.scale);
             }
             Timer(Duration(milliseconds: 500), () {
               tapcount = 0;
