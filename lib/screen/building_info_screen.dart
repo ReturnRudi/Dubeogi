@@ -8,6 +8,7 @@ import 'package:Dubeogi/provider/algo_value.dart';
 class BuildingInfoScreen extends StatefulWidget {
   final String title;
 
+
   const BuildingInfoScreen({Key? key, required this.title}) : super(key: key);
 
   @override

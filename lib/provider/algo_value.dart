@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:Dubeogi/save/astar.dart';
 import 'package:Dubeogi/save/save.dart';
-import 'package:Dubeogi/screen/search_screen.dart';
 
 // 알고리즘에 사용되며 지속하여 변화하는 값들을 모아놓음.
 class AlgoValue with ChangeNotifier{

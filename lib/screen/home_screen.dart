@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,14 +7,14 @@ import 'package:sidebarx/sidebarx.dart';
 
 import 'package:Dubeogi/components/building_positioned_list.dart';
 import 'package:Dubeogi/components/buildingname_positioned_list.dart';
-import 'package:Dubeogi/components/detail_list.dart';
-import 'package:Dubeogi/components/end_alert.dart';
 import 'package:Dubeogi/components/facility_button.dart';
 import 'package:Dubeogi/components/facility_offsets.dart';
 import 'package:Dubeogi/components/floor_view.dart';
+import 'package:Dubeogi/components/home_sidebarx.dart';
 import 'package:Dubeogi/components/linepainter.dart';
 
 import 'package:Dubeogi/provider/algo_value.dart';
+import 'package:Dubeogi/provider/map_value.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/save/custom_text.dart';
 
@@ -75,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // .
   dynamic result;
   late AlgoValue algovalue;
+  late MapValue mapvalue;
 
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
@@ -96,17 +96,56 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ================================================
   void _onScaleStart(ScaleStartDetails details) {
+    mapvalue.previousScale = mapvalue.scale;
+    mapvalue.previousPosition = details.focalPoint;
+    /*
     setState(() {
       _previousScale = _scale;
       _previousPosition = details.focalPoint;
-    });
+    });*/
   }
 
   void _onScaleUpdate(ScaleUpdateDetails details) {
-    setState(() {
+    mapvalue.scale = (mapvalue.previousScale * details.scale).clamp(1.3, 12.0);
+    final ratio =
+        MediaQuery.of(context).size.height / MediaQuery.of(context).size.width;
+    final screenWidth = _imageWidth_du / mapvalue.scale;
+    final screenHeight = screenWidth * ratio;
+
+    double minY, maxY;
+
+    double minX = -_imageWidth_du / 2 + screenWidth / 2;
+    double maxX = _imageWidth_du / 2 - screenWidth / 2;
+
+    if (_imageHeight_du > screenHeight) {
+      minY = -_imageHeight_du / 2 + screenHeight / 2;
+      maxY = _imageHeight_du / 2 - screenHeight / 2;
+    } else {
+      minY = _imageHeight_du / 2 - screenHeight / 2;
+      maxY = -_imageHeight_du / 2 + screenHeight / 2;
+    }
+
+    mapvalue.position += (details.focalPoint - mapvalue.previousPosition) /
+        mapvalue.previousScale /
+        scale_offset;
+
+    mapvalue.position = Offset(
+      mapvalue.position.dx.clamp(minX, maxX),
+      mapvalue.position.dy.clamp(minY, maxY),
+    );
+
+    mapvalue.previousPosition = details.focalPoint;
+
+    /*setState(() {
       _scale = (_previousScale * details.scale).clamp(1.3, 12.0);
-      final ratio = MediaQuery.of(context).size.height /
-          MediaQuery.of(context).size.width;
+      final ratio = MediaQuery
+          .of(context)
+          .size
+          .height /
+          MediaQuery
+              .of(context)
+              .size
+              .width;
       final screenWidth = _imageWidth_du / _scale;
       final screenHeight = screenWidth * ratio;
 
@@ -133,16 +172,57 @@ class _HomeScreenState extends State<HomeScreen> {
       );
 
       _previousPosition = details.focalPoint;
-    });
+    });*/
   }
 
   void _onScaleEnd(ScaleEndDetails details) {
-    setState(() {
+    // 화면 크기를 얻습니다.
+    print('position: ${mapvalue.position}');
+    print("_scale: ${mapvalue.scale}");
+    final ratio =
+        MediaQuery.of(context).size.height / MediaQuery.of(context).size.width;
+    final screenWidth = _imageWidth_du / mapvalue.scale; //화면에서 보여지는 너비의 물리적 픽셀값
+    final screenHeight = screenWidth * ratio; //화면에서 보여지는 높이의 물리적 픽셀값
+
+    double minY, maxY;
+
+    // 이미지의 최소 및 최대 제한 값을 계산합니다.
+    double minX = -_imageWidth_du / 2 + screenWidth / 2;
+    double maxX = _imageWidth_du / 2 - screenWidth / 2;
+
+    // 위 아래 여백이 생기는 경우 minY, maxY의 크기가 역전되지 않도록 if문 추가
+    if (_imageHeight_du > screenHeight) {
+      minY = -_imageHeight_du / 2 + screenHeight / 2;
+      maxY = _imageHeight_du / 2 - screenHeight / 2;
+    } else {
+      minY = _imageHeight_du / 2 - screenHeight / 2;
+      maxY = -_imageHeight_du / 2 + screenHeight / 2;
+    }
+
+    // 값을 출력합니다.
+/*      print('imageHeight: $_imageHeight_du, imageWidth: $_imageWidth_du');
+      print('screenWidth: $screenWidth, screenHeight: $screenHeight');
+      print('minX: $minX, maxX: $maxX, minY: $minY, maxY: $maxY');
+      print('_showButton: $_showButton');*/
+
+    // _position 값을 제한 값으로 설정합니다.
+    mapvalue.position = Offset(
+      mapvalue.position.dx.clamp(minX, maxX),
+      mapvalue.position.dy.clamp(minY, maxY),
+    );
+
+    /*setState(() {
       // 화면 크기를 얻습니다.
       print('position: $_position');
       print("_scale: $_scale");
-      final ratio = MediaQuery.of(context).size.height /
-          MediaQuery.of(context).size.width;
+      final ratio = MediaQuery
+          .of(context)
+          .size
+          .height /
+          MediaQuery
+              .of(context)
+              .size
+              .width;
       final screenWidth = _imageWidth_du / _scale; //화면에서 보여지는 너비의 물리적 픽셀값
       final screenHeight = screenWidth * ratio; //화면에서 보여지는 높이의 물리적 픽셀값
 
@@ -172,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _position.dx.clamp(minX, maxX),
         _position.dy.clamp(minY, maxY),
       );
-    });
+    });*/
   }
 
   // ================================================
@@ -329,6 +409,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return confirmExit ?? false;
   }
 
+  // ====================================================
+
+  // ====================================================
   bool _isInitialized = false;
   final _controller = SidebarXController(selectedIndex: 0);
 
@@ -346,6 +429,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     algovalue = Provider.of<AlgoValue>(context, listen: true);
+    mapvalue = Provider.of<MapValue>(context, listen: true);
     buildingPositions = buildingPositionedList(
         scale_offset: scale_offset, showFloorButton: _showFloorButton);
     vendings = vendingPositionedList(scale_offset: scale_offset);
@@ -355,7 +439,7 @@ class _HomeScreenState extends State<HomeScreen> {
     atms = atmPositionedList(scale_offset: scale_offset);
     lounges = loungePositionedList(scale_offset: scale_offset);
     buildingNames = buildingnamePositionedList(
-      scale: _scale,
+      scale: mapvalue.scale,
       scale_offset: scale_offset,
     );
     if (_isInitialized == false) {
@@ -376,9 +460,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Stack(
                   children: [
                     Transform.scale(
-                      scale: _scale,
+                      scale: mapvalue.scale,
                       child: Transform.translate(
-                        offset: _position.scale(scale_offset, scale_offset),
+                        offset:
+                            mapvalue.position.scale(scale_offset, scale_offset),
                         child: ClipRect(
                           child: Stack(
                             children: [
@@ -429,12 +514,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Positioned(
                                       // 투명 큰 원
                                       left: (gpsToPixel.dx * scale_offset) -
-                                          4 * 1.3 / _scale,
+                                          4 * 1.3 / mapvalue.scale,
                                       top: (gpsToPixel.dy * scale_offset) -
-                                          4 * 1.3 / _scale,
+                                          4 * 1.3 / mapvalue.scale,
                                       child: Container(
-                                        width: 18 * 1.3 / _scale,
-                                        height: 18 * 1.3 / _scale,
+                                        width: 18 * 1.3 / mapvalue.scale,
+                                        height: 18 * 1.3 / mapvalue.scale,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: Colors.orange.withOpacity(0.3),
@@ -446,12 +531,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       left: gpsToPixel.dx * scale_offset,
                                       top: gpsToPixel.dy * scale_offset,
                                       child: Container(
-                                        width: 10 * 1.3 / _scale,
-                                        height: 10 * 1.3 / _scale,
+                                        width: 10 * 1.3 / mapvalue.scale,
+                                        height: 10 * 1.3 / mapvalue.scale,
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               color: Colors.white,
-                                              width: 1.5 * 1.3 / _scale),
+                                              width:
+                                                  1.5 * 1.3 / mapvalue.scale),
                                           color: Colors.red,
                                           shape: BoxShape.circle,
                                         ),
@@ -588,7 +674,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Expanded(
                             child: algovalue.isRequired
-                                ? ExampleSidebarX(controller: _controller)
+                                ? HomeSidebarX(
+                                    controller: _controller,
+                                  )
                                 : Text(""),
                           )
                         ],
@@ -624,14 +712,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Positioned(
-                right: 20,
+                right: 27.5,
                 bottom: 20,
                 child: FloatingActionButton(
                   onPressed: toggleLocationTracking,
                   child: Icon(isTrackingLocation
                       ? Icons.location_off
                       : Icons.location_on),
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.blue.withOpacity(0.9),
                 ),
               ),
             ],
@@ -641,167 +729,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-class ExampleSidebarX extends StatelessWidget {
-  late AlgoValue algovalue;
-
-  ExampleSidebarX({
-    Key? key,
-    required SidebarXController controller,
-  })  : _controller = controller,
-        super(key: key);
-
-  void endGuide(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return EndAlert(
-            title: '종료?',
-            message: '진짜로?',
-            onOption1Pressed: () {
-              algovalue.erase();
-              algovalue.isRequired = false;
-              Navigator.pop(context);
-            },
-            onOption2Pressed: () {
-              Navigator.pop(context);
-            },
-          );
-        });
-  }
-
-
-  List<SidebarXItem> makelist() {
-    IconData? icon;
-    double angle = 0.0;
-    List<SidebarXItem> items = [];
-    for (int i = 0; i < algovalue.homeResult.length; i++) {
-      if (algovalue.homeDirection[i].contains("크게 왼쪽")) {
-        icon = Icons.arrow_back;
-      } else if (algovalue.homeDirection[i].contains("크게 오른쪽")) {
-        icon = Icons.arrow_forward;
-      } else if (algovalue.homeDirection[i].contains("왼쪽")) {
-        icon = Icons.arrow_back;
-        angle = pi / 4;
-      } else if (algovalue.homeDirection[i].contains("오른쪽")) {
-        icon = Icons.arrow_forward;
-        angle = -pi / 4;
-      } else if (algovalue.homeDirection[i].contains("출발지") ||
-          algovalue.homeDirection[i].contains("목적지")) {
-        icon = Icons.place;
-        angle = 0.0;
-      } else {
-        icon = Icons.arrow_upward_rounded;
-      }
-      items.add(
-        SidebarXItem(
-          iconWidget: Transform.rotate(
-            angle: angle,
-            child: Icon(
-              icon,
-              color: Colors.blue,
-            ),
-          ),
-          label: algovalue.homeResult[i].name,
-          onTap: () {},
-        ),
-      );
-    }
-    return items;
-  }
-
-  final SidebarXController _controller;
-
-  @override
-  Widget build(BuildContext context) {
-    algovalue = Provider.of<AlgoValue>(context, listen: true);
-    return SidebarX(
-      controller: _controller,
-      theme: SidebarXTheme(
-        //margin: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        hoverColor: Colors.black,
-        textStyle: TextStyle(color: Colors.black.withOpacity(0.7)),
-        selectedTextStyle: const TextStyle(color: Colors.white),
-        itemTextPadding: const EdgeInsets.only(left: 30),
-        selectedItemTextPadding: const EdgeInsets.only(left: 30),
-        itemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.white),
-        ),
-        selectedItemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.blue.withOpacity(0.6).withOpacity(0.37),
-          ),
-          /*gradient: const LinearGradient(
-            colors: [Color(0xFF3E3E61), Color(0xFF2E2E48)],
-          ),*/
-          color: Colors.pink,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.28),
-              blurRadius: 30,
-            )
-          ],
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.blue.withOpacity(0.8),
-          size: 24,
-        ),
-        selectedIconTheme: const IconThemeData(
-          color: Colors.white,
-          size: 24,
-        ),
-      ),
-      extendedTheme: const SidebarXTheme(
-        width: 200,
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-      ),
-      footerDivider: divider,
-      headerBuilder: (context, extended) {
-        return Container(
-          height: 100,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-          ),
-        );
-        /*SizedBox(
-          height: 100,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text('${algovalue.startNodeName} to ${algovalue.endNodeName}'),
-          ),
-        );*/
-      },
-      items: [
-        ...makelist(),
-      ],
-      footerBuilder: (context, extended) {
-        return ElevatedButton(
-          onPressed: () => endGuide(context),
-          child: CustomText(
-            text: '안내종료',
-            fontWeight: FontWeight.w700,
-            fontSize: 11.0,
-            color: Colors.white,
-          ),
-        );
-      },
-    );
-  }
-}
-
-final divider = Divider(color: Colors.white.withOpacity(0.3), height: 1);
-
-
-
-
-
-
-

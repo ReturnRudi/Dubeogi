@@ -101,7 +101,7 @@ class _FloorViewState extends State<FloorView> {
     fileNames.insert(0, "기본");
     fileNames.insert(0, "시설");
     return Positioned(
-      left: 20.0,
+      right: 20.0,
       bottom: 100.0,
       child: Stack(
         children: [
