@@ -27,4 +27,8 @@ class MapValue with ChangeNotifier{
     _previousPosition = val;
     notifyListeners();
   }
+  void initialize(double val_x, val_y){
+    _position = Offset(val_x, val_y);
+    _previousPosition = Offset(val_x, val_y);
+  }
 }

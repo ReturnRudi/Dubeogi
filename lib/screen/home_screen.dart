@@ -116,18 +116,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     double minY, maxY;
 
-    double minX = -_imageWidth_du / 2 + screenWidth / 2;
-    double maxX = _imageWidth_du / 2 - screenWidth / 2;
+    double minX = screenWidth / 2;
+    double maxX = _imageWidth_du - screenWidth / 2;
 
-    if (_imageHeight_du > screenHeight) {
-      minY = -_imageHeight_du / 2 + screenHeight / 2;
-      maxY = _imageHeight_du / 2 - screenHeight / 2;
-    } else {
-      minY = _imageHeight_du / 2 - screenHeight / 2;
-      maxY = -_imageHeight_du / 2 + screenHeight / 2;
-    }
+    minY = screenHeight / 2;
+    maxY = _imageHeight_du - screenHeight / 2 - MediaQuery.of(context).padding.top / scale_offset;
 
-    mapvalue.position += (details.focalPoint - mapvalue.previousPosition) /
+    mapvalue.position -= (details.focalPoint - mapvalue.previousPosition) /
         mapvalue.previousScale /
         scale_offset;
 
@@ -189,17 +184,12 @@ class _HomeScreenState extends State<HomeScreen> {
     double minY, maxY;
 
     // 이미지의 최소 및 최대 제한 값을 계산합니다.
-    double minX = -_imageWidth_du / 2 + screenWidth / 2;
-    double maxX = _imageWidth_du / 2 - screenWidth / 2;
+    double minX = screenWidth / 2;
+    double maxX = _imageWidth_du - screenWidth / 2;
 
     // 위 아래 여백이 생기는 경우 minY, maxY의 크기가 역전되지 않도록 if문 추가
-    if (_imageHeight_du > screenHeight) {
-      minY = -_imageHeight_du / 2 + screenHeight / 2;
-      maxY = _imageHeight_du / 2 - screenHeight / 2;
-    } else {
-      minY = _imageHeight_du / 2 - screenHeight / 2;
-      maxY = -_imageHeight_du / 2 + screenHeight / 2;
-    }
+    minY = screenHeight / 2;
+    maxY = _imageHeight_du - screenHeight / 2 - MediaQuery.of(context).padding.top / scale_offset;
 
     // 값을 출력합니다.
 /*      print('imageHeight: $_imageHeight_du, imageWidth: $_imageWidth_du');
@@ -446,6 +436,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     if (_isInitialized == false) {
       algovalue.initialize();
+      mapvalue.initialize(_imageWidth_du / 2 , _imageHeight_du / 2);
       _isInitialized = true;
     }
 
@@ -464,10 +455,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Transform.scale(
                       scale: mapvalue.scale,
                       child: Transform.translate(
-                        offset: mapvalue.position
-                                .scale(scale_offset, scale_offset) +
-                            Offset(0, 56.0 / scale_offset)
-                                .scale(scale_offset, scale_offset),
+                        offset: Offset(MediaQuery.of(context).size.width / scale_offset / 2 - mapvalue.position.dx, MediaQuery.of(context).size.height / scale_offset / 2 - MediaQuery.of(context).padding.top / scale_offset - mapvalue.position.dy).scale(scale_offset, scale_offset),
                         child: ClipRect(
                           child: Stack(
                             children: [
