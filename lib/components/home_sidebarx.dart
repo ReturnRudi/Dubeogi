@@ -66,6 +66,7 @@ class HomeSidebarX extends StatelessWidget {
         angle = 0.0;
       } else {
         icon = Icons.arrow_upward_rounded;
+        angle = 0.0;
       }
       items.add(
         SidebarXItem(
