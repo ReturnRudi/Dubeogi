@@ -24,160 +24,162 @@ class _FindScreenState extends State<FindScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text('동국대학교'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                // 1. 상단 안내문구/박스
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.0),
-                    child: Container(
-                      width: 200.0,
-                      child: TypeAheadField(
-                        textFieldConfiguration: TextFieldConfiguration(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white.withOpacity(0.7),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            hintText: '검색하거나 아래 목록을 터치하세요',
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontFamily: 'Paybooc',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          controller: Controller,
-                        ),
-                        suggestionsCallback: (pattern) {
-                          return buildings.where((building) => building
-                              .toLowerCase()
-                              .contains(pattern.toLowerCase()));
-                        },
-                        itemBuilder: (context, suggestion) {
-                          return ListTile(
-                            title: CustomText(
-                              text: suggestion,
-                              color: Colors.grey,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          );
-                        },
-                        onSuggestionSelected: (suggestion) {
-                          print(suggestion);
-                          setState(() {
-                            Controller.text = suggestion;
-                          });
-                        },
-                        noItemsFoundBuilder: (context) {
-                          return Container(
-                            height: 45.0,
-                            child: Center(
-                              child: CustomText(
-                                text: '건물명을 정확히 입력해주세요.',
+      // appBar: AppBar(
+      //   title: Text('동국대학교'),
+      // ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  // 1. 상단 안내문구/박스
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4.0),
+                      child: Container(
+                        width: 200.0,
+                        child: TypeAheadField(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white.withOpacity(0.7),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              hintText: '검색하거나 아래 목록을 터치하세요',
+                              hintStyle: TextStyle(
                                 color: Colors.grey,
-                                fontSize: 15.0,
+                                fontFamily: 'Paybooc',
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                // end 1
-
-                // 2. 건물 검색 버튼
-                Container(
-                  height: 50.0,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      result = Controller.text; // 박스 안의 텍스트
-                      if (isExistBuilding(result) == true) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => BuildingInfoScreen(
-                              title: result,
-                            ),
+                            controller: Controller,
                           ),
-                        );
-                      }
-                      else {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Alert"),
-                              content: Text("Content"),
-                              actions: [
-                                TextButton(
-                                  child: Text("OK"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
+                          suggestionsCallback: (pattern) {
+                            return buildings.where((building) => building
+                                .toLowerCase()
+                                .contains(pattern.toLowerCase()));
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return ListTile(
+                              title: CustomText(
+                                text: suggestion,
+                                color: Colors.grey,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w400,
+                              ),
                             );
                           },
-                        );
-                      }
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.apartment_rounded,
+                          onSuggestionSelected: (suggestion) {
+                            print(suggestion);
+                            setState(() {
+                              Controller.text = suggestion;
+                            });
+                          },
+                          noItemsFoundBuilder: (context) {
+                            return Container(
+                              height: 45.0,
+                              child: Center(
+                                child: CustomText(
+                                  text: '건물명을 정확히 입력해주세요.',
+                                  color: Colors.grey,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                        CustomText(
-                          text: '건물 검색',
-                          color: Colors.white,
-                          fontSize: 8.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                // end 2
-              ],
-            ),
-            SizedBox(height: 16.0),
-            // 3. 검색창 아래 뜨는 터치할 수 있는 리스트뷰(건묾명 등)
-            Expanded(
-              child: ListView.builder(
-                itemCount: buildings.length,
-                itemBuilder: (context, index) {
-                  final name = buildings[index];
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        Controller.text = name;
-                      });
-                    },
-                    child: ListTile(
-                      title: CustomText(
-                        text: name,
-                        color: Colors.black,
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                  );
-                },
+                  ),
+                  // end 1
+
+                  // 2. 건물 검색 버튼
+                  Container(
+                    height: 50.0,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        result = Controller.text; // 박스 안의 텍스트
+                        if (isExistBuilding(result) == true) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => BuildingInfoScreen(
+                                title: result,
+                              ),
+                            ),
+                          );
+                        }
+                        else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Alert"),
+                                content: Text("Content"),
+                                actions: [
+                                  TextButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.apartment_rounded,
+                          ),
+                          CustomText(
+                            text: '건물 검색',
+                            color: Colors.white,
+                            fontSize: 8.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // end 2
+                ],
               ),
-            ),
-            // end 3
-          ],
+              SizedBox(height: 16.0),
+              // 3. 검색창 아래 뜨는 터치할 수 있는 리스트뷰(건묾명 등)
+              Expanded(
+                child: ListView.builder(
+                  itemCount: buildings.length,
+                  itemBuilder: (context, index) {
+                    final name = buildings[index];
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          Controller.text = name;
+                        });
+                      },
+                      child: ListTile(
+                        title: CustomText(
+                          text: name,
+                          color: Colors.black,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              // end 3
+            ],
+          ),
         ),
       ),
     );

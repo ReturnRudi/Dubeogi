@@ -120,419 +120,427 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text('동국대학교'),
-      ),
-      body: Column(
-        children: [
-          // 최단.최적.차도
-          Container(
-            height: 60,
-            color: Colors.orange,
-            child: Stack(
+      // appBar: AppBar(
+      //   title: Text('동국대학교'),
+      // ),
+      body: Container(
+        color: Colors.orange,
+        child: SafeArea(
+          child: Container(
+            color: Colors.white,
+            child: Column(
               children: [
-                // 버튼 속성
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      width: 80,
-                      child: Stack(
+                // 최단.최적.차도
+                Container(
+                  height: 60,
+                  color: Colors.orange,
+                  child: Stack(
+                    children: [
+                      // 버튼 속성
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Center(
-                            child: CustomText(
-                              text: '최소',
-                              fontWeight: FontWeight.w800,
-                              fontSize: 15.0,
-                              color: algovalue.selectOption == 1
-                                  ? Colors.orange
-                                  : Colors.white,
-                            ),
-                          ),
-                          InkWell(onTap: () {
-                            algovalue.selectOption = 1;
-                            _handleSubmit();
-                          })
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        color:
-                            algovalue.selectOption == 1 ? Colors.white : null,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      width: 80,
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: CustomText(
-                              text: '최적',
-                              fontWeight: FontWeight.w800,
-                              fontSize: 15.0,
-                              color: algovalue.selectOption == 2
-                                  ? Colors.orange
-                                  : Colors.white,
-                            ),
-                          ),
-                          InkWell(onTap: () {
-                            algovalue.selectOption = 2;
-                            _handleSubmit();
-                          })
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        color:
-                            algovalue.selectOption == 2 ? Colors.white : null,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      width: 80,
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: CustomText(
-                              text: '차도',
-                              fontWeight: FontWeight.w800,
-                              fontSize: 15.0,
-                              color: algovalue.selectOption == 3
-                                  ? Colors.orange
-                                  : Colors.white,
-                            ),
-                          ),
-                          InkWell(onTap: () {
-                            algovalue.selectOption = 3;
-                            _handleSubmit();
-                          })
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        color:
-                            algovalue.selectOption == 3 ? Colors.white : null,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-
-          // 출발지 목적지 box
-          Container(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-            color: Colors.orange,
-            child: Stack(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // 츌발지
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TypeAheadField(
-                            textFieldConfiguration: TextFieldConfiguration(
-                                controller: firstController,
-                                focusNode: firstFocus,
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 16, horizontal: 10),
-                                    hintText: '출발 지점을 입력하세요',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Paybooc',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    filled: true,
-                                    fillColor: const Color(0xffF9D5A8),
-                                    suffixIcon: InkWell(
-                                      onTap: () {
-                                        firstController.text = "";
-                                      },
-                                      child: Icon(
-                                        Icons.cancel,
-                                        size: 20.0,
-                                      ),
-                                    )),
-                                onSubmitted: (_) {
-                                  FocusScope.of(context)
-                                      .requestFocus(secondFocus);
-                                }),
-                            suggestionsCallback: (pattern) {
-                              return buildings.where((text) => text
-                                  .toLowerCase()
-                                  .contains(pattern.toLowerCase()));
-                            },
-                            suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                                color: const Color(0xffF9D5A8)),
-                            itemBuilder: (context, suggestion) {
-                              return ListTile(
-                                title: CustomText(
-                                  text: suggestion,
-                                  color: Colors.black,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w400,
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            width: 80,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: CustomText(
+                                    text: '최소',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 15.0,
+                                    color: algovalue.selectOption == 1
+                                        ? Colors.orange
+                                        : Colors.white,
+                                  ),
                                 ),
-                              );
-                            },
-                            onSuggestionSelected: (suggestion) {
-                              setState(() {
-                                firstController.text = suggestion;
-                              });
-                            },
-                            noItemsFoundBuilder: (context) {
-                              if (firstController.text == '') {
-                                return Container();
-                              } else {
-                                return Container(
-                                  height: 45.0,
-                                  child: Center(
-                                    child: CustomText(
-                                      text: '건물명을 정확히 입력해주세요',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 15.0,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: InkWell(
-                            onTap: () async {
-                              Offset? result = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        SelectFromMap(destination: false)),
-                              );
-                              setState(() {
-                                if (result != null) {
-                                  firstController.text = "";
-                                  algovalue.pickandUpdateGraph(
-                                      result, '지도에서 선택한 출발지');
-                                  firstController.text = '지도에서 선택한 출발지';
-                                }
-                              });
-                            },
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(10, 5, 0, 5),
-                              // Add margin to all sides
-                              padding: EdgeInsets.all(15.0),
-                              // Add padding to the container
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(
-                                    10), // Add borderRadius
-                              ),
-                              child: CustomText(
-                                text: '지도',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13.0,
-                              ),
+                                InkWell(onTap: () {
+                                  algovalue.selectOption = 1;
+                                  _handleSubmit();
+                                })
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  algovalue.selectOption == 1 ? Colors.white : null,
+                              borderRadius: BorderRadius.circular(50),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 2,
-                      color: Colors.orange,
-                    ),
-                    // 목적지
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TypeAheadField(
-                            textFieldConfiguration: TextFieldConfiguration(
-                              controller: secondController,
-                              focusNode: secondFocus,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 16, horizontal: 10),
-                                  border: InputBorder.none,
-                                  hintText: '도착 지점을 입력하세요',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Paybooc',
-                                    fontWeight: FontWeight.w400,
+                          SizedBox(width: 20),
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            width: 80,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: CustomText(
+                                    text: '최적',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 15.0,
+                                    color: algovalue.selectOption == 2
+                                        ? Colors.orange
+                                        : Colors.white,
                                   ),
-                                  filled: true,
-                                  fillColor: const Color(0xffF9D5A8),
-                                  suffixIcon: InkWell(
-                                    onTap: () {
-                                      secondController.text = "";
-                                    },
-                                    child: Icon(
-                                      Icons.cancel,
-                                      size: 20.0,
-                                    ),
-                                  )),
-                            ),
-                            suggestionsCallback: (pattern) {
-                              return buildings.where((text) => text
-                                  .toLowerCase()
-                                  .contains(pattern.toLowerCase()));
-                            },
-                            suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                                color: const Color(0xffF9D5A8)),
-                            itemBuilder: (context, suggestion) {
-                              return ListTile(
-                                title: CustomText(
-                                  text: suggestion,
-                                  color: Colors.black,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w400,
                                 ),
-                              );
-                            },
-                            onSuggestionSelected: (suggestion) {
-                              setState(() {
-                                secondController.text = suggestion;
-                              });
-                            },
-                            noItemsFoundBuilder: (context) {
-                              if (secondController.text == '지도에서 선택한 도착지') {
-                                return Container();
-                              } else {
-                                return Container(
-                                  height: 45.0,
-                                  child: Center(
-                                    child: CustomText(
-                                      text: '건물명을 정확히 입력해주세요',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 15.0,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: InkWell(
-                            onTap: () async {
-                              Offset? result = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        SelectFromMap(destination: true)),
-                              );
-                              setState(() {
-                                if (result != null) {
-                                  secondController.text = "";
-                                  algovalue.pickandUpdateGraph(
-                                      result, '지도에서 선택한 도착지');
-                                  secondController.text = '지도에서 선택한 도착지';
-                                }
-                              });
-                            },
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(10, 5, 0, 5),
-                              // Add margin to all sides
-                              padding: EdgeInsets.all(15.0),
-                              // Add padding to the container
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(
-                                    10), // Add borderRadius
-                              ),
-                              child: CustomText(
-                                text: '지도',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13.0,
-                              ),
+                                InkWell(onTap: () {
+                                  algovalue.selectOption = 2;
+                                  _handleSubmit();
+                                })
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  algovalue.selectOption == 2 ? Colors.white : null,
+                              borderRadius: BorderRadius.circular(50),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          // 출발/목적지 설정 x -> 빈칸
-          if (algovalue.isFind == false)
-            Expanded(
-              child: Container(
-                child: Center(
-                  child: ((firstController.text == secondController.text) &&
-                          isExistBuilding(firstController.text))
-                      ? CustomText(
-                          text: "출발지와 목적지가 같음.",
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w700,
-                        )
-                      : CustomText(
-                          text: "출발지와 목적지를 입력하세요.",
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.0,
-                        ),
-                ),
-              ),
-            )
-          // else 경로 미리 표시
-          else if (algovalue.isFind == true)
-            Expanded(
-              child: DetailList(
-                items: algovalue.result_alpha,
-                // List<Node> : 경로에 속하는 모든 노드의 이름들이 들어가있는 리스트
-                direction: algovalue.direction_alpha, // List<String> : 방향 설명
-              ),
-            ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
-            child: SizedBox(
-              width: double.infinity,
-              height: 35.0,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (algovalue.isFind == false) {
-                    // 경로를 찾지 않은 경우
-                    notHandleInput(context);
-                  } else {
-                    for (String key in FloorData.keys) {
-                      if (FloorData[key] != 0)
-                        FloorData[key] = 0;
-                    }
-                    for (String key in LookData.keys) {
-                      LookData[key] = OriginalData[key]!;
-                    }
-                    handleInput();
-                  }
-                },
-                child: CustomText(
-                  text: '경로 안내 시작하기',
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white,
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.orange, // 주황색 배경색
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16), // 버튼 모서리를 둥글게 처리
+                          SizedBox(width: 20),
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            width: 80,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: CustomText(
+                                    text: '차도',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 15.0,
+                                    color: algovalue.selectOption == 3
+                                        ? Colors.orange
+                                        : Colors.white,
+                                  ),
+                                ),
+                                InkWell(onTap: () {
+                                  algovalue.selectOption = 3;
+                                  _handleSubmit();
+                                })
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  algovalue.selectOption == 3 ? Colors.white : null,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
-              ),
+
+                // 출발지 목적지 box
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                  color: Colors.orange,
+                  child: Stack(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // 츌발지
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TypeAheadField(
+                                  textFieldConfiguration: TextFieldConfiguration(
+                                      controller: firstController,
+                                      focusNode: firstFocus,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 16, horizontal: 10),
+                                          hintText: '출발 지점을 입력하세요',
+                                          hintStyle: TextStyle(
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          filled: true,
+                                          fillColor: const Color(0xffF9D5A8),
+                                          suffixIcon: InkWell(
+                                            onTap: () {
+                                              firstController.text = "";
+                                            },
+                                            child: Icon(
+                                              Icons.cancel,
+                                              size: 20.0,
+                                            ),
+                                          )),
+                                      onSubmitted: (_) {
+                                        FocusScope.of(context)
+                                            .requestFocus(secondFocus);
+                                      }),
+                                  suggestionsCallback: (pattern) {
+                                    return buildings.where((text) => text
+                                        .toLowerCase()
+                                        .contains(pattern.toLowerCase()));
+                                  },
+                                  suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                      color: const Color(0xffF9D5A8)),
+                                  itemBuilder: (context, suggestion) {
+                                    return ListTile(
+                                      title: CustomText(
+                                        text: suggestion,
+                                        color: Colors.black,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    );
+                                  },
+                                  onSuggestionSelected: (suggestion) {
+                                    setState(() {
+                                      firstController.text = suggestion;
+                                    });
+                                  },
+                                  noItemsFoundBuilder: (context) {
+                                    if (firstController.text == '') {
+                                      return Container();
+                                    } else {
+                                      return Container(
+                                        height: 45.0,
+                                        child: Center(
+                                          child: CustomText(
+                                            text: '건물명을 정확히 입력해주세요',
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 15.0,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: InkWell(
+                                  onTap: () async {
+                                    Offset? result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SelectFromMap(destination: false)),
+                                    );
+                                    setState(() {
+                                      if (result != null) {
+                                        firstController.text = "";
+                                        algovalue.pickandUpdateGraph(
+                                            result, '지도에서 선택한 출발지');
+                                        firstController.text = '지도에서 선택한 출발지';
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(10, 5, 0, 5),
+                                    // Add margin to all sides
+                                    padding: EdgeInsets.all(15.0),
+                                    // Add padding to the container
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange,
+                                      borderRadius: BorderRadius.circular(
+                                          10), // Add borderRadius
+                                    ),
+                                    child: CustomText(
+                                      text: '지도',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 13.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            height: 2,
+                            color: Colors.orange,
+                          ),
+                          // 목적지
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TypeAheadField(
+                                  textFieldConfiguration: TextFieldConfiguration(
+                                    controller: secondController,
+                                    focusNode: secondFocus,
+                                    decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 16, horizontal: 10),
+                                        border: InputBorder.none,
+                                        hintText: '도착 지점을 입력하세요',
+                                        hintStyle: TextStyle(
+                                          fontFamily: 'Paybooc',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        filled: true,
+                                        fillColor: const Color(0xffF9D5A8),
+                                        suffixIcon: InkWell(
+                                          onTap: () {
+                                            secondController.text = "";
+                                          },
+                                          child: Icon(
+                                            Icons.cancel,
+                                            size: 20.0,
+                                          ),
+                                        )),
+                                  ),
+                                  suggestionsCallback: (pattern) {
+                                    return buildings.where((text) => text
+                                        .toLowerCase()
+                                        .contains(pattern.toLowerCase()));
+                                  },
+                                  suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                      color: const Color(0xffF9D5A8)),
+                                  itemBuilder: (context, suggestion) {
+                                    return ListTile(
+                                      title: CustomText(
+                                        text: suggestion,
+                                        color: Colors.black,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    );
+                                  },
+                                  onSuggestionSelected: (suggestion) {
+                                    setState(() {
+                                      secondController.text = suggestion;
+                                    });
+                                  },
+                                  noItemsFoundBuilder: (context) {
+                                    if (secondController.text == '지도에서 선택한 도착지') {
+                                      return Container();
+                                    } else {
+                                      return Container(
+                                        height: 45.0,
+                                        child: Center(
+                                          child: CustomText(
+                                            text: '건물명을 정확히 입력해주세요',
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 15.0,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: InkWell(
+                                  onTap: () async {
+                                    Offset? result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SelectFromMap(destination: true)),
+                                    );
+                                    setState(() {
+                                      if (result != null) {
+                                        secondController.text = "";
+                                        algovalue.pickandUpdateGraph(
+                                            result, '지도에서 선택한 도착지');
+                                        secondController.text = '지도에서 선택한 도착지';
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(10, 5, 0, 5),
+                                    // Add margin to all sides
+                                    padding: EdgeInsets.all(15.0),
+                                    // Add padding to the container
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange,
+                                      borderRadius: BorderRadius.circular(
+                                          10), // Add borderRadius
+                                    ),
+                                    child: CustomText(
+                                      text: '지도',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 13.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                // 출발/목적지 설정 x -> 빈칸
+                if (algovalue.isFind == false)
+                  Expanded(
+                    child: Container(
+                      child: Center(
+                        child: ((firstController.text == secondController.text) &&
+                                isExistBuilding(firstController.text))
+                            ? CustomText(
+                                text: "출발지와 목적지가 같음.",
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w700,
+                              )
+                            : CustomText(
+                                text: "출발지와 목적지를 입력하세요.",
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14.0,
+                              ),
+                      ),
+                    ),
+                  )
+                // else 경로 미리 표시
+                else if (algovalue.isFind == true)
+                  Expanded(
+                    child: DetailList(
+                      items: algovalue.result_alpha,
+                      // List<Node> : 경로에 속하는 모든 노드의 이름들이 들어가있는 리스트
+                      direction: algovalue.direction_alpha, // List<String> : 방향 설명
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 35.0,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (algovalue.isFind == false) {
+                          // 경로를 찾지 않은 경우
+                          notHandleInput(context);
+                        } else {
+                          for (String key in FloorData.keys) {
+                            if (FloorData[key] != 0)
+                              FloorData[key] = 0;
+                          }
+                          for (String key in LookData.keys) {
+                            LookData[key] = OriginalData[key]!;
+                          }
+                          handleInput();
+                        }
+                      },
+                      child: CustomText(
+                        text: '경로 안내 시작하기',
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.orange, // 주황색 배경색
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16), // 버튼 모서리를 둥글게 처리
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

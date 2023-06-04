@@ -51,128 +51,133 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
   Widget build(BuildContext context) {
     algovalue = Provider.of<AlgoValue>(context, listen: true);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("동국대학교"),
-      ),
-      body: Column(
-        children: [
-          Image.asset(
-            'assets/images/infophoto/${widget.title}.png',
-            fit: BoxFit.contain,
-          ),
-          SizedBox(height: 20),
-          Container(
-            alignment: Alignment.center,
-            child: CustomText(
-              text: widget.title,
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          SizedBox(height: 15.0, width: 20.0),
-          // 2개의 버튼
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      // appBar: AppBar(
+      //   title: Text("동국대학교"),
+      // ),
+      body: Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: Column(
             children: [
-              OutlinedButton(
-                onPressed: () {
-                  algovalue.isFind = false;
-                  Navigator.pushNamed(
-                    context,
-                    '/search',
-                    arguments: {'start': widget.title, 'end': ''},
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.blue),
-                  backgroundColor: Colors.white,
-                  padding: EdgeInsets.all(12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  minimumSize: Size(100, 0),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.directions_walk, color: Colors.blue),
-                    SizedBox(width: 4),
-                    CustomText(
-                      text: '출발',
-                      color: Colors.blue,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ],
+              Image.asset(
+                'assets/images/infophoto/${widget.title}.png',
+                fit: BoxFit.contain,
+              ),
+              SizedBox(height: 20),
+              Container(
+                alignment: Alignment.center,
+                child: CustomText(
+                  text: widget.title,
+                  color: Colors.black,
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(width: 25),
-              OutlinedButton(
-                onPressed: () {
-                  algovalue.isFind = false;
-                  Navigator.pushNamed(context, '/search',
-                      arguments: {'start': '', 'end': widget.title});
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.blue),
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.all(12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  minimumSize: Size(100, 0),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.directions_walk, color: Colors.white),
-                    SizedBox(width: 4),
-                    CustomText(
-                      text: '도착',
-                      color: Colors.white,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
+              SizedBox(height: 15.0, width: 20.0),
+              // 2개의 버튼
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      algovalue.isFind = false;
+                      Navigator.pushNamed(
+                        context,
+                        '/search',
+                        arguments: {'start': widget.title, 'end': ''},
+                      );
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.blue),
+                      backgroundColor: Colors.white,
+                      padding: EdgeInsets.all(12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      minimumSize: Size(100, 0),
                     ),
-                  ],
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.directions_walk, color: Colors.blue),
+                        SizedBox(width: 4),
+                        CustomText(
+                          text: '출발',
+                          color: Colors.blue,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 25),
+                  OutlinedButton(
+                    onPressed: () {
+                      algovalue.isFind = false;
+                      Navigator.pushNamed(context, '/search',
+                          arguments: {'start': '', 'end': widget.title});
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.blue),
+                      backgroundColor: Colors.blue,
+                      padding: EdgeInsets.all(12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      minimumSize: Size(100, 0),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.directions_walk, color: Colors.white),
+                        SizedBox(width: 4),
+                        CustomText(
+                          text: '도착',
+                          color: Colors.white,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Flexible(
+                child: ListView.builder(
+                  itemCount: _displayedAmenities.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {},
+                      child: ListTile(
+                        leading: Column(
+                          children: [
+                            SizedBox(
+                              height: 14,
+                            ),
+                            _displayedAmenities[index].icon,
+                          ],
+                        ),
+                        title: CustomText(
+                          text: '${_displayedAmenities[index].name}',
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.0,
+                        ),
+                        subtitle: CustomText(
+                          text: '${_displayedAmenities[index].description}',
+                          color: Colors.grey,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
           ),
-          SizedBox(height: 10),
-          Flexible(
-            child: ListView.builder(
-              itemCount: _displayedAmenities.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    leading: Column(
-                      children: [
-                        SizedBox(
-                          height: 14,
-                        ),
-                        _displayedAmenities[index].icon,
-                      ],
-                    ),
-                    title: CustomText(
-                      text: '${_displayedAmenities[index].name}',
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.0,
-                    ),
-                    subtitle: CustomText(
-                      text: '${_displayedAmenities[index].description}',
-                      color: Colors.grey,
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
