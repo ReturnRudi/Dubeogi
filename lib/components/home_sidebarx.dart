@@ -143,7 +143,7 @@ class HomeSidebarX extends StatelessWidget {
         ),
       ),
       extendedTheme: SidebarXTheme(
-        width: 300,
+        width: 270,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.8),
         ),

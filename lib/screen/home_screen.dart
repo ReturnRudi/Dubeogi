@@ -705,7 +705,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Positioned(
-                right: 27.5,
+                right: 12,
                 bottom: 20,
                 child: FloatingActionButton(
                   onPressed: toggleLocationTracking,
