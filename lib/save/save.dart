@@ -6312,6 +6312,10 @@ Graph initDriveWayGraph(){
       }
     }
   }
+
+  for (Edge edge in newGraph.edges){
+    edge.time_weight /= 6;
+  }
   print('nodes: ${newGraph.nodes}');
   return newGraph;
 }
