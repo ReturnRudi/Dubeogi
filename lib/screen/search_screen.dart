@@ -624,6 +624,10 @@ class _SearchScreenState extends State<SearchScreen> {
           weight_select: weight_select,
         );
 
+        for (int i = 0; i < result.length - 1; i++) {//총 걸린 시간을 계산하는 부분
+          total_weight += algovalue.graph.findEdge(result[i].name, result[i + 1].name)!.time_weight;
+        }
+
       } else {
         // option 3
         List<Node> temp;
@@ -642,16 +646,31 @@ class _SearchScreenState extends State<SearchScreen> {
           usingGraph: algovalue.graph,
           weight_select: weight_select,
         );
+
+        for (int i = 0; i < temp.length - 1; i++) {//총 걸린 시간을 계산하는 부분
+          total_weight += algovalue.graph.findEdge(temp[i].name, temp[i + 1].name)!.time_weight;
+        }
+        int length_temp = temp.length ;
         // 차도
         algovalue.startNodeName = startClosest.name;
         algovalue.endNodeName = endClosest.name;
         temp.addAll(algovalue.astarPathMaking(
             usingGraph: driveWayGraph, weight_select: weight_select));
         // 차도 끝 -> 도착
+        for (int i = length_temp; i < temp.length - 1; i++) {//총 걸린 시간을 계산하는 부분
+            //디버그용 출력
+/*          print('temp[i].name: ${temp[i].name}     temp[i + 1].name: ${temp[i + 1].name}');
+          print(driveWayGraph.findEdge(temp[i].name, temp[i + 1].name));*/
+          total_weight += driveWayGraph.findEdge(temp[i].name, temp[i + 1].name)!.time_weight;
+        }
+        length_temp = temp.length;
         algovalue.startNodeName = endClosest.name;
         algovalue.endNodeName = end.name;
         temp.addAll(algovalue.astarPathMaking(
             usingGraph: algovalue.graph, weight_select: weight_select));
+        for (int i = length_temp; i < temp.length - 1; i++) {//총 걸린 시간을 계산하는 부분
+          total_weight += algovalue.graph.findEdge(temp[i].name, temp[i + 1].name)!.time_weight;
+        }
 
         // temp 바탕으로 result 정리
         for (int i = 0; i < temp.length; i++) {
@@ -667,9 +686,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
       if (isExistBuilding(firstController.text)) {
         result.removeAt(0);
+        total_weight -= 100000;
       }
       if (isExistBuilding(secondController.text)) {
         result.removeLast();
+        total_weight -= 100000;
       }
 
       List<Node> startNodes = [];
@@ -684,9 +705,9 @@ class _SearchScreenState extends State<SearchScreen> {
           endNodes.add(result[i]);
           startNodes.add(result[i]);
         }
-        if(i != result.length - 1){ //총 걸린 시간을 계산하는 부분
+/*        if(i != result.length - 1){ //총 걸린 시간을 계산하는 부분
           total_weight += algovalue.graph.findEdge(result[i].name, result[i + 1].name)!.time_weight;
-        }
+        }*/
       }
 
       for (Node str in result) {

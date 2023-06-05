@@ -6312,5 +6312,6 @@ Graph initDriveWayGraph(){
       }
     }
   }
+  print('nodes: ${newGraph.nodes}');
   return newGraph;
 }
