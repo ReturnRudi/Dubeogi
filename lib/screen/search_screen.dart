@@ -586,6 +586,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void _handleSubmit() {
     int selectOption = algovalue.selectOption;
     String weight_select;
+    double total_weight = 0;
 
     if(selectOption == 1 || selectOption == 3){
       weight_select = "최단";
@@ -622,6 +623,7 @@ class _SearchScreenState extends State<SearchScreen> {
           usingGraph: algovalue.graph,
           weight_select: weight_select,
         );
+
       } else {
         // option 3
         List<Node> temp;
@@ -682,6 +684,9 @@ class _SearchScreenState extends State<SearchScreen> {
           endNodes.add(result[i]);
           startNodes.add(result[i]);
         }
+        if(i != result.length - 1){ //총 걸린 시간을 계산하는 부분
+          total_weight += algovalue.graph.findEdge(result[i].name, result[i + 1].name)!.time_weight;
+        }
       }
 
       for (Node str in result) {
@@ -736,5 +741,6 @@ class _SearchScreenState extends State<SearchScreen> {
     else {
       algovalue.isFind = false;
     }
+    print('total_weight: ${(total_weight / 60).toInt()}분 ${(total_weight % 60).toInt()}초, 약 ${(total_weight / 60).toInt() + 1}분');
   }
 }
