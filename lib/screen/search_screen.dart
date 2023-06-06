@@ -39,8 +39,6 @@ class _SearchScreenState extends State<SearchScreen> {
   int check = 0;
   String? previousFirstValue;
   String? previousSecondValue;
-  String meridiem = '';
-  String arrivetime = '';
 
   List<String> direction_alpha = [];
   List<Node> result_alpha = [];
@@ -485,133 +483,131 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 // 출발/목적지 설정 x -> 빈칸
                 if (algovalue.isFind == true)
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                SizedBox(width: 10.0),
-                                Icon(
-                                  Icons.access_time,
-                                  color: Colors.blueAccent,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              SizedBox(width: 10.0),
+                              Icon(
+                                Icons.access_time,
+                                color: Colors.blueAccent,
+                              ),
+                              SizedBox(width: 15.0),
+                              RichText(
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: '${(algovalue.totalWeight / 60).toInt()}',
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 20,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '분',
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ' ${(algovalue.totalWeight % 60).toInt()}',
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 20,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '초',
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: 15.0),
-                                RichText(
-                                  text: TextSpan(
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: '${(algovalue.totalWeight / 60).toInt()}',
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 20,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '분',
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' ${(algovalue.totalWeight % 60).toInt()}',
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 20,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '초',
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              ),
+                              SizedBox(
+                                width: 8.0,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                                SizedBox(
-                                  width: 8.0,
+                                height: 20.0,
+                                width: 3.0,
+                              ),
+                              SizedBox(
+                                width: 8.0,
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: algovalue.meridiem,
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ' ' + algovalue.arrivetime.substring(0,2),
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ':',
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: algovalue.arrivetime.substring(3,5) + ' ',
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '도착',
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontFamily: 'Paybooc',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  height: 20.0,
-                                  width: 3.0,
-                                ),
-                                SizedBox(
-                                  width: 8.0,
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: meridiem,
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' ' + arrivetime.substring(0,2),
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ':',
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: arrivetime.substring(3,5) + ' ',
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '도착',
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 12,
-                                          fontFamily: 'Paybooc',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 if (algovalue.isFind == false)
@@ -914,14 +910,14 @@ class _SearchScreenState extends State<SearchScreen> {
       algovalue.result_alpha = result_alpha;
       algovalue.direction_alpha = direction_alpha;
       algovalue.totalWeight = total_weight;
-      arrivetime = DateTime.now().add(Duration(minutes: (total_weight / 60).toInt() + 1)).toString().substring(11,16);
-      int hour = int.parse(arrivetime.substring(0,2));
+      algovalue.arrivetime = DateTime.now().add(Duration(minutes: (total_weight / 60).toInt() + 1)).toString().substring(11,16);
+      int hour = int.parse(algovalue.arrivetime.substring(0,2));
       if(hour >= 12){
-        meridiem = '오후';
+        algovalue.meridiem = '오후';
         hour -= 12;
       }
       else{
-        meridiem = '오전';
+        algovalue.meridiem = '오전';
       }
     } else {
       algovalue.isFind = false;

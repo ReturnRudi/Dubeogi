@@ -10,6 +10,8 @@ class AlgoValue with ChangeNotifier{
   //String _showButton = "기본";
   String _startNodeName = "";
   String _endNodeName = "";
+  String meridiem = '';
+  String arrivetime = '';
   List<Offset> _startPointsRed = []; // custompaint에 사용
   List<Offset> _endPointsRed = []; // custompaint에 사용
   List<Offset> _startPointsBlue = []; // custompaint에 사용

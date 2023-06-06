@@ -22,8 +22,7 @@ class HomeSidebarX extends StatelessWidget {
     Key? key,
     required SidebarXController controller,
     required this.scale_offset,
-  })
-      : _controller = controller,
+  })  : _controller = controller,
         super(key: key);
 
   void endGuide(BuildContext context) {
@@ -79,14 +78,16 @@ class HomeSidebarX extends StatelessWidget {
           ),
           label: algovalue.homeResult[i].name,
           onTap: () {
-            if(previous == -1 || previous == i){ //
+            if (previous == -1 || previous == i) {
+              //
               tapcount++;
             }
             if (tapcount % 2 == 0) {
               mapvalue.scale = 6.0;
-              print('check: (${algovalue.homeResult[i].x},${algovalue
-                  .homeResult[i].y})');
-              mapvalue.position = Offset(algovalue.homeResult[i].x, algovalue.homeResult[i].y - 50);
+              print(
+                  'check: (${algovalue.homeResult[i].x},${algovalue.homeResult[i].y})');
+              mapvalue.position = Offset(
+                  algovalue.homeResult[i].x, algovalue.homeResult[i].y - 50);
             }
             Timer(Duration(milliseconds: 500), () {
               tapcount = 0;
@@ -99,7 +100,6 @@ class HomeSidebarX extends StatelessWidget {
     }
     return items;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -150,20 +150,150 @@ class HomeSidebarX extends StatelessWidget {
       ),
       footerDivider: divider,
       headerBuilder: (context, extended) {
-        return Container(
-            color: Colors.black.withOpacity(0.9),
-            height: 100,
-            width: double.infinity,
-            child: Center(
-              child: CustomText(
-                text: 'total_weight: ${(algovalue.homeWeight / 60).toInt()}분 '
-                    '${(algovalue.homeWeight % 60).toInt()}초, 약 ${(algovalue.homeWeight / 60).toInt() + 1}분',
-                fontSize: 10.0,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            )
-        );
+        if (extended == true)
+          return Container(
+              color: Colors.white.withOpacity(0.9),
+              height: 100,
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          SizedBox(width: 10.0),
+                          Icon(
+                            Icons.access_time,
+                            color: Colors.blueAccent,
+                          ),
+                          SizedBox(width: 15.0),
+                          RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text:
+                                      '${(algovalue.totalWeight / 60).toInt()}',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 20,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '분',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' ${(algovalue.totalWeight % 60).toInt()}',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 20,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '초',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: algovalue.meridiem,
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' ' +
+                                      algovalue.arrivetime.substring(0, 2),
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ':',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: algovalue.arrivetime.substring(3, 5) +
+                                      ' ',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '도착',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                    fontFamily: 'Paybooc',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ));
+        else
+          return Container(
+            height: 50.0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Icon(
+                  Icons.access_time,
+                  color: Colors.blueAccent,
+                ),
+                Text(
+                  '시간',
+                  style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 12,
+                    fontFamily: 'Paybooc',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          );
         /*SizedBox(
           height: 100,
           child: Padding(
@@ -177,10 +307,7 @@ class HomeSidebarX extends StatelessWidget {
       ],
       footerBuilder: (context, extended) {
         return Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+          width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange.withOpacity(0.8),
