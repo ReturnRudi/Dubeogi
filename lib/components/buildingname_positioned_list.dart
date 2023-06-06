@@ -448,8 +448,8 @@ List<Widget> buildingnamePositionedList({required double scale, required double 
     Positioned(
       width: 100 / scale,
       height: 40 / scale,
-      left: 2550 * scale_offset - 50 / scale,
-      top: 2455 * scale_offset - 20 / scale,
+      left: 2419 * scale_offset - 50 / scale,
+      top: 2537 * scale_offset - 20 / scale,
       child: Container(
         child: Align(
           alignment: Alignment.center,

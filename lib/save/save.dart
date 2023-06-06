@@ -159,7 +159,12 @@ final List<String> buildings = [
   '학림관',
   '학생회관',
   '학술관',
-  '혜화관'
+  '혜화관',
+  '정문',
+  '후문',
+  '충무로 방향 입구',
+  '동대입구 방향 입구',
+  'DUICA쪽 입구'
 ];
 
 final List<String> selectFromMap = [
@@ -831,13 +836,13 @@ void initGraph(Graph graph) {
       showRoute2: false);
   graph.addEdge("정문2", "정문3", 87.422, 7.3112, "오르막", "차도");
 //86
-  graph.addEdge("정문2", "정문", 52.8705, 3.5247, "내리막", "차도",
+  graph.addEdge("정문2", "정문 앞", 52.8705, 3.5247, "내리막", "차도",
       node2X: 2380,
       node2Y: 3389,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("정문", "정문2", 62.8827, 5.25895, "오르막", "차도");
+  graph.addEdge("정문 앞", "정문2", 62.8827, 5.25895, "오르막", "차도");
 //87
   graph.addEdge("만해관 내려가는 길1", "만해관 옆 계단 아래", 13.3333, 0.84, "계단아래", "도보",
       node2X: 1557,
@@ -2191,21 +2196,21 @@ void initGraph(Graph graph) {
       showRoute2: true);
   graph.addEdge("학림관 왼쪽 뒷문", "학림관 뒷길5", 6.66667, 0.42, "계단아래", "도보");
 //255
-  graph.addEdge("학림관 뒷길5", "후문", 24.3863, 1.62575, "내리막", "도보",
+  graph.addEdge("학림관 뒷길5", "후문 앞", 24.3863, 1.62575, "내리막", "도보",
       node2X: 1114,
       node2Y: 1576,
       isInside2: 0,
       building2: "실외",
       showRoute2: true);
-  graph.addEdge("후문", "학림관 뒷길5", 29.8084, 3.15859, "오르막", "도보");
+  graph.addEdge("후문 앞", "학림관 뒷길5", 29.8084, 3.15859, "오르막", "도보");
 //256
-  graph.addEdge("후문", "후문 학생회관1", 27.4429, 2.90793, "오르막", "도보",
+  graph.addEdge("후문 앞", "후문 학생회관1", 27.4429, 2.90793, "오르막", "도보",
       node2X: 993,
       node2Y: 1608,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("후문 학생회관1", "후문", 22.451, 1.49674, "내리막", "도보");
+  graph.addEdge("후문 학생회관1", "후문 앞", 22.451, 1.49674, "내리막", "도보");
 //257
   graph.addEdge("후문 학생회관1", "후문 학생회관2", 11.9983, 0.799886, "평지", "도보",
       node2X: 936,
@@ -4628,8 +4633,10 @@ void initGraph(Graph graph) {
   graph.addEdge("사회과학관 2층 쪽문", "사회과학관_경영관", 100000, 100000, "평지", "도보");
   graph.addEdge("사회과학관_경영관", "사회과학관 2층 쪽문", 100000, 100000, "평지", "도보");
   //사회과학관 B1 엘베
-  graph.addEdge("사회과학관 B1 엘베", "사회과학관_경영관", 100000, 100000, "평지", "도보");
-  graph.addEdge("사회과학관_경영관", "사회과학관 B1 엘베", 100000, 100000, "평지", "도보");
+  graph.addEdge("사회과학관 3층 엘베", "사회과학관_경영관", 100000, 100000, "평지", "도보");
+  graph.addEdge("사회과학관_경영관", "사회과학관 3층 엘베", 100000, 100000, "평지", "도보");
+  graph.addEdge("사회과학관 2층 엘베", "사회과학관_경영관", 100000, 100000, "평지", "도보");
+  graph.addEdge("사회과학관_경영관", "사회과학관 2층 엘베", 100000, 100000, "평지", "도보");
   //경영관 2층 뒷문
   graph.addEdge("경영관 2층 뒷문", "사회과학관_경영관", 100000, 100000, "평지", "도보");
   graph.addEdge("사회과학관_경영관", "경영관 2층 뒷문", 100000, 100000, "평지", "도보");
@@ -6302,6 +6309,46 @@ void initGraph(Graph graph) {
       building2: "실외",
       showRoute2: false);
   graph.addEdge("만해광장", "만해광장 중앙", 100000, 100000, "평지", "도보");
+  //정문
+  graph.addEdge("정문 앞", "정문", 100000, 100000, "평지", "차도",
+      node2X: 2380,
+      node2Y: 3389,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: true);
+  graph.addEdge("정문", "정문 앞", 100000, 100000, "평지", "차도");
+  //후문
+  graph.addEdge("후문 앞", "후문", 100000, 100000, "평지", "도보",
+      node2X: 1114,
+      node2Y: 1576,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: true);
+  graph.addEdge("후문", "후문 앞", 100000, 100000, "평지", "도보");
+  //충무로 방향 입구
+  graph.addEdge("충무로쪽 입구", "충무로 방향 입구", 100000, 100000, "내리막", "도보",
+      node2X: 574,
+      node2Y: 2552,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: true);
+  graph.addEdge("충무로 방향 입구", "충무로쪽 입구", 100000, 100000, "오르막", "도보");
+  //동대입구 방향 입구
+  graph.addEdge("동대입구", "동대입구 방향 입구", 100000, 100000, "평지", "도보",
+      node2X: 2587,
+      node2Y: 2426,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: true);
+  graph.addEdge("동대입구 방향 입구", "동대입구", 100000, 100000, "평지", "도보");
+  //346
+  graph.addEdge("듀이카쪽 학교 입구", "DUICA쪽 입구", 100000, 100000, "평지", "도보",
+      node2X: 1625,
+      node2Y: 1936,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("DUICA쪽 입구", "듀이카쪽 학교 입구", 100000, 100000, "평지", "도보");
 
 }
 
