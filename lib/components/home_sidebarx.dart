@@ -151,10 +151,18 @@ class HomeSidebarX extends StatelessWidget {
       footerDivider: divider,
       headerBuilder: (context, extended) {
         return Container(
-          height: 100,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-          ),
+            color: Colors.black.withOpacity(0.9),
+            height: 100,
+            width: double.infinity,
+            child: Center(
+              child: CustomText(
+                text: 'total_weight: ${(algovalue.homeWeight / 60).toInt()}분 '
+                    '${(algovalue.homeWeight % 60).toInt()}초, 약 ${(algovalue.homeWeight / 60).toInt() + 1}분',
+                fontSize: 10.0,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            )
         );
         /*SizedBox(
           height: 100,

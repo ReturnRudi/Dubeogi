@@ -6294,8 +6294,13 @@ void initGraph(Graph graph) {
       building2: "실외",
       showRoute2: false);
   graph.addEdge("대운동장", "대운동장 입구", 100000, 100000, "평지", "도보");
-  //대운동장 입구
-  graph.addEdge("만해광장 중앙", "만해광장", 100000, 100000, "평지", "도보");
+  // 만해광장
+  graph.addEdge("만해광장 중앙", "만해광장", 100000, 100000, "평지", "도보",
+      node2X: 1122,
+      node2Y: 2043,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
   graph.addEdge("만해광장", "만해광장 중앙", 100000, 100000, "평지", "도보");
 
 }

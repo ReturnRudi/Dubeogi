@@ -28,6 +28,8 @@ class AlgoValue with ChangeNotifier{
   List<Node> _endNodes_alpha =[];
   List<String> _homeDirection = [];
   List<Node> _homeResult = [];
+  double _homeWeight = 0.0;
+  double _totalWeight = 0.0;
 
   bool _isRequired = false; // 길을 찾는 중인지
   //bool _isInitialized = false; // 처음 한번만 실행되도록하게하는 변수
@@ -55,6 +57,8 @@ class AlgoValue with ChangeNotifier{
   List<Node> get endNodes_alpha => _endNodes_alpha;
   List<String> get homeDirection => _homeDirection;
   List<Node> get homeResult => _homeResult;
+  double get homeWeight => _homeWeight;
+  double get totalWeight => _totalWeight;
 
   bool get isRequired => _isRequired;
   //bool get isInitialized => _isInitialized;
@@ -117,6 +121,14 @@ class AlgoValue with ChangeNotifier{
   }
   set homeResult(List<Node> nodelist){
     _homeResult = nodelist;
+    notifyListeners();
+  }
+  set homeWeight(double val){
+    _homeWeight = val;
+    notifyListeners();
+  }
+  set totalWeight(double val){
+    _totalWeight = val;
     notifyListeners();
   }
   set isRequired(bool tf){

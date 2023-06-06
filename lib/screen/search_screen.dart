@@ -43,7 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
   List<String> direction_alpha = [];
   List<Node> result_alpha = [];
   List<Node> startNodes_alpha = [];
-  List<Node> endNodes_alpha =[];
+  List<Node> endNodes_alpha = [];
 
   void _handleFirstTextChange() {
     if (firstController.text != previousFirstValue) {
@@ -162,8 +162,9 @@ class _SearchScreenState extends State<SearchScreen> {
                               ],
                             ),
                             decoration: BoxDecoration(
-                              color:
-                                  algovalue.selectOption == 1 ? Colors.white : null,
+                              color: algovalue.selectOption == 1
+                                  ? Colors.white
+                                  : null,
                               borderRadius: BorderRadius.circular(50),
                             ),
                           ),
@@ -190,8 +191,9 @@ class _SearchScreenState extends State<SearchScreen> {
                               ],
                             ),
                             decoration: BoxDecoration(
-                              color:
-                                  algovalue.selectOption == 2 ? Colors.white : null,
+                              color: algovalue.selectOption == 2
+                                  ? Colors.white
+                                  : null,
                               borderRadius: BorderRadius.circular(50),
                             ),
                           ),
@@ -218,8 +220,9 @@ class _SearchScreenState extends State<SearchScreen> {
                               ],
                             ),
                             decoration: BoxDecoration(
-                              color:
-                                  algovalue.selectOption == 3 ? Colors.white : null,
+                              color: algovalue.selectOption == 3
+                                  ? Colors.white
+                                  : null,
                               borderRadius: BorderRadius.circular(50),
                             ),
                           ),
@@ -243,40 +246,45 @@ class _SearchScreenState extends State<SearchScreen> {
                             children: [
                               Expanded(
                                 child: TypeAheadField(
-                                  textFieldConfiguration: TextFieldConfiguration(
-                                      controller: firstController,
-                                      focusNode: firstFocus,
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.symmetric(
-                                              vertical: 16, horizontal: 10),
-                                          hintText: '출발 지점을 입력하세요',
-                                          hintStyle: TextStyle(
-                                            fontFamily: 'Paybooc',
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                          filled: true,
-                                          fillColor: const Color(0xffF9D5A8),
-                                          suffixIcon: InkWell(
-                                            onTap: () {
-                                              firstController.text = "";
-                                            },
-                                            child: Icon(
-                                              Icons.cancel,
-                                              size: 20.0,
-                                            ),
-                                          )),
-                                      onSubmitted: (_) {
-                                        FocusScope.of(context)
-                                            .requestFocus(secondFocus);
-                                      }),
+                                  textFieldConfiguration:
+                                      TextFieldConfiguration(
+                                          controller: firstController,
+                                          focusNode: firstFocus,
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 16,
+                                                      horizontal: 10),
+                                              hintText: '출발 지점을 입력하세요',
+                                              hintStyle: TextStyle(
+                                                fontFamily: 'Paybooc',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                              filled: true,
+                                              fillColor:
+                                                  const Color(0xffF9D5A8),
+                                              suffixIcon: InkWell(
+                                                onTap: () {
+                                                  firstController.text = "";
+                                                },
+                                                child: Icon(
+                                                  Icons.cancel,
+                                                  size: 20.0,
+                                                ),
+                                              )),
+                                          onSubmitted: (_) {
+                                            FocusScope.of(context)
+                                                .requestFocus(secondFocus);
+                                          }),
                                   suggestionsCallback: (pattern) {
                                     return buildings.where((text) => text
                                         .toLowerCase()
                                         .contains(pattern.toLowerCase()));
                                   },
-                                  suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                                      color: const Color(0xffF9D5A8)),
+                                  suggestionsBoxDecoration:
+                                      SuggestionsBoxDecoration(
+                                          color: const Color(0xffF9D5A8)),
                                   itemBuilder: (context, suggestion) {
                                     return ListTile(
                                       title: CustomText(
@@ -318,8 +326,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     Offset? result = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              SelectFromMap(destination: false)),
+                                          builder: (context) => SelectFromMap(
+                                              destination: false)),
                                     );
                                     setState(() {
                                       if (result != null) {
@@ -360,7 +368,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             children: [
                               Expanded(
                                 child: TypeAheadField(
-                                  textFieldConfiguration: TextFieldConfiguration(
+                                  textFieldConfiguration:
+                                      TextFieldConfiguration(
                                     controller: secondController,
                                     focusNode: secondFocus,
                                     decoration: InputDecoration(
@@ -389,8 +398,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                         .toLowerCase()
                                         .contains(pattern.toLowerCase()));
                                   },
-                                  suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                                      color: const Color(0xffF9D5A8)),
+                                  suggestionsBoxDecoration:
+                                      SuggestionsBoxDecoration(
+                                          color: const Color(0xffF9D5A8)),
                                   itemBuilder: (context, suggestion) {
                                     return ListTile(
                                       title: CustomText(
@@ -407,7 +417,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     });
                                   },
                                   noItemsFoundBuilder: (context) {
-                                    if (secondController.text == '지도에서 선택한 도착지') {
+                                    if (secondController.text ==
+                                        '지도에서 선택한 도착지') {
                                       return Container();
                                     } else {
                                       return Container(
@@ -471,24 +482,54 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 // 출발/목적지 설정 x -> 빈칸
+                if (algovalue.isFind == true)
+                  Container(
+                      color: Colors.black.withOpacity(0.9),
+                      height: 100,
+                      width: double.infinity,
+                      child: Center(
+                        child: CustomText(
+                          text:
+                              'total_weight: ${(algovalue.totalWeight / 60).toInt()}분 '
+                              '${(algovalue.totalWeight % 60).toInt()}초, 약 ${(algovalue.totalWeight / 60).toInt() + 1}분',
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ))
+                else if (algovalue.isFind == false)
+                  Container(
+                    color: Colors.black.withOpacity(0.9),
+                    height: 100,
+                    width: double.infinity,
+                    child: Center(
+                      child: CustomText(
+                        text: '시 간 뜨 는 곳',
+                        fontSize: 36.0,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 if (algovalue.isFind == false)
                   Expanded(
                     child: Container(
                       child: Center(
-                        child: ((firstController.text == secondController.text) &&
-                                isExistBuilding(firstController.text))
-                            ? CustomText(
-                                text: "출발지와 목적지가 같음.",
-                                color: Colors.black,
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w700,
-                              )
-                            : CustomText(
-                                text: "출발지와 목적지를 입력하세요.",
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14.0,
-                              ),
+                        child:
+                            ((firstController.text == secondController.text) &&
+                                    isExistBuilding(firstController.text))
+                                ? CustomText(
+                                    text: "출발지와 목적지가 같음.",
+                                    color: Colors.black,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w700,
+                                  )
+                                : CustomText(
+                                    text: "출발지와 목적지를 입력하세요.",
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14.0,
+                                  ),
                       ),
                     ),
                   )
@@ -498,11 +539,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: DetailList(
                       items: algovalue.result_alpha,
                       // List<Node> : 경로에 속하는 모든 노드의 이름들이 들어가있는 리스트
-                      direction: algovalue.direction_alpha, // List<String> : 방향 설명
+                      direction:
+                          algovalue.direction_alpha, // List<String> : 방향 설명
                     ),
                   ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 3.0, vertical: 4.0),
                   child: SizedBox(
                     width: double.infinity,
                     height: 35.0,
@@ -513,8 +556,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           notHandleInput(context);
                         } else {
                           for (String key in FloorData.keys) {
-                            if (FloorData[key] != 0)
-                              FloorData[key] = 0;
+                            if (FloorData[key] != 0) FloorData[key] = 0;
                           }
                           for (String key in LookData.keys) {
                             LookData[key] = OriginalData[key]!;
@@ -531,7 +573,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.orange, // 주황색 배경색
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16), // 버튼 모서리를 둥글게 처리
+                          borderRadius:
+                              BorderRadius.circular(16), // 버튼 모서리를 둥글게 처리
                         ),
                       ),
                     ),
@@ -576,6 +619,7 @@ class _SearchScreenState extends State<SearchScreen> {
     algovalue.endNodeName = secondController.text;
     algovalue.homeDirection = algovalue.direction_alpha;
     algovalue.homeResult = algovalue.result_alpha;
+    algovalue.homeWeight = algovalue.totalWeight;
     //
     Navigator.of(context).popUntil((route) => route.isFirst);
     algovalue.isFind = false; // searchscreen에서의 값
@@ -588,19 +632,18 @@ class _SearchScreenState extends State<SearchScreen> {
     String weight_select;
     double total_weight = 0;
 
-    if(selectOption == 1 || selectOption == 3){
+    if (selectOption == 1 || selectOption == 3) {
       weight_select = "최단";
-    }
-    else{
+    } else {
       weight_select = "최적";
     }
 
     List<Node> result = [];
-    /*if (firstController.text == secondController.text) {
+    if (firstController.text == secondController.text) {
       algovalue.erase();
       algovalue.isFind = false;
       return;
-    }*/
+    }
 
     if (firstController.text != '지도에서 선택한 출발지') {
       algovalue.removePickedPointFromGraph('지도에서 선택한 출발지');
@@ -624,10 +667,12 @@ class _SearchScreenState extends State<SearchScreen> {
           weight_select: weight_select,
         );
 
-        for (int i = 0; i < result.length - 1; i++) {//총 걸린 시간을 계산하는 부분
-          total_weight += algovalue.graph.findEdge(result[i].name, result[i + 1].name)!.time_weight;
+        for (int i = 0; i < result.length - 1; i++) {
+          //총 걸린 시간을 계산하는 부분
+          total_weight += algovalue.graph
+              .findEdge(result[i].name, result[i + 1].name)!
+              .time_weight;
         }
-
       } else {
         // option 3
         List<Node> temp;
@@ -635,9 +680,9 @@ class _SearchScreenState extends State<SearchScreen> {
         Node end = algovalue.graph.findNode(secondController.text);
         Graph driveWayGraph = initDriveWayGraph();
         Node? startClosest =
-        algovalue.findClosestNode(driveWayGraph.nodes, start.x, start.y);
+            algovalue.findClosestNode(driveWayGraph.nodes, start.x, start.y);
         Node? endClosest =
-        algovalue.findClosestNode(driveWayGraph.nodes, end.x, end.y);
+            algovalue.findClosestNode(driveWayGraph.nodes, end.x, end.y);
 
         // 시작 -> 가까운 차도
         algovalue.startNodeName = start.name;
@@ -647,29 +692,38 @@ class _SearchScreenState extends State<SearchScreen> {
           weight_select: weight_select,
         );
 
-        for (int i = 0; i < temp.length - 1; i++) {//총 걸린 시간을 계산하는 부분
-          total_weight += algovalue.graph.findEdge(temp[i].name, temp[i + 1].name)!.time_weight;
+        for (int i = 0; i < temp.length - 1; i++) {
+          //총 걸린 시간을 계산하는 부분
+          total_weight += algovalue.graph
+              .findEdge(temp[i].name, temp[i + 1].name)!
+              .time_weight;
         }
-        int length_temp = temp.length ;
+        int length_temp = temp.length;
         // 차도
         algovalue.startNodeName = startClosest.name;
         algovalue.endNodeName = endClosest.name;
         temp.addAll(algovalue.astarPathMaking(
             usingGraph: driveWayGraph, weight_select: weight_select));
         // 차도 끝 -> 도착
-        for (int i = length_temp; i < temp.length - 1; i++) {//총 걸린 시간을 계산하는 부분
-            //디버그용 출력
+        for (int i = length_temp; i < temp.length - 1; i++) {
+          //총 걸린 시간을 계산하는 부분
+          //디버그용 출력
 /*          print('temp[i].name: ${temp[i].name}     temp[i + 1].name: ${temp[i + 1].name}');
           print(driveWayGraph.findEdge(temp[i].name, temp[i + 1].name));*/
-          total_weight += driveWayGraph.findEdge(temp[i].name, temp[i + 1].name)!.time_weight;
+          total_weight += driveWayGraph
+              .findEdge(temp[i].name, temp[i + 1].name)!
+              .time_weight;
         }
         length_temp = temp.length;
         algovalue.startNodeName = endClosest.name;
         algovalue.endNodeName = end.name;
         temp.addAll(algovalue.astarPathMaking(
             usingGraph: algovalue.graph, weight_select: weight_select));
-        for (int i = length_temp; i < temp.length - 1; i++) {//총 걸린 시간을 계산하는 부분
-          total_weight += algovalue.graph.findEdge(temp[i].name, temp[i + 1].name)!.time_weight;
+        for (int i = length_temp; i < temp.length - 1; i++) {
+          //총 걸린 시간을 계산하는 부분
+          total_weight += algovalue.graph
+              .findEdge(temp[i].name, temp[i + 1].name)!
+              .time_weight;
         }
 
         // temp 바탕으로 result 정리
@@ -741,13 +795,11 @@ class _SearchScreenState extends State<SearchScreen> {
           startNodes_alpha.add(result[i]);
           result_alpha.add(result[i]);
           direction_alpha.add("출발지");
-        }
-        else if (direction[i] == "목적지") {
+        } else if (direction[i] == "목적지") {
           endNodes_alpha.add(result[i]);
           result_alpha.add(result[i]);
           direction_alpha.add("목적지");
-        }
-        else if (result[i].showRoute == true) {
+        } else if (result[i].showRoute == true) {
           endNodes_alpha.add(result[i]);
           startNodes_alpha.add(result[i]);
           result_alpha.add(result[i]);
@@ -758,10 +810,11 @@ class _SearchScreenState extends State<SearchScreen> {
       algovalue.startNodes_alpha = startNodes_alpha;
       algovalue.result_alpha = result_alpha;
       algovalue.direction_alpha = direction_alpha;
-    }
-    else {
+      algovalue.totalWeight = total_weight;
+    } else {
       algovalue.isFind = false;
     }
-    print('total_weight: ${(total_weight / 60).toInt()}분 ${(total_weight % 60).toInt()}초, 약 ${(total_weight / 60).toInt() + 1}분');
+    print(
+        'total_weight: ${(total_weight / 60).toInt()}분 ${(total_weight % 60).toInt()}초, 약 ${(total_weight / 60).toInt() + 1}분');
   }
 }
