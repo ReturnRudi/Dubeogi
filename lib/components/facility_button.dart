@@ -7,6 +7,7 @@ class FacilityButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color textColor;
   final bool onoff;
+  final IconData icon;
 
   const FacilityButton({
     Key? key,
@@ -14,17 +15,29 @@ class FacilityButton extends StatelessWidget {
     required this.textColor,
     required this.onoff,
     required this.onPressed,
+    required this.icon,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: CustomText(
-        text: text,
-        color: textColor,
-        fontSize: 12.0,
-        fontWeight: FontWeight.w700,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: textColor,
+            size: 20.0,
+          ),
+          SizedBox(width: 8.0),
+          CustomText(
+            text: text,
+            color: textColor,
+            fontSize: 12.0,
+            fontWeight: FontWeight.w700,
+          ),
+        ],
       ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(

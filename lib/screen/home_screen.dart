@@ -17,6 +17,8 @@ import 'package:Dubeogi/provider/algo_value.dart';
 import 'package:Dubeogi/provider/map_value.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/save/custom_text.dart';
+import 'package:Dubeogi/save/building_info.dart';
+
 
 import 'package:Dubeogi/screen/building_info_screen.dart';
 
@@ -79,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
-        AssetImage('assets/images/du.png').resolve(ImageConfiguration());
+    AssetImage('assets/images/du.png').resolve(ImageConfiguration());
     final listener = ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     });
@@ -349,9 +351,9 @@ class _HomeScreenState extends State<HomeScreen> {
     print('check: startLocationStream();');
     await requestLocationPermission();
     positionStream = Geolocator.getPositionStream(
-            desiredAccuracy: LocationAccuracy.high,
-            //distanceFilter: 1
-            intervalDuration: Duration(milliseconds: 1000))
+        desiredAccuracy: LocationAccuracy.high,
+        //distanceFilter: 1
+        intervalDuration: Duration(milliseconds: 1000))
         .listen((Position position) {
       setState(() {
         now_w = position.latitude;
@@ -424,12 +426,24 @@ class _HomeScreenState extends State<HomeScreen> {
     mapvalue = Provider.of<MapValue>(context, listen: true);
     buildingPositions = buildingPositionedList(
         scale_offset: scale_offset, showFloorButton: _showFloorButton);
-    vendings = vendingPositionedList(scale_offset: scale_offset);
-    showers = showerPositionedList(scale_offset: scale_offset);
-    stores = storePositionedList(scale_offset: scale_offset);
-    printers = printerPositionedList(scale_offset: scale_offset);
-    atms = atmPositionedList(scale_offset: scale_offset);
-    lounges = loungePositionedList(scale_offset: scale_offset);
+    vendings = vendingPositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
+    showers = showerPositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
+    stores = storePositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
+    printers = printerPositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
+    atms = atmPositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
+    lounges = loungePositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
     buildingNames = buildingnamePositionedList(
       scale: mapvalue.scale,
       scale_offset: scale_offset,
@@ -474,7 +488,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   startPointsBlue: algovalue.startPointsBlue,
                                   // 빈 리스트 전달
                                   endPointsBlue:
-                                      algovalue.endPointsBlue, // 빈 리스트 전달
+                                  algovalue.endPointsBlue, // 빈 리스트 전달
                                 ),
                                 child: Stack(
                                   children: [
@@ -500,23 +514,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               ),
-                              if (mapvalue.isRequired == true)
-                                Positioned(
-                                  left: mapvalue.guideX * scale_offset - 2.5,
-                                  top: mapvalue.guideY * scale_offset - 2.5,
-                                  child: Container(
-                                    width: 5,
-                                    height: 5,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.transparent,
-                                        border: Border.all(
-                                            color: Colors.red,
-                                            width: 0.5
-                                        )
-                                    ),
-                                  ),
-                                ),
                               if (isTrackingLocation)
                                 Stack(
                                   children: [
@@ -546,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           border: Border.all(
                                               color: Colors.white,
                                               width:
-                                                  1.5 * 1.3 / mapvalue.scale),
+                                              1.5 * 1.3 / mapvalue.scale),
                                           color: Colors.red,
                                           shape: BoxShape.circle,
                                         ),
@@ -570,7 +567,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 child: Padding(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 4.0),
+                                  EdgeInsets.symmetric(horizontal: 4.0),
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(context, '/find');
@@ -632,7 +629,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          // 자판기 샤워실 편의점 ...
+                          // 자판기 샤워실 매점 ...
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
@@ -642,6 +639,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   textColor: Colors.blue,
                                   onPressed: _vendingshow,
                                   onoff: _vendingvisibility,
+                                  icon: Icons.local_drink,
                                 ),
                                 SizedBox(width: 10),
                                 FacilityButton(
@@ -649,13 +647,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   textColor: Colors.lightBlueAccent,
                                   onPressed: _showershow,
                                   onoff: _showervisibility,
+                                  icon: Icons.shower,
                                 ),
                                 SizedBox(width: 10),
                                 FacilityButton(
-                                  text: '편의점',
+                                  text: '매점',
                                   textColor: Colors.purple,
                                   onPressed: _storeshow,
                                   onoff: _storevisibility,
+                                  icon: Icons.store,
                                 ),
                                 SizedBox(width: 10),
                                 FacilityButton(
@@ -663,6 +663,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   textColor: Colors.green,
                                   onPressed: _printershow,
                                   onoff: _printervisibility,
+                                  icon: Icons.print,
                                 ),
                                 SizedBox(width: 10),
                                 FacilityButton(
@@ -670,6 +671,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   textColor: Colors.brown,
                                   onPressed: _loungeshow,
                                   onoff: _loungevisibility,
+                                  icon: Icons.desk,
                                 ),
                                 SizedBox(width: 10),
                                 FacilityButton(
@@ -677,6 +679,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   textColor: Colors.red,
                                   onPressed: _atmshow,
                                   onoff: _atmvisibility,
+                                  icon: Icons.monetization_on,
                                 ),
                               ],
                             ),
@@ -684,9 +687,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Expanded(
                             child: algovalue.isRequired
                                 ? HomeSidebarX(
-                                    controller: _controller,
-                                    scale_offset: scale_offset,
-                                  )
+                              controller: _controller,
+                              scale_offset: scale_offset,
+                            )
                                 : Text(""),
                           )
                         ],
