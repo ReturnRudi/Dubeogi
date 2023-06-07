@@ -790,6 +790,7 @@ class _SearchScreenState extends State<SearchScreen> {
         // 시작 -> 가까운 차도
         algovalue.startNodeName = start.name;
         algovalue.endNodeName = startClosest.name;
+        print("startClosest.name: ${startClosest.name}");
         temp = algovalue.astarPathMaking(
           usingGraph: algovalue.graph,
           weight_select: weight_select,
@@ -807,16 +808,16 @@ class _SearchScreenState extends State<SearchScreen> {
         algovalue.endNodeName = endClosest.name;
         temp.addAll(algovalue.astarPathMaking(
             usingGraph: driveWayGraph, weight_select: weight_select));
-        // 차도 끝 -> 도착
         for (int i = length_temp; i < temp.length - 1; i++) {
           //총 걸린 시간을 계산하는 부분
-          //디버그용 출력
-/*          print('temp[i].name: ${temp[i].name}     temp[i + 1].name: ${temp[i + 1].name}');
+/*          //디버그용 출력
+          print('temp[i].name: ${temp[i].name}     temp[i + 1].name: ${temp[i + 1].name}');
           print(driveWayGraph.findEdge(temp[i].name, temp[i + 1].name));*/
           total_weight += driveWayGraph
               .findEdge(temp[i].name, temp[i + 1].name)!
               .time_weight;
         }
+        // 차도 끝 -> 도착
         length_temp = temp.length;
         algovalue.startNodeName = endClosest.name;
         algovalue.endNodeName = end.name;

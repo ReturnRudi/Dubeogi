@@ -186,6 +186,7 @@ class AlgoValue with ChangeNotifier{
     List<int> regularPrev = regularResult.item2;
 
     _regularPath = reconstructPath(regularPrev, usingGraph.nodes, startIndex, endIndex);
+    print("_regularPath: $_regularPath");
 
     notifyListeners();
     return _regularPath;

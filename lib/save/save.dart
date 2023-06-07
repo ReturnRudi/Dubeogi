@@ -1187,13 +1187,13 @@ void initGraph(Graph graph) {
       showRoute2: true);
   graph.addEdge("사회과학관 B1 엘베", "사회과학관 B1 엘베 앞", 7.03476, 0.468984, "평지", "차도");
   //126
-  graph.addEdge("사회과학관 B1 엘베 입구", "동대입구 문화관3", 9.81351, 0.654234, "평지", "도보",
+  graph.addEdge("사회과학관 B1 엘베 입구", "동대입구 문화관3", 9.81351, 0.654234, "평지", "차도",
       node2X: 2298,
       node2Y: 3052,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("동대입구 문화관3", "사회과학관 B1 엘베 입구", 9.81351, 0.654234, "평지", "도보");
+  graph.addEdge("동대입구 문화관3", "사회과학관 B1 엘베 입구", 9.81351, 0.654234, "평지", "차도");
 //127
   graph.addEdge("동대입구 문화관3", "문화관 쪽문 앞", 10.6076, 0.707176, "평지", "차도",
       node2X: 2354,
@@ -6310,13 +6310,13 @@ void initGraph(Graph graph) {
       showRoute2: false);
   graph.addEdge("만해광장", "만해광장 중앙", 100000, 100000, "평지", "도보");
   //정문
-  graph.addEdge("정문 앞", "정문", 100000, 100000, "평지", "차도",
+  graph.addEdge("정문 앞", "정문", 100000, 100000, "평지", "도보",
       node2X: 2380,
       node2Y: 3389,
       isInside2: 0,
       building2: "실외",
       showRoute2: true);
-  graph.addEdge("정문", "정문 앞", 100000, 100000, "평지", "차도");
+  graph.addEdge("정문", "정문 앞", 100000, 100000, "평지", "도보");
   //후문
   graph.addEdge("후문 앞", "후문", 100000, 100000, "평지", "도보",
       node2X: 1114,
