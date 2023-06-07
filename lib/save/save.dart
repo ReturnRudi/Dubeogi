@@ -165,6 +165,7 @@ final List<String> buildings = [
   '충무로 방향 입구',
   '동대입구 방향 입구',
   'DUICA쪽 입구'
+  '체육관 쪽 입구'
 ];
 
 final List<String> selectFromMap = [
@@ -2856,7 +2857,62 @@ void initGraph(Graph graph) {
       building2: "실외",
       showRoute2: false);
   graph.addEdge("남산학사 계단 앞", "충무로쪽 입구", 3.58758, 0.239172, "평지", "도보");
-
+  //736
+  graph.addEdge("체육관 옆문 앞", "체육관 쪽 입구6", 7.38074, 0.492049, "평지", "도보",
+      node2X: 1306,
+      node2Y: 2036,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관 쪽 입구6", "체육관 옆문 앞", 7.38074, 0.492049, "평지", "도보");
+  //737
+  graph.addEdge("체육관 쪽 입구6", "체육관 쪽 입구5", 9.03329, 0.602219, "평지", "도보",
+      node2X: 1312,
+      node2Y: 2086,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관 쪽 입구5", "체육관 쪽 입구6", 9.03329, 0.602219, "평지", "도보");
+  //738
+  graph.addEdge("체육관 쪽 입구5", "체육관 쪽 입구4", 2.54945, 0.169963, "평지", "도보",
+      node2X: 1321,
+      node2Y: 2097,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관 쪽 입구4", "체육관 쪽 입구5", 2.54945, 0.169963, "평지", "도보");
+  //739
+  graph.addEdge("체육관 쪽 입구4", "체육관 쪽 입구3", 13.7198, 0.914656, "평지", "도보",
+      node2X: 1396,
+      node2Y: 2112,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관 쪽 입구3", "체육관 쪽 입구4", 13.7198, 0.914656, "평지", "도보");
+  //740
+  graph.addEdge("체육관 쪽 입구3", "체육관 쪽 입구2", 8.83338, 0.588892, "평지", "도보",
+      node2X: 1416,
+      node2Y: 2157,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관 쪽 입구2", "체육관 쪽 입구3", 8.83338, 0.588892, "평지", "도보");
+  //741
+  graph.addEdge("체육관 쪽 입구2", "체육관 쪽 입구1", 7.88043, 0.525362, "평지", "도보",
+      node2X: 1459,
+      node2Y: 2166,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관 쪽 입구1", "체육관 쪽 입구2", 7.88043, 0.525362, "평지", "도보");
+  //742
+  graph.addEdge("체육관 쪽 입구1", "체육관 쪽 입구", 100000, 100000, "평지", "도보",
+      node2X: 1459,
+      node2Y: 2166,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관 쪽 입구", "체육관 쪽 입구1", 100000, 100000, "평지", "도보");
   //----------------------------실내 노드------------------------------
   //정P(입구: 2층 입구, 3층 입구(3층), 3층 후문)
   //후문
