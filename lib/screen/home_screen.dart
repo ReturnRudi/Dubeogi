@@ -500,6 +500,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               ),
+                              if (mapvalue.isRequired == true)
+                                Positioned(
+                                  left: mapvalue.guideX * scale_offset - 2.5,
+                                  top: mapvalue.guideY * scale_offset - 2.5,
+                                  child: Container(
+                                    width: 5,
+                                    height: 5,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.transparent,
+                                        border: Border.all(
+                                            color: Colors.red,
+                                            width: 0.5
+                                        )
+                                    ),
+                                  ),
+                                ),
                               if (isTrackingLocation)
                                 Stack(
                                   children: [

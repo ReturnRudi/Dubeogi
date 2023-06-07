@@ -35,6 +35,7 @@ class HomeSidebarX extends StatelessWidget {
             onOption1Pressed: () {
               algovalue.erase();
               algovalue.isRequired = false;
+              mapvalue.isRequired = false;
               Navigator.pop(context);
             },
             onOption2Pressed: () {
@@ -88,6 +89,9 @@ class HomeSidebarX extends StatelessWidget {
                   'check: (${algovalue.homeResult[i].x},${algovalue.homeResult[i].y})');
               mapvalue.position = Offset(
                   algovalue.homeResult[i].x, algovalue.homeResult[i].y - 50);
+              mapvalue.guideX = algovalue.homeResult[i].x;
+              mapvalue.guideY = algovalue.homeResult[i].y;
+              mapvalue.isRequired = true;
             }
             Timer(Duration(milliseconds: 500), () {
               tapcount = 0;
@@ -146,9 +150,11 @@ class HomeSidebarX extends StatelessWidget {
         width: 270,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.8),
+          borderRadius: BorderRadius.circular(20),
         ),
       ),
-      footerDivider: divider,headerBuilder: (context, extended) {
+      footerDivider: divider,
+      headerBuilder: (context, extended) {
       return FutureBuilder<void>(
         future: Future.delayed(Duration(milliseconds: 400)),
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {

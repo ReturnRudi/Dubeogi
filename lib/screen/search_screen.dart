@@ -6,6 +6,7 @@ import 'package:Dubeogi/save/astar.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/save/custom_text.dart';
 import 'package:Dubeogi/provider/algo_value.dart';
+import 'package:Dubeogi/provider/map_value.dart';
 import 'dart:math';
 
 import 'package:provider/provider.dart';
@@ -27,6 +28,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   late List<Node> result;
   late AlgoValue algovalue;
+  late MapValue mapvalue;
   List<String> direction = [];
   late List<Node> detail_items; // result
   late List<String> detail_direction; // direction
@@ -111,6 +113,7 @@ class _SearchScreenState extends State<SearchScreen> {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
     algovalue = Provider.of<AlgoValue>(context, listen: true);
+    mapvalue = Provider.of<MapValue>(context);
 
     if (arguments != null && count == 0) {
       firstController.text = arguments['start'] ?? '';
@@ -723,6 +726,7 @@ class _SearchScreenState extends State<SearchScreen> {
     Navigator.of(context).popUntil((route) => route.isFirst);
     algovalue.isFind = false; // searchscreen에서의 값
     algovalue.isRequired = true; // drawer 쓸건지 안쓸건지
+    mapvalue.isRequired = false; // 노드 표시가 있다면 비활성화
     //dispose();
   }
 
