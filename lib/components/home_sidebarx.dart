@@ -148,189 +148,211 @@ class HomeSidebarX extends StatelessWidget {
           color: Colors.white.withOpacity(0.8),
         ),
       ),
-      footerDivider: divider,
-      headerBuilder: (context, extended) {
-        if (extended == true)
-          return Container(
-              color: Colors.white.withOpacity(0.9),
-              height: 100,
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+      footerDivider: divider,headerBuilder: (context, extended) {
+      return FutureBuilder<void>(
+        future: Future.delayed(Duration(milliseconds: 400)),
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              height: 50.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.access_time,
+                    color: Colors.blueAccent,
+                  ),
+                  Text(
+                    '시간',
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 12,
+                      fontFamily: 'Paybooc',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+          else {
+            if (extended == true)
+              return Container(
+                  color: Colors.white.withOpacity(0.9),
+                  height: 100,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 3.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.access_time,
+                                    color: Colors.blueAccent,
+                                  ),
+                                  SizedBox(width: 10.0),
+                                  Text(
+                                    '출발 : ${algovalue.startNodeName}\n도착 : ${algovalue.endNodeName}',
+                                    style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 12,
+                                      fontFamily: 'Paybooc',
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text:
+                                          '${(algovalue.totalWeight / 60).toInt()}',
+                                          style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 20,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: '분',
+                                          style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 15,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                          ' ${(algovalue.totalWeight % 60).toInt()}',
+                                          style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 20,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: '초',
+                                          style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 15,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 10.0),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    height: 20.0,
+                                    width: 3.0,
+                                  ),
+                                  SizedBox(width: 10.0),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: algovalue.meridiem,
+                                          style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 15,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' ' + (algovalue.hour >= 10 ? '${algovalue.hour}' : '0${algovalue.hour}'),
+                                          style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 15,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ':',
+                                          style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 15,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: algovalue.arrivetime.substring(3, 5) +
+                                              ' ',
+                                          style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 15,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: '도착',
+                                          style: TextStyle(
+                                            color: Colors.blueAccent,
+                                            fontSize: 15,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ));
+            else
+              return Container(
+                height: 50.0,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 3.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.access_time,
-                                color: Colors.blueAccent,
-                              ),
-                              SizedBox(width: 10.0),
-                              Text(
-                                '출발 : ${algovalue.startNodeName}\n도착 : ${algovalue.endNodeName}',
-                                style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontSize: 12,
-                                  fontFamily: 'Paybooc',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 5.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text:
-                                      '${(algovalue.totalWeight / 60).toInt()}',
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 20,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '분',
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text:
-                                      ' ${(algovalue.totalWeight % 60).toInt()}',
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 20,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '초',
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 10.0),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                height: 20.0,
-                                width: 3.0,
-                              ),
-                              SizedBox(width: 10.0),
-                              RichText(
-                                text: TextSpan(
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: algovalue.meridiem,
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: ' ' + (algovalue.hour >= 10 ? '${algovalue.hour}' : '0${algovalue.hour}'),
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: ':',
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: algovalue.arrivetime.substring(3, 5) +
-                                          ' ',
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '도착',
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontFamily: 'Paybooc',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                    Icon(
+                      Icons.access_time,
+                      color: Colors.blueAccent,
+                    ),
+                    Text(
+                      '시간',
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontSize: 12,
+                        fontFamily: 'Paybooc',
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
-              ));
-        else
-          return Container(
-            height: 50.0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Icon(
-                  Icons.access_time,
-                  color: Colors.blueAccent,
-                ),
-                Text(
-                  '시간',
-                  style: TextStyle(
-                    color: Colors.blueAccent,
-                    fontSize: 12,
-                    fontFamily: 'Paybooc',
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-          );
-        /*SizedBox(
-          height: 100,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text('${algovalue.startNodeName} to ${algovalue.endNodeName}'),
-          ),
-        );*/
-      },
+              );
+          }
+        },
+      );
+    },
       items: [
         ...makeList(),
       ],
