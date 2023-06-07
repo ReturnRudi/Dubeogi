@@ -566,7 +566,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: ' ' + algovalue.arrivetime.substring(0,2),
+                                      text: ' ' + (algovalue.hour >= 10 ? '${algovalue.hour}' : '0${algovalue.hour}'),
                                       style: TextStyle(
                                         color: Colors.blueAccent,
                                         fontSize: 15,
@@ -911,10 +911,10 @@ class _SearchScreenState extends State<SearchScreen> {
       algovalue.direction_alpha = direction_alpha;
       algovalue.totalWeight = total_weight;
       algovalue.arrivetime = DateTime.now().add(Duration(minutes: (total_weight / 60).toInt() + 1)).toString().substring(11,16);
-      int hour = int.parse(algovalue.arrivetime.substring(0,2));
-      if(hour >= 12){
+      algovalue.hour = int.parse(algovalue.arrivetime.substring(0,2));
+      if(algovalue.hour >= 12){
         algovalue.meridiem = '오후';
-        hour -= 12;
+        algovalue.hour -= 12;
       }
       else{
         algovalue.meridiem = '오전';

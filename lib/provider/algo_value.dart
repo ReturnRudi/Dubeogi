@@ -8,6 +8,7 @@ import 'package:Dubeogi/save/save.dart';
 class AlgoValue with ChangeNotifier{
   Graph _graph = Graph();
   //String _showButton = "기본";
+  int hour = 0;
   String _startNodeName = "";
   String _endNodeName = "";
   String meridiem = '';
