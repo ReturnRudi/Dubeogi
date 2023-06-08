@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 
 class CustomText extends StatelessWidget {
   final String text;
-  final Color color;
-  final double fontSize;
-  final FontWeight fontWeight;
+  final Color? color;
+  final double? fontSize;
+  final FontWeight? fontWeight;
 
-  const CustomText({
+  CustomText({
     Key? key,
     required this.text,
-    required this.color,
-    required this.fontSize,
-    required this.fontWeight,
+    this.color,
+    this.fontSize,
+    this.fontWeight,
+    this.align,
   }) : super(key: key);
 
   @override
@@ -19,11 +20,14 @@ class CustomText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        color: color,
-        fontSize: fontSize,
+        color: color ?? Colors.black,
+        fontSize: fontSize ?? 12.0,
         fontFamily: 'Paybooc',
-        fontWeight: fontWeight,
+        fontWeight: fontWeight ?? FontWeight.w700,
       ),
+      textAlign: align ?? TextAlign.start,
     );
   }
+
+  TextAlign? align;
 }

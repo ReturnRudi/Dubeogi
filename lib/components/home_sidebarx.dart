@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:Dubeogi/components/end_alert.dart';
 import 'package:Dubeogi/provider/algo_value.dart';
@@ -142,7 +141,7 @@ class HomeSidebarX extends StatelessWidget {
         ),
       ),
       extendedTheme: SidebarXTheme(
-        width: 270,
+        width: MediaQuery.of(context).size.width*0.7,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.8),
           borderRadius: BorderRadius.circular(20),
@@ -548,7 +547,7 @@ class HomeSidebarX extends StatelessWidget {
             child: CustomText(
               text: '안내종료',
               fontWeight: FontWeight.w700,
-              fontSize: 11.0,
+              fontSize: 10.0,
               color: Colors.white,
             ),
           ),
