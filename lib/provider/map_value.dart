@@ -51,4 +51,21 @@ class MapValue with ChangeNotifier{
     _position = Offset(val_x, val_y);
     _previousPosition = Offset(val_x, val_y);
   }
+
+  void guide_animation(Offset end, double scale) async {
+    int num = 1000;
+
+    double x_change = (end.dx - _position.dx) / num;
+    double y_change = (end.dy - _position.dy) / num;
+    double scale_change = (scale - _scale) / num;
+    print('x_change: $x_change    y_change: $y_change');
+
+    for(int i = 1; i <= num; i++){
+      await Future.delayed(Duration(microseconds: 1));  // 10 milliseconds의 지연시간을 설정
+      _position = Offset(_position.dx + x_change, _position.dy + y_change);
+      _scale += scale_change;
+      notifyListeners(); // position이 변경되었음을 알려 화면을 갱신
+      print("_position: $_position");
+    }
+  }
 }

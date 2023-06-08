@@ -83,12 +83,12 @@ class HomeSidebarX extends StatelessWidget {
           ),
           label: algovalue.homeResult[i].name,
           onTap: () {
-            mapvalue.scale = 6.0;
+            //mapvalue.scale = 6.0;
             print(
                 'check: (${algovalue.homeResult[i].x},${algovalue
                     .homeResult[i].y})');
-            mapvalue.position = Offset(
-                algovalue.homeResult[i].x, algovalue.homeResult[i].y - 50);
+            mapvalue.guide_animation(Offset(
+                algovalue.homeResult[i].x, algovalue.homeResult[i].y - 50), 6);
             mapvalue.guideX = algovalue.homeResult[i].x;
             mapvalue.guideY = algovalue.homeResult[i].y;
             mapvalue.isRequired = true;

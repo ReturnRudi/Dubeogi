@@ -135,6 +135,44 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     mapvalue.previousPosition = details.focalPoint;
+
+    /*setState(() {
+      _scale = (_previousScale * details.scale).clamp(1.3, 12.0);
+      final ratio = MediaQuery
+          .of(context)
+          .size
+          .height /
+          MediaQuery
+              .of(context)
+              .size
+              .width;
+      final screenWidth = _imageWidth_du / _scale;
+      final screenHeight = screenWidth * ratio;
+
+      double minY, maxY;
+
+      double minX = -_imageWidth_du / 2 + screenWidth / 2;
+      double maxX = _imageWidth_du / 2 - screenWidth / 2;
+
+      if (_imageHeight_du > screenHeight) {
+        minY = -_imageHeight_du / 2 + screenHeight / 2;
+        maxY = _imageHeight_du / 2 - screenHeight / 2;
+      } else {
+        minY = _imageHeight_du / 2 - screenHeight / 2;
+        maxY = -_imageHeight_du / 2 + screenHeight / 2;
+      }
+
+      _position += (details.focalPoint - _previousPosition) /
+          _previousScale /
+          scale_offset;
+
+      _position = Offset(
+        _position.dx.clamp(minX, maxX),
+        _position.dy.clamp(minY, maxY),
+      );
+
+      _previousPosition = details.focalPoint;
+    });*/
   }
 
   void _onScaleEnd(ScaleEndDetails details) {
@@ -343,23 +381,30 @@ class _HomeScreenState extends State<HomeScreen> {
     buildingPositions = buildingPositionedList(
         scale_offset: scale_offset, showFloorButton: _showFloorButton);
     vendings = vendingPositionedList(
-        scale: mapvalue.scale, scale_offset: scale_offset);
-    showers =
-        showerPositionedList(scale: mapvalue.scale, scale_offset: scale_offset);
-    stores =
-        storePositionedList(scale: mapvalue.scale, scale_offset: scale_offset);
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
+    showers = showerPositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
+    stores = storePositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
     printers = printerPositionedList(
-        scale: mapvalue.scale, scale_offset: scale_offset);
-    atms = atmPositionedList(scale: mapvalue.scale, scale_offset: scale_offset);
-    lounges =
-        loungePositionedList(scale: mapvalue.scale, scale_offset: scale_offset);
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
+    atms = atmPositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
+    lounges = loungePositionedList(
+        scale: mapvalue.scale,
+        scale_offset: scale_offset);
     buildingNames = buildingnamePositionedList(
       scale: mapvalue.scale,
       scale_offset: scale_offset,
     );
     if (_isInitialized == false) {
       algovalue.initialize();
-      mapvalue.initialize(_imageWidth_du / 2, _imageHeight_du / 2);
+      mapvalue.initialize(_imageWidth_du / 2 , _imageHeight_du / 2);
       _isInitialized = true;
     }
 
@@ -384,21 +429,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Transform.scale(
                       scale: mapvalue.scale,
                       child: Transform.translate(
-                        offset: Offset(
-                                MediaQuery.of(context).size.width /
-                                        scale_offset /
-                                        2 -
-                                    mapvalue.position.dx,
-                                MediaQuery
-                                                .of(context)
-                                            .size
-                                            .height /
-                                        scale_offset /
-                                        2 -
-                                    MediaQuery.of(context).padding.top /
-                                        scale_offset -
-                                    mapvalue.position.dy)
-                            .scale(scale_offset, scale_offset),
+                        offset: Offset(MediaQuery.of(context).size.width / scale_offset / 2 - mapvalue.position.dx, MediaQuery.of(context).size.height / scale_offset / 2 - MediaQuery.of(context).padding.top / scale_offset - mapvalue.position.dy).scale(scale_offset, scale_offset),
                         child: ClipRect(
                           child: Stack(
                             children: [
@@ -445,22 +476,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               if (mapvalue.isRequired == true)
                                 Positioned(
-                                  //width: 300 / mapvalue.scale,
-                                  //height: 40 / mapvalue.scale,
-                                  left: (mapvalue.guideX * scale_offset -
-                                          150 / mapvalue.scale * scale_offset) -
-                                      4 * 1.3 / mapvalue.scale,
-                                  top: (mapvalue.guideY * scale_offset -
-                                          3.5 -
-                                          40 / mapvalue.scale * scale_offset) -
-                                      4 * 1.3 / mapvalue.scale,
-                                  child: CustomText(
-                                    text: 'ABC D SFSDFS NODE NAME ',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 10.0 / mapvalue.scale,
-                                    color: Colors.red,
-                                    align: TextAlign.start,
-                                  ),
+                                  width: 100 / mapvalue.scale,
+                                  height: 20 / mapvalue.scale,
+                                  left: (mapvalue.guideX * scale_offset - 50 / mapvalue.scale),
+                                  top: (mapvalue.guideY * scale_offset - 2.5 - 20 / mapvalue.scale),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text('NODE NAME',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 10.0 / mapvalue.scale,
+                                            color: Colors.red,
+                                            fontFamily: 'Paybooc',
+                                            fontWeight: FontWeight.w700
+                                          ),
+                                        ),
+                                    ],
+                                  )
                                 ),
                               if (mapvalue.isRequired == true)
                                 Positioned(

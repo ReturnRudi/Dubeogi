@@ -164,8 +164,9 @@ final List<String> buildings = [
   '후문',
   '충무로 방향 입구',
   '동대입구 방향 입구',
-  'DUICA쪽 입구'
-  '체육관 쪽 입구'
+  'DUICA쪽 입구',
+  '체육관쪽 입구',
+  '정보문화관p쪽 입구'
 ];
 
 final List<String> selectFromMap = [
@@ -4188,15 +4189,13 @@ void initGraph(Graph graph) {
   //416
   graph.addEdge("학림관 왼쪽 뒷문 안", "학림관 왼쪽 뒷문", 1.3059, 0.0870598, "평지", "도보");
   graph.addEdge("학림관 왼쪽 뒷문", "학림관 왼쪽 뒷문 안", 1.3059, 0.0870598, "평지", "도보");
-  //편의점 입구
-  graph.addEdge("학림관 편의점 입구", "학림관", 100000, 100000, "평지", "도보",
+  //입구
+  graph.addEdge("학림관 입구", "학림관", 100000, 100000, "평지", "도보",
       node2X: 1265,
       node2Y: 1758,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  //입구
-  graph.addEdge("학림관 입구", "학림관", 100000, 100000, "평지", "도보");
   graph.addEdge("학림관", "학림관 입구", 100000, 100000, "평지", "도보");
   //우측 앞문
   graph.addEdge("학림관 우측 앞문", "학림관", 100000, 100000, "평지", "도보");
@@ -6397,7 +6396,7 @@ void initGraph(Graph graph) {
       building2: "실외",
       showRoute2: true);
   graph.addEdge("동대입구 방향 입구", "동대입구", 100000, 100000, "평지", "도보");
-  //346
+  //DUICA쪽 입구
   graph.addEdge("듀이카쪽 학교 입구", "DUICA쪽 입구", 100000, 100000, "평지", "도보",
       node2X: 1625,
       node2Y: 1936,
@@ -6405,7 +6404,14 @@ void initGraph(Graph graph) {
       building2: "실외",
       showRoute2: false);
   graph.addEdge("DUICA쪽 입구", "듀이카쪽 학교 입구", 100000, 100000, "평지", "도보");
-
+  //정보문화관p쪽 입구
+  graph.addEdge("자취촌 학교 입구", "정보문화관p쪽 입구", 100000, 100000, "평지", "도보",
+      node2X: 691,
+      node2Y: 2095,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("정보문화관p쪽 입구", "자취촌 학교 입구", 100000, 100000, "평지", "도보");
 }
 
 Graph initDriveWayGraph(){
