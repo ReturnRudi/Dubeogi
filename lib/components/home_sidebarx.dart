@@ -84,37 +84,15 @@ class HomeSidebarX extends StatelessWidget {
           ),
           label: algovalue.homeResult[i].name,
           onTap: () {
-            if (previous == -1 || previous == i) {
-              //
-              tapcount++;
-            }
-            if (tapcount % 2 == 0) {
-              mapvalue.scale = 6.0;
-              print(
-                  'check: (${algovalue.homeResult[i].x},${algovalue
-                      .homeResult[i].y})');
-              mapvalue.position = Offset(
-                  algovalue.homeResult[i].x, algovalue.homeResult[i].y - 50);
-              mapvalue.guideX = algovalue.homeResult[i].x;
-              mapvalue.guideY = algovalue.homeResult[i].y;
-              mapvalue.isRequired = true;
-            }
-            else if(tapcount % 2 == 1){
-              Fluttertoast.showToast(
-                msg: '해당 위치를 보려면 한번 더 터치하세요.',
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.black45,
-                textColor: Colors.white,
-                fontSize: 16.0,
-              );
-            }
-            Timer(Duration(milliseconds: 500), () {
-              tapcount = 0;
-              previous = -1;
-            });
-            previous = i;
+            mapvalue.scale = 6.0;
+            print(
+                'check: (${algovalue.homeResult[i].x},${algovalue
+                    .homeResult[i].y})');
+            mapvalue.position = Offset(
+                algovalue.homeResult[i].x, algovalue.homeResult[i].y - 50);
+            mapvalue.guideX = algovalue.homeResult[i].x;
+            mapvalue.guideY = algovalue.homeResult[i].y;
+            mapvalue.isRequired = true;
           },
         ),
       );
