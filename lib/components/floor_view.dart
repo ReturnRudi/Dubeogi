@@ -106,7 +106,7 @@ class _FloorViewState extends State<FloorView> {
       child: Stack(
         children: [
           Container(
-            height: 150.0,
+            height: fileNames.length <= 4 ? 55.0 * fileNames.length : 220.0,
             width: 70.0,
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(1.0),
