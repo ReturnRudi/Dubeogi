@@ -156,7 +156,7 @@ class _FindScreenState extends State<FindScreen> {
               // 3. 검색창 아래 뜨는 터치할 수 있는 리스트뷰(건묾명 등)
               Expanded(
                 child: ListView.builder(
-                  itemCount: buildings.length,
+                  itemCount: buildings.sublist(0,21).length,
                   itemBuilder: (context, index) {
                     final name = buildings[index];
                     return GestureDetector(
