@@ -3,13 +3,14 @@ import 'package:Dubeogi/save/save.dart';
 import 'package:flutter/material.dart';
 // 건물 터치시 층수, 시설정보 등을 터치할 수 있는 리스트가 나타남.
 
-
 class FloorView extends StatefulWidget {
   final String showbutton;
   final Function onValueChanged;
 
   const FloorView({
-    Key? key, required this.showbutton, required this.onValueChanged,
+    Key? key,
+    required this.showbutton,
+    required this.onValueChanged,
   }) : super(key: key);
 
   @override
@@ -23,58 +24,49 @@ class _FloorViewState extends State<FloorView> {
   String processString(String input) {
     if (input.endsWith('관')) {
       return input.substring(0, input.length - 1);
-    }
-    else {
+    } else {
       return input;
     }
   }
 
   String replaceToBuildinginfo(String input) {
-    if (input == '시설'){
+    if (input == '시설') {
       return '시설';
-    }
-    else if(input == '기본')
+    } else if (input == '기본')
       return input;
-    else{
+    else {
       String floor = input.replaceAll(RegExp(r'[^0-9]'), '');
       print(floor);
-      if(input.contains('B'))
-      {
+      if (input.contains('B')) {
         return 'B${int.parse(floor)}';
-      }
-      else{
+      } else {
         return '${int.parse(floor)}F';
       }
     }
   }
 
   String? floorTopath(String input, List<String> fileNames) {
-    if (input.contains('F') || input.contains('B'))
-    {
+    if (input.contains('F') || input.contains('B')) {
       String floor = input.replaceAll(RegExp(r'[^0-9B]'), '');
       for (String str in fileNames) {
-        if (!str.contains('(') && !str.contains(')') && str.contains(floor))
-        {
+        if (!str.contains('(') && !str.contains(')') && str.contains(floor)) {
           return defaultpath + str;
         }
       }
-    }
-    else if(input == '기본') {
+    } else if (input == '기본') {
       return OriginalData[widget.showbutton];
-    }
-    else
-    { //시설정보 입력할 때
+    } else {
+      //시설정보 입력할 때
       return input;
-    };
+    }
+    ;
   }
 
   int floorToint(String input) {
-    if (input.contains('F') || input.contains('B'))
-    {
-      String floor  = input.replaceAll(RegExp(r'[^0-9]'), '');
+    if (input.contains('F') || input.contains('B')) {
+      String floor = input.replaceAll(RegExp(r'[^0-9]'), '');
       return int.parse(floor);
-    }
-    else{
+    } else {
       return 0;
     }
   }
@@ -82,7 +74,8 @@ class _FloorViewState extends State<FloorView> {
   @override
   Widget build(BuildContext context) {
     String serachstring = processString(widget.showbutton);
-    List<String> fileNames = allFileNames.where((name) => name.startsWith(serachstring)).toList();
+    List<String> fileNames =
+        allFileNames.where((name) => name.startsWith(serachstring)).toList();
     fileNames.sort((a, b) {
       String aNumber = a.replaceAll(RegExp(r'[^0-9]'), ''); // 숫자만 추출
       String bNumber = b.replaceAll(RegExp(r'[^0-9]'), ''); // 숫자만 추출
@@ -104,48 +97,68 @@ class _FloorViewState extends State<FloorView> {
       right: 4.5,
       bottom: 100.0,
       child: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
           Container(
-            height: fileNames.length <= 4 ? 55.0 * fileNames.length : 220.0,
-            width: 70.0,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(1.0),
+              color: Colors.orangeAccent.withOpacity(0.9),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: ListView.builder(
-              itemCount: fileNames.length,
-              itemBuilder: (context, index) {
-                String fileName = replaceToBuildinginfo(fileNames[index]);
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      int radix = 1;
-                      selectedIndex = index;
-                      if(fileName.contains('B'))
-                        radix = -1;
-                      widget.onValueChanged(floorTopath(fileName, fileNames), radix * floorToint(fileName));
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: selectedIndex == index
-                          ? Colors.blue
-                          : Colors.transparent,
-                    ),
-                    child: ListTile(
-                      title: Center(
-                        child: CustomText(
-                          text: fileName,
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
+            height: fileNames.length <= 4 ? 55.0 * fileNames.length + 14.0: 220.0 + 14.0,
+            width: 75.0,
+          ),
+          Column(
+            children: [
+              CustomText(
+                text: widget.showbutton,
+                fontSize: 9.0,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+              Container(
+                height: fileNames.length <= 4 ? 55.0 * fileNames.length : 220.0,
+                width: 75.0,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(1.0),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ListView.builder(
+                  itemCount: fileNames.length,
+                  itemBuilder: (context, index) {
+                    String fileName = replaceToBuildinginfo(fileNames[index]);
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          int radix = 1;
+                          selectedIndex = index;
+                          if (fileName.contains('B')) radix = -1;
+                          widget.onValueChanged(
+                              floorTopath(fileName, fileNames),
+                              radix * floorToint(fileName));
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: selectedIndex == index
+                              ? Colors.blue
+                              : Colors.transparent,
+                        ),
+                        child: ListTile(
+                          title: Center(
+                            child: CustomText(
+                              text: fileName,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),
