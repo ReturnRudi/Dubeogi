@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
-    AssetImage('assets/images/du.png').resolve(ImageConfiguration());
+        AssetImage('assets/images/du.png').resolve(ImageConfiguration());
     final listener = ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     });
@@ -351,9 +351,9 @@ class _HomeScreenState extends State<HomeScreen> {
     print('check: startLocationStream();');
     await requestLocationPermission();
     positionStream = Geolocator.getPositionStream(
-        desiredAccuracy: LocationAccuracy.high,
-        //distanceFilter: 1
-        intervalDuration: Duration(milliseconds: 1000))
+            desiredAccuracy: LocationAccuracy.high,
+            //distanceFilter: 1
+            intervalDuration: Duration(milliseconds: 1000))
         .listen((Position position) {
       setState(() {
         now_w = position.latitude;
@@ -488,7 +488,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   startPointsBlue: algovalue.startPointsBlue,
                                   // 빈 리스트 전달
                                   endPointsBlue:
-                                  algovalue.endPointsBlue, // 빈 리스트 전달
+                                      algovalue.endPointsBlue, // 빈 리스트 전달
                                 ),
                                 child: Stack(
                                   children: [
@@ -514,6 +514,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               ),
+                              if (mapvalue.isRequired == true)
+                                Positioned(
+                                  width: 300 / mapvalue.scale,
+                                  height: 40 / mapvalue.scale,
+                                  left: (mapvalue.guideX * scale_offset - 150 / mapvalue.scale * scale_offset) -
+                                      4 * 1.3 / mapvalue.scale,
+                                  top: (mapvalue.guideY * scale_offset - 3.5 - 40 / mapvalue.scale * scale_offset) -
+                                      4 * 1.3 / mapvalue.scale,
+                                  child: CustomText(
+                                    text: 'NODE NAME',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 10.0 / mapvalue.scale,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              if (mapvalue.isRequired == true)
+                                Positioned(
+                                  left: mapvalue.guideX * scale_offset - 2.5,
+                                  top: mapvalue.guideY * scale_offset - 2.5,
+                                  child: Container(
+                                    width: 5,
+                                    height: 5,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.transparent,
+                                        border: Border.all(
+                                            color: Colors.red,
+                                            width: 0.5
+                                        )
+                                    ),
+                                  ),
+                                ),
                               if (isTrackingLocation)
                                 Stack(
                                   children: [
@@ -543,7 +575,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           border: Border.all(
                                               color: Colors.white,
                                               width:
-                                              1.5 * 1.3 / mapvalue.scale),
+                                                  1.5 * 1.3 / mapvalue.scale),
                                           color: Colors.red,
                                           shape: BoxShape.circle,
                                         ),
@@ -567,7 +599,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 child: Padding(
                                   padding:
-                                  EdgeInsets.symmetric(horizontal: 4.0),
+                                      EdgeInsets.symmetric(horizontal: 4.0),
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(context, '/find');
