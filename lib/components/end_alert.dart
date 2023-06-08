@@ -1,3 +1,4 @@
+import 'package:Dubeogi/save/custom_text.dart';
 import 'package:flutter/material.dart';
 // 안내 종료 버튼을 누를 때 뜨는 경고창.
 // 실수로 눌렀을 경우를 방지하는 역할도 제공
@@ -19,8 +20,8 @@ class EndAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title),
-      content: Text(message),
+      title: CustomText(text: title, color: Colors.red, fontSize: 15.0,),
+      content: CustomText(text: message, color: Colors.black, fontSize: 13.0,),
       actions: [
         if (onOption1Pressed != null)
           TextButton(

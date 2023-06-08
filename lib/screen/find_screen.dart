@@ -18,7 +18,7 @@ class _FindScreenState extends State<FindScreen> {
   dynamic getdata;
 
   // 해당 건물이 존재하는지 확인
-  bool isExistBuilding(String name) => buildings.contains(name);
+  bool isExistBuilding(String name) => buildings.sublist(0,21).contains(name);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _FindScreenState extends State<FindScreen> {
                             controller: Controller,
                           ),
                           suggestionsCallback: (pattern) {
-                            return buildings.where((building) => building
+                            return buildings.sublist(0,21).where((building) => building
                                 .toLowerCase()
                                 .contains(pattern.toLowerCase()));
                           },
@@ -118,11 +118,11 @@ class _FindScreenState extends State<FindScreen> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text("Alert"),
-                                content: Text("Content"),
+                                title: CustomText(text: "경고", fontSize: 15.0,color: Colors.redAccent,),
+                                content: CustomText(text: "존재하지 않는 건물입니다.",fontSize: 15.0,),
                                 actions: [
                                   TextButton(
-                                    child: Text("OK"),
+                                    child: CustomText(text: "확인",color: Colors.blueAccent,),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },

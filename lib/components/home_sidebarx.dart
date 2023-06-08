@@ -33,8 +33,8 @@ class HomeSidebarX extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return EndAlert(
-            title: '종료?',
-            message: '진짜로?',
+            title: '알림',
+            message: '종료하시겠습니까?',
             onOption1Pressed: () {
               algovalue.erase();
               algovalue.isRequired = false;
