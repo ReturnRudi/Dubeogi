@@ -254,6 +254,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       child: TypeAheadField(
                                         textFieldConfiguration:
                                         TextFieldConfiguration(
+                                          cursorColor: Colors.orangeAccent,
                                             controller: firstController,
                                             focusNode: firstFocus,
                                             decoration: InputDecoration(
@@ -277,6 +278,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   child: Icon(
                                                     Icons.cancel,
                                                     size: 20.0,
+                                                    color: Colors.grey[600],
                                                   ),
                                                 )),
                                             onSubmitted: (_) {
@@ -376,6 +378,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       child: TypeAheadField(
                                         textFieldConfiguration:
                                         TextFieldConfiguration(
+                                          cursorColor: Colors.orangeAccent,
                                           controller: secondController,
                                           focusNode: secondFocus,
                                           decoration: InputDecoration(
@@ -396,6 +399,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 child: Icon(
                                                   Icons.cancel,
                                                   size: 20.0,
+                                                  color: Colors.grey[600],
                                                 ),
                                               )),
                                         ),

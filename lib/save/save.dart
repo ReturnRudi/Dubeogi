@@ -1822,7 +1822,7 @@ void initGraph(Graph graph) {
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("다향관 1층 입구 앞2", "다향관 1층 입구 앞", 6.70215, 0.44681, "오르막", "도보");
+  graph.addEdge("다향관 1층 입구 앞2", "다향관 1층 입구 앞", 15.1095, 1.46884, "오르막", "도보");
   //211
   graph.addEdge("다향관 1층 입구 앞2", "다향관 1층 입구 앞3", 3.42703, 0.228469, "내리막", "도보",
       node2X: 1370,
@@ -2491,7 +2491,7 @@ void initGraph(Graph graph) {
       isInside2: 0,
       building2: "실외",
       showRoute2: true);
-  graph.addEdge("원흥관 앞 계단 아래", "팔정도 후문 차도4", 20.5872, 1.37248, "오르막", "차도");
+  graph.addEdge("원흥관 앞 계단 아래", "팔정도 후문 차도4", 43.3856, 4.34675, "오르막", "차도");
 //293
   graph.addEdge("원흥관 앞 계단 아래", "원흥관 앞 계단 중간1", 16.6667, 2.5, "계단위", "도보",
       node2X: 943,

@@ -8,6 +8,7 @@ class MapValue with ChangeNotifier{
   double _guideX = 0.0;
   double _guideY = 0.0;
   bool _isRequired = false;
+  bool _isAnimating = false;
 
   double get scale => _scale;
   double get previousScale => _previousScale;
@@ -53,6 +54,12 @@ class MapValue with ChangeNotifier{
   }
 
   void guide_animation(Offset end, double scale) async {
+    if (_isAnimating) {
+      return;
+    }
+
+    _isAnimating = true;
+
     int num = 1000;
 
     double x_change = (end.dx - _position.dx) / num;
@@ -67,5 +74,7 @@ class MapValue with ChangeNotifier{
       notifyListeners(); // position이 변경되었음을 알려 화면을 갱신
       print("_position: $_position");
     }
+
+    _isAnimating = false;
   }
 }
