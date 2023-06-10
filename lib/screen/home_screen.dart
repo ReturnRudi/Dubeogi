@@ -596,9 +596,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               // 길찾기 버튼
                               Container(
+                                color: Color(0xFFDDA2),
                                 height: 43.0,
                                 width: 60.0,
                                 child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.orangeAccent
+                                  ),
                                   onPressed: () {
                                     algovalue.isFind = false;
                                     Navigator.pushNamed(
@@ -727,7 +731,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Icon(isTrackingLocation
                       ? Icons.location_off
                       : Icons.location_on),
-                  backgroundColor: Colors.blue.withOpacity(0.9),
+                  backgroundColor: Colors.orangeAccent.withOpacity(0.9),
                 ),
               ),
             ],
