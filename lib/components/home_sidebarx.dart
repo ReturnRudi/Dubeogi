@@ -537,21 +537,26 @@ class HomeSidebarX extends StatelessWidget {
         ...makeList(),
       ],
       footerBuilder: (context, extended) {
-        return Container(
-          width: MediaQuery.of(context).size.width,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange.withOpacity(0.8),
-            ),
-            onPressed: () => endGuide(context),
-            child: CustomText(
-              text: '안내종료',
-              fontWeight: FontWeight.w700,
-              fontSize: 10.0,
-              color: Colors.white,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange.withOpacity(0.8),
+                padding: EdgeInsets.zero,
+              ),
+              onPressed: () => endGuide(context),
+              child: CustomText(
+                text: '안내종료',
+                fontWeight: FontWeight.w700,
+                fontSize: 11.0,
+                color: Colors.white,
+              ),
             ),
           ),
         );
+
       },
     );
   }
