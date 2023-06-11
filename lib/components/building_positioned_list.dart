@@ -84,8 +84,8 @@ List<Widget> buildingPositionedList(
       ),
     ),
     Positioned(
-      left: 1530 * scale_offset,
-      top: 2564 * scale_offset,
+      left: 1528 * scale_offset,
+      top: 2563 * scale_offset,
       child: InkWell(
         onTap: () {
           showFloorButton('법학관_만해관');
@@ -136,7 +136,7 @@ List<Widget> buildingPositionedList(
       ),
     ),
     Positioned(
-      left: 1069 * scale_offset,
+      left: 1067 * scale_offset,
       top: 3118 * scale_offset,
       child: InkWell(
         onTap: () {
