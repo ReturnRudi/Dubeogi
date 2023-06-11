@@ -136,7 +136,7 @@ List<Widget> buildingPositionedList(
       ),
     ),
     Positioned(
-      left: 1067 * scale_offset,
+      left: 1069 * scale_offset,
       top: 3118 * scale_offset,
       child: InkWell(
         onTap: () {
