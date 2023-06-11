@@ -1989,14 +1989,30 @@ void initGraph(Graph graph) {
       building2: "실외",
       showRoute2: true);
   graph.addEdge("체육관 옆문", "체육관 옆문 앞", 9.26713, 0.617809, "평지", "도보");
-//231
-  graph.addEdge("체육관 옆문 앞", "듀이카 가는길1", 28.64, 1.90933, "내리막", "도보",
+  //231
+  graph.addEdge("체육관 옆문 앞", "체육관 입구 앞", 23.18597, 1.54573, "내리막", "도보",
+      node2X: 1317,
+      node2Y: 1873,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관 입구 앞", "체육관 옆문 앞", 34.64335, 3.90105, "오르막", "도보");
+  //743
+  graph.addEdge("체육관 입구 앞", "체육관 입구", 10.3513, 0.690084, "평지", "도보",
+      node2X: 1374,
+      node2Y: 1882,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관 입구", "체육관 입구 앞", 10.3513, 0.690084, "평지", "도보");
+  //742
+  graph.addEdge("체육관 입구 앞", "듀이카 가는길1", 5.45403, 0.36360, "내리막", "도보",
       node2X: 1322,
       node2Y: 1843,
       isInside2: 0,
       building2: "실외",
       showRoute2: false);
-  graph.addEdge("듀이카 가는길1", "체육관 옆문 앞", 42.7925, 4.81869, "오르막", "도보");
+  graph.addEdge("듀이카 가는길1", "체육관 입구 앞", 8.14915, 0.91764, "오르막", "도보");
 //232
   graph.addEdge("듀이카 가는길1", "듀이카 가는길2", 3.96261, 0.264174, "평지", "도보",
       node2X: 1344,
@@ -6308,11 +6324,11 @@ void initGraph(Graph graph) {
       building2: "실외",
       showRoute2: false);
   graph.addEdge("학생회관", "학생회관 계단 입구", 100000, 100000, "평지", "도보");
-//입구
+  //입구
   graph.addEdge("학생회관 입구", "학생회관", 100000, 100000, "평지", "도보");
   graph.addEdge("학생회관", "학생회관 입구", 100000, 100000, "평지", "도보");
-//      체육관
-//정문
+  //      체육관
+  //정문
   graph.addEdge("체육관 정문", "체육관", 100000, 100000, "평지", "도보",
       node2X: 1432,
       node2Y: 1958,
@@ -6320,9 +6336,12 @@ void initGraph(Graph graph) {
       building2: "실외",
       showRoute2: false);
   graph.addEdge("체육관", "체육관 정문", 100000, 100000, "평지", "도보");
-//옆문
+  //옆문
   graph.addEdge("체육관 옆문", "체육관", 100000, 100000, "평지", "도보");
   graph.addEdge("체육관", "체육관 옆문", 100000, 100000, "평지", "도보");
+  //입구
+  graph.addEdge("체육관 입구", "체육관", 100000, 100000, "평지", "도보");
+  graph.addEdge("체육관", "체육관 입구", 100000, 100000, "평지", "도보");
 //      상록원
 //상록원 옆입구
   graph.addEdge("상록원 옆입구", "상록원", 100000, 100000, "평지", "도보",
@@ -6412,6 +6431,14 @@ void initGraph(Graph graph) {
       building2: "실외",
       showRoute2: false);
   graph.addEdge("정보문화관p쪽 입구", "자취촌 학교 입구", 100000, 100000, "평지", "도보");
+  //체육관쪽 입구
+  graph.addEdge("체육관쪽 입구1", "체육관쪽 입구", 100000, 100000, "평지", "도보",
+      node2X: 1459,
+      node2Y: 2166,
+      isInside2: 0,
+      building2: "실외",
+      showRoute2: false);
+  graph.addEdge("체육관쪽 입구", "체육관쪽 입구1", 100000, 100000, "평지", "도보");
 }
 
 Graph initDriveWayGraph(){
