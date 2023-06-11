@@ -11,6 +11,7 @@ import 'package:Dubeogi/components/buildingname_positioned_list.dart';
 import 'package:Dubeogi/components/facility_button.dart';
 import 'package:Dubeogi/components/facility_offsets.dart';
 import 'package:Dubeogi/components/floor_view.dart';
+import 'package:Dubeogi/components/end_alert.dart';
 import 'package:Dubeogi/components/home_sidebarx.dart';
 import 'package:Dubeogi/components/linepainter.dart';
 
@@ -21,6 +22,7 @@ import 'package:Dubeogi/save/custom_text.dart';
 import 'package:Dubeogi/save/building_info.dart';
 
 import 'package:Dubeogi/screen/building_info_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -336,23 +338,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<bool> _onBackPressed() async {
     bool? confirmExit = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text("앱 종료?"),
-        content: Text("진짜로?"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: Text('확인'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: Text('취소'),
-          ),
-        ],
+      builder: (context) => EndAlert(
+        title: 'DU벅이 - 동국대학교 길찾기',
+        message: '종료하시겠습니까?',
+        onOption1Pressed: () { // 아니오
+          Navigator.of(context).pop(false);
+        },
+        onOption2Pressed: () { // 예
+          Navigator.of(context).pop(true);
+        },
       ),
     );
     return confirmExit ?? false;
