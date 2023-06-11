@@ -340,6 +340,22 @@ List<Widget> vendingPositionedList({required double scale, required double scale
           ),
         )
     ),
+    Positioned(
+        width: 100 / scale,
+        height: 40 / scale,
+        left: 1309 * scale_offset - 50 / scale,
+        top: 3044 * scale_offset - 20 / scale,
+        child: Container(
+          child: Align(
+            alignment: Alignment.center,
+            child: Icon(
+              Icons.local_drink,
+              size: 10 / (scale*0.7),
+              color: Colors.blue,
+            ),
+          ),
+        )
+    ),
   ];
 
   return widgets;
@@ -830,6 +846,38 @@ List<Widget> printerPositionedList({required double scale, required double scale
         height: 40 / scale,
         left: 1248 * scale_offset - 50 / scale,
         top: 1773 * scale_offset - 20 / scale,
+        child: Container(
+          child: Align(
+            alignment: Alignment.center,
+            child: Icon(
+              Icons.print,
+              size: 10 / (scale*0.7),
+              color: Colors.green,
+            ),
+          ),
+        )
+    ),
+    Positioned(
+        width: 100 / scale,
+        height: 40 / scale,
+        left: 1644 * scale_offset - 50 / scale,
+        top: 2866 * scale_offset - 20 / scale,
+        child: Container(
+          child: Align(
+            alignment: Alignment.center,
+            child: Icon(
+              Icons.print,
+              size: 10 / (scale*0.7),
+              color: Colors.green,
+            ),
+          ),
+        )
+    ),
+    Positioned(
+        width: 100 / scale,
+        height: 40 / scale,
+        left: 1290 * scale_offset - 50 / scale,
+        top: 3058 * scale_offset - 20 / scale,
         child: Container(
           child: Align(
             alignment: Alignment.center,
