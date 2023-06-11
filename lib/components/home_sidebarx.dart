@@ -92,6 +92,7 @@ class HomeSidebarX extends StatelessWidget {
             mapvalue.guideX = algovalue.homeResult[i].x;
             mapvalue.guideY = algovalue.homeResult[i].y;
             mapvalue.isRequired = true;
+            mapvalue.nodeName = algovalue.homeResult[i].name;
           },
         ),
       );

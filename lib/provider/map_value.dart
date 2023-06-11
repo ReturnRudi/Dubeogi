@@ -9,6 +9,7 @@ class MapValue with ChangeNotifier{
   double _guideY = 0.0;
   bool _isRequired = false;
   bool _isAnimating = false;
+  String _nodeName = "";
 
   double get scale => _scale;
   double get previousScale => _previousScale;
@@ -17,6 +18,7 @@ class MapValue with ChangeNotifier{
   double get guideX => _guideX;
   double get guideY => _guideY;
   bool get isRequired => _isRequired;
+  String get nodeName => _nodeName;
 
   set scale(double val){
     _scale = val;
@@ -45,6 +47,10 @@ class MapValue with ChangeNotifier{
   set isRequired(bool tf){
     _isRequired = tf;
     print('check: mapvlue-isRequired = ${_isRequired}');
+    notifyListeners();
+  }
+  set nodeName(String name){
+    _nodeName = name;
     notifyListeners();
   }
 

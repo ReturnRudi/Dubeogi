@@ -487,7 +487,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text('NODE NAME',
+                                      Text(mapvalue.nodeName,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 10.0 / mapvalue.scale,
