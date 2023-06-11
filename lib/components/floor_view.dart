@@ -36,7 +36,6 @@ class _FloorViewState extends State<FloorView> {
       return input;
     else {
       String floor = input.replaceAll(RegExp(r'[^0-9]'), '');
-      print(floor);
       if (input.contains('B')) {
         return 'B${int.parse(floor)}';
       } else {
@@ -46,13 +45,15 @@ class _FloorViewState extends State<FloorView> {
   }
 
   String? floorTopath(String input, List<String> fileNames) {
+    List<String> matchedfloors = [];
     if (input.contains('F') || input.contains('B')) {
       String floor = input.replaceAll(RegExp(r'[^0-9B]'), '');
       for (String str in fileNames) {
-        if (!str.contains('(') && !str.contains(')') && str.contains(floor)) {
-          return defaultpath + str;
-        }
+        if (str.contains(floor))
+          matchedfloors.add(str);
       }
+      matchedfloors.sort();
+      return defaultpath + matchedfloors[0];
     } else if (input == '기본') {
       return OriginalData[widget.showbutton];
     } else {
