@@ -36,14 +36,15 @@ class HomeSidebarX extends StatelessWidget {
             title: '알림',
             message: '종료하시겠습니까?',
             onOption1Pressed: () {
+              Navigator.pop(context);
+            },
+            onOption2Pressed: () {
               algovalue.erase();
               algovalue.isRequired = false;
               mapvalue.isRequired = false;
               algovalue.open = 0;
               Navigator.pop(context);
-            },
-            onOption2Pressed: () {
-              Navigator.pop(context);
+
             },
           );
         });
