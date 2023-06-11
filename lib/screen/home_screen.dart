@@ -480,30 +480,62 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               if (mapvalue.isRequired == true)
                                 Positioned(
-                                  width: 100 / mapvalue.scale,
+                                  width: 200 / mapvalue.scale,
                                   height: 20 / mapvalue.scale,
-                                  left: (mapvalue.guideX * scale_offset - 50 / mapvalue.scale),
+                                  left: (mapvalue.guideX * scale_offset - 100 / mapvalue.scale),
                                   top: (mapvalue.guideY * scale_offset - 2.5 - 20 / mapvalue.scale),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(mapvalue.nodeName,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 10.0 / mapvalue.scale,
-                                            color: Colors.red,
-                                            fontFamily: 'Paybooc',
-                                            fontWeight: FontWeight.w700
+                                      Stack(
+                                        children: <Widget>[
+                                          // 아웃라인용 텍스트
+                                          Text(mapvalue.nodeName,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 10.0 / mapvalue.scale,
+                                              fontFamily: 'Paybooc',
+                                              fontWeight: FontWeight.w700,
+                                              foreground: Paint()
+                                                ..style = PaintingStyle.stroke
+                                                ..strokeWidth = 0.8 / mapvalue.scale
+                                                ..color = Colors.black, // 아웃라인 색
+                                            ),
                                           ),
-                                        ),
+                                          // 실제 텍스트
+                                          Text(mapvalue.nodeName,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 10.0 / mapvalue.scale,
+                                              fontFamily: 'Paybooc',
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.orangeAccent, // 실제 텍스트 색
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
                                     ],
                                   )
                                 ),
                               if (mapvalue.isRequired == true)
                                 Positioned(
-                                  left: mapvalue.guideX * scale_offset - 2.5,
-                                  top: mapvalue.guideY * scale_offset - 2.5,
-                                  child: Container(
+                                  left: mapvalue.guideX * scale_offset - 146/3 * scale_offset / mapvalue.scale,
+                                  top: mapvalue.guideY * scale_offset - 146/3 * scale_offset / mapvalue.scale,
+                                  width: 1522/3 * scale_offset / mapvalue.scale,
+                                  height: 921/3 * scale_offset / mapvalue.scale,
+                                  child: Image.asset(
+                                      'assets/images/position.png',
+                                  )
+/*                                  Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/images/position.png')
+                                      ),
+                                      border: Border.all(width: 1),
+                                    ),
+                                  )*/
+/*                                  Container(
                                     width: 5,
                                     height: 5,
                                     decoration: BoxDecoration(
@@ -511,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: Colors.transparent,
                                         border: Border.all(
                                             color: Colors.red, width: 0.5)),
-                                  ),
+                                  ),*/
                                 ),
                               if (isTrackingLocation)
                                 Stack(
