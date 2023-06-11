@@ -74,7 +74,7 @@ class MapValue with ChangeNotifier{
     print('x_change: $x_change    y_change: $y_change');
 
     for(int i = 1; i <= num; i++){
-      await Future.delayed(Duration(microseconds: 1));  // 10 milliseconds의 지연시간을 설정
+      await Future.delayed(Duration(microseconds: 750));  // 10 milliseconds의 지연시간을 설정
       _position = Offset(_position.dx + x_change, _position.dy + y_change);
       _scale += scale_change;
       notifyListeners(); // position이 변경되었음을 알려 화면을 갱신
