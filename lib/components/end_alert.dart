@@ -26,12 +26,12 @@ class EndAlert extends StatelessWidget {
         if (onOption1Pressed != null)
           TextButton(
             onPressed: onOption1Pressed,
-            child: Text('아니오'),
+            child: Text('네'),
           ),
         if (onOption2Pressed != null)
           TextButton(
             onPressed: onOption2Pressed,
-            child: Text('예'),
+            child: Text('아니요'),
           ),
       ],
     );
