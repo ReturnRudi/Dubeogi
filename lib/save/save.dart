@@ -2951,7 +2951,7 @@ void initGraph(Graph graph) {
       node2X: 830,
       node2Y: 2156,
       isInside2: 3,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 3층 엘베 갈림길", "정P 3층 후문", 3.27336, 0.218224, "평지", "도보");
   //353
@@ -2959,7 +2959,7 @@ void initGraph(Graph graph) {
       node2X: 821,
       node2Y: 2155,
       isInside2: 3,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 3층 계단 앞", "정P 3층 엘베 갈림길", 1.62434, 0.10829, "평지", "도보");
   //354
@@ -2967,7 +2967,7 @@ void initGraph(Graph graph) {
       node2X: 821,
       node2Y: 2162,
       isInside2: 3,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 내 3층 계단", "정P 3층 계단 앞", 1.25565, 0.0837101, "평지", "도보");
   //355
@@ -2975,7 +2975,7 @@ void initGraph(Graph graph) {
       node2X: 809,
       node2Y: 2156,
       isInside2: 3,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 3층 엘베 앞", "정P 3층 계단 앞", 2.16001, 0.144, "평지", "도보");
   //356
@@ -2983,7 +2983,7 @@ void initGraph(Graph graph) {
       node2X: 810,
       node2Y: 2162,
       isInside2: 3,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 3층 엘베", "정P 3층 엘베 앞", 1.09112, 0.0727413, "평지", "도보");
   //357
@@ -2991,7 +2991,7 @@ void initGraph(Graph graph) {
       node2X: 816,
       node2Y: 2006,
       isInside2: 3,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 3층 정문 갈림길", "정P 3층 엘베 갈림길", 27.0238, 1.80158, "평지", "도보");
   //358
@@ -3003,7 +3003,7 @@ void initGraph(Graph graph) {
       node2X: 821,
       node2Y: 2162,
       isInside2: 2,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 내 2층 계단", "정P 내 3층 계단", 13.3333, 2, "계단위", "도보");
   //정P 엘베 2층 - 3층 이동
@@ -3011,7 +3011,7 @@ void initGraph(Graph graph) {
       node2X: 810,
       node2Y: 2162,
       isInside2: 2,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: true);
   graph.addEdge("정P 2층 엘베", "정P 3층 엘베", 132, 0, "엘베", "도보");
   //361
@@ -3019,7 +3019,7 @@ void initGraph(Graph graph) {
       node2X: 809,
       node2Y: 2156,
       isInside2: 2,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 2층 엘베 앞", "정P 2층 엘베", 1.09112, 0.0727413, "평지", "도보");
   //362
@@ -3027,7 +3027,7 @@ void initGraph(Graph graph) {
       node2X: 821,
       node2Y: 2155,
       isInside2: 2,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 내 2층 계단 앞", "정P 2층 엘베 앞", 2.16001, 0.144, "평지", "도보");
   //363
@@ -3038,7 +3038,7 @@ void initGraph(Graph graph) {
       node2X: 830,
       node2Y: 2156,
       isInside2: 2,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 2층 엘베 갈림길", "정P 내 2층 계단 앞", 1.62434, 0.10829, "평지", "도보");
   //365
@@ -3046,7 +3046,7 @@ void initGraph(Graph graph) {
       node2X: 816,
       node2Y: 2006,
       isInside2: 2,
-      building2: "정p",
+      building2: "정보문화관p",
       showRoute2: false);
   graph.addEdge("정P 2층 정문 갈림길", "정P 2층 엘베 갈림길", 27.0238, 1.80158, "평지", "도보");
   //366
