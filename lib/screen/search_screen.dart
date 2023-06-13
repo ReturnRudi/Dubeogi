@@ -867,8 +867,11 @@ class _SearchScreenState extends State<SearchScreen> {
       List<Node> endNodes = [];
 
       for (int i = 0; i < result.length; i++) {
-        if (i == 0)
+        if (i == 0) {
           startNodes.add(result[i]);
+          if(result.length == 1)
+            endNodes.add(result[i]);
+        }
         else if (i == result.length - 1)
           endNodes.add(result[i]);
         else {
@@ -879,7 +882,6 @@ class _SearchScreenState extends State<SearchScreen> {
           total_weight += algovalue.graph.findEdge(result[i].name, result[i + 1].name)!.time_weight;
         }*/
       }
-
       for (Node str in result) {
         print("print name: ${str.name}");
       }
