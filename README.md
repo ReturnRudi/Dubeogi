@@ -1,6 +1,6 @@
 ![playstore](./playstore.png)
 
-# DU벅이 - 동국대학교 길찾기 어플리케이션
+# DU벅이 - 동국대학교 길찾기 어플리케이션 [[Google Play 스토어 링크]](https://play.google.com/store/apps/details?id=com.flutter.dubeogi)
 수직 이동 및 실내 경로를 포함한 동국대학교 전용 경로 안내 어플리케이션
 
 ## 📋 프로젝트 소개
