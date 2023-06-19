@@ -21,5 +21,14 @@
 - **Framework**: <img src="https://img.shields.io/badge/flutter-02569B?style=flat-square&logo=flutter&logoColor=white" />
 - **Language**: <img src="https://img.shields.io/badge/dart-0175C2?style=flat-square&logo=dart&logoColor=white" />
 
+### ⏰ 개발 타임라인
+- 타임라인 [[Link]](https://github.com/ReturnRudi/Dubeogi/blob/master/timeline.md)
+
+### 📃 최종 보고서
+- 최종보고서 [[Link]](https://github.com/ReturnRudi/Dubeogi/blob/master/report.md)
+
+### 🎞 발표자료
+- 발표자료 [[Link]](https://github.com/ReturnRudi/Dubeogi/blob/master/ppt.md)
+
 ### 🚨 에러수집
-- 구글폼 [[Link]](https://forms.gle/QyyDc98YARxDLh9L7)<br>
+- 구글폼 [[Link]](https://forms.gle/QyyDc98YARxDLh9L7)
