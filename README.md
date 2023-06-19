@@ -21,6 +21,9 @@
 - **Framework**: <img src="https://img.shields.io/badge/flutter-02569B?style=flat-square&logo=flutter&logoColor=white" />
 - **Language**: <img src="https://img.shields.io/badge/dart-0175C2?style=flat-square&logo=dart&logoColor=white" />
 
+### 🚨 에러수집
+- 구글폼 [[Link]](https://forms.gle/QyyDc98YARxDLh9L7)<br>
+
 ### ⏰ 개발 타임라인
 ##### <4/4>
 
@@ -130,5 +133,3 @@
 ##### <6/8>  
 
 - 드로어 터치시 해당 노드 표시 애니메이션 구현  
-
-
