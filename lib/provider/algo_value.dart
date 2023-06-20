@@ -274,6 +274,9 @@ class AlgoValue with ChangeNotifier{
     double closestDistance = double.infinity;
 
     for (Node node in nodes) {
+      if(buildings.contains(node.name) || node.isInside != 0){
+        continue;
+      }
       double distance = (node.x - dx) * (node.x - dx) + (node.y - dy) * (node.y - dy);
       if (distance < closestDistance) {
         closestDistance = distance;

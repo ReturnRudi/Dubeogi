@@ -734,7 +734,6 @@ class _SearchScreenState extends State<SearchScreen> {
     algovalue.homeWeight = algovalue.totalWeight;
     mapvalue.position = Offset((algovalue.graph.findNode(firstController.text).x + algovalue.graph.findNode(secondController.text).x) / 2, (algovalue.graph.findNode(firstController.text).y + algovalue.graph.findNode(secondController.text).y) / 2);
     mapvalue.scale = 2;
-    //
     Navigator.of(context).popUntil((route) => route.isFirst);
     algovalue.isFind = false; // searchscreen에서의 값
     algovalue.isRequired = true; // drawer 쓸건지 안쓸건지
