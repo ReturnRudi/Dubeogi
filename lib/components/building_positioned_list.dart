@@ -175,19 +175,6 @@ List<Widget> buildingPositionedList(
       ),
     ),
     Positioned(
-      left: 769 * scale_offset,
-      top: 1920 * scale_offset,
-      child: InkWell(
-        onTap: () {
-          showFloorButton('정보문화관p');
-        },
-        child: Image.asset(
-          LookData['정보문화관p']!,
-          scale: 1 / scale_offset,
-        ),
-      ),
-    ),
-    Positioned(
       left: 634 * scale_offset,
       top: 1866 * scale_offset,
       child: InkWell(
@@ -196,6 +183,19 @@ List<Widget> buildingPositionedList(
         },
         child: Image.asset(
           LookData['정보문화관q']!,
+          scale: 1 / scale_offset,
+        ),
+      ),
+    ),
+    Positioned(
+      left: 769 * scale_offset,
+      top: 1920 * scale_offset,
+      child: InkWell(
+        onTap: () {
+          showFloorButton('정보문화관p');
+        },
+        child: Image.asset(
+          LookData['정보문화관p']!,
           scale: 1 / scale_offset,
         ),
       ),

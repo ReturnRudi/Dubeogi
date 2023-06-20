@@ -34,7 +34,7 @@ class HomeSidebarX extends StatelessWidget {
         builder: (BuildContext context) {
           return EndAlert(
             title: '알림',
-            message: '종료하시겠습니까?',
+            message: '길안내를 종료하시겠습니까?',
             onOption1Pressed: () {
               Navigator.pop(context);
             },
