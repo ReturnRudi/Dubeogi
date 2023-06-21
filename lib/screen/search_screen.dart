@@ -726,7 +726,6 @@ class _SearchScreenState extends State<SearchScreen> {
     // # reconstruct path를 새로하면 됨.
 
     algovalue.colorPath();
-    //
     algovalue.startNodeName = firstController.text;
     algovalue.endNodeName = secondController.text;
     algovalue.homeDirection = algovalue.direction_alpha;
@@ -738,10 +737,10 @@ class _SearchScreenState extends State<SearchScreen> {
     algovalue.isFind = false; // searchscreen에서의 값
     algovalue.isRequired = true; // drawer 쓸건지 안쓸건지
     mapvalue.isRequired = false; // 노드 표시가 있다면 비활성화
-    //dispose();
   }
 
   void _handleSubmit() {
+    algovalue.isRequired = false;
     int selectOption = algovalue.selectOption;
     String weight_select;
     double total_weight = 0;

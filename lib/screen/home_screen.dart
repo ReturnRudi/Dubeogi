@@ -468,113 +468,195 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Stack(
                                   children: [
                                     ...buildingNames,
-                                  ],
-                                ),
-                              ),
-                              if (mapvalue.isRequired == true)
-                                Positioned(
-                                  width: 200 / mapvalue.scale,
-                                  height: 20 / mapvalue.scale,
-                                  left: (mapvalue.guideX * scale_offset - 100 / mapvalue.scale),
-                                  top: (mapvalue.guideY * scale_offset - 2.5 - 20 / mapvalue.scale),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
+                                    if (mapvalue.isRequired == true)
+                                      Positioned(
+                                          width: 200 / mapvalue.scale,
+                                          height: 20 / mapvalue.scale,
+                                          left: (mapvalue.guideX * scale_offset - 100 / mapvalue.scale),
+                                          top: (mapvalue.guideY * scale_offset - 2.5 - 20 / mapvalue.scale),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Stack(
+                                                children: <Widget>[
+                                                  // 아웃라인용 텍스트
+                                                  Text(mapvalue.nodeName,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontFamily: 'Paybooc',
+                                                      fontWeight: FontWeight.w700,
+                                                      foreground: Paint()
+                                                        ..style = PaintingStyle.stroke
+                                                        ..strokeWidth = 0.8 / mapvalue.scale
+                                                        ..color = Colors.black, // 아웃라인 색
+                                                    ),
+                                                  ),
+                                                  // 실제 텍스트
+                                                  Text(mapvalue.nodeName,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontFamily: 'Paybooc',
+                                                      fontWeight: FontWeight.w700,
+                                                      color: Colors.orangeAccent, // 실제 텍스트 색
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                      ),
+                                    if (mapvalue.isRequired == true)    //노드 안내 아코
+                                      Positioned(
+                                          left: mapvalue.guideX * scale_offset - 146/3 * scale_offset / mapvalue.scale,
+                                          top: mapvalue.guideY * scale_offset - 146/3 * scale_offset / mapvalue.scale,
+                                          width: 1522/3 * scale_offset / mapvalue.scale,
+                                          height: 921/3 * scale_offset / mapvalue.scale,
+                                          child: Image.asset(
+                                            'assets/images/position.png',
+                                          )
+                                      ),
+                                    if (algovalue.isRequired == true)   //출발지 마커
+                                      Positioned(
+                                          left: algovalue.startNodes[0].x * scale_offset - 256/2 * scale_offset / mapvalue.scale ,
+                                          top: algovalue.startNodes[0].y * scale_offset - 512/2 * scale_offset / mapvalue.scale,
+                                          width: 512/2 * scale_offset / mapvalue.scale,
+                                          height: 512/2 * scale_offset / mapvalue.scale,
+                                          child: Image.asset(
+                                            'assets/images/start.png',
+                                          )
+                                      ),
+                                    if (algovalue.isRequired == true)   //도착지 마커
+                                      Positioned(
+                                          left: algovalue.endNodes.last.x * scale_offset - 256/2 * scale_offset / mapvalue.scale,
+                                          top: algovalue.endNodes.last.y * scale_offset - 512/2 * scale_offset / mapvalue.scale,
+                                          width: 512/2 * scale_offset / mapvalue.scale,
+                                          height: 512/2 * scale_offset / mapvalue.scale,
+                                          child: Image.asset(
+                                            'assets/images/end.png',
+                                          )
+                                      ),
+                                    if (algovalue.isRequired == true)   //출발지 노드 이름
+                                      Positioned(
+                                          width: 200 / mapvalue.scale,
+                                          height: 20 / mapvalue.scale,
+                                          left: (algovalue.startNodes[0].x * scale_offset - 100 / mapvalue.scale),
+                                          top: (algovalue.startNodes[0].y * scale_offset - 512/2 * scale_offset / mapvalue.scale - 20 / mapvalue.scale),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Stack(
+                                                children: <Widget>[
+                                                  // 아웃라인용 텍스트
+                                                  Text(algovalue.startNodes[0].name,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontFamily: 'Paybooc',
+                                                      fontWeight: FontWeight.w700,
+                                                      foreground: Paint()
+                                                        ..style = PaintingStyle.stroke
+                                                        ..strokeWidth = 0.8 / mapvalue.scale
+                                                        ..color = Colors.white, // 아웃라인 색
+                                                    ),
+                                                  ),
+                                                  // 실제 텍스트
+                                                  Text(algovalue.startNodes[0].name,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontFamily: 'Paybooc',
+                                                      fontWeight: FontWeight.w700,
+                                                      color: Colors.orangeAccent, // 실제 텍스트 색
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+
+                                            ],
+                                          )
+                                      ),
+                                    if (algovalue.isRequired == true)   //도착지 노드 이름
+                                      Positioned(
+                                          width: 200 / mapvalue.scale,
+                                          height: 20 / mapvalue.scale,
+                                          left: (algovalue.endNodes.last.x * scale_offset - 100 / mapvalue.scale),
+                                          top: (algovalue.endNodes.last.y * scale_offset - 512/2 * scale_offset / mapvalue.scale - 20 / mapvalue.scale),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Stack(
+                                                children: <Widget>[
+                                                  // 아웃라인용 텍스트
+                                                  Text(algovalue.endNodes.last.name,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontFamily: 'Paybooc',
+                                                      fontWeight: FontWeight.w700,
+                                                      foreground: Paint()
+                                                        ..style = PaintingStyle.stroke
+                                                        ..strokeWidth = 0.8 / mapvalue.scale
+                                                        ..color = Colors.white, // 아웃라인 색
+                                                    ),
+                                                  ),
+                                                  // 실제 텍스트
+                                                  Text(algovalue.endNodes.last.name,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontFamily: 'Paybooc',
+                                                      fontWeight: FontWeight.w700,
+                                                      color: Colors.orangeAccent, // 실제 텍스트 색
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+
+                                            ],
+                                          )
+                                      ),
+                                    if (isTrackingLocation)
                                       Stack(
-                                        children: <Widget>[
-                                          // 아웃라인용 텍스트
-                                          Text(mapvalue.nodeName,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 10.0 / mapvalue.scale,
-                                              fontFamily: 'Paybooc',
-                                              fontWeight: FontWeight.w700,
-                                              foreground: Paint()
-                                                ..style = PaintingStyle.stroke
-                                                ..strokeWidth = 0.8 / mapvalue.scale
-                                                ..color = Colors.black, // 아웃라인 색
+                                        children: [
+                                          Positioned(
+                                            // 투명 큰 원
+                                            left: (gpsToPixel.dx * scale_offset) -
+                                                4 * 1.3 / mapvalue.scale,
+                                            top: (gpsToPixel.dy * scale_offset) -
+                                                4 * 1.3 / mapvalue.scale,
+                                            child: Container(
+                                              width: 18 * 1.3 / mapvalue.scale,
+                                              height: 18 * 1.3 / mapvalue.scale,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.orange.withOpacity(0.3),
+                                              ),
                                             ),
                                           ),
-                                          // 실제 텍스트
-                                          Text(mapvalue.nodeName,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 10.0 / mapvalue.scale,
-                                              fontFamily: 'Paybooc',
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.orangeAccent, // 실제 텍스트 색
+                                          Positioned(
+                                            //중앙 원
+                                            left: gpsToPixel.dx * scale_offset,
+                                            top: gpsToPixel.dy * scale_offset,
+                                            child: Container(
+                                              width: 10 * 1.3 / mapvalue.scale,
+                                              height: 10 * 1.3 / mapvalue.scale,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.white,
+                                                    width:
+                                                    1.5 * 1.3 / mapvalue.scale),
+                                                color: Colors.red,
+                                                shape: BoxShape.circle,
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
-
-                                    ],
-                                  )
-                                ),
-                              if (mapvalue.isRequired == true)
-                                Positioned(
-                                  left: mapvalue.guideX * scale_offset - 146/3 * scale_offset / mapvalue.scale,
-                                  top: mapvalue.guideY * scale_offset - 146/3 * scale_offset / mapvalue.scale,
-                                  width: 1522/3 * scale_offset / mapvalue.scale,
-                                  height: 921/3 * scale_offset / mapvalue.scale,
-                                  child: Image.asset(
-                                      'assets/images/position.png',
-                                  )
-/*                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/images/position.png')
-                                      ),
-                                      border: Border.all(width: 1),
-                                    ),
-                                  )*/
-/*                                  Container(
-                                    width: 5,
-                                    height: 5,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.transparent,
-                                        border: Border.all(
-                                            color: Colors.red, width: 0.5)),
-                                  ),*/
-                                ),
-                              if (isTrackingLocation)
-                                Stack(
-                                  children: [
-                                    Positioned(
-                                      // 투명 큰 원
-                                      left: (gpsToPixel.dx * scale_offset) -
-                                          4 * 1.3 / mapvalue.scale,
-                                      top: (gpsToPixel.dy * scale_offset) -
-                                          4 * 1.3 / mapvalue.scale,
-                                      child: Container(
-                                        width: 18 * 1.3 / mapvalue.scale,
-                                        height: 18 * 1.3 / mapvalue.scale,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.orange.withOpacity(0.3),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      //중앙 원
-                                      left: gpsToPixel.dx * scale_offset,
-                                      top: gpsToPixel.dy * scale_offset,
-                                      child: Container(
-                                        width: 10 * 1.3 / mapvalue.scale,
-                                        height: 10 * 1.3 / mapvalue.scale,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.white,
-                                              width:
-                                                  1.5 * 1.3 / mapvalue.scale),
-                                          color: Colors.red,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
+                              ),
                             ],
                           ),
                         ),
