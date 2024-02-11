@@ -54,7 +54,7 @@ Map<String, String> OriginalData = {
   '혜화관':'assets/images/building/혜화관(1804,2694).png'
 };
 
-Map<String, String> LookData = {
+Map<String, String> buildingFilePath = {
   '과학관':'assets/images/building/과학관(1102,2973).png',
   '다향관':'assets/images/building/다향관(1337,2379).png',
   '대운동장':'assets/images/building/대운동장(1308,3206).png',
@@ -78,7 +78,7 @@ Map<String, String> LookData = {
   '혜화관':'assets/images/building/혜화관(1804,2694).png'
 };
 
-Map<String, int> FloorData = {
+Map<String, int> nowFloorData = {
   '과학관': 0,
   '다향관': 0,
   '대운동장': 0,

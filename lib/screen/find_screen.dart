@@ -37,8 +37,8 @@ class _FindScreenState extends State<FindScreen> {
                   // 1. 상단 안내문구/박스
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4.0),
-                      child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: SizedBox(
                         width: 200.0,
                         child: TypeAheadField(
                           textFieldConfiguration: TextFieldConfiguration(
@@ -50,7 +50,7 @@ class _FindScreenState extends State<FindScreen> {
                                 borderSide: BorderSide.none,
                               ),
                               hintText: '검색하거나 아래 목록을 터치하세요',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                 color: Colors.grey,
                                 fontFamily: 'Paybooc',
                                 fontWeight: FontWeight.w400,
@@ -80,7 +80,7 @@ class _FindScreenState extends State<FindScreen> {
                             });
                           },
                           noItemsFoundBuilder: (context) {
-                            return Container(
+                            return SizedBox(
                               height: 45.0,
                               child: Center(
                                 child: CustomText(
@@ -99,7 +99,7 @@ class _FindScreenState extends State<FindScreen> {
                   // end 1
 
                   // 2. 건물 검색 버튼
-                  Container(
+                  SizedBox(
                     height: 50.0,
                     child: ElevatedButton(
                       onPressed: () {
@@ -136,7 +136,7 @@ class _FindScreenState extends State<FindScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.apartment_rounded,
                           ),
                           CustomText(
@@ -152,7 +152,7 @@ class _FindScreenState extends State<FindScreen> {
                   // end 2
                 ],
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               // 3. 검색창 아래 뜨는 터치할 수 있는 리스트뷰(건묾명 등)
               Expanded(
                 child: ListView.builder(

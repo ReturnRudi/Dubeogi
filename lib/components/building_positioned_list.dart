@@ -10,10 +10,11 @@ List<Widget> buildingPositionedList(
       top: 2694 * scale_offset,
       child: InkWell(
         onTap: () {
+          // 건물이 터치되면
           showFloorButton('혜화관');
         },
         child: Image.asset(
-          LookData['혜화관']!,
+          buildingFilePath['혜화관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -26,7 +27,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('다향관');
         },
         child: Image.asset(
-          LookData['다향관']!,
+          buildingFilePath['다향관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -39,7 +40,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('대운동장');
         },
         child: Image.asset(
-          LookData['대운동장']!,
+          buildingFilePath['대운동장']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -52,7 +53,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('만해광장');
         },
         child: Image.asset(
-          LookData['만해광장']!,
+          buildingFilePath['만해광장']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -65,7 +66,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('명진관');
         },
         child: Image.asset(
-          LookData['명진관']!,
+          buildingFilePath['명진관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -78,7 +79,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('과학관');
         },
         child: Image.asset(
-          LookData['과학관']!,
+          buildingFilePath['과학관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -91,7 +92,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('법학관_만해관');
         },
         child: Image.asset(
-          LookData['법학관_만해관']!,
+          buildingFilePath['법학관_만해관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -104,7 +105,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('본관');
         },
         child: Image.asset(
-          LookData['본관']!,
+          buildingFilePath['본관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -117,7 +118,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('사회과학관_경영관');
         },
         child: Image.asset(
-          LookData['사회과학관_경영관']!,
+          buildingFilePath['사회과학관_경영관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -130,7 +131,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('문화관');
         },
         child: Image.asset(
-          LookData['문화관']!,
+          buildingFilePath['문화관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -143,7 +144,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('상록원');
         },
         child: Image.asset(
-          LookData['상록원']!,
+          buildingFilePath['상록원']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -156,7 +157,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('신공학관');
         },
         child: Image.asset(
-          LookData['신공학관']!,
+          buildingFilePath['신공학관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -169,7 +170,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('원흥관');
         },
         child: Image.asset(
-          LookData['원흥관']!,
+          buildingFilePath['원흥관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -182,7 +183,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('정보문화관q');
         },
         child: Image.asset(
-          LookData['정보문화관q']!,
+          buildingFilePath['정보문화관q']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -195,7 +196,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('정보문화관p');
         },
         child: Image.asset(
-          LookData['정보문화관p']!,
+          buildingFilePath['정보문화관p']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -208,7 +209,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('정각원');
         },
         child: Image.asset(
-          LookData['정각원']!,
+          buildingFilePath['정각원']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -221,7 +222,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('중앙도서관');
         },
         child: Image.asset(
-          LookData['중앙도서관']!,
+          buildingFilePath['중앙도서관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -234,7 +235,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('체육관');
         },
         child: Image.asset(
-          LookData['체육관']!,
+          buildingFilePath['체육관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -247,7 +248,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('학림관');
         },
         child: Image.asset(
-          LookData['학림관']!,
+          buildingFilePath['학림관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -260,7 +261,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('학생회관');
         },
         child: Image.asset(
-          LookData['학생회관']!,
+          buildingFilePath['학생회관']!,
           scale: 1 / scale_offset,
         ),
       ),
@@ -273,7 +274,7 @@ List<Widget> buildingPositionedList(
           showFloorButton('학술관');
         },
         child: Image.asset(
-          LookData['학술관']!,
+          buildingFilePath['학술관']!,
           scale: 1 / scale_offset,
         ),
       ),

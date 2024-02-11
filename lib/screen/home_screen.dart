@@ -14,13 +14,10 @@ import 'package:Dubeogi/components/floor_view.dart';
 import 'package:Dubeogi/components/end_alert.dart';
 import 'package:Dubeogi/components/home_sidebarx.dart';
 import 'package:Dubeogi/components/linepainter.dart';
-
 import 'package:Dubeogi/provider/algo_value.dart';
 import 'package:Dubeogi/provider/map_value.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/save/custom_text.dart';
-import 'package:Dubeogi/save/building_info.dart';
-
 import 'package:Dubeogi/screen/building_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -36,12 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
   // map load
   late ImageInfo _imageInfo_du;
   bool _imageLoaded_du = false;
-
-  // 지도 확대축소
-  double _scale = 1.3;
-  double _previousScale = 1.0;
-  Offset _position = Offset.zero;
-  Offset _previousPosition = Offset.zero;
   late double _imageWidth_du;
   late double _imageHeight_du;
   late double scale_offset;
@@ -65,8 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loungevisibility = false;
   bool _printervisibility = false;
 
-  // drawer
-
   // gps
   double now_w = 0.0;
   double now_g = 0.0;
@@ -79,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
   late AlgoValue algovalue;
   late MapValue mapvalue;
 
-  Future<void> _getImageInfo() async {
+  // _ getImageInfo() 학교 지도 이미지를 불러오고 이미지의 폭, 높이, 비율을 변수에 저장
+  // 비동기
+/*  Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
         AssetImage('assets/images/du.png').resolve(ImageConfiguration());
@@ -91,10 +82,25 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _imageLoaded_du = true;
       _imageWidth_du = _imageInfo_du.image.width.toDouble();
-      _imageHeight_du = _imageInfo_du.image.height.toDouble();
+      _imageHeight_du =  _imageInfo_du.image.height.toDouble();
       scale_offset = MediaQuery.of(context).size.width / _imageWidth_du;
     });
     stream.removeListener(listener);
+  }*/
+  //동기
+  void _getImageInfo() {
+    Image image = Image.asset('assets/images/du.png');
+    Completer<ImageInfo> completer = Completer<ImageInfo>();
+
+    image.image.resolve(const ImageConfiguration()).addListener(ImageStreamListener((ImageInfo info, bool _) {
+      _imageInfo_du = info;
+      _imageLoaded_du = true;
+      _imageWidth_du = info.image.width.toDouble();
+      _imageHeight_du = info.image.height.toDouble();
+      scale_offset = MediaQuery.of(context).size.width / _imageWidth_du;
+      setState(() {});
+      completer.complete(info);
+    }));
   }
 
   // ================================================
@@ -103,11 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
     mapvalue.previousPosition = details.focalPoint;
     print(
         "MediaQuery.of(context).padding.top: ${MediaQuery.of(context).padding.top}");
-    /*
-    setState(() {
-      _previousScale = _scale;
-      _previousPosition = details.focalPoint;
-    });*/
   }
 
   void _onScaleUpdate(ScaleUpdateDetails details) {
@@ -137,44 +138,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     mapvalue.previousPosition = details.focalPoint;
-
-    /*setState(() {
-      _scale = (_previousScale * details.scale).clamp(1.3, 12.0);
-      final ratio = MediaQuery
-          .of(context)
-          .size
-          .height /
-          MediaQuery
-              .of(context)
-              .size
-              .width;
-      final screenWidth = _imageWidth_du / _scale;
-      final screenHeight = screenWidth * ratio;
-
-      double minY, maxY;
-
-      double minX = -_imageWidth_du / 2 + screenWidth / 2;
-      double maxX = _imageWidth_du / 2 - screenWidth / 2;
-
-      if (_imageHeight_du > screenHeight) {
-        minY = -_imageHeight_du / 2 + screenHeight / 2;
-        maxY = _imageHeight_du / 2 - screenHeight / 2;
-      } else {
-        minY = _imageHeight_du / 2 - screenHeight / 2;
-        maxY = -_imageHeight_du / 2 + screenHeight / 2;
-      }
-
-      _position += (details.focalPoint - _previousPosition) /
-          _previousScale /
-          scale_offset;
-
-      _position = Offset(
-        _position.dx.clamp(minX, maxX),
-        _position.dy.clamp(minY, maxY),
-      );
-
-      _previousPosition = details.focalPoint;
-    });*/
   }
 
   void _onScaleEnd(ScaleEndDetails details) {
@@ -209,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _vendingshow() {
     setState(() {
       _vendingvisibility = !_vendingvisibility;
-      print('check: vendingvisibility: ${_vendingvisibility}');
+      print('check: vendingvisibility: $_vendingvisibility');
     });
   }
 
@@ -243,6 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+
+  // 건물을 터치하면 _showButton 변수를 터치한 건물명으로 바꾸는 함수 _showFloorButton
   void _showFloorButton(String touchedBuilding) {
     String name = "기본";
     setState(() {
@@ -250,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ? _showButton = touchedBuilding
           : _showButton = name;
     });
-    print('check: showButton: ${_showButton}');
+    print('check: showButton: $_showButton');
   }
 
   void gotoBuildingInfo({required String buildingname}) {
@@ -267,7 +232,6 @@ class _HomeScreenState extends State<HomeScreen> {
   // ================================================
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _getImageInfo();
   }
@@ -281,14 +245,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ====================================================
   Offset gps(double w, double g) {
-    double pixel_x = 3000 *
+    double pixelX = 3000 *
         (g - 126.9962082464593) /
         (127.0046597158073 - 126.9962082464593);
-    double pixel_y = 5333 *
+    double pixelY = 5333 *
         (37.56424922299378 - w) /
         (37.56424922299378 - 37.552279443944855);
 
-    return Offset(pixel_x - 12, pixel_y - 5); //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
+    return Offset(pixelX - 12, pixelY - 5); //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
   }
 
   Future<void> requestLocationPermission() async {
@@ -309,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
     positionStream = Geolocator.getPositionStream(
             desiredAccuracy: LocationAccuracy.high,
             //distanceFilter: 1
-            intervalDuration: Duration(milliseconds: 1000))
+            intervalDuration: const Duration(milliseconds: 1000))
         .listen((Position position) {
       setState(() {
         now_w = position.latitude;
@@ -359,19 +323,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([ //세로 정방향만 사용
+    //세로 정방향만 사용 가능하도록 제한
+    SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp
     ]);
+
+    //지도 이미지 로드시 로딩 이미지 표시
     if (!_imageLoaded_du) {
       return Container(
         color: Colors.white,
-        child: Center(
+        child: const Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),
         ),
       );
     }
+
 
     algovalue = Provider.of<AlgoValue>(context, listen: true);
     mapvalue = Provider.of<MapValue>(context, listen: true);
@@ -673,7 +641,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 child: Padding(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 4.0),
+                                      const EdgeInsets.symmetric(horizontal: 4.0),
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(context, '/find');
@@ -691,7 +659,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: Colors.grey.withOpacity(0.3),
                                             spreadRadius: 1,
                                             blurRadius: 10,
-                                            offset: Offset(0, 2),
+                                            offset: const Offset(0, 2),
                                           ),
                                         ],
                                       ),
@@ -707,7 +675,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               // 길찾기 버튼
                               Container(
-                                color: Color(0xFFDDA2),
+                                color: const Color(0x00ffdda2),
                                 height: 43.0,
                                 width: 60.0,
                                 child: ElevatedButton(
@@ -724,7 +692,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.search,
                                       ),
                                       CustomText(
@@ -751,7 +719,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onoff: _vendingvisibility,
                                   icon: Icons.local_drink,
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 FacilityButton(
                                   text: '샤워실',
                                   textColor: Colors.lightBlueAccent,
@@ -759,7 +727,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onoff: _showervisibility,
                                   icon: Icons.shower,
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 FacilityButton(
                                   text: '매점',
                                   textColor: Colors.purple,
@@ -767,7 +735,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onoff: _storevisibility,
                                   icon: Icons.store,
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 FacilityButton(
                                   text: '프린터',
                                   textColor: Colors.green,
@@ -775,7 +743,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onoff: _printervisibility,
                                   icon: Icons.print,
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 FacilityButton(
                                   text: '라운지',
                                   textColor: Colors.brown,
@@ -783,7 +751,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onoff: _loungevisibility,
                                   icon: Icons.desk,
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 FacilityButton(
                                   text: 'ATM',
                                   textColor: Colors.red,
@@ -800,28 +768,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                     controller: _controller,
                                     scale_offset: scale_offset,
                                   )
-                                : Text(""),
+                                : const Text(""),
                           )
                         ],
                       ),
                     ),
+                    // _showButton이 "기본"이 아닌 경우 즉, 건물이 터치된 경우 리스트 뷰 위젯 출력
+
                     if (_showButton != "기본")
                       FloorView(
-                        showbutton: _showButton,
+                        showButton: _showButton,
                         onValueChanged: (String strValue, int intValue) {
                           setState(() {
-                            FloorData[_showButton] = intValue;
+                            nowFloorData[_showButton] = intValue;
                             if (strValue == "시설") {
                               gotoBuildingInfo(
                                 buildingname: _showButton,
                               );
                             } else {
-                              LookData[_showButton] = strValue;
+                              buildingFilePath[_showButton] = strValue;
                               algovalue.colorPath();
-                              for (String key in FloorData.keys) {
-                                if (FloorData[key] != 0)
+                              for (String key in nowFloorData.keys) {
+                                if (nowFloorData[key] != 0) {
                                   algovalue.floorButtonPath(
-                                      FloorData[key]!, key);
+                                      nowFloorData[key]!, key);
+                                }
                               }
                             }
                             if (intValue == 0) {
@@ -839,10 +810,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottom: 20,
                 child: FloatingActionButton(
                   onPressed: toggleLocationTracking,
+                  backgroundColor: Colors.orangeAccent.withOpacity(0.9),
                   child: Icon(isTrackingLocation
                       ? Icons.location_off
                       : Icons.location_on),
-                  backgroundColor: Colors.orangeAccent.withOpacity(0.9),
                 ),
               ),
             ],

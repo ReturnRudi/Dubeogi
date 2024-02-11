@@ -148,8 +148,14 @@ class _SearchScreenState extends State<SearchScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.all(10),
+                                  margin: const EdgeInsets.all(10),
                                   width: 80,
+                                  decoration: BoxDecoration(
+                                    color: algovalue.selectOption == 1
+                                        ? Colors.white
+                                        : null,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
                                   child: Stack(
                                     children: [
                                       Center(
@@ -168,17 +174,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                       })
                                     ],
                                   ),
+                                ),
+                                const SizedBox(width: 20),
+                                Container(
+                                  margin: const EdgeInsets.all(10),
+                                  width: 80,
                                   decoration: BoxDecoration(
-                                    color: algovalue.selectOption == 1
+                                    color: algovalue.selectOption == 2
                                         ? Colors.white
                                         : null,
                                     borderRadius: BorderRadius.circular(50),
                                   ),
-                                ),
-                                SizedBox(width: 20),
-                                Container(
-                                  margin: EdgeInsets.all(10),
-                                  width: 80,
                                   child: Stack(
                                     children: [
                                       Center(
@@ -197,17 +203,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                       })
                                     ],
                                   ),
+                                ),
+                                const SizedBox(width: 20),
+                                Container(
+                                  margin: const EdgeInsets.all(10),
+                                  width: 80,
                                   decoration: BoxDecoration(
-                                    color: algovalue.selectOption == 2
+                                    color: algovalue.selectOption == 3
                                         ? Colors.white
                                         : null,
                                     borderRadius: BorderRadius.circular(50),
                                   ),
-                                ),
-                                SizedBox(width: 20),
-                                Container(
-                                  margin: EdgeInsets.all(10),
-                                  width: 80,
                                   child: Stack(
                                     children: [
                                       Center(
@@ -226,12 +232,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                       })
                                     ],
                                   ),
-                                  decoration: BoxDecoration(
-                                    color: algovalue.selectOption == 3
-                                        ? Colors.white
-                                        : null,
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
                                 ),
                               ],
                             )
@@ -240,7 +240,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       // 출발지 목적지 box
                       Container(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
                         color: Colors.orangeAccent,
                         child: Stack(
                           children: [
@@ -260,11 +260,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                             decoration: InputDecoration(
                                                 border: InputBorder.none,
                                                 contentPadding:
-                                                EdgeInsets.symmetric(
+                                                const EdgeInsets.symmetric(
                                                     vertical: 16,
                                                     horizontal: 10),
                                                 hintText: '출발 지점을 입력하세요',
-                                                hintStyle: TextStyle(
+                                                hintStyle: const TextStyle(
                                                   fontFamily: 'Paybooc',
                                                   fontWeight: FontWeight.w400,
                                                 ),
@@ -291,8 +291,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                               .contains(pattern.toLowerCase()));
                                         },
                                         suggestionsBoxDecoration:
-                                        SuggestionsBoxDecoration(
-                                            color: const Color(0xffF9D5A8)),
+                                        const SuggestionsBoxDecoration(
+                                            color: Color(0xffF9D5A8)),
                                         itemBuilder: (context, suggestion) {
                                           return ListTile(
                                             title: CustomText(
@@ -312,7 +312,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           if (firstController.text == '') {
                                             return Container();
                                           } else {
-                                            return Container(
+                                            return SizedBox(
                                               height: 45.0,
                                               child: Center(
                                                 child: CustomText(
@@ -334,7 +334,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           Offset? result = await Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => SelectFromMap(
+                                                builder: (context) => const SelectFromMap(
                                                     destination: false)),
                                           );
                                           setState(() {
@@ -347,9 +347,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                           });
                                         },
                                         child: Container(
-                                          margin: EdgeInsets.fromLTRB(10, 5, 0, 5),
+                                          margin: const EdgeInsets.fromLTRB(10, 5, 0, 5),
                                           // Add margin to all sides
-                                          padding: EdgeInsets.all(15.0),
+                                          padding: const EdgeInsets.all(15.0),
                                           // Add padding to the container
                                           decoration: BoxDecoration(
                                             color: Colors.orange,
@@ -382,11 +382,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                           controller: secondController,
                                           focusNode: secondFocus,
                                           decoration: InputDecoration(
-                                              contentPadding: EdgeInsets.symmetric(
+                                              contentPadding: const EdgeInsets.symmetric(
                                                   vertical: 16, horizontal: 10),
                                               border: InputBorder.none,
                                               hintText: '도착 지점을 입력하세요',
-                                              hintStyle: TextStyle(
+                                              hintStyle: const TextStyle(
                                                 fontFamily: 'Paybooc',
                                                 fontWeight: FontWeight.w400,
                                               ),
@@ -409,8 +409,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                               .contains(pattern.toLowerCase()));
                                         },
                                         suggestionsBoxDecoration:
-                                        SuggestionsBoxDecoration(
-                                            color: const Color(0xffF9D5A8)),
+                                        const SuggestionsBoxDecoration(
+                                            color: Color(0xffF9D5A8)),
                                         itemBuilder: (context, suggestion) {
                                           return ListTile(
                                             title: CustomText(
@@ -431,7 +431,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               '지도에서 선택한 도착지') {
                                             return Container();
                                           } else {
-                                            return Container(
+                                            return SizedBox(
                                               height: 45.0,
                                               child: Center(
                                                 child: CustomText(
@@ -454,7 +454,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    SelectFromMap(destination: true)),
+                                                    const SelectFromMap(destination: true)),
                                           );
                                           setState(() {
                                             if (result != null) {
@@ -466,9 +466,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                           });
                                         },
                                         child: Container(
-                                          margin: EdgeInsets.fromLTRB(10, 5, 0, 5),
+                                          margin: const EdgeInsets.fromLTRB(10, 5, 0, 5),
                                           // Add margin to all sides
-                                          padding: EdgeInsets.all(15.0),
+                                          padding: const EdgeInsets.all(15.0),
                                           // Add padding to the container
                                           decoration: BoxDecoration(
                                             color: Colors.orange,
@@ -504,25 +504,25 @@ class _SearchScreenState extends State<SearchScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              SizedBox(width: 10.0),
-                              Icon(
+                              const SizedBox(width: 10.0),
+                              const Icon(
                                 Icons.access_time,
                                 color: Colors.blueAccent,
                               ),
-                              SizedBox(width: 15.0),
+                              const SizedBox(width: 15.0),
                               RichText(
                                 text: TextSpan(
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text: '${(algovalue.totalWeight / 60).toInt()}',
-                                      style: TextStyle(
+                                      text: '${algovalue.totalWeight ~/ 60}',
+                                      style: const TextStyle(
                                         color: Colors.blueAccent,
                                         fontSize: 20,
                                         fontFamily: 'Paybooc',
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    TextSpan(
+                                    const TextSpan(
                                       text: '분',
                                       style: TextStyle(
                                         color: Colors.blueAccent,
@@ -533,14 +533,14 @@ class _SearchScreenState extends State<SearchScreen> {
                                     ),
                                     TextSpan(
                                       text: ' ${(algovalue.totalWeight % 60).toInt()}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.blueAccent,
                                         fontSize: 20,
                                         fontFamily: 'Paybooc',
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    TextSpan(
+                                    const TextSpan(
                                       text: '초',
                                       style: TextStyle(
                                         color: Colors.blueAccent,
@@ -552,7 +552,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8.0,
                               ),
                               Container(
@@ -563,7 +563,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 height: 20.0,
                                 width: 3.0,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8.0,
                               ),
                               RichText(
@@ -571,7 +571,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   children: <TextSpan>[
                                     TextSpan(
                                       text: algovalue.meridiem,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.blueAccent,
                                         fontSize: 15,
                                         fontFamily: 'Paybooc',
@@ -579,15 +579,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: ' ' + (algovalue.hour >= 10 ? '${algovalue.hour}' : '0${algovalue.hour}'),
-                                      style: TextStyle(
+                                      text: ' ${algovalue.hour >= 10 ? '${algovalue.hour}' : '0${algovalue.hour}'}',
+                                      style: const TextStyle(
                                         color: Colors.blueAccent,
                                         fontSize: 15,
                                         fontFamily: 'Paybooc',
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    TextSpan(
+                                    const TextSpan(
                                       text: ':',
                                       style: TextStyle(
                                         color: Colors.blueAccent,
@@ -597,15 +597,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: algovalue.arrivetime.substring(3,5) + ' ',
-                                      style: TextStyle(
+                                      text: '${algovalue.arrivetime.substring(3,5)} ',
+                                      style: const TextStyle(
                                         color: Colors.blueAccent,
                                         fontSize: 15,
                                         fontFamily: 'Paybooc',
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    TextSpan(
+                                    const TextSpan(
                                       text: '도착',
                                       style: TextStyle(
                                         color: Colors.blueAccent,
@@ -667,27 +667,27 @@ class _SearchScreenState extends State<SearchScreen> {
                           // 경로를 찾지 않은 경우
                           notHandleInput(context);
                         } else {
-                          for (String key in FloorData.keys) {
-                            if (FloorData[key] != 0) FloorData[key] = 0;
+                          for (String key in nowFloorData.keys) {
+                            if (nowFloorData[key] != 0) nowFloorData[key] = 0;
                           }
-                          for (String key in LookData.keys) {
-                            LookData[key] = OriginalData[key]!;
+                          for (String key in buildingFilePath.keys) {
+                            buildingFilePath[key] = OriginalData[key]!;
                           }
                           handleInput();
                         }
                       },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orangeAccent, // 주황색 배경색
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(16), // 버튼 모서리를 둥글게 처리
+                        ),
+                      ),
                       child: CustomText(
                         text: '경로 안내 시작하기',
                         fontSize: 15.0,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.orangeAccent, // 주황색 배경색
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(16), // 버튼 모서리를 둥글게 처리
-                        ),
                       ),
                     ),
                   ),
@@ -705,11 +705,11 @@ class _SearchScreenState extends State<SearchScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("경로탐색 실패"),
-          content: Text("다시 입력"),
+          title: const Text("경로탐색 실패"),
+          content: const Text("다시 입력"),
           actions: [
             TextButton(
-              child: Text("OK"),
+              child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -742,13 +742,13 @@ class _SearchScreenState extends State<SearchScreen> {
   void _handleSubmit() {
     algovalue.isRequired = false;
     int selectOption = algovalue.selectOption;
-    String weight_select;
-    double total_weight = 0;
+    String weightSelect;
+    double totalWeight = 0;
 
     if (selectOption == 1 || selectOption == 3) {
-      weight_select = "최단";
+      weightSelect = "최단";
     } else {
-      weight_select = "최적";
+      weightSelect = "최적";
     }
 
     List<Node> result = [];
@@ -777,12 +777,12 @@ class _SearchScreenState extends State<SearchScreen> {
 
         result = algovalue.astarPathMaking(
           usingGraph: algovalue.graph,
-          weight_select: weight_select,
+          weight_select: weightSelect,
         );
 
         for (int i = 0; i < result.length - 1; i++) {
           //총 걸린 시간을 계산하는 부분
-          total_weight += algovalue.graph
+          totalWeight += algovalue.graph
               .findEdge(result[i].name, result[i + 1].name)!
               .time_weight;
         }
@@ -803,39 +803,39 @@ class _SearchScreenState extends State<SearchScreen> {
         print("startClosest.name: ${startClosest.name}");
         temp = algovalue.astarPathMaking(
           usingGraph: algovalue.graph,
-          weight_select: weight_select,
+          weight_select: weightSelect,
         );
 
         for (int i = 0; i < temp.length - 1; i++) {
           //총 걸린 시간을 계산하는 부분
-          total_weight += algovalue.graph
+          totalWeight += algovalue.graph
               .findEdge(temp[i].name, temp[i + 1].name)!
               .time_weight;
         }
-        int length_temp = temp.length;
+        int lengthTemp = temp.length;
         // 차도
         algovalue.startNodeName = startClosest.name;
         algovalue.endNodeName = endClosest.name;
         temp.addAll(algovalue.astarPathMaking(
-            usingGraph: driveWayGraph, weight_select: weight_select));
-        for (int i = length_temp; i < temp.length - 1; i++) {
+            usingGraph: driveWayGraph, weight_select: weightSelect));
+        for (int i = lengthTemp; i < temp.length - 1; i++) {
           //총 걸린 시간을 계산하는 부분
 /*          //디버그용 출력
           print('temp[i].name: ${temp[i].name}     temp[i + 1].name: ${temp[i + 1].name}');
           print(driveWayGraph.findEdge(temp[i].name, temp[i + 1].name));*/
-          total_weight += driveWayGraph
+          totalWeight += driveWayGraph
               .findEdge(temp[i].name, temp[i + 1].name)!
               .time_weight;
         }
         // 차도 끝 -> 도착
-        length_temp = temp.length;
+        lengthTemp = temp.length;
         algovalue.startNodeName = endClosest.name;
         algovalue.endNodeName = end.name;
         temp.addAll(algovalue.astarPathMaking(
-            usingGraph: algovalue.graph, weight_select: weight_select));
-        for (int i = length_temp; i < temp.length - 1; i++) {
+            usingGraph: algovalue.graph, weight_select: weightSelect));
+        for (int i = lengthTemp; i < temp.length - 1; i++) {
           //총 걸린 시간을 계산하는 부분
-          total_weight += algovalue.graph
+          totalWeight += algovalue.graph
               .findEdge(temp[i].name, temp[i + 1].name)!
               .time_weight;
         }
@@ -854,11 +854,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
       if (isExistBuilding(firstController.text)) {
         result.removeAt(0);
-        total_weight -= 100000;
+        totalWeight -= 100000;
       }
       if (isExistBuilding(secondController.text)) {
         result.removeLast();
-        total_weight -= 100000;
+        totalWeight -= 100000;
       }
 
       List<Node> startNodes = [];
@@ -867,8 +867,9 @@ class _SearchScreenState extends State<SearchScreen> {
       for (int i = 0; i < result.length; i++) {
         if (i == 0) {
           startNodes.add(result[i]);
-          if(result.length == 1)
+          if(result.length == 1) {
             endNodes.add(result[i]);
+          }
         }
         else if (i == result.length - 1)
           endNodes.add(result[i]);
@@ -926,8 +927,8 @@ class _SearchScreenState extends State<SearchScreen> {
       algovalue.startNodes_alpha = startNodes_alpha;
       algovalue.result_alpha = result_alpha;
       algovalue.direction_alpha = direction_alpha;
-      algovalue.totalWeight = total_weight;
-      algovalue.arrivetime = DateTime.now().add(Duration(minutes: (total_weight / 60).toInt() + 1)).toString().substring(11,16);
+      algovalue.totalWeight = totalWeight;
+      algovalue.arrivetime = DateTime.now().add(Duration(minutes: totalWeight ~/ 60 + 1)).toString().substring(11,16);
       algovalue.hour = int.parse(algovalue.arrivetime.substring(0,2));
       if(algovalue.hour >= 12){
         algovalue.meridiem = '오후';
@@ -940,6 +941,6 @@ class _SearchScreenState extends State<SearchScreen> {
       algovalue.isFind = false;
     }
     print(
-        'total_weight: ${(total_weight / 60).toInt()}분 ${(total_weight % 60).toInt()}초, 약 ${(total_weight / 60).toInt() + 1}분');
+        'total_weight: ${totalWeight ~/ 60}분 ${(totalWeight % 60).toInt()}초, 약 ${totalWeight ~/ 60 + 1}분');
   }
 }

@@ -46,7 +46,7 @@ class MapValue with ChangeNotifier{
   }
   set isRequired(bool tf){
     _isRequired = tf;
-    print('check: mapvlue-isRequired = ${_isRequired}');
+    print('check: mapvlue-isRequired = $_isRequired');
     notifyListeners();
   }
   set nodeName(String name){
@@ -54,9 +54,9 @@ class MapValue with ChangeNotifier{
     notifyListeners();
   }
 
-  void initialize(double val_x, val_y){
-    _position = Offset(val_x, val_y);
-    _previousPosition = Offset(val_x, val_y);
+  void initialize(double valX, valY){
+    _position = Offset(valX, valY);
+    _previousPosition = Offset(valX, valY);
   }
 
   void guide_animation(Offset end, double scale) async {
@@ -68,15 +68,15 @@ class MapValue with ChangeNotifier{
 
     int num = 1000;
 
-    double x_change = (end.dx - _position.dx) / num;
-    double y_change = (end.dy - _position.dy) / num;
-    double scale_change = (scale - _scale) / num;
-    print('x_change: $x_change    y_change: $y_change');
+    double xChange = (end.dx - _position.dx) / num;
+    double yChange = (end.dy - _position.dy) / num;
+    double scaleChange = (scale - _scale) / num;
+    print('x_change: $xChange    y_change: $yChange');
 
     for(int i = 1; i <= num; i++){
-      await Future.delayed(Duration(microseconds: 750));  // 10 milliseconds의 지연시간을 설정
-      _position = Offset(_position.dx + x_change, _position.dy + y_change);
-      _scale += scale_change;
+      await Future.delayed(const Duration(microseconds: 750));  // 10 milliseconds의 지연시간을 설정
+      _position = Offset(_position.dx + xChange, _position.dy + yChange);
+      _scale += scaleChange;
       notifyListeners(); // position이 변경되었음을 알려 화면을 갱신
       print("_position: $_position");
     }

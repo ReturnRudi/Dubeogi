@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Dubeogi/save/save.dart';
-// 편의시설들 버튼 누르면 뜨는 아이콘의 위치들.
+// 편의시설들의 각 버튼 누르면 뜨는 아이콘의 위치들.
 
 List<Widget> vendingPositionedList({required double scale, required double scale_offset}) {
   List<Widget> widgets = [

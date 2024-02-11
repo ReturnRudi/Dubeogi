@@ -9,7 +9,7 @@ class DetailList extends StatefulWidget {
   final List<Node> items;
   final List<String> direction;
 
-  DetailList({required this.items, required this.direction});
+  const DetailList({super.key, required this.items, required this.direction});
 
   @override
   State<DetailList> createState() => _DetailListState();

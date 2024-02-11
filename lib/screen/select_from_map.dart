@@ -10,7 +10,7 @@ late double scale_offset;
 class SelectFromMap extends StatefulWidget {
   final bool destination; //false 출발지, true 도착지
 
-  SelectFromMap({required this.destination});
+  const SelectFromMap({super.key, required this.destination});
 
   @override
   State<SelectFromMap> createState() => _SelectFromMapState();
@@ -23,8 +23,8 @@ class _SelectFromMapState extends State<SelectFromMap> {
   late double _imageHeight_du;
   double _scale = 6.0;
   double _previousScale = 6.0;
-  Offset _position = Offset(101, 39);
-  Offset _previousPosition = Offset(101, 39);
+  Offset _position = const Offset(101, 39);
+  Offset _previousPosition = const Offset(101, 39);
   double now_w = 0.0;
   double now_g = 0.0;
   Offset gpsToPixel = Offset.zero;
@@ -32,14 +32,14 @@ class _SelectFromMapState extends State<SelectFromMap> {
   late List<Widget> buildingNames;
 
   Offset gps(double w, double g) {
-    double pixel_x = 3000 *
+    double pixelX = 3000 *
         (g - 126.9962082464593) /
         (127.0046597158073 - 126.9962082464593);
-    double pixel_y = 5333 *
+    double pixelY = 5333 *
         (37.56424922299378 - w) /
         (37.56424922299378 - 37.552279443944855);
 
-    return Offset(pixel_x - 30, pixel_y - 15); //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
+    return Offset(pixelX - 30, pixelY - 15); //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
   }
 
   Future<void> requestLocationPermission() async {
@@ -77,7 +77,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
   Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
-    AssetImage('assets/images/du.png').resolve(ImageConfiguration());
+    const AssetImage('assets/images/du.png').resolve(const ImageConfiguration());
     final listener = ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     });
@@ -166,7 +166,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
     if (!_imageLoaded_du) {
       return Container(
         color: Colors.white,
-        child: Center(
+        child: const Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),
@@ -219,7 +219,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
                     Align(
                       alignment: Alignment.center,
                       child: Transform.translate(
-                        offset: Offset(0, -15),
+                        offset: const Offset(0, -15),
                         child: Image.asset(
                           'assets/images/marker.png',
                           width: 30.0,
@@ -233,7 +233,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             color: Colors.orange,
             // Change the color to white or any other color
             width: double.infinity,
@@ -255,8 +255,8 @@ class _SelectFromMapState extends State<SelectFromMap> {
                 getCurrentLocation();
                 print("gpsToPixel: $gpsToPixel");
               },
-              child: Icon(Icons.location_on),
               backgroundColor: Colors.orange,
+              child: const Icon(Icons.location_on),
             ),
           ),
         ],

@@ -14,12 +14,12 @@ class AlgoValue with ChangeNotifier{
   String _endNodeName = "";
   String meridiem = '';
   String arrivetime = '';
-  List<Offset> _startPointsRed = []; // custompaint에 사용
-  List<Offset> _endPointsRed = []; // custompaint에 사용
-  List<Offset> _startPointsBlue = []; // custompaint에 사용
-  List<Offset> _endPointsBlue = []; // custompaint에 사용
-  List<Offset> _startPointsGreen = []; // custompaint에 사용
-  List<Offset> _endPointsGreen = []; // custompaint에 사용
+  final List<Offset> _startPointsRed = []; // custompaint에 사용
+  final List<Offset> _endPointsRed = []; // custompaint에 사용
+  final List<Offset> _startPointsBlue = []; // custompaint에 사용
+  final List<Offset> _endPointsBlue = []; // custompaint에 사용
+  final List<Offset> _startPointsGreen = []; // custompaint에 사용
+  final List<Offset> _endPointsGreen = []; // custompaint에 사용
   List<Node> _startNodes = []; // A-B-C 일때 A-B, B-C ... 등 계속 바뀜
   List<Node> _endNodes = []; // 유효한 노드들
   List<Node> _regularPath = []; // 경로의 유효한 노드 리스트
@@ -100,7 +100,7 @@ class AlgoValue with ChangeNotifier{
   }
   set selectOption(int option){
     _selectOption = option;
-    print('check: set selectOption: ${_selectOption}');
+    print('check: set selectOption: $_selectOption');
     notifyListeners();
   }
   set direction_alpha(List<String> strlist){
@@ -142,7 +142,7 @@ class AlgoValue with ChangeNotifier{
   }
   set isFind(bool tf){
     _isFind = tf;
-    print('check: set isFind: ${_isFind}');
+    print('check: set isFind: $_isFind');
     notifyListeners();
   }
 
@@ -291,14 +291,14 @@ class AlgoValue with ChangeNotifier{
     return closest;
   }
   void pickandUpdateGraph(Offset newpoint, String str){ // 위치 선택한 후 새롭게 graph를 변경함
-    print("check: pickandUpdateGraph(${str})");
+    print("check: pickandUpdateGraph($str)");
     Graph tempGraph = Graph();
     double dxPixel = 1500 - newpoint.dx;
     double dyPixel = 5333/2 - newpoint.dy;
     Node closestNode = findClosestNode(_graph.nodes, dxPixel, dyPixel);
-    int isExist = _graph!.findNodeIndex(_graph!.nodes, str);
+    int isExist = _graph.findNodeIndex(_graph.nodes, str);
     if(isExist != -1) {
-      _graph!.removeNode(str);
+      _graph.removeNode(str);
     }
 
     tempGraph = selectFromMapNewGraph(str, dxPixel, dyPixel, closestNode); // 그래프에 엣지 추가
@@ -306,10 +306,10 @@ class AlgoValue with ChangeNotifier{
     notifyListeners();
   }
   void removePickedPointFromGraph(String str){ // search screen에서 선택되어서 변경되었던 그래프를 원래대로 돌려놓음.
-    int isExist = _graph!.findNodeIndex(_graph!.nodes, str);
+    int isExist = _graph.findNodeIndex(_graph.nodes, str);
     if(isExist != -1) {
-      _graph!.removeNode(str);
-      print("check: removePickedPointFromGraph('${str}')");
+      _graph.removeNode(str);
+      print("check: removePickedPointFromGraph('$str')");
       notifyListeners();
     }
     return;

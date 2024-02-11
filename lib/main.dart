@@ -17,9 +17,9 @@ void main() {
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
-          '/': (context) => HomeScreen(),
-          '/find': (context) => FindScreen(),
-          '/search': (context) => SearchScreen(),
+          '/': (context) => const HomeScreen(),
+          '/find': (context) => const FindScreen(),
+          '/search': (context) => const SearchScreen(),
         },
       ),
     ),

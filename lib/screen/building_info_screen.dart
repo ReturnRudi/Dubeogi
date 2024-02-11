@@ -27,11 +27,11 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
     _buildingInfoDetail = _getBuildingInfoDetail(widget.title);
     _displayedAmenities = [
       Amenity(
-          icon: Icon(Icons.phone),
+          icon: const Icon(Icons.phone),
           name: '전화번호',
           description: _buildingInfoDetail.teleNumber),
       Amenity(
-          icon: Icon(Icons.access_time),
+          icon: const Icon(Icons.access_time),
           name: '이용시간',
           description: _buildingInfoDetail.operatingHours),
       ..._buildingInfoDetail.amenities,
@@ -63,7 +63,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                 'assets/images/infophoto/${widget.title}.png',
                 fit: BoxFit.contain,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 alignment: Alignment.center,
                 child: CustomText(
@@ -73,7 +73,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(height: 15.0, width: 20.0),
+              const SizedBox(height: 15.0, width: 20.0),
               // 2개의 버튼
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -88,19 +88,19 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                       );
                     },
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.blue),
+                      side: const BorderSide(color: Colors.blue),
                       backgroundColor: Colors.white,
-                      padding: EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      minimumSize: Size(100, 0),
+                      minimumSize: const Size(100, 0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.directions_walk, color: Colors.blue),
-                        SizedBox(width: 4),
+                        const Icon(Icons.directions_walk, color: Colors.blue),
+                        const SizedBox(width: 4),
                         CustomText(
                           text: '출발',
                           color: Colors.blue,
@@ -110,7 +110,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(width: 25),
+                  const SizedBox(width: 25),
                   OutlinedButton(
                     onPressed: () {
                       algovalue.isFind = false;
@@ -118,19 +118,19 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                           arguments: {'start': '', 'end': widget.title});
                     },
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.blue),
+                      side: const BorderSide(color: Colors.blue),
                       backgroundColor: Colors.blue,
-                      padding: EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      minimumSize: Size(100, 0),
+                      minimumSize: const Size(100, 0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.directions_walk, color: Colors.white),
-                        SizedBox(width: 4),
+                        const Icon(Icons.directions_walk, color: Colors.white),
+                        const SizedBox(width: 4),
                         CustomText(
                           text: '도착',
                           color: Colors.white,
@@ -142,7 +142,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Flexible(
                 child: ListView.builder(
                   itemCount: _displayedAmenities.length,
@@ -152,20 +152,20 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                       child: ListTile(
                         leading: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 14,
                             ),
                             _displayedAmenities[index].icon,
                           ],
                         ),
                         title: CustomText(
-                          text: '${_displayedAmenities[index].name}',
+                          text: _displayedAmenities[index].name,
                           color: Colors.black,
                           fontWeight: FontWeight.w700,
                           fontSize: 16.0,
                         ),
                         subtitle: CustomText(
-                          text: '${_displayedAmenities[index].description}',
+                          text: _displayedAmenities[index].description,
                           color: Colors.grey,
                           fontSize: 12.0,
                           fontWeight: FontWeight.w700,

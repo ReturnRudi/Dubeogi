@@ -152,7 +152,7 @@ class HomeSidebarX extends StatelessWidget {
       footerDivider: divider,
       headerBuilder: (context, extended) {
         return FutureBuilder<void>(
-          future: Future.delayed(Duration(milliseconds: 400)),
+          future: Future.delayed(const Duration(milliseconds: 400)),
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 algovalue.open == 1 && extended == true) {
@@ -172,15 +172,15 @@ class HomeSidebarX extends StatelessWidget {
                               8.0, 8.0, 8.0, 0.0),
                           child: Column(
                             children: [
-                              SizedBox(height: 3.0),
+                              const SizedBox(height: 3.0),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.access_time,
                                     color: Colors.blueAccent,
                                   ),
-                                  SizedBox(width: 10.0),
+                                  const SizedBox(width: 10.0),
                                   CustomText(
                                     text: '출발 : ${algovalue
                                         .startNodeName}\n도착 : ${algovalue
@@ -191,7 +191,7 @@ class HomeSidebarX extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 5.0),
+                              const SizedBox(height: 5.0),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -200,16 +200,15 @@ class HomeSidebarX extends StatelessWidget {
                                       children: <TextSpan>[
                                         TextSpan(
                                           text:
-                                          '${(algovalue.totalWeight / 60)
-                                              .toInt()}',
-                                          style: TextStyle(
+                                          '${algovalue.totalWeight ~/ 60}',
+                                          style: const TextStyle(
                                             color: Colors.blueAccent,
                                             fontSize: 20,
                                             fontFamily: 'Paybooc',
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                        TextSpan(
+                                        const TextSpan(
                                           text: '분',
                                           style: TextStyle(
                                             color: Colors.blueAccent,
@@ -222,14 +221,14 @@ class HomeSidebarX extends StatelessWidget {
                                           text:
                                           ' ${(algovalue.totalWeight % 60)
                                               .toInt()}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.blueAccent,
                                             fontSize: 20,
                                             fontFamily: 'Paybooc',
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                        TextSpan(
+                                        const TextSpan(
                                           text: '초',
                                           style: TextStyle(
                                             color: Colors.blueAccent,
@@ -241,7 +240,7 @@ class HomeSidebarX extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(width: 10.0),
+                                  const SizedBox(width: 10.0),
                                   Container(
                                     decoration: BoxDecoration(
                                       color: Colors.grey.withOpacity(0.3),
@@ -250,13 +249,13 @@ class HomeSidebarX extends StatelessWidget {
                                     height: 20.0,
                                     width: 3.0,
                                   ),
-                                  SizedBox(width: 10.0),
+                                  const SizedBox(width: 10.0),
                                   RichText(
                                     text: TextSpan(
                                       children: <TextSpan>[
                                         TextSpan(
                                           text: algovalue.meridiem,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.blueAccent,
                                             fontSize: 15,
                                             fontFamily: 'Paybooc',
@@ -264,17 +263,17 @@ class HomeSidebarX extends StatelessWidget {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: ' ' + (algovalue.hour >= 10
+                                          text: ' ${algovalue.hour >= 10
                                               ? '${algovalue.hour}'
-                                              : '0${algovalue.hour}'),
-                                          style: TextStyle(
+                                              : '0${algovalue.hour}'}',
+                                          style: const TextStyle(
                                             color: Colors.blueAccent,
                                             fontSize: 15,
                                             fontFamily: 'Paybooc',
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                        TextSpan(
+                                        const TextSpan(
                                           text: ':',
                                           style: TextStyle(
                                             color: Colors.blueAccent,
@@ -284,17 +283,16 @@ class HomeSidebarX extends StatelessWidget {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: algovalue.arrivetime.substring(
-                                              3, 5) +
-                                              ' ',
-                                          style: TextStyle(
+                                          text: '${algovalue.arrivetime.substring(
+                                              3, 5)} ',
+                                          style: const TextStyle(
                                             color: Colors.blueAccent,
                                             fontSize: 15,
                                             fontFamily: 'Paybooc',
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                        TextSpan(
+                                        const TextSpan(
                                           text: '도착',
                                           style: TextStyle(
                                             color: Colors.blueAccent,
@@ -316,7 +314,7 @@ class HomeSidebarX extends StatelessWidget {
                   ));
             }
             else if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
+              return const SizedBox(
                 height: 100.0,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -357,20 +355,20 @@ class HomeSidebarX extends StatelessWidget {
                                 8.0, 8.0, 8.0, 0.0),
                             child: Column(
                               children: [
-                                SizedBox(height: 3.0),
+                                const SizedBox(height: 3.0),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.access_time,
                                       color: Colors.blueAccent,
                                     ),
-                                    SizedBox(width: 10.0),
+                                    const SizedBox(width: 10.0),
                                     Text(
                                       '출발 : ${algovalue
                                           .startNodeName}\n도착 : ${algovalue
                                           .endNodeName}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.blueAccent,
                                         fontSize: 12,
                                         fontFamily: 'Paybooc',
@@ -379,7 +377,7 @@ class HomeSidebarX extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 5.0),
+                                const SizedBox(height: 5.0),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -388,16 +386,15 @@ class HomeSidebarX extends StatelessWidget {
                                         children: <TextSpan>[
                                           TextSpan(
                                             text:
-                                            '${(algovalue.totalWeight / 60)
-                                                .toInt()}',
-                                            style: TextStyle(
+                                            '${algovalue.totalWeight ~/ 60}',
+                                            style: const TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 20,
                                               fontFamily: 'Paybooc',
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
-                                          TextSpan(
+                                          const TextSpan(
                                             text: '분',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
@@ -410,14 +407,14 @@ class HomeSidebarX extends StatelessWidget {
                                             text:
                                             ' ${(algovalue.totalWeight % 60)
                                                 .toInt()}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 20,
                                               fontFamily: 'Paybooc',
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
-                                          TextSpan(
+                                          const TextSpan(
                                             text: '초',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
@@ -429,7 +426,7 @@ class HomeSidebarX extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(width: 10.0),
+                                    const SizedBox(width: 10.0),
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.grey.withOpacity(0.3),
@@ -438,13 +435,13 @@ class HomeSidebarX extends StatelessWidget {
                                       height: 20.0,
                                       width: 3.0,
                                     ),
-                                    SizedBox(width: 10.0),
+                                    const SizedBox(width: 10.0),
                                     RichText(
                                       text: TextSpan(
                                         children: <TextSpan>[
                                           TextSpan(
                                             text: algovalue.meridiem,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 15,
                                               fontFamily: 'Paybooc',
@@ -452,17 +449,17 @@ class HomeSidebarX extends StatelessWidget {
                                             ),
                                           ),
                                           TextSpan(
-                                            text: ' ' + (algovalue.hour >= 10
+                                            text: ' ${algovalue.hour >= 10
                                                 ? '${algovalue.hour}'
-                                                : '0${algovalue.hour}'),
-                                            style: TextStyle(
+                                                : '0${algovalue.hour}'}',
+                                            style: const TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 15,
                                               fontFamily: 'Paybooc',
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
-                                          TextSpan(
+                                          const TextSpan(
                                             text: ':',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
@@ -472,17 +469,16 @@ class HomeSidebarX extends StatelessWidget {
                                             ),
                                           ),
                                           TextSpan(
-                                            text: algovalue.arrivetime
-                                                .substring(3, 5) +
-                                                ' ',
-                                            style: TextStyle(
+                                            text: '${algovalue.arrivetime
+                                                .substring(3, 5)} ',
+                                            style: const TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 15,
                                               fontFamily: 'Paybooc',
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
-                                          TextSpan(
+                                          const TextSpan(
                                             text: '도착',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
@@ -511,7 +507,7 @@ class HomeSidebarX extends StatelessWidget {
                     color: Colors.white.withOpacity(0.8),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
@@ -541,7 +537,7 @@ class HomeSidebarX extends StatelessWidget {
       footerBuilder: (context, extended) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(

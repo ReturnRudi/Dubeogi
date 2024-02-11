@@ -45,7 +45,7 @@ class Graph {
     return nodes.firstWhere((node) => node.name == name, orElse: () => throw Exception("Node not found"));
   }
 
-  void addEdge(String node1Name, String node2Name, double weight1, double weight2, String type, String edgeAttribute, {double? node1X = null, double? node1Y = null, int? isInside1 = null, double? node2X = null, double? node2Y = null, int? isInside2 = null, String? building1 = null, String? building2 = null, bool? showRoute1 = null, bool? showRoute2 = null}) {
+  void addEdge(String node1Name, String node2Name, double weight1, double weight2, String type, String edgeAttribute, {double? node1X, double? node1Y, int? isInside1, double? node2X, double? node2Y, int? isInside2, String? building1, String? building2, bool? showRoute1, bool? showRoute2}) {
     if (!nodeExists(node1Name) && node1X != null && node1Y != null && isInside1 != null && building1 != null && showRoute1 != null) {
       addNode(node1Name, node1X, node1Y, isInside1, building1, showRoute1);
     }
@@ -178,7 +178,7 @@ class Graph {
 
     return Tuple2<List<double>, List<int>>(dist, prev);
   }*/
-  Tuple2<List<double>, List<int>> aStar(List<Node> nodes, List<Edge> edges, Node start, Node end, String weight_select) {
+  Tuple2<List<double>, List<int>> aStar(List<Node> nodes, List<Edge> edges, Node start, Node end, String weightSelect) {
     int startIndex = findNodeIndex(nodes, start.name);
     int endIndex = findNodeIndex(nodes, end.name);
 
@@ -211,7 +211,7 @@ class Graph {
           int nextNode;
           nextNode = findNodeIndex(nodes, edge.node2.name);
 
-          double weight = weight_select == "최단" ? edge.time_weight : edge.comfy_weight; // Select weight based on useTimeWeight
+          double weight = weightSelect == "최단" ? edge.time_weight : edge.comfy_weight; // Select weight based on useTimeWeight
 
           double candidateDist = dist[currentNode] + weight;
 

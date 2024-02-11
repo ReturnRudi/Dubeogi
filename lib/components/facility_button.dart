@@ -22,23 +22,6 @@ class FacilityButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            color: textColor,
-            size: 20.0,
-          ),
-          SizedBox(width: 8.0),
-          CustomText(
-            text: text,
-            color: textColor,
-            fontSize: 12.0,
-            fontWeight: FontWeight.w700,
-          ),
-        ],
-      ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(
           onoff ? Colors.grey.shade300 : Colors.white, // 버튼 색상 조정
@@ -48,6 +31,23 @@ class FacilityButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.0), // 모서리 둥글기 조정
           ),
         ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: textColor,
+            size: 20.0,
+          ),
+          const SizedBox(width: 8.0),
+          CustomText(
+            text: text,
+            color: textColor,
+            fontSize: 12.0,
+            fontWeight: FontWeight.w700,
+          ),
+        ],
       ),
     );
   }
