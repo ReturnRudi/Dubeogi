@@ -21,8 +21,12 @@ class FacilityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+
       onPressed: onPressed,
       style: ButtonStyle(
+        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+          EdgeInsets.symmetric(horizontal: 8.0), // 내부 패딩을 없앰
+        ),
         backgroundColor: MaterialStateProperty.all<Color>(
           onoff ? Colors.grey.shade300 : Colors.white, // 버튼 색상 조정
         ),

@@ -89,7 +89,7 @@ class HomeSidebarX extends StatelessWidget {
                 'check: (${algovalue.homeResult[i].x},${algovalue
                     .homeResult[i].y})');
             mapvalue.guide_animation(Offset(
-                algovalue.homeResult[i].x, algovalue.homeResult[i].y - 50), 6);
+                algovalue.homeResult[i].x, algovalue.homeResult[i].y), 6);
             mapvalue.guideX = algovalue.homeResult[i].x;
             mapvalue.guideY = algovalue.homeResult[i].y;
             mapvalue.isRequired = true;

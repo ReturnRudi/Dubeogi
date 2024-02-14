@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MapValue with ChangeNotifier{
-  double _scale = 1.3;
+  double _scale = 1.0;
   double _previousScale = 1.0;
   Offset _position = Offset.zero;
   Offset _previousPosition = Offset.zero;
@@ -71,7 +71,6 @@ class MapValue with ChangeNotifier{
     double xChange = (end.dx - _position.dx) / num;
     double yChange = (end.dy - _position.dy) / num;
     double scaleChange = (scale - _scale) / num;
-    print('x_change: $xChange    y_change: $yChange');
 
     for(int i = 1; i <= num; i++){
       await Future.delayed(const Duration(microseconds: 750));  // 10 milliseconds의 지연시간을 설정

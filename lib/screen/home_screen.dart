@@ -30,15 +30,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // map load
+  // 사용자 디바이스의 정보를 저장하는 변수들
+  late double deviceWidth = MediaQuery.of(context).size.width;
+  late double deviceHeight = MediaQuery.of(context).size.height;
+  late double devicePaddingTop = MediaQuery.of(context).padding.top;
+
+  // _getImageInfo함수를 통해 초기화되는 변수들
   late ImageInfo _imageInfo_du;
-  bool _imageLoaded_du = false;
   late double _imageWidth_du;
   late double _imageHeight_du;
   late double scale_offset;
+  bool _imageLoaded_du = false;
+  late double bottomSpace;
 
   // 건물 및 편의시설 관련
   int nowFloor = 0;
+  String _showButton = "기본";
   late List<Widget> buildingPositions;
   late List<Widget> buildingNames;
   late List<Widget> vendings;
@@ -47,8 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<Widget> printers;
   late List<Widget> atms;
   late List<Widget> lounges;
-
-  String _showButton = "기본";
   bool _vendingvisibility = false;
   bool _showervisibility = false;
   bool _storevisibility = false;
@@ -56,21 +61,19 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loungevisibility = false;
   bool _printervisibility = false;
 
-  // gps
-  double now_w = 0.0;
-  double now_g = 0.0;
+  // gps 관련 변수들
+  late double now_w;
+  late double now_g;
   bool isTrackingLocation = false;
   StreamSubscription<Position>? positionStream;
   Offset gpsToPixel = Offset.zero;
 
-  // .
-  dynamic result;
+  // provider
   late AlgoValue algovalue;
   late MapValue mapvalue;
 
-  // _ getImageInfo() 학교 지도 이미지를 불러오고 이미지의 폭, 높이, 비율을 변수에 저장
-  // 비동기
-/*  Future<void> _getImageInfo() async {
+/*  // 비동기
+  Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
         AssetImage('assets/images/du.png').resolve(ImageConfiguration());
@@ -83,11 +86,12 @@ class _HomeScreenState extends State<HomeScreen> {
       _imageLoaded_du = true;
       _imageWidth_du = _imageInfo_du.image.width.toDouble();
       _imageHeight_du =  _imageInfo_du.image.height.toDouble();
-      scale_offset = MediaQuery.of(context).size.width / _imageWidth_du;
+      scale_offset = deviceWidth / _imageWidth_du;
     });
     stream.removeListener(listener);
   }*/
-  //동기
+  // _getImageInfo() 학교 지도 이미지를 불러오고 이미지의 폭, 높이, 비율을 변수에 저장
+  // 동기
   void _getImageInfo() {
     Image image = Image.asset('assets/images/du.png');
     Completer<ImageInfo> completer = Completer<ImageInfo>();
@@ -97,75 +101,70 @@ class _HomeScreenState extends State<HomeScreen> {
       _imageLoaded_du = true;
       _imageWidth_du = info.image.width.toDouble();
       _imageHeight_du = info.image.height.toDouble();
-      scale_offset = MediaQuery.of(context).size.width / _imageWidth_du;
+      print("_imageWidth_du: $_imageWidth_du");
+      print("_imageHeight_du: $_imageHeight_du");
+      scale_offset = deviceWidth / _imageWidth_du;
+      print("scale_offset: $scale_offset");
+      bottomSpace = deviceHeight / scale_offset - _imageHeight_du;
+      print("bottomSpace: $bottomSpace");
+      print("deviceWidth: $deviceWidth");
+      print("deviceHeight: $deviceHeight");
+      print("devicePaddingTop: $devicePaddingTop");
+      print("deviceHeight / scale_offset : ${deviceHeight / scale_offset}");
+
       setState(() {});
       completer.complete(info);
     }));
   }
 
   // ================================================
+  // 줌/드래그 가 시작되는 시점의 줌 레벨과 위치를 저장하는 함수 _onScaleStart
   void _onScaleStart(ScaleStartDetails details) {
     mapvalue.previousScale = mapvalue.scale;
     mapvalue.previousPosition = details.focalPoint;
-    print(
-        "MediaQuery.of(context).padding.top: ${MediaQuery.of(context).padding.top}");
   }
 
+  // 줌/드래그가 진행될 때 제스처의 정도에 알맞게 줌/드래그 레벨을 변화시켜주는 함수 _onScaleUpdate
+  // ScaleUpdateDetails details 에 사용자의 제스처 정보가 들어있다 (줌 / 드래그 한 정도)
   void _onScaleUpdate(ScaleUpdateDetails details) {
-    mapvalue.scale = (mapvalue.previousScale * details.scale).clamp(1.3, 12.0);
-    final ratio =
-        MediaQuery.of(context).size.height / MediaQuery.of(context).size.width;
+    mapvalue.scale = (mapvalue.previousScale * details.scale).clamp(0.1, 12.0);
+    final ratio = deviceHeight / deviceWidth;
+    // 현재 화면상에 보여지는 지도 이미지의 실제 너비 (처음 화면에 너비를 꽉맞춰 이미지 위젯을 띄우므로 너비가 기준)
+    // 원래 이미지의 너비가 3000픽셀일 때 scale이 2배라면 현재 화면에 보여지는 지도의 너비는 1500픽셀에 해당함
     final screenWidth = _imageWidth_du / mapvalue.scale;
+    // 폭이 기준이므로 구한 화면상에 보여지는 지도 이미지의 실제 너비 * (너비 높이 비율) 을 통해 높이를 구함
     final screenHeight = screenWidth * ratio;
 
-    double minY, maxY;
+    // 사용자가 드래그를 할 때 지도 이미지 밖으로 나가면 안되므로 드래그의 최소/최대 범위를 계산을 통해 구한다
+
+    double compX = _imageWidth_du / 2;
+    double compY = _imageHeight_du / 2;
 
     double minX = screenWidth / 2;
     double maxX = _imageWidth_du - screenWidth / 2;
 
-    minY = screenHeight / 2;
-    maxY = _imageHeight_du -
-        screenHeight / 2 -
-        MediaQuery.of(context).padding.top / scale_offset;
+    double minY = screenHeight / 2;   // 2666.5
+    double maxY = _imageHeight_du - screenHeight / 2;
 
-    mapvalue.position -= (details.focalPoint - mapvalue.previousPosition) /
-        mapvalue.previousScale /
-        scale_offset;
+    minY = minY > compY ? compY : minY;
+    maxY = maxY > compY ? maxY : compY;
+
+    minX = minX > compX ? compX : minX;
+    maxX = maxX > compX ? maxX : compX;
+
+    print('minY: $minY');
+    print('maxY: $maxY');
+
+    mapvalue.position -= (details.focalPoint - mapvalue.previousPosition) / mapvalue.previousScale / scale_offset;
 
     mapvalue.position = Offset(
       mapvalue.position.dx.clamp(minX, maxX),
       mapvalue.position.dy.clamp(minY, maxY),
     );
+
+    print("position: ${mapvalue.position}");
 
     mapvalue.previousPosition = details.focalPoint;
-  }
-
-  void _onScaleEnd(ScaleEndDetails details) {
-    // 화면 크기를 얻습니다.
-    print('position: ${mapvalue.position}');
-    print("_scale: ${mapvalue.scale}");
-    final ratio =
-        MediaQuery.of(context).size.height / MediaQuery.of(context).size.width;
-    final screenWidth = _imageWidth_du / mapvalue.scale; //화면에서 보여지는 너비의 물리적 픽셀값
-    final screenHeight = screenWidth * ratio; //화면에서 보여지는 높이의 물리적 픽셀값
-
-    double minY, maxY;
-
-    // 이미지의 최소 및 최대 제한 값을 계산합니다.
-    double minX = screenWidth / 2;
-    double maxX = _imageWidth_du - screenWidth / 2;
-
-    // 위 아래 여백이 생기는 경우 minY, maxY의 크기가 역전되지 않도록 if문 추가
-    minY = screenHeight / 2;
-    maxY = _imageHeight_du -
-        screenHeight / 2 -
-        MediaQuery.of(context).padding.top / scale_offset;
-
-    // _position 값을 제한 값으로 설정합니다.
-    mapvalue.position = Offset(
-      mapvalue.position.dx.clamp(minX, maxX),
-      mapvalue.position.dy.clamp(minY, maxY),
-    );
   }
 
   // ================================================
@@ -218,12 +217,13 @@ class _HomeScreenState extends State<HomeScreen> {
     print('check: showButton: $_showButton');
   }
 
-  void gotoBuildingInfo({required String buildingname}) {
+  // 리스트 뷰에서 "시설"을 터치했을 때 해당 시설 정보 화면으로 이동시켜주는 함수 gotoBuildingInfo
+  void gotoBuildingInfo({required String buildingName}) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => BuildingInfoScreen(
-          title: buildingname,
+          title: buildingName,
         ),
       ),
     );
@@ -239,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     positionStream
-        ?.cancel(); // Don't forget to cancel the stream when disposing
+        ?.cancel();
     super.dispose();
   }
 
@@ -271,9 +271,9 @@ class _HomeScreenState extends State<HomeScreen> {
     print('check: startLocationStream();');
     await requestLocationPermission();
     positionStream = Geolocator.getPositionStream(
-            desiredAccuracy: LocationAccuracy.high,
-            //distanceFilter: 1
-            intervalDuration: const Duration(milliseconds: 1000))
+        desiredAccuracy: LocationAccuracy.high,
+        //distanceFilter: 1
+        intervalDuration: const Duration(milliseconds: 1000))
         .listen((Position position) {
       setState(() {
         now_w = position.latitude;
@@ -314,8 +314,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     return confirmExit ?? false;
   }
-
-  // ====================================================
 
   // ====================================================
   bool _isInitialized = false;
@@ -375,16 +373,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return WillPopScope(
       onWillPop: _onBackPressed,
-      child: Scaffold(
-        body: SafeArea(
-          child: Stack(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'homescreen',
+        home: Scaffold(
+          body: Stack(
             children: [
               GestureDetector(
                 onScaleStart: _onScaleStart,
                 onScaleUpdate: _onScaleUpdate,
-                onScaleEnd: _onScaleEnd,
                 onTap: (){
-                  print("check: ontap on maps");
                   setState(() {
                     _showButton = "기본";
                   });
@@ -394,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Transform.scale(
                       scale: mapvalue.scale,
                       child: Transform.translate(
-                        offset: Offset(MediaQuery.of(context).size.width / scale_offset / 2 - mapvalue.position.dx, MediaQuery.of(context).size.height / scale_offset / 2 - MediaQuery.of(context).padding.top / scale_offset - mapvalue.position.dy).scale(scale_offset, scale_offset),
+                        offset: Offset(_imageWidth_du / 2 - mapvalue.position.dx, _imageHeight_du / 2 + bottomSpace / 2 - mapvalue.position.dy).scale(scale_offset, scale_offset),
                         child: ClipRect(
                           child: Stack(
                             children: [
@@ -413,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   startPointsBlue: algovalue.startPointsBlue,
                                   // 빈 리스트 전달
                                   endPointsBlue:
-                                      algovalue.endPointsBlue, // 빈 리스트 전달
+                                  algovalue.endPointsBlue, // 빈 리스트 전달
                                 ),
                                 child: Stack(
                                   children: [
@@ -630,18 +628,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 4.0, // 오른쪽 패딩패딩
+                            right: 4.0,
+                            top: devicePaddingTop,
+                          ),
+                          child: Row(
                             children: [
                               // 검색하고 싶은 건물 입력
                               Expanded(
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.symmetric(horizontal: 4.0),
+                                  const EdgeInsets.only(
+                                    right: 4.0, // 오른쪽 패딩패딩
+                                  ),
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(context, '/find');
@@ -665,7 +669,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       child: CustomText(
                                         text: '검색하고 싶은 건물을 입력하세요.',
-                                        fontSize: 16.0,
+                                        fontSize: 12.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.grey,
                                       ),
@@ -676,11 +680,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               // 길찾기 버튼
                               Container(
                                 color: const Color(0x00ffdda2),
-                                height: 43.0,
-                                width: 60.0,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orangeAccent
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10), // 버튼의 모양 설정
+                                      ),
+                                      padding: EdgeInsets.all(0),
+                                      backgroundColor: Colors.orangeAccent
                                   ),
                                   onPressed: () {
                                     algovalue.isFind = false;
@@ -694,6 +700,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       const Icon(
                                         Icons.search,
+                                        color: Colors.white,
                                       ),
                                       CustomText(
                                         text: '길찾기',
@@ -707,11 +714,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          // 자판기 샤워실 매점 ...
-                          SingleChildScrollView(
+                        ),
+                        // 자판기 샤워실 매점 ...
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 0, // 오른쪽 패딩패딩
+                            right: 0,
+                            top: 0,
+                          ),
+                          child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: [
+                                const SizedBox(width: 10),
                                 FacilityButton(
                                   text: '자판기',
                                   textColor: Colors.blue,
@@ -759,19 +774,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onoff: _atmvisibility,
                                   icon: Icons.monetization_on,
                                 ),
+                                const SizedBox(width: 10),
                               ],
                             ),
                           ),
-                          Expanded(
-                            child: algovalue.isRequired
-                                ? HomeSidebarX(
-                                    controller: _controller,
-                                    scale_offset: scale_offset,
-                                  )
-                                : const Text(""),
+                        ),
+                        Expanded(
+                          child: algovalue.isRequired
+                              ? HomeSidebarX(
+                            controller: _controller,
+                            scale_offset: scale_offset,
                           )
-                        ],
-                      ),
+                              : const Text(""),
+                        )
+                      ],
                     ),
                     // _showButton이 "기본"이 아닌 경우 즉, 건물이 터치된 경우 리스트 뷰 위젯 출력
 
@@ -783,7 +799,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             nowFloorData[_showButton] = intValue;
                             if (strValue == "시설") {
                               gotoBuildingInfo(
-                                buildingname: _showButton,
+                                buildingName: _showButton,
                               );
                             } else {
                               buildingFilePath[_showButton] = strValue;
