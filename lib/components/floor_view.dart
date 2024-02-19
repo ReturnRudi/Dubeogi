@@ -63,7 +63,7 @@ class _FloorViewState extends State<FloorView> {
       //B1의 경우 "1"과 "B1"이 모두 리스트 matchedFloors에 들어가므로 정렬 후 0번째 인덱스를 이어붙인다
       return defaultPath + matchedFloors[0];
     } else if (input == '기본') {
-      return OriginalData[widget.showButton];
+      return originalData[widget.showButton];
     } else {
       //시설 정보 입력할 때
       return input;
@@ -108,9 +108,6 @@ class _FloorViewState extends State<FloorView> {
     fileNames = fileNames.reversed.toList();
     fileNames.insert(0, "기본");
     fileNames.insert(0, "시설");
-    fileNames.forEach((fileName) {
-      print(fileName);
-    });
     //fileNames 리스트의 순서를 반대로 뒤집고 "시설", "기본"을 추가 한다.
     //ex. [ "시설", "기본", "학술관4.png", "학술관1.png", "학술관B1.png" ]
 

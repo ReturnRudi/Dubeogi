@@ -40,8 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
   late double _imageWidth_du;
   late double _imageHeight_du;
   late double scale_offset;
+  late double scr_img_diff;
   bool _imageLoaded_du = false;
-  late double bottomSpace;
+
 
   // 건물 및 편의시설 관련
   int nowFloor = 0;
@@ -66,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late double now_g;
   bool isTrackingLocation = false;
   StreamSubscription<Position>? positionStream;
-  Offset gpsToPixel = Offset.zero;
+  Offset nowLocationPixel = Offset.zero;
 
   // provider
   late AlgoValue algovalue;
@@ -101,23 +102,14 @@ class _HomeScreenState extends State<HomeScreen> {
       _imageLoaded_du = true;
       _imageWidth_du = info.image.width.toDouble();
       _imageHeight_du = info.image.height.toDouble();
-      print("_imageWidth_du: $_imageWidth_du");
-      print("_imageHeight_du: $_imageHeight_du");
       scale_offset = deviceWidth / _imageWidth_du;
-      print("scale_offset: $scale_offset");
-      bottomSpace = deviceHeight / scale_offset - _imageHeight_du;
-      print("bottomSpace: $bottomSpace");
-      print("deviceWidth: $deviceWidth");
-      print("deviceHeight: $deviceHeight");
-      print("devicePaddingTop: $devicePaddingTop");
-      print("deviceHeight / scale_offset : ${deviceHeight / scale_offset}");
+      scr_img_diff = deviceHeight / scale_offset - _imageHeight_du;
 
       setState(() {});
       completer.complete(info);
     }));
   }
 
-  // ================================================
   // 줌/드래그 가 시작되는 시점의 줌 레벨과 위치를 저장하는 함수 _onScaleStart
   void _onScaleStart(ScaleStartDetails details) {
     mapvalue.previousScale = mapvalue.scale;
@@ -127,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // 줌/드래그가 진행될 때 제스처의 정도에 알맞게 줌/드래그 레벨을 변화시켜주는 함수 _onScaleUpdate
   // ScaleUpdateDetails details 에 사용자의 제스처 정보가 들어있다 (줌 / 드래그 한 정도)
   void _onScaleUpdate(ScaleUpdateDetails details) {
-    mapvalue.scale = (mapvalue.previousScale * details.scale).clamp(0.1, 12.0);
+    mapvalue.scale = (mapvalue.previousScale * details.scale).clamp(1.3, 12.0);
     final ratio = deviceHeight / deviceWidth;
     // 현재 화면상에 보여지는 지도 이미지의 실제 너비 (처음 화면에 너비를 꽉맞춰 이미지 위젯을 띄우므로 너비가 기준)
     // 원래 이미지의 너비가 3000픽셀일 때 scale이 2배라면 현재 화면에 보여지는 지도의 너비는 1500픽셀에 해당함
@@ -137,13 +129,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // 사용자가 드래그를 할 때 지도 이미지 밖으로 나가면 안되므로 드래그의 최소/최대 범위를 계산을 통해 구한다
 
+
+    // 이미지가 화면보다 작아질 경우를 대비해 dx, dy 각각의 최소값의 최대값, 최대값의 최소값을 지정한다.
     double compX = _imageWidth_du / 2;
     double compY = _imageHeight_du / 2;
 
     double minX = screenWidth / 2;
     double maxX = _imageWidth_du - screenWidth / 2;
 
-    double minY = screenHeight / 2;   // 2666.5
+    double minY = screenHeight / 2;
     double maxY = _imageHeight_du - screenHeight / 2;
 
     minY = minY > compY ? compY : minY;
@@ -167,7 +161,6 @@ class _HomeScreenState extends State<HomeScreen> {
     mapvalue.previousPosition = details.focalPoint;
   }
 
-  // ================================================
   void _vendingshow() {
     setState(() {
       _vendingvisibility = !_vendingvisibility;
@@ -208,13 +201,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // 건물을 터치하면 _showButton 변수를 터치한 건물명으로 바꾸는 함수 _showFloorButton
   void _showFloorButton(String touchedBuilding) {
-    String name = "기본";
     setState(() {
       _showButton != touchedBuilding
           ? _showButton = touchedBuilding
-          : _showButton = name;
+          : _showButton = "기본";
     });
-    print('check: showButton: $_showButton');
   }
 
   // 리스트 뷰에서 "시설"을 터치했을 때 해당 시설 정보 화면으로 이동시켜주는 함수 gotoBuildingInfo
@@ -229,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // ================================================
+  // initState, dispose
   @override
   void initState() {
     super.initState();
@@ -243,8 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  // ====================================================
-  Offset gps(double w, double g) {
+  // geolocator를 통해 얻은 경도 위도를 이미지의 픽셀로 옮겨주는 함수 gpsToPixel
+  Offset gpsToPixel(double w, double g) {
     double pixelX = 3000 *
         (g - 126.9962082464593) /
         (127.0046597158073 - 126.9962082464593);
@@ -255,20 +246,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return Offset(pixelX - 12, pixelY - 5); //왼쪽 위 오른 쪽 아래 보면서 오차 수정 필요
   }
 
+  // 위치 권한을 요청하는 함수 requestLocationPermission
   Future<void> requestLocationPermission() async {
-    print('check: requestLocationPermission();');
     var status = await Permission.location.request();
     if (!status.isGranted) {
       //status = await Permission.location.request();
       //if (!status.isGranted) {
       //return Future.error('Location permission not granted');
       //}
-      print('check: GPS permission failed.');
     }
   }
 
+  // 위치 스트림을 받아오는 함수 startLocationStream
   void startLocationStream() async {
-    print('check: startLocationStream();');
     await requestLocationPermission();
     positionStream = Geolocator.getPositionStream(
         desiredAccuracy: LocationAccuracy.high,
@@ -278,12 +268,13 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         now_w = position.latitude;
         now_g = position.longitude;
-        gpsToPixel = gps(now_w, now_g);
+        nowLocationPixel = gpsToPixel(now_w, now_g);
         //print("gpsToPixel: $gpsToPixel");
       });
     });
   }
 
+  // GPS 기능을 활성화/비활성화 하는 함수
   void toggleLocationTracking() {
     if (isTrackingLocation) {
       positionStream?.cancel();
@@ -392,7 +383,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Transform.scale(
                       scale: mapvalue.scale,
                       child: Transform.translate(
-                        offset: Offset(_imageWidth_du / 2 - mapvalue.position.dx, _imageHeight_du / 2 + bottomSpace / 2 - mapvalue.position.dy).scale(scale_offset, scale_offset),
+                        offset: Offset(_imageWidth_du / 2 - mapvalue.position.dx, _imageHeight_du / 2 + scr_img_diff / 2 - mapvalue.position.dy).scale(scale_offset, scale_offset),
                         child: ClipRect(
                           child: Stack(
                             children: [
@@ -587,11 +578,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Stack(
                                         children: [
                                           Positioned(
-                                            // 투명 큰 원
-                                            left: (gpsToPixel.dx * scale_offset) -
-                                                4 * 1.3 / mapvalue.scale,
-                                            top: (gpsToPixel.dy * scale_offset) -
-                                                4 * 1.3 / mapvalue.scale,
+                                            // 오렌지색 투명 큰 원
+                                            left: nowLocationPixel.dx * scale_offset -
+                                                9 * 1.3 / mapvalue.scale,
+                                            top: nowLocationPixel.dy * scale_offset -
+                                                9 * 1.3 / mapvalue.scale,
                                             child: Container(
                                               width: 18 * 1.3 / mapvalue.scale,
                                               height: 18 * 1.3 / mapvalue.scale,
@@ -602,9 +593,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           Positioned(
-                                            //중앙 원
-                                            left: gpsToPixel.dx * scale_offset,
-                                            top: gpsToPixel.dy * scale_offset,
+                                            //중앙 오렌지색 원 및 흰색 테두리
+                                            left: nowLocationPixel.dx * scale_offset -
+                                                5 * 1.3 / mapvalue.scale,
+                                            top: nowLocationPixel.dy * scale_offset -
+                                                5 * 1.3 / mapvalue.scale,
                                             child: Container(
                                               width: 10 * 1.3 / mapvalue.scale,
                                               height: 10 * 1.3 / mapvalue.scale,

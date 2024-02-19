@@ -29,8 +29,7 @@ String atmPath = 'assets/images/facility/atm.png';
 String loungePath = 'assets/images/facility/lounge.png';
 String printerPath = 'assets/images/facility/printer.png';
 
-
-Map<String, String> OriginalData = {
+Map<String, String> originalData = {
   '과학관':'assets/images/building/과학관(1102,2973).png',
   '다향관':'assets/images/building/다향관(1337,2379).png',
   '대운동장':'assets/images/building/대운동장(1308,3206).png',

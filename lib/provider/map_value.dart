@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MapValue with ChangeNotifier{
-  double _scale = 1.0;
-  double _previousScale = 1.0;
+  double _scale = 1.3;
+  double _previousScale = 1.3;
   Offset _position = Offset.zero;
   Offset _previousPosition = Offset.zero;
   double _guideX = 0.0;

@@ -671,7 +671,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             if (nowFloorData[key] != 0) nowFloorData[key] = 0;
                           }
                           for (String key in buildingFilePath.keys) {
-                            buildingFilePath[key] = OriginalData[key]!;
+                            buildingFilePath[key] = originalData[key]!;
                           }
                           handleInput();
                         }
