@@ -37,7 +37,7 @@ class AlgoValue with ChangeNotifier{
 
   bool _isRequired = false; // 길을 찾는 중인지
   //bool _isInitialized = false; // 처음 한번만 실행되도록하게하는 변수
-  bool _isFind = false; // astar 알고리즘이 작동했는지 안했는지
+  bool _isAstared = false; // astar 알고리즘이 작동했는지 안했는지
 
   Graph get graph => _graph;
   //String get showButton => _showButton;
@@ -66,36 +66,30 @@ class AlgoValue with ChangeNotifier{
 
   bool get isRequired => _isRequired;
   //bool get isInitialized => _isInitialized;
-  bool get isFind => _isFind;
+  bool get isAstared => _isAstared;
 
   set startNodeName(String str){
     _startNodeName = str;
-    //print('check: set startNodeName: ${_startNodeName}');
     notifyListeners();
   }
   set endNodeName(String str){
     _endNodeName = str;
-    //print('check: set endNodeName: ${_endNodeName}');
     notifyListeners();
   }
   set startNodes(List<Node> nodelist){
     _startNodes = nodelist;
-    //print('check: set startNodes: ${_startNodes}');
     notifyListeners();
   }
   set endNodes(List<Node> nodelist){
     _endNodes = nodelist;
-    //print('check: set endNodes: ${_endNodes}');
     notifyListeners();
   }
   set finalPath(List<Node> nodelist){
     _finalPath = nodelist;
-    //print('check: set finalPath: ${_finalPath}');
     notifyListeners();
   }
   set direction(List<String> strlist){
     _direction = strlist;
-    //print('check: set direction: ${_direction}');
     notifyListeners();
   }
   set selectOption(int option){
@@ -140,9 +134,9 @@ class AlgoValue with ChangeNotifier{
     //print('check: set isRequired: ${_isRequired}');
     notifyListeners();
   }
-  set isFind(bool tf){
-    _isFind = tf;
-    print('check: set isFind: $_isFind');
+  set isAstared(bool tf){
+    _isAstared = tf;
+    print('check: set isAstared: $_isAstared');
     notifyListeners();
   }
 
@@ -218,7 +212,7 @@ class AlgoValue with ChangeNotifier{
     }
     else{
       for (int i = 0; i < _startNodes.length; i++) {
-        if (_graph.findEdge(_startNodes[i].name, _endNodes[i].name)?.edgeAttribute == "차도") {
+        if (_graph.findEdge(_startNodes[i].name, _endNodes[i].name)?.isRoad == true) {
           _startPointsBlue.add(Offset(_startNodes[i].x, _startNodes[i].y));
           _endPointsBlue.add(Offset(_endNodes[i].x, _endNodes[i].y));
         }
@@ -258,13 +252,13 @@ class AlgoValue with ChangeNotifier{
     newGraph.edges = List.from(graph.edges);
     double weight = sqrt((dx - closest.x) * (dx - closest.x) + (dy - closest.y) * (dy - closest.y));
 
-    newGraph.addEdge(closest.name, newName, weight, weight, "평지", "도보",
+    newGraph.addEdge(closest.name, newName, weight, weight, "평지", false,
         node2X: dx,
         node2Y: dy,
         isInside2: 0,
         building2: "실외",
         showRoute2: false);
-    newGraph.addEdge(newName, closest.name, weight, weight, "평지", "도보");
+    newGraph.addEdge(newName, closest.name, weight, weight, "평지", false);
 
 
     return newGraph;
@@ -290,7 +284,9 @@ class AlgoValue with ChangeNotifier{
 
     return closest;
   }
-  void pickandUpdateGraph(Offset newpoint, String str){ // 위치 선택한 후 새롭게 graph를 변경함
+
+  // '지도에서 선택'으로 선택된 위치에 노드를 추가하는 함수 addSelectedFromMapNode
+  void addSelectedFromMapNode(Offset newpoint, String str){
     print("check: pickandUpdateGraph($str)");
     Graph tempGraph = Graph();
     double dxPixel = 1500 - newpoint.dx;
@@ -305,7 +301,9 @@ class AlgoValue with ChangeNotifier{
     _graph = tempGraph;
     notifyListeners();
   }
-  void removePickedPointFromGraph(String str){ // search screen에서 선택되어서 변경되었던 그래프를 원래대로 돌려놓음.
+
+  // '지도에서 선택'으로 추가했던 노드를 다시 삭제하는 함수 removeSelectedFromMapNode
+  void removeSelectedFromMapNode(String str){
     int isExist = _graph.findNodeIndex(_graph.nodes, str);
     if(isExist != -1) {
       _graph.removeNode(str);
@@ -314,6 +312,4 @@ class AlgoValue with ChangeNotifier{
     }
     return;
   }
-
-  // ==============================================
 }

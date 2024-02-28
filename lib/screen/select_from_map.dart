@@ -5,8 +5,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:Dubeogi/components/buildingname_positioned_list.dart';
 import 'package:Dubeogi/save/custom_text.dart';
 
-late double scale_offset;
-
 class SelectFromMap extends StatefulWidget {
   final bool destination; //false 출발지, true 도착지
 
@@ -17,17 +15,24 @@ class SelectFromMap extends StatefulWidget {
 }
 
 class _SelectFromMapState extends State<SelectFromMap> {
+  late double deviceWidth = MediaQuery.of(context).size.width;
+  late double deviceHeight = MediaQuery.of(context).size.height;
+  late double devicePaddingTop = MediaQuery.of(context).padding.top;
+  late double scr_img_diff;
+  late double scale_offset;
+
   late ImageInfo _imageInfo_du;
-  bool _imageLoaded_du = false;
   late double _imageWidth_du;
   late double _imageHeight_du;
+
+  bool _imageLoaded_du = false;
   double _scale = 6.0;
   double _previousScale = 6.0;
   Offset _position = const Offset(101, 39);
   Offset _previousPosition = const Offset(101, 39);
   double now_w = 0.0;
   double now_g = 0.0;
-  Offset gpsToPixel = Offset.zero;
+  Offset nowLocationPixel = Offset.zero;
 
   late List<Widget> buildingNames;
 
@@ -45,10 +50,10 @@ class _SelectFromMapState extends State<SelectFromMap> {
   Future<void> requestLocationPermission() async {
     var status = await Permission.location.status;
     if (!status.isGranted) {
-      status = await Permission.location.request();
+/*      status = await Permission.location.request();
       if (!status.isGranted) {
         return Future.error('Location permission not granted');
-      }
+      }*/
     }
   }
 
@@ -60,8 +65,8 @@ class _SelectFromMapState extends State<SelectFromMap> {
       setState(() {
         now_w = position.latitude;
         now_g = position.longitude;
-        gpsToPixel = gps(position.latitude, position.longitude);
-        _position = Offset(1500 - gpsToPixel.dx, 5333 / 2 - gpsToPixel.dy);
+        nowLocationPixel = gps(position.latitude, position.longitude);
+        _position = Offset(1500 - nowLocationPixel.dx, 5333 / 2 - nowLocationPixel.dy);
       });
     } catch (e) {
       print(e);
@@ -74,7 +79,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
     _getImageInfo();
   }
 
-  Future<void> _getImageInfo() async {
+/*  Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
     const AssetImage('assets/images/du.png').resolve(const ImageConfiguration());
@@ -90,6 +95,22 @@ class _SelectFromMapState extends State<SelectFromMap> {
       scale_offset = MediaQuery.of(context).size.width / _imageWidth_du;
     });
     stream.removeListener(listener);
+  }*/
+  void _getImageInfo() {
+    Image image = Image.asset('assets/images/du.png');
+    Completer<ImageInfo> completer = Completer<ImageInfo>();
+
+    image.image.resolve(const ImageConfiguration()).addListener(ImageStreamListener((ImageInfo info, bool _) {
+      _imageInfo_du = info;
+      _imageLoaded_du = true;
+      _imageWidth_du = info.image.width.toDouble();
+      _imageHeight_du = info.image.height.toDouble();
+      scale_offset = deviceWidth / _imageWidth_du;
+      scr_img_diff = deviceHeight / scale_offset - _imageHeight_du;
+
+      setState(() {});
+      completer.complete(info);
+    }));
   }
 
   void _onScaleStart(ScaleStartDetails details) {
@@ -253,7 +274,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
             child: FloatingActionButton(
               onPressed: () {
                 getCurrentLocation();
-                print("gpsToPixel: $gpsToPixel");
+                print("gpsToPixel: $nowLocationPixel");
               },
               backgroundColor: Colors.orange,
               child: const Icon(Icons.location_on),

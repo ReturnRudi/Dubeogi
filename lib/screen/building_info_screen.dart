@@ -80,7 +80,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                 children: [
                   OutlinedButton(
                     onPressed: () {
-                      algovalue.isFind = false;
+                      algovalue.isAstared = false;
                       Navigator.pushNamed(
                         context,
                         '/search',
@@ -113,7 +113,7 @@ class _BuildingInfoScreenState extends State<BuildingInfoScreen> {
                   const SizedBox(width: 25),
                   OutlinedButton(
                     onPressed: () {
-                      algovalue.isFind = false;
+                      algovalue.isAstared = false;
                       Navigator.pushNamed(context, '/search',
                           arguments: {'start': '', 'end': widget.title});
                     },

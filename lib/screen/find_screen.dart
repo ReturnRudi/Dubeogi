@@ -4,7 +4,7 @@ import 'package:Dubeogi/save/custom_text.dart';
 import 'package:Dubeogi/screen/building_info_screen.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-// 검색창을 누르면 나오는 스크린.
+// 검색창을 누르면 나오는 스크린
 class FindScreen extends StatefulWidget {
   const FindScreen({Key? key}) : super(key: key);
 

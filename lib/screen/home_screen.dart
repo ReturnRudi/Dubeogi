@@ -250,10 +250,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> requestLocationPermission() async {
     var status = await Permission.location.request();
     if (!status.isGranted) {
-      //status = await Permission.location.request();
-      //if (!status.isGranted) {
-      //return Future.error('Location permission not granted');
-      //}
+/*      status = await Permission.location.request();
+      if (!status.isGranted) {
+      return Future.error('Location permission not granted');
+      }*/
     }
   }
 
@@ -274,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // GPS 기능을 활성화/비활성화 하는 함수
+  // 메인화면 우측 하단 GPS 버튼을 통해 GPS 기능을 활성화/비활성화 하는 함수
   void toggleLocationTracking() {
     if (isTrackingLocation) {
       positionStream?.cancel();
@@ -682,7 +682,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       backgroundColor: Colors.orangeAccent
                                   ),
                                   onPressed: () {
-                                    algovalue.isFind = false;
+                                    algovalue.isAstared = false;
                                     Navigator.pushNamed(
                                       context,
                                       '/search',

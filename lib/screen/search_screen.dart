@@ -8,7 +8,6 @@ import 'package:Dubeogi/save/custom_text.dart';
 import 'package:Dubeogi/provider/algo_value.dart';
 import 'package:Dubeogi/provider/map_value.dart';
 import 'dart:math';
-
 import 'package:provider/provider.dart';
 
 class Vec {
@@ -47,6 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
   List<Node> startNodes_alpha = [];
   List<Node> endNodes_alpha = [];
 
+  // 출발지 텍스트에 변경점이 있는 경우 _handleSubmit()를 호출하는 함수 _handleFirstTextChange
   void _handleFirstTextChange() {
     if (firstController.text != previousFirstValue) {
       previousFirstValue = firstController.text;
@@ -54,6 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
+  // 도착지 텍스트에 변경점이 있는 경우 _handleSubmit()를 호출하는 함수 _handleFirstTextChange
   void _handleSecondTextChange() {
     if (secondController.text != previousSecondValue) {
       previousSecondValue = secondController.text;
@@ -77,6 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
     secondController.dispose();
   }
 
+  // 외적을 통해 얻은 각도를 이용해 방향 문자열을 리턴하는 함수 getDirection
   String getDirection(Vec current, Vec next) {
     double crossProduct = current.x * next.y - current.y * next.x;
     double dotProduct = current.x * next.x + current.y * next.y;
@@ -104,9 +106,265 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
+  // name에 해당하는 이름의 빌딩이 존재하는 지 확인하는 함수 isExistBuilding
   bool isExistBuilding(String name) => buildings.contains(name);
 
+  //
   bool isExistSelectFromMap(String name) => selectFromMap.contains(name);
+
+
+  void notHandleInput(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("경로탐색 실패"),
+          content: const Text("다시 입력"),
+          actions: [
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void handleInput() {
+    // TextField에 값을 넣는 순간부터 경로를 다 찾아놔서 다시 돌릴 필요가 없어 일단 주석처리 해놓았음
+    // search_screen과 home_screen + drawer에 차별점을 주려면 놔둘 필요는 있음.
+    // reconstruct path를 새로하면 됨.
+
+    algovalue.colorPath();
+    algovalue.startNodeName = firstController.text;
+    algovalue.endNodeName = secondController.text;
+    algovalue.homeDirection = algovalue.direction_alpha;
+    algovalue.homeResult = algovalue.result_alpha;
+    algovalue.homeWeight = algovalue.totalWeight;
+    mapvalue.position = Offset((algovalue.graph.findNode(firstController.text).x + algovalue.graph.findNode(secondController.text).x) / 2, (algovalue.graph.findNode(firstController.text).y + algovalue.graph.findNode(secondController.text).y) / 2);
+    mapvalue.scale = 2;
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    algovalue.isAstared = false; // searchscreen에서의 값
+    algovalue.isRequired = true; // drawer 쓸건지 안쓸건지
+    mapvalue.isRequired = false; // 노드 표시가 있다면 비활성화
+  }
+
+
+  void _handleSubmit() {
+    algovalue.isRequired = false;
+    String weightSelect;
+    double totalWeight = 0;
+
+    // A* 알고리즘을 어떤 가중치를 통해서 진행할 지 설정한다.
+    if (algovalue.selectOption == 1 || algovalue.selectOption == 3) {
+      weightSelect = "최단";
+    } else {
+      weightSelect = "최적";
+    }
+
+    List<Node> result = [];
+    // 만약 출발지, 목적지가 같은 경우 알고리즘을 초기화하고 isAstared를f false로 바꾼다.
+    if (firstController.text == secondController.text) {
+      algovalue.erase();
+      algovalue.isAstared = false;
+      return;
+    }
+
+    // 출발지/도착지가 지도에서 선택한 출발지/도착지가 아닌 경우 지도에서 선택한 출발지/도착지 에 해당하는 노드를 삭제한다.
+    if (firstController.text != '지도에서 선택한 출발지') {
+      algovalue.removeSelectedFromMapNode('지도에서 선택한 출발지');
+    }
+    if (secondController.text != '지도에서 선택한 도착지') {
+      algovalue.removeSelectedFromMapNode('지도에서 선택한 도착지');
+    }
+
+    // 출발지/도착지에 올바른 빌딩명을 입력했거나 지도에서 선택한 출발지/도착지가 제대로 입력된 경우 길찾기를 정상적으로 시작한다.
+    if ((isExistBuilding(firstController.text) || isExistSelectFromMap(firstController.text)) &&
+        (isExistBuilding(secondController.text) || isExistSelectFromMap(secondController.text))) {
+      print("check: function handleSubmit start\n");
+
+      // '최소', '최적' 인 경우
+      if (algovalue.selectOption == 1 || algovalue.selectOption == 2) {
+        algovalue.startNodeName = firstController.text;
+        algovalue.endNodeName = secondController.text;
+
+        result = algovalue.astarPathMaking(
+          usingGraph: algovalue.graph,
+          weight_select: weightSelect,
+        );
+
+        // 총 걸린 시간을 계산하는 부분
+        for (int i = 0; i < result.length - 1; i++) {
+          totalWeight += algovalue.graph
+              .findEdge(result[i].name, result[i + 1].name)!
+              .sec_weight;
+        }
+      } else {
+        // '차도' 인 경우
+        List<Node> temp;
+        Node start = algovalue.graph.findNode(firstController.text);
+        Node end = algovalue.graph.findNode(secondController.text);
+        Graph roadGraph = initRoadGraph();
+        Node? startClosest =
+        algovalue.findClosestNode(roadGraph.nodes, start.x, start.y);
+        Node? endClosest =
+        algovalue.findClosestNode(roadGraph.nodes, end.x, end.y);
+
+        // [ 시작 지점 -> 가까운 차도 ] 길탐색
+        algovalue.startNodeName = start.name;
+        algovalue.endNodeName = startClosest.name;
+        temp = algovalue.astarPathMaking(
+          usingGraph: algovalue.graph,
+          weight_select: weightSelect,
+        );
+
+        // [ 시작 지점 -> 시작 지점에서 가까운 차도 ] 걸린 시간을 계산
+        for (int i = 0; i < temp.length - 1; i++) {
+          totalWeight += algovalue.graph
+              .findEdge(temp[i].name, temp[i + 1].name)!
+              .sec_weight;
+        }
+        int lengthTemp = temp.length;
+        // [ 시작 지점에서 가까운 차도 -> 도착 지점에서 가까운 차도 ] 길탐색
+        algovalue.startNodeName = startClosest.name;
+        algovalue.endNodeName = endClosest.name;
+        temp.addAll(algovalue.astarPathMaking(
+            usingGraph: roadGraph, weight_select: weightSelect));
+
+        // [ 시작 지점에서 가까운 차도 -> 도착 지점에서 가까운 차도 ] 걸린 시간을 계산해서 총 시간에 갱신
+        for (int i = lengthTemp; i < temp.length - 1; i++) {
+          totalWeight += roadGraph
+              .findEdge(temp[i].name, temp[i + 1].name)!
+              .sec_weight;
+        }
+        // [ 도착 지점에서 가까운 차도 -> 도착 지점 ] 길탐색
+        lengthTemp = temp.length;
+        algovalue.startNodeName = endClosest.name;
+        algovalue.endNodeName = end.name;
+        temp.addAll(algovalue.astarPathMaking(
+            usingGraph: algovalue.graph, weight_select: weightSelect));
+
+        // [ 도착 지점에서 가까운 차도 -> 도착 지점 ] 걸린 시간을 계산해서 총 시간에 갱신
+        for (int i = lengthTemp; i < temp.length - 1; i++) {
+          totalWeight += algovalue.graph
+              .findEdge(temp[i].name, temp[i + 1].name)!
+              .sec_weight;
+        }
+
+        // temp 바탕으로 result 정리
+        for (int i = 0; i < temp.length; i++) {
+          if (!result.any((node) => node.name == temp[i].name)) {
+            result.add(temp[i]);
+          } else {
+            int duplicateIndex = result.indexOf(temp[i]);
+            result.removeRange(duplicateIndex + 1, result.length);
+          }
+        }
+      }
+
+      // A* 알고리즘이 작동했으므로 isAstared를 true로 바꾼다.
+      algovalue.isAstared = true;
+
+      // A* 알고리즘의 결과 리스트 result 디버깅용 print
+      for (Node str in result) {
+        print("print name: ${str.name}");
+      }
+
+      // A* 알고리즘의 결과 리스트의 시작과 끝에 존재하는 건물명을 없애고 [ 건물명 - 입구 ] 엣지에 설정해 둔 가중치 100000을 뺀다. (save.dart 참고)
+      if (isExistBuilding(firstController.text)) {
+        result.removeAt(0);
+        totalWeight -= 100000;
+      }
+      if (isExistBuilding(secondController.text)) {
+        result.removeLast();
+        totalWeight -= 100000;
+      }
+
+      List<Node> startNodes = [];
+      List<Node> endNodes = [];
+
+      // LinePainter로 선을 그리기 위해 A* 알고리즘의 결과 리스트를 startNodes, endNodes에 순서대로 넣는다.
+      for (int i = 0; i < result.length; i++) {
+        if (i == 0) {
+          startNodes.add(result[i]);
+          if(result.length == 1) {
+            endNodes.add(result[i]);
+          }
+        }
+        else if (i == result.length - 1){
+          endNodes.add(result[i]);
+        }
+        else {
+          endNodes.add(result[i]);
+          startNodes.add(result[i]);
+        }
+      }
+
+      // 엣지를 벡터화한 후 엣지 간 getDirection을 통해 각도를 설명하는 문자열을 구해서 direction 벡터에 넣는다.
+      vector.clear();
+      direction.clear();
+      for (int i = 0; i < startNodes.length; i++) {
+        double deltaX = endNodes[i].x - startNodes[i].x;
+        double deltaY = endNodes[i].y - startNodes[i].y;
+        vector.add(Vec(deltaX, deltaY));
+      }
+      direction.add("출발지");
+      for (int i = 0; i < vector.length - 1; i++) {
+        direction.add(getDirection(vector[i], vector[i + 1]));
+      }
+      direction.add("목적지");
+
+      // 완성된 startNodes, endNodes, direction를 프로바이더에 갱신한다.
+      algovalue.startNodes = startNodes;
+      algovalue.endNodes = endNodes;
+      algovalue.finalPath = result;
+      algovalue.direction = direction;
+
+      direction_alpha.clear();
+      result_alpha.clear();
+      startNodes_alpha.clear();
+      endNodes_alpha.clear();
+
+      for (int i = 0; i < result.length; i++) {
+        if (direction[i] == "출발지") {
+          startNodes_alpha.add(result[i]);
+          result_alpha.add(result[i]);
+          direction_alpha.add("출발지");
+        } else if (direction[i] == "목적지") {
+          endNodes_alpha.add(result[i]);
+          result_alpha.add(result[i]);
+          direction_alpha.add("목적지");
+        } else if (result[i].showDetail == true) {
+          endNodes_alpha.add(result[i]);
+          startNodes_alpha.add(result[i]);
+          result_alpha.add(result[i]);
+          direction_alpha.add(direction[i]);
+        }
+      }
+
+      algovalue.endNodes_alpha = endNodes_alpha;
+      algovalue.startNodes_alpha = startNodes_alpha;
+      algovalue.result_alpha = result_alpha;
+      algovalue.direction_alpha = direction_alpha;
+      algovalue.totalWeight = totalWeight;
+      algovalue.arrivetime = DateTime.now().add(Duration(minutes: totalWeight ~/ 60 + 1)).toString().substring(11,16);
+      algovalue.hour = int.parse(algovalue.arrivetime.substring(0,2));
+      if(algovalue.hour >= 12){
+        algovalue.meridiem = '오후';
+        algovalue.hour -= 12;
+      }
+      else{
+        algovalue.meridiem = '오전';
+      }
+    } else {
+      algovalue.isAstared = false;
+    }
+    print(
+        'total_weight: ${totalWeight ~/ 60}분 ${(totalWeight % 60).toInt()}초, 약 ${totalWeight ~/ 60 + 1}분');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,9 +381,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // appBar: AppBar(
-      //   title: Text('동국대학교'),
-      // ),
       body: Container(
         color: Colors.orangeAccent,
         child: SafeArea(
@@ -137,7 +392,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   color: Colors.orangeAccent,
                   child: Column(
                     children: [
-                      // 최단.최적.차도
+                      // 최단, 최적, 차도 버튼
                       Container(
                         height: 60,
                         color: Colors.orangeAccent,
@@ -148,7 +403,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.all(10),
+                                  margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
                                   width: 80,
                                   decoration: BoxDecoration(
                                     color: algovalue.selectOption == 1
@@ -177,7 +432,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                                 const SizedBox(width: 20),
                                 Container(
-                                  margin: const EdgeInsets.all(10),
+                                  margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
                                   width: 80,
                                   decoration: BoxDecoration(
                                     color: algovalue.selectOption == 2
@@ -206,7 +461,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                                 const SizedBox(width: 20),
                                 Container(
-                                  margin: const EdgeInsets.all(10),
+                                  margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
                                   width: 80,
                                   decoration: BoxDecoration(
                                     color: algovalue.selectOption == 3
@@ -247,10 +502,11 @@ class _SearchScreenState extends State<SearchScreen> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // 츌발지
+                                // 출발지
                                 Row(
                                   children: [
                                     Expanded(
+                                      // 자동완성 기능을 제공하는 TypeAheadField 위젯 사용
                                       child: TypeAheadField(
                                         textFieldConfiguration:
                                         TextFieldConfiguration(
@@ -260,9 +516,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             decoration: InputDecoration(
                                                 border: InputBorder.none,
                                                 contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 16,
-                                                    horizontal: 10),
+                                                const EdgeInsets.fromLTRB(10, 10, 10, 0),
                                                 hintText: '출발 지점을 입력하세요',
                                                 hintStyle: const TextStyle(
                                                   fontFamily: 'Paybooc',
@@ -272,6 +526,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 fillColor:
                                                 const Color(0xffF9D5A8),
                                                 suffixIcon: InkWell(
+                                                  // x 버튼 터치 시 내용을 지운다
                                                   onTap: () {
                                                     firstController.text = "";
                                                   },
@@ -327,6 +582,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         },
                                       ),
                                     ),
+                                    // 지도 버튼 Align
                                     Align(
                                       alignment: Alignment.centerRight,
                                       child: InkWell(
@@ -340,7 +596,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           setState(() {
                                             if (result != null) {
                                               firstController.text = "";
-                                              algovalue.pickandUpdateGraph(
+                                              algovalue.addSelectedFromMapNode(
                                                   result, '지도에서 선택한 출발지');
                                               firstController.text = '지도에서 선택한 출발지';
                                             }
@@ -367,10 +623,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                     ),
                                   ],
                                 ),
-                                Container(
-                                  height: 2,
+/*                                Container(
+                                  height: 1,
                                   color: Colors.orangeAccent,
-                                ),
+                                ),*/
                                 // 목적지
                                 Row(
                                   children: [
@@ -383,7 +639,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           focusNode: secondFocus,
                                           decoration: InputDecoration(
                                               contentPadding: const EdgeInsets.symmetric(
-                                                  vertical: 16, horizontal: 10),
+                                                  vertical: 10, horizontal: 10),
                                               border: InputBorder.none,
                                               hintText: '도착 지점을 입력하세요',
                                               hintStyle: const TextStyle(
@@ -459,7 +715,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           setState(() {
                                             if (result != null) {
                                               secondController.text = "";
-                                              algovalue.pickandUpdateGraph(
+                                              algovalue.addSelectedFromMapNode(
                                                   result, '지도에서 선택한 도착지');
                                               secondController.text = '지도에서 선택한 도착지';
                                             }
@@ -495,7 +751,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 // 출발/목적지 설정 x -> 빈칸
-                if (algovalue.isFind == true)
+                if (algovalue.isAstared == true) //A* 알고리즘이 작동했다면
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -623,7 +879,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ],
                     ),
                   ),
-                if (algovalue.isFind == false)
+                if (algovalue.isAstared == false)  // A* 알고리즘이 아직 돌아가지 않았을 때
                   Expanded(
                     child: Container(
                       child: Center(
@@ -631,7 +887,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             ((firstController.text == secondController.text) &&
                                     isExistBuilding(firstController.text))
                                 ? CustomText(
-                                    text: "출발지와 목적지가 같음.",
+                                    text: "출발지와 목적지가 같습니다.",
                                     color: Colors.black,
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w700,
@@ -645,8 +901,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     ),
                   )
-                // else 경로 미리 표시
-                else if (algovalue.isFind == true)
+                // // A* 알고리즘이 돌아갔을 때
+                else if (algovalue.isAstared == true)
                   Expanded(
                     child: DetailList(
                       items: algovalue.result_alpha,
@@ -663,7 +919,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     height: 35.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (algovalue.isFind == false) {
+                        if (algovalue.isAstared == false) {
                           // 경로를 찾지 않은 경우
                           notHandleInput(context);
                         } else {
@@ -698,249 +954,5 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
     );
-  }
-
-  void notHandleInput(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("경로탐색 실패"),
-          content: const Text("다시 입력"),
-          actions: [
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void handleInput() {
-    // # TextField에 값을 넣는 순간부터 경로를 다 찾아놔서 다시 돌릴 필요가 없어서 일단 주석처리 해놓았음
-    // # search_screen과 home_screen + drawer에 차별점을 주려면 놔둘 필요는 있음.
-    // # reconstruct path를 새로하면 됨.
-
-    algovalue.colorPath();
-    algovalue.startNodeName = firstController.text;
-    algovalue.endNodeName = secondController.text;
-    algovalue.homeDirection = algovalue.direction_alpha;
-    algovalue.homeResult = algovalue.result_alpha;
-    algovalue.homeWeight = algovalue.totalWeight;
-    mapvalue.position = Offset((algovalue.graph.findNode(firstController.text).x + algovalue.graph.findNode(secondController.text).x) / 2, (algovalue.graph.findNode(firstController.text).y + algovalue.graph.findNode(secondController.text).y) / 2);
-    mapvalue.scale = 2;
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    algovalue.isFind = false; // searchscreen에서의 값
-    algovalue.isRequired = true; // drawer 쓸건지 안쓸건지
-    mapvalue.isRequired = false; // 노드 표시가 있다면 비활성화
-  }
-
-  void _handleSubmit() {
-    algovalue.isRequired = false;
-    int selectOption = algovalue.selectOption;
-    String weightSelect;
-    double totalWeight = 0;
-
-    if (selectOption == 1 || selectOption == 3) {
-      weightSelect = "최단";
-    } else {
-      weightSelect = "최적";
-    }
-
-    List<Node> result = [];
-    if (firstController.text == secondController.text) {
-      algovalue.erase();
-      algovalue.isFind = false;
-      return;
-    }
-
-    if (firstController.text != '지도에서 선택한 출발지') {
-      algovalue.removePickedPointFromGraph('지도에서 선택한 출발지');
-    } // 지우기
-    if (secondController.text != '지도에서 선택한 도착지') {
-      algovalue.removePickedPointFromGraph('지도에서 선택한 도착지');
-    } // 지우기
-
-    if ((isExistBuilding(firstController.text) ||
-            isExistSelectFromMap(firstController.text)) &&
-        (isExistBuilding(secondController.text) ||
-            isExistSelectFromMap(secondController.text))) {
-      print("check: function handleSubmit start\n");
-
-      if (selectOption == 1 || selectOption == 2) {
-        algovalue.startNodeName = firstController.text;
-        algovalue.endNodeName = secondController.text;
-
-        result = algovalue.astarPathMaking(
-          usingGraph: algovalue.graph,
-          weight_select: weightSelect,
-        );
-
-        for (int i = 0; i < result.length - 1; i++) {
-          //총 걸린 시간을 계산하는 부분
-          totalWeight += algovalue.graph
-              .findEdge(result[i].name, result[i + 1].name)!
-              .time_weight;
-        }
-      } else {
-        // option 3
-        List<Node> temp;
-        Node start = algovalue.graph.findNode(firstController.text);
-        Node end = algovalue.graph.findNode(secondController.text);
-        Graph driveWayGraph = initDriveWayGraph();
-        Node? startClosest =
-            algovalue.findClosestNode(driveWayGraph.nodes, start.x, start.y);
-        Node? endClosest =
-            algovalue.findClosestNode(driveWayGraph.nodes, end.x, end.y);
-
-        // 시작 -> 가까운 차도
-        algovalue.startNodeName = start.name;
-        algovalue.endNodeName = startClosest.name;
-        print("startClosest.name: ${startClosest.name}");
-        temp = algovalue.astarPathMaking(
-          usingGraph: algovalue.graph,
-          weight_select: weightSelect,
-        );
-
-        for (int i = 0; i < temp.length - 1; i++) {
-          //총 걸린 시간을 계산하는 부분
-          totalWeight += algovalue.graph
-              .findEdge(temp[i].name, temp[i + 1].name)!
-              .time_weight;
-        }
-        int lengthTemp = temp.length;
-        // 차도
-        algovalue.startNodeName = startClosest.name;
-        algovalue.endNodeName = endClosest.name;
-        temp.addAll(algovalue.astarPathMaking(
-            usingGraph: driveWayGraph, weight_select: weightSelect));
-        for (int i = lengthTemp; i < temp.length - 1; i++) {
-          //총 걸린 시간을 계산하는 부분
-/*          //디버그용 출력
-          print('temp[i].name: ${temp[i].name}     temp[i + 1].name: ${temp[i + 1].name}');
-          print(driveWayGraph.findEdge(temp[i].name, temp[i + 1].name));*/
-          totalWeight += driveWayGraph
-              .findEdge(temp[i].name, temp[i + 1].name)!
-              .time_weight;
-        }
-        // 차도 끝 -> 도착
-        lengthTemp = temp.length;
-        algovalue.startNodeName = endClosest.name;
-        algovalue.endNodeName = end.name;
-        temp.addAll(algovalue.astarPathMaking(
-            usingGraph: algovalue.graph, weight_select: weightSelect));
-        for (int i = lengthTemp; i < temp.length - 1; i++) {
-          //총 걸린 시간을 계산하는 부분
-          totalWeight += algovalue.graph
-              .findEdge(temp[i].name, temp[i + 1].name)!
-              .time_weight;
-        }
-
-        // temp 바탕으로 result 정리
-        for (int i = 0; i < temp.length; i++) {
-          if (!result.any((node) => node.name == temp[i].name)) {
-            result.add(temp[i]);
-          } else {
-            int duplicateIndex = result.indexOf(temp[i]);
-            result.removeRange(duplicateIndex + 1, result.length);
-          }
-        }
-      }
-      algovalue.isFind = true;
-
-      if (isExistBuilding(firstController.text)) {
-        result.removeAt(0);
-        totalWeight -= 100000;
-      }
-      if (isExistBuilding(secondController.text)) {
-        result.removeLast();
-        totalWeight -= 100000;
-      }
-
-      List<Node> startNodes = [];
-      List<Node> endNodes = [];
-
-      for (int i = 0; i < result.length; i++) {
-        if (i == 0) {
-          startNodes.add(result[i]);
-          if(result.length == 1) {
-            endNodes.add(result[i]);
-          }
-        }
-        else if (i == result.length - 1)
-          endNodes.add(result[i]);
-        else {
-          endNodes.add(result[i]);
-          startNodes.add(result[i]);
-        }
-/*        if(i != result.length - 1){ //총 걸린 시간을 계산하는 부분
-          total_weight += algovalue.graph.findEdge(result[i].name, result[i + 1].name)!.time_weight;
-        }*/
-      }
-      for (Node str in result) {
-        print("print name: ${str.name}");
-      }
-      vector.clear();
-      direction.clear();
-      for (int i = 0; i < startNodes.length; i++) {
-        double deltaX = endNodes[i].x - startNodes[i].x;
-        double deltaY = endNodes[i].y - startNodes[i].y;
-        vector.add(Vec(deltaX, deltaY));
-      }
-      direction.add("출발지");
-      for (int i = 0; i < vector.length - 1; i++) {
-        direction.add(getDirection(vector[i], vector[i + 1]));
-      }
-      direction.add("목적지");
-
-      algovalue.startNodes = startNodes;
-      algovalue.endNodes = endNodes;
-      //
-      algovalue.finalPath = result;
-      algovalue.direction = direction;
-      //
-      direction_alpha.clear();
-      result_alpha.clear();
-      startNodes_alpha.clear();
-      endNodes_alpha.clear();
-      for (int i = 0; i < result.length; i++) {
-        if (direction[i] == "출발지") {
-          startNodes_alpha.add(result[i]);
-          result_alpha.add(result[i]);
-          direction_alpha.add("출발지");
-        } else if (direction[i] == "목적지") {
-          endNodes_alpha.add(result[i]);
-          result_alpha.add(result[i]);
-          direction_alpha.add("목적지");
-        } else if (result[i].showRoute == true) {
-          endNodes_alpha.add(result[i]);
-          startNodes_alpha.add(result[i]);
-          result_alpha.add(result[i]);
-          direction_alpha.add(direction[i]);
-        }
-      }
-      algovalue.endNodes_alpha = endNodes_alpha;
-      algovalue.startNodes_alpha = startNodes_alpha;
-      algovalue.result_alpha = result_alpha;
-      algovalue.direction_alpha = direction_alpha;
-      algovalue.totalWeight = totalWeight;
-      algovalue.arrivetime = DateTime.now().add(Duration(minutes: totalWeight ~/ 60 + 1)).toString().substring(11,16);
-      algovalue.hour = int.parse(algovalue.arrivetime.substring(0,2));
-      if(algovalue.hour >= 12){
-        algovalue.meridiem = '오후';
-        algovalue.hour -= 12;
-      }
-      else{
-        algovalue.meridiem = '오전';
-      }
-    } else {
-      algovalue.isFind = false;
-    }
-    print(
-        'total_weight: ${totalWeight ~/ 60}분 ${(totalWeight % 60).toInt()}초, 약 ${totalWeight ~/ 60 + 1}분');
   }
 }
