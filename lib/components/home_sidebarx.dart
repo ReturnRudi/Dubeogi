@@ -40,7 +40,7 @@ class HomeSidebarX extends StatelessWidget {
             },
             onOption2Pressed: () {
               algovalue.erase();
-              algovalue.isRequired = false;
+              algovalue.showDrawer = false;
               mapvalue.isRequired = false;
               algovalue.open = 0;
               Navigator.pop(context);
@@ -54,7 +54,7 @@ class HomeSidebarX extends StatelessWidget {
     IconData? icon;
     double angle = 0.0;
     List<SidebarXItem> items = [];
-    for (int i = 0; i < algovalue.homeResult.length; i++) {
+    for (int i = 0; i < algovalue.homeFinalPath.length; i++) {
       if (algovalue.homeDirection[i].contains("크게 왼쪽")) {
         icon = Icons.arrow_back;
       } else if (algovalue.homeDirection[i].contains("크게 오른쪽")) {
@@ -82,18 +82,18 @@ class HomeSidebarX extends StatelessWidget {
               color: Colors.blue,
             ),
           ),
-          label: algovalue.homeResult[i].name,
+          label: algovalue.homeFinalPath[i].name,
           onTap: () {
             //mapvalue.scale = 6.0;
             print(
-                'check: (${algovalue.homeResult[i].x},${algovalue
-                    .homeResult[i].y})');
+                'check: (${algovalue.homeFinalPath[i].x},${algovalue
+                    .homeFinalPath[i].y})');
             mapvalue.guide_animation(Offset(
-                algovalue.homeResult[i].x, algovalue.homeResult[i].y), 6);
-            mapvalue.guideX = algovalue.homeResult[i].x;
-            mapvalue.guideY = algovalue.homeResult[i].y;
+                algovalue.homeFinalPath[i].x, algovalue.homeFinalPath[i].y), 6);
+            mapvalue.guideX = algovalue.homeFinalPath[i].x;
+            mapvalue.guideY = algovalue.homeFinalPath[i].y;
             mapvalue.isRequired = true;
-            mapvalue.nodeName = algovalue.homeResult[i].name;
+            mapvalue.nodeName = algovalue.homeFinalPath[i].name;
           },
         ),
       );

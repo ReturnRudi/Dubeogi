@@ -79,7 +79,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
     _getImageInfo();
   }
 
-/*  Future<void> _getImageInfo() async {
+  Future<void> _getImageInfo() async {
     final Completer<ImageInfo> completer = Completer();
     final ImageStream stream =
     const AssetImage('assets/images/du.png').resolve(const ImageConfiguration());
@@ -95,8 +95,8 @@ class _SelectFromMapState extends State<SelectFromMap> {
       scale_offset = MediaQuery.of(context).size.width / _imageWidth_du;
     });
     stream.removeListener(listener);
-  }*/
-  void _getImageInfo() {
+  }
+/*  void _getImageInfo() {
     Image image = Image.asset('assets/images/du.png');
     Completer<ImageInfo> completer = Completer<ImageInfo>();
 
@@ -111,7 +111,7 @@ class _SelectFromMapState extends State<SelectFromMap> {
       setState(() {});
       completer.complete(info);
     }));
-  }
+  }*/
 
   void _onScaleStart(ScaleStartDetails details) {
     setState(() {
@@ -277,7 +277,8 @@ class _SelectFromMapState extends State<SelectFromMap> {
                 print("gpsToPixel: $nowLocationPixel");
               },
               backgroundColor: Colors.orange,
-              child: const Icon(Icons.location_on),
+              child: const Icon(Icons.location_on,
+                color: Colors.white,),
             ),
           ),
         ],

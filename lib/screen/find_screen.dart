@@ -37,24 +37,35 @@ class _FindScreenState extends State<FindScreen> {
                   // 1. 상단 안내문구/박스
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: SizedBox(
-                        width: 200.0,
+                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white.withOpacity(0.7),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                         child: TypeAheadField(
                           textFieldConfiguration: TextFieldConfiguration(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white.withOpacity(0.7),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide: BorderSide.none,
-                              ),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding:
+                              EdgeInsets.fromLTRB(15, 10, 10, 10),
                               hintText: '검색하거나 아래 목록을 터치하세요',
-                              hintStyle: const TextStyle(
+                              hintStyle: TextStyle(
                                 color: Colors.grey,
                                 fontFamily: 'Paybooc',
                                 fontWeight: FontWeight.w400,
+                                fontSize: 12.0,
                               ),
+                              filled: true,
+                              fillColor: Colors.white,
                             ),
                             controller: Controller,
                           ),
@@ -99,8 +110,7 @@ class _FindScreenState extends State<FindScreen> {
                   // end 1
 
                   // 2. 건물 검색 버튼
-                  SizedBox(
-                    height: 50.0,
+                  Container(
                     child: ElevatedButton(
                       onPressed: () {
                         result = Controller.text; // 박스 안의 텍스트
@@ -133,11 +143,19 @@ class _FindScreenState extends State<FindScreen> {
                           );
                         }
                       },
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10), // 버튼의 모양 설정
+                          ),
+                          padding: EdgeInsets.all(0),
+                          backgroundColor: Colors.orangeAccent
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
                             Icons.apartment_rounded,
+                            color: Colors.white,
                           ),
                           CustomText(
                             text: '건물 검색',

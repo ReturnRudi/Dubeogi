@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late double scale_offset;
   late double scr_img_diff;
   bool _imageLoaded_du = false;
-
+  late double ratio;
 
   // 건물 및 편의시설 관련
   int nowFloor = 0;
@@ -70,8 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Offset nowLocationPixel = Offset.zero;
 
   // provider
-  late AlgoValue algovalue;
-  late MapValue mapvalue;
+  late AlgoValue algoValue;
+  late MapValue mapValue;
 
 /*  // 비동기
   Future<void> _getImageInfo() async {
@@ -112,23 +112,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // 줌/드래그 가 시작되는 시점의 줌 레벨과 위치를 저장하는 함수 _onScaleStart
   void _onScaleStart(ScaleStartDetails details) {
-    mapvalue.previousScale = mapvalue.scale;
-    mapvalue.previousPosition = details.focalPoint;
+    mapValue.previousScale = mapValue.scale;
+    mapValue.previousPosition = details.focalPoint;
   }
 
   // 줌/드래그가 진행될 때 제스처의 정도에 알맞게 줌/드래그 레벨을 변화시켜주는 함수 _onScaleUpdate
   // ScaleUpdateDetails details 에 사용자의 제스처 정보가 들어있다 (줌 / 드래그 한 정도)
   void _onScaleUpdate(ScaleUpdateDetails details) {
-    mapvalue.scale = (mapvalue.previousScale * details.scale).clamp(1.3, 12.0);
+    mapValue.scale = (mapValue.previousScale * details.scale).clamp(1.3, 12.0);
     final ratio = deviceHeight / deviceWidth;
     // 현재 화면상에 보여지는 지도 이미지의 실제 너비 (처음 화면에 너비를 꽉맞춰 이미지 위젯을 띄우므로 너비가 기준)
     // 원래 이미지의 너비가 3000픽셀일 때 scale이 2배라면 현재 화면에 보여지는 지도의 너비는 1500픽셀에 해당함
-    final screenWidth = _imageWidth_du / mapvalue.scale;
+    final screenWidth = _imageWidth_du / mapValue.scale;
     // 폭이 기준이므로 구한 화면상에 보여지는 지도 이미지의 실제 너비 * (너비 높이 비율) 을 통해 높이를 구함
     final screenHeight = screenWidth * ratio;
 
     // 사용자가 드래그를 할 때 지도 이미지 밖으로 나가면 안되므로 드래그의 최소/최대 범위를 계산을 통해 구한다
-
 
     // 이미지가 화면보다 작아질 경우를 대비해 dx, dy 각각의 최소값의 최대값, 최대값의 최소값을 지정한다.
     double compX = _imageWidth_du / 2;
@@ -146,19 +145,21 @@ class _HomeScreenState extends State<HomeScreen> {
     minX = minX > compX ? compX : minX;
     maxX = maxX > compX ? maxX : compX;
 
-    print('minY: $minY');
-    print('maxY: $maxY');
+    mapValue.minX = minX;
+    mapValue.maxX = maxX;
+    mapValue.minY = minY;
+    mapValue.maxY = maxY;
 
-    mapvalue.position -= (details.focalPoint - mapvalue.previousPosition) / mapvalue.previousScale / scale_offset;
+    mapValue.position -= (details.focalPoint - mapValue.previousPosition) / mapValue.previousScale / scale_offset;
 
-    mapvalue.position = Offset(
-      mapvalue.position.dx.clamp(minX, maxX),
-      mapvalue.position.dy.clamp(minY, maxY),
+    mapValue.position = Offset(
+      mapValue.position.dx.clamp(minX, maxX),
+      mapValue.position.dy.clamp(minY, maxY),
     );
 
-    print("position: ${mapvalue.position}");
+    //print("position: ${mapvalue.position}");
 
-    mapvalue.previousPosition = details.focalPoint;
+    mapValue.previousPosition = details.focalPoint;
   }
 
   void _vendingshow() {
@@ -197,7 +198,6 @@ class _HomeScreenState extends State<HomeScreen> {
       _printervisibility = !_printervisibility;
     });
   }
-
 
   // 건물을 터치하면 _showButton 변수를 터치한 건물명으로 바꾸는 함수 _showFloorButton
   void _showFloorButton(String touchedBuilding) {
@@ -287,8 +287,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // ====================================================
-
   Future<bool> _onBackPressed() async {
     bool? confirmExit = await showDialog<bool>(
       context: context,
@@ -329,36 +327,35 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
 
-
-    algovalue = Provider.of<AlgoValue>(context, listen: true);
-    mapvalue = Provider.of<MapValue>(context, listen: true);
+    algoValue = Provider.of<AlgoValue>(context, listen: true);
+    mapValue = Provider.of<MapValue>(context, listen: true);
     buildingPositions = buildingPositionedList(
         scale_offset: scale_offset, showFloorButton: _showFloorButton);
     vendings = vendingPositionedList(
-        scale: mapvalue.scale,
+        scale: mapValue.scale,
         scale_offset: scale_offset);
     showers = showerPositionedList(
-        scale: mapvalue.scale,
+        scale: mapValue.scale,
         scale_offset: scale_offset);
     stores = storePositionedList(
-        scale: mapvalue.scale,
+        scale: mapValue.scale,
         scale_offset: scale_offset);
     printers = printerPositionedList(
-        scale: mapvalue.scale,
+        scale: mapValue.scale,
         scale_offset: scale_offset);
     atms = atmPositionedList(
-        scale: mapvalue.scale,
+        scale: mapValue.scale,
         scale_offset: scale_offset);
     lounges = loungePositionedList(
-        scale: mapvalue.scale,
+        scale: mapValue.scale,
         scale_offset: scale_offset);
     buildingNames = buildingnamePositionedList(
-      scale: mapvalue.scale,
+      scale: mapValue.scale,
       scale_offset: scale_offset,
     );
     if (_isInitialized == false) {
-      algovalue.initialize();
-      mapvalue.initialize(_imageWidth_du / 2 , _imageHeight_du / 2);
+      algoValue.initialize();
+      mapValue.initialize(_imageWidth_du / 2 , _imageHeight_du / 2);
       _isInitialized = true;
     }
 
@@ -381,9 +378,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Stack(
                   children: [
                     Transform.scale(
-                      scale: mapvalue.scale,
+                      scale: mapValue.scale,
                       child: Transform.translate(
-                        offset: Offset(_imageWidth_du / 2 - mapvalue.position.dx, _imageHeight_du / 2 + scr_img_diff / 2 - mapvalue.position.dy).scale(scale_offset, scale_offset),
+                        offset: Offset(_imageWidth_du / 2 - mapValue.position.dx, _imageHeight_du / 2 + scr_img_diff / 2 - mapValue.position.dy).scale(scale_offset, scale_offset),
                         child: ClipRect(
                           child: Stack(
                             children: [
@@ -391,18 +388,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 size: Size(_imageWidth_du, _imageHeight_du),
                                 foregroundPainter: LinePainter(
                                   imageInfo: _imageInfo_du,
-                                  startPointsRed: algovalue.startPointsRed,
+                                  startPointsRed: algoValue.startPointsRed,
                                   // 빈 리스트 전달
-                                  endPointsRed: algovalue.endPointsRed,
+                                  endPointsRed: algoValue.endPointsRed,
                                   // 빈 리스트 전달
-                                  startPointsGreen: algovalue.startPointsGreen,
+                                  startPointsGreen: algoValue.startPointsGreen,
                                   // 초록색 선의 점들 전달
-                                  endPointsGreen: algovalue.endPointsGreen,
+                                  endPointsGreen: algoValue.endPointsGreen,
                                   // 초록색 선의 점들 전달
-                                  startPointsBlue: algovalue.startPointsBlue,
+                                  startPointsBlue: algoValue.startPointsBlue,
                                   // 빈 리스트 전달
                                   endPointsBlue:
-                                  algovalue.endPointsBlue, // 빈 리스트 전달
+                                  algoValue.endPointsBlue, // 빈 리스트 전달
                                 ),
                                 child: Stack(
                                   children: [
@@ -425,35 +422,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Stack(
                                   children: [
                                     ...buildingNames,
-                                    if (mapvalue.isRequired == true)
+                                    if (mapValue.isRequired == true)
                                       Positioned(
-                                          width: 200 / mapvalue.scale,
-                                          height: 20 / mapvalue.scale,
-                                          left: (mapvalue.guideX * scale_offset - 100 / mapvalue.scale),
-                                          top: (mapvalue.guideY * scale_offset - 2.5 - 20 / mapvalue.scale),
+                                          width: 200 / mapValue.scale,
+                                          height: 20 / mapValue.scale,
+                                          left: (mapValue.guideX * scale_offset - 100 / mapValue.scale),
+                                          top: (mapValue.guideY * scale_offset - 2.5 - 20 / mapValue.scale),
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Stack(
                                                 children: <Widget>[
                                                   // 아웃라인용 텍스트
-                                                  Text(mapvalue.nodeName,
+                                                  Text(mapValue.nodeName,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontSize: 10.0 / mapValue.scale,
                                                       fontFamily: 'Paybooc',
                                                       fontWeight: FontWeight.w700,
                                                       foreground: Paint()
                                                         ..style = PaintingStyle.stroke
-                                                        ..strokeWidth = 0.8 / mapvalue.scale
+                                                        ..strokeWidth = 0.8 / mapValue.scale
                                                         ..color = Colors.black, // 아웃라인 색
                                                     ),
                                                   ),
                                                   // 실제 텍스트
-                                                  Text(mapvalue.nodeName,
+                                                  Text(mapValue.nodeName,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontSize: 10.0 / mapValue.scale,
                                                       fontFamily: 'Paybooc',
                                                       fontWeight: FontWeight.w700,
                                                       color: Colors.orangeAccent, // 실제 텍스트 색
@@ -464,65 +461,65 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ],
                                           )
                                       ),
-                                    if (mapvalue.isRequired == true)    //노드 안내 아코
+                                    if (mapValue.isRequired == true)    //노드 안내 아코
                                       Positioned(
-                                          left: mapvalue.guideX * scale_offset - 146/3 * scale_offset / mapvalue.scale,
-                                          top: mapvalue.guideY * scale_offset - 146/3 * scale_offset / mapvalue.scale,
-                                          width: 1522/3 * scale_offset / mapvalue.scale,
-                                          height: 921/3 * scale_offset / mapvalue.scale,
+                                          left: mapValue.guideX * scale_offset - 146/3 * scale_offset / mapValue.scale,
+                                          top: mapValue.guideY * scale_offset - 146/3 * scale_offset / mapValue.scale,
+                                          width: 1522/3 * scale_offset / mapValue.scale,
+                                          height: 921/3 * scale_offset / mapValue.scale,
                                           child: Image.asset(
                                             'assets/images/position.png',
                                           )
                                       ),
-                                    if (algovalue.isRequired == true)   //출발지 마커
+                                    if (algoValue.showDrawer == true)   //출발지 마커
                                       Positioned(
-                                          left: algovalue.startNodes[0].x * scale_offset - 256/2 * scale_offset / mapvalue.scale ,
-                                          top: algovalue.startNodes[0].y * scale_offset - 512/2 * scale_offset / mapvalue.scale,
-                                          width: 512/2 * scale_offset / mapvalue.scale,
-                                          height: 512/2 * scale_offset / mapvalue.scale,
+                                          left: algoValue.startNodes[0].x * scale_offset - 256/2 * scale_offset / mapValue.scale ,
+                                          top: algoValue.startNodes[0].y * scale_offset - 512/2 * scale_offset / mapValue.scale,
+                                          width: 512/2 * scale_offset / mapValue.scale,
+                                          height: 512/2 * scale_offset / mapValue.scale,
                                           child: Image.asset(
                                             'assets/images/start.png',
                                           )
                                       ),
-                                    if (algovalue.isRequired == true)   //도착지 마커
+                                    if (algoValue.showDrawer == true)   //도착지 마커
                                       Positioned(
-                                          left: algovalue.endNodes.last.x * scale_offset - 256/2 * scale_offset / mapvalue.scale,
-                                          top: algovalue.endNodes.last.y * scale_offset - 512/2 * scale_offset / mapvalue.scale,
-                                          width: 512/2 * scale_offset / mapvalue.scale,
-                                          height: 512/2 * scale_offset / mapvalue.scale,
+                                          left: algoValue.endNodes.last.x * scale_offset - 256/2 * scale_offset / mapValue.scale,
+                                          top: algoValue.endNodes.last.y * scale_offset - 512/2 * scale_offset / mapValue.scale,
+                                          width: 512/2 * scale_offset / mapValue.scale,
+                                          height: 512/2 * scale_offset / mapValue.scale,
                                           child: Image.asset(
                                             'assets/images/end.png',
                                           )
                                       ),
-                                    if (algovalue.isRequired == true)   //출발지 노드 이름
+                                    if (algoValue.showDrawer == true)   //출발지 노드 이름
                                       Positioned(
-                                          width: 200 / mapvalue.scale,
-                                          height: 20 / mapvalue.scale,
-                                          left: (algovalue.startNodes[0].x * scale_offset - 100 / mapvalue.scale),
-                                          top: (algovalue.startNodes[0].y * scale_offset - 512/2 * scale_offset / mapvalue.scale - 20 / mapvalue.scale),
+                                          width: 200 / mapValue.scale,
+                                          height: 20 / mapValue.scale,
+                                          left: (algoValue.startNodes[0].x * scale_offset - 100 / mapValue.scale),
+                                          top: (algoValue.startNodes[0].y * scale_offset - 512/2 * scale_offset / mapValue.scale - 20 / mapValue.scale),
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Stack(
                                                 children: <Widget>[
                                                   // 아웃라인용 텍스트
-                                                  Text(algovalue.startNodes[0].name,
+                                                  Text(algoValue.startNodes[0].name,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontSize: 10.0 / mapValue.scale,
                                                       fontFamily: 'Paybooc',
                                                       fontWeight: FontWeight.w700,
                                                       foreground: Paint()
                                                         ..style = PaintingStyle.stroke
-                                                        ..strokeWidth = 0.8 / mapvalue.scale
+                                                        ..strokeWidth = 0.8 / mapValue.scale
                                                         ..color = Colors.white, // 아웃라인 색
                                                     ),
                                                   ),
                                                   // 실제 텍스트
-                                                  Text(algovalue.startNodes[0].name,
+                                                  Text(algoValue.startNodes[0].name,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontSize: 10.0 / mapValue.scale,
                                                       fontFamily: 'Paybooc',
                                                       fontWeight: FontWeight.w700,
                                                       color: Colors.orangeAccent, // 실제 텍스트 색
@@ -534,35 +531,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ],
                                           )
                                       ),
-                                    if (algovalue.isRequired == true)   //도착지 노드 이름
+                                    if (algoValue.showDrawer == true)   //도착지 노드 이름
                                       Positioned(
-                                          width: 200 / mapvalue.scale,
-                                          height: 20 / mapvalue.scale,
-                                          left: (algovalue.endNodes.last.x * scale_offset - 100 / mapvalue.scale),
-                                          top: (algovalue.endNodes.last.y * scale_offset - 512/2 * scale_offset / mapvalue.scale - 20 / mapvalue.scale),
+                                          width: 200 / mapValue.scale,
+                                          height: 20 / mapValue.scale,
+                                          left: (algoValue.endNodes.last.x * scale_offset - 100 / mapValue.scale),
+                                          top: (algoValue.endNodes.last.y * scale_offset - 512/2 * scale_offset / mapValue.scale - 20 / mapValue.scale),
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Stack(
                                                 children: <Widget>[
                                                   // 아웃라인용 텍스트
-                                                  Text(algovalue.endNodes.last.name,
+                                                  Text(algoValue.endNodes.last.name,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontSize: 10.0 / mapValue.scale,
                                                       fontFamily: 'Paybooc',
                                                       fontWeight: FontWeight.w700,
                                                       foreground: Paint()
                                                         ..style = PaintingStyle.stroke
-                                                        ..strokeWidth = 0.8 / mapvalue.scale
+                                                        ..strokeWidth = 0.8 / mapValue.scale
                                                         ..color = Colors.white, // 아웃라인 색
                                                     ),
                                                   ),
                                                   // 실제 텍스트
-                                                  Text(algovalue.endNodes.last.name,
+                                                  Text(algoValue.endNodes.last.name,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      fontSize: 10.0 / mapvalue.scale,
+                                                      fontSize: 10.0 / mapValue.scale,
                                                       fontFamily: 'Paybooc',
                                                       fontWeight: FontWeight.w700,
                                                       color: Colors.orangeAccent, // 실제 텍스트 색
@@ -580,12 +577,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Positioned(
                                             // 오렌지색 투명 큰 원
                                             left: nowLocationPixel.dx * scale_offset -
-                                                9 * 1.3 / mapvalue.scale,
+                                                9 * 1.3 / mapValue.scale,
                                             top: nowLocationPixel.dy * scale_offset -
-                                                9 * 1.3 / mapvalue.scale,
+                                                9 * 1.3 / mapValue.scale,
                                             child: Container(
-                                              width: 18 * 1.3 / mapvalue.scale,
-                                              height: 18 * 1.3 / mapvalue.scale,
+                                              width: 18 * 1.3 / mapValue.scale,
+                                              height: 18 * 1.3 / mapValue.scale,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: Colors.orange.withOpacity(0.3),
@@ -595,17 +592,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Positioned(
                                             //중앙 오렌지색 원 및 흰색 테두리
                                             left: nowLocationPixel.dx * scale_offset -
-                                                5 * 1.3 / mapvalue.scale,
+                                                5 * 1.3 / mapValue.scale,
                                             top: nowLocationPixel.dy * scale_offset -
-                                                5 * 1.3 / mapvalue.scale,
+                                                5 * 1.3 / mapValue.scale,
                                             child: Container(
-                                              width: 10 * 1.3 / mapvalue.scale,
-                                              height: 10 * 1.3 / mapvalue.scale,
+                                              width: 10 * 1.3 / mapValue.scale,
+                                              height: 10 * 1.3 / mapValue.scale,
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.white,
                                                     width:
-                                                    1.5 * 1.3 / mapvalue.scale),
+                                                    1.5 * 1.3 / mapValue.scale),
                                                 color: Colors.red,
                                                 shape: BoxShape.circle,
                                               ),
@@ -682,7 +679,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       backgroundColor: Colors.orangeAccent
                                   ),
                                   onPressed: () {
-                                    algovalue.isAstared = false;
+                                    algoValue.isAstared = false;
+                                    // 먼저 minX, maxX, minY, maxY를 초기화하여
+                                    // 사용자가 지도를 드래그 하지 않은 상태에서 길찾기를 진행해도
+                                    // 화면에 위젯 밖 부분이 보이지 않도록 만들었다
+                                    ratio = deviceHeight / deviceWidth;
+                                    mapValue.minX = _imageWidth_du / 4;
+                                    mapValue.maxX = _imageWidth_du - _imageWidth_du / 4;
+                                    mapValue.minY = _imageWidth_du * ratio / 4;
+                                    mapValue.maxY = _imageHeight_du - _imageWidth_du * ratio / 4;
                                     Navigator.pushNamed(
                                       context,
                                       '/search',
@@ -773,7 +778,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Expanded(
-                          child: algovalue.isRequired
+                          child: algoValue.showDrawer
                               ? HomeSidebarX(
                             controller: _controller,
                             scale_offset: scale_offset,
@@ -796,10 +801,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             } else {
                               buildingFilePath[_showButton] = strValue;
-                              algovalue.colorPath();
+                              algoValue.colorPath();
                               for (String key in nowFloorData.keys) {
                                 if (nowFloorData[key] != 0) {
-                                  algovalue.floorButtonPath(
+                                  algoValue.floorButtonPath(
                                       nowFloorData[key]!, key);
                                 }
                               }
@@ -822,7 +827,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: Colors.orangeAccent.withOpacity(0.9),
                   child: Icon(isTrackingLocation
                       ? Icons.location_off
-                      : Icons.location_on),
+                      : Icons.location_on,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],

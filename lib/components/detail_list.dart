@@ -3,8 +3,7 @@ import 'package:Dubeogi/save/astar.dart';
 import 'package:Dubeogi/save/custom_text.dart';
 import 'dart:math';
 
-// 노드 이름들과 방향을 받으면 이에 해당하는 리스트를 반환함
-// = screen/line_screen
+// 노드 이름과 방향을 받으면 이에 해당하는 리스트를 반환하는 detail_list.dart
 class DetailList extends StatefulWidget {
   final List<Node> items;
   final List<String> direction;
@@ -48,7 +47,6 @@ class _DetailListState extends State<DetailList> {
           else{
             icon = Icons.arrow_upward_rounded;
           }
-          // ----
 
           return ListTile(
             onTap: (){},

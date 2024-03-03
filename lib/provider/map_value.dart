@@ -10,6 +10,10 @@ class MapValue with ChangeNotifier{
   bool _isRequired = false;
   bool _isAnimating = false;
   String _nodeName = "";
+  double _minX = 0;
+  double _maxX = 0;
+  double _minY = 0;
+  double _maxY = 0;
 
   double get scale => _scale;
   double get previousScale => _previousScale;
@@ -19,6 +23,30 @@ class MapValue with ChangeNotifier{
   double get guideY => _guideY;
   bool get isRequired => _isRequired;
   String get nodeName => _nodeName;
+  double get minX => _minX;
+  double get maxX => _maxX;
+  double get minY => _minY;
+  double get maxY => _maxY;
+
+  set minX(double val){
+    _minX = val;
+    notifyListeners();
+  }
+
+  set maxX(double val){
+    _maxX = val;
+    notifyListeners();
+  }
+
+  set minY(double val){
+    _minY = val;
+    notifyListeners();
+  }
+
+  set maxY(double val){
+    _maxY = val;
+    notifyListeners();
+  }
 
   set scale(double val){
     _scale = val;

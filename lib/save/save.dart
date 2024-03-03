@@ -3504,7 +3504,8 @@ void initGraph(Graph graph) {
       building2: "신공학관",
       showRoute2: false);
   graph.addEdge("신공 1층 전층 엘베", "신공 1층 전층 엘베 앞", 2.09958, 0.139972, "평지", false);
-  //신공 전층 엘베 1층 - 3층
+  // 신공학관 전층 엘베 운행 변경으로 인해 주석 처리 ( 1층, 4층, 9층 운행으로 변경 )
+/*  //신공 전층 엘베 1층 - 3층
   graph.addEdge("신공 1층 전층 엘베", "신공 3층 전층 엘베", 264, 0, "엘베", false,
       node2X: 861,
       node2Y: 2650,
@@ -3541,7 +3542,26 @@ void initGraph(Graph graph) {
       isInside2: 9,
       building2: "신공학관",
       showRoute2: true);
-  graph.addEdge("신공 9층 전층 엘베", "신공 7층 전층 엘베", 264, 0, "엘베", false);
+  graph.addEdge("신공 9층 전층 엘베", "신공 7층 전층 엘베", 264, 0, "엘베", false);*/
+  //신공 전층 엘베 1층 - 4층
+  graph.addEdge("신공 1층 전층 엘베", "신공 4층 전층 엘베", 162, 0, "엘베", false,
+      node2X: 861,
+      node2Y: 2650,
+      isInside2: 4,
+      building2: "신공학관",
+      showRoute2: true);
+  graph.addEdge("신공 4층 전층 엘베", "신공 1층 전층 엘베", 162, 0, "엘베", false);
+  //신공 전층 엘베 1층 - 9층
+  graph.addEdge("신공 1층 전층 엘베", "신공 9층 전층 엘베", 194, 0, "엘베", false,
+      node2X: 861,
+      node2Y: 2650,
+      isInside2: 9,
+      building2: "신공학관",
+      showRoute2: true);
+  graph.addEdge("신공 9층 전층 엘베", "신공 1층 전층 엘베", 194, 0, "엘베", false);
+  //신공 전층 엘베 4층 - 9층
+  graph.addEdge("신공 4층 전층 엘베", "신공 9층 전층 엘베", 170, 0, "엘베", false);
+  graph.addEdge("신공 9층 전층 엘베", "신공 4층 전층 엘베", 170, 0, "엘베", false);
   //391
   graph.addEdge("신공 1층 전층 엘베 앞", "신공 1층 오른쪽 위", 1.93197, 0.128798, "평지", false,
       node2X: 875,
@@ -3847,7 +3867,12 @@ void initGraph(Graph graph) {
   graph.addEdge("신공 7층 왼쪽 위", "신공 7층 전층 엘베 앞", 4.76621, 0.317748, "평지", false);
   graph.addEdge("신공 7층 전층 엘베 앞", "신공 7층 왼쪽 위", 4.76621, 0.317748, "평지", false);
   //684
-  graph.addEdge("신공 7층 전층 엘베 앞", "신공 7층 전층 엘베", 0.914656, 0.0609771, "평지", false);
+  graph.addEdge("신공 7층 전층 엘베 앞", "신공 7층 전층 엘베", 0.914656, 0.0609771, "평지", false,
+      node2X: 861,
+      node2Y: 2650,
+      isInside2: 7,
+      building2: "신공학관",
+      showRoute2: true);
   graph.addEdge("신공 7층 전층 엘베", "신공 7층 전층 엘베 앞", 0.914656, 0.0609771, "평지", false);
   //705
   graph.addEdge("신공 7층 전층 엘베 앞", "신공 7층 오른쪽 위", 2.09958, 0.139972, "평지", false,
@@ -5554,6 +5579,9 @@ void initGraph(Graph graph) {
   //문화관 학술관 구름다리 입구
   graph.addEdge("문화관 학술관 구름다리 입구", "문화관", 100000, 100000, "평지", false);
   graph.addEdge("문화관", "문화관 학술관 구름다리 입구", 100000, 100000, "평지", false);
+  //문화관 경영관 구름다리 입구
+  graph.addEdge("문화관 경영관 구름다리 입구", "문화관", 100000, 100000, "평지", false);
+  graph.addEdge("문화관", "문화관 경영관 구름다리 입구", 100000, 100000, "평지", false);
 
   //문화관 1층
   //문화관 1층 입구
@@ -7192,6 +7220,6 @@ Graph initRoadGraph(){
   for (Edge edge in newGraph.edges){
     edge.sec_weight /= 6;
   }
-  print('nodes: ${newGraph.nodes}');
+  //print('nodes: ${newGraph.nodes}');
   return newGraph;
 }

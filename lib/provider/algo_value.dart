@@ -24,20 +24,17 @@ class AlgoValue with ChangeNotifier{
   List<Node> _endNodes = []; // 유효한 노드들
   List<Node> _regularPath = []; // 경로의 유효한 노드 리스트
   List<Node> _finalPath = [];
-  List<String> _direction = []; // 경로의 안내를 위한 설명 리스트
   int _selectOption = 1; // 탐색 옵션
-  List<String> _direction_alpha = [];
-  List<Node> _result_alpha = [];
-  List<Node> _startNodes_alpha = [];
-  List<Node> _endNodes_alpha =[];
+  List<String> _detailDirection = [];
+  List<Node> _finalDetailPath = [];
   List<String> _homeDirection = [];
-  List<Node> _homeResult = [];
+  List<Node> _homeFinalPath = [];
   double _homeWeight = 0.0;
   double _totalWeight = 0.0;
-
   bool _isRequired = false; // 길을 찾는 중인지
   //bool _isInitialized = false; // 처음 한번만 실행되도록하게하는 변수
   bool _isAstared = false; // astar 알고리즘이 작동했는지 안했는지
+
 
   Graph get graph => _graph;
   //String get showButton => _showButton;
@@ -53,18 +50,17 @@ class AlgoValue with ChangeNotifier{
   List<Node> get endNodes => _endNodes;
   List<Node> get regularPath => _regularPath;
   List<Node> get finalPath => _finalPath;
-  List<String> get direction => _direction;
   int get selectOption => _selectOption;
-  List<String> get direction_alpha => _direction_alpha;
-  List<Node> get result_alpha => _result_alpha;
-  List<Node> get startNodes_alpha => _startNodes_alpha;
-  List<Node> get endNodes_alpha => _endNodes_alpha;
+  List<String> get detailDirection => _detailDirection;
+  List<Node> get finalDetailPath => _finalDetailPath;
+/*  List<Node> get startNodes_alpha => _startNodes_alpha;
+  List<Node> get endNodes_alpha => _endNodes_alpha;*/
   List<String> get homeDirection => _homeDirection;
-  List<Node> get homeResult => _homeResult;
+  List<Node> get homeFinalPath => _homeFinalPath;
   double get homeWeight => _homeWeight;
   double get totalWeight => _totalWeight;
 
-  bool get isRequired => _isRequired;
+  bool get showDrawer => _isRequired;
   //bool get isInitialized => _isInitialized;
   bool get isAstared => _isAstared;
 
@@ -88,37 +84,25 @@ class AlgoValue with ChangeNotifier{
     _finalPath = nodelist;
     notifyListeners();
   }
-  set direction(List<String> strlist){
-    _direction = strlist;
-    notifyListeners();
-  }
   set selectOption(int option){
     _selectOption = option;
     print('check: set selectOption: $_selectOption');
     notifyListeners();
   }
-  set direction_alpha(List<String> strlist){
-    _direction_alpha = strlist;
+  set detailDirection(List<String> strlist){
+    _detailDirection = strlist;
     notifyListeners();
   }
-  set result_alpha(List<Node> nodelist){
-    _result_alpha = nodelist;
-    notifyListeners();
-  }
-  set startNodes_alpha(List<Node> nodelist){
-    _startNodes_alpha = nodelist;
-    notifyListeners();
-  }
-  set endNodes_alpha(List<Node> nodelist){
-    _endNodes_alpha = nodelist;
+  set finalDetailPath(List<Node> nodelist){
+    _finalDetailPath = nodelist;
     notifyListeners();
   }
   set homeDirection(List<String> strlist){
     _homeDirection = strlist;
     notifyListeners();
   }
-  set homeResult(List<Node> nodelist){
-    _homeResult = nodelist;
+  set homeFinalPath(List<Node> nodelist){
+    _homeFinalPath = nodelist;
     notifyListeners();
   }
   set homeWeight(double val){
@@ -129,7 +113,7 @@ class AlgoValue with ChangeNotifier{
     _totalWeight = val;
     notifyListeners();
   }
-  set isRequired(bool tf){
+  set showDrawer(bool tf){
     _isRequired = tf;
     //print('check: set isRequired: ${_isRequired}');
     notifyListeners();
@@ -156,7 +140,6 @@ class AlgoValue with ChangeNotifier{
     _startNodes.clear();
     _endNodes.clear();
     _finalPath.clear();
-    _direction.clear();
   }
   void eraseNodes(){
     _startNodes.clear();
@@ -181,7 +164,7 @@ class AlgoValue with ChangeNotifier{
     List<int> regularPrev = regularResult.item2;
 
     _regularPath = reconstructPath(regularPrev, usingGraph.nodes, startIndex, endIndex);
-    print("_regularPath: $_regularPath");
+    print("Path: $_regularPath");
 
     notifyListeners();
     return _regularPath;
@@ -226,9 +209,6 @@ class AlgoValue with ChangeNotifier{
   void floorButtonPath(int nowFloor, String nowBuilding) {
     //층 단면도를 보여주는 버튼을 눌렀을 때 해당하는 경로를 보여주는 함수
 
-    //colorPath();  //이 부분에서 clear()를 호출하고 실외 경로를 RGB 리스트에 넣어주어
-                  //층 버튼을 누를 때마다 이전의 보였던 층의 실내 경로를 보이지 않게함
-                  //이 부분을 수정하면 아마 이전의 실내 경로를 유지할 수 있을 듯
     for (int i = 0; i < _startNodes.length; i++) {
       if (_startNodes[i].isInside != 0 || _endNodes[i].isInside != 0) {
         if(nowFloor != 0){
@@ -246,6 +226,7 @@ class AlgoValue with ChangeNotifier{
       }
     }
   }
+
   Graph selectFromMapNewGraph(String newName, double dx, double dy, Node closest) {
     Graph newGraph = Graph();
     newGraph.nodes = List.from(graph.nodes);
@@ -263,6 +244,7 @@ class AlgoValue with ChangeNotifier{
 
     return newGraph;
   }
+
   Node findClosestNode(List<Node> nodes, double dx, double dy) {
     Node? closest;
     double closestDistance = double.infinity;
