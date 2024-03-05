@@ -59,7 +59,7 @@ android {
         versionName flutterVersionName
     }
     // 배포시 아래 주석을 활성화
-/*    signingConfigs {
+    signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
@@ -74,16 +74,16 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
         }
-    }*/
+    }
 
     //디버그시 아래 주석을 활성화
-    buildTypes {
+/*    buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
-    }
+    }*/
 }
 
 flutter {
