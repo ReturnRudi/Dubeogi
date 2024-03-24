@@ -142,6 +142,7 @@ class _FloorViewState extends State<FloorView> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListView.builder(
+                  padding: EdgeInsets.zero,
                   //위의 코드에서 만든 리스트를 기반으로 리스트 뷰를 표시
                   itemCount: fileNames.length,
                   itemBuilder: (context, index) {
