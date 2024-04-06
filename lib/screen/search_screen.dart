@@ -2,7 +2,7 @@ import 'package:Dubeogi/components/detail_list.dart';
 import 'package:Dubeogi/screen/select_from_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:Dubeogi/save/astar.dart';
+import 'package:Dubeogi/save/Dijkstra.dart';
 import 'package:Dubeogi/save/save.dart';
 import 'package:Dubeogi/save/custom_text.dart';
 import 'package:Dubeogi/provider/algo_value.dart';
@@ -146,18 +146,18 @@ class _SearchScreenState extends State<SearchScreen> {
     print('middleX: $middleX     middleY: $middleY');
     mapValue.position = Offset(middleX, middleY);
     Navigator.of(context).popUntil((route) => route.isFirst);
-    algoValue.isAstared = false; // A* 알고리즘이 작동했는지 판단하는 변수 -> 작동하면 true로 초기화한다.
+    algoValue.isDijkstra = false; // Dijkstra 알고리즘이 작동했는지 판단하는 변수 -> 작동하면 true로 초기화한다.
     algoValue.showDrawer = true; // drawer 쓸건지 안쓸건지
     mapValue.isRequired = false; // 노드 표시가 있다면 비활성화
   }
 
 
-  // 출발지, 목적지가 정해지면 A* 알고리즘을 진행하는 함수 _handleSubmit
+  // 출발지, 목적지가 정해지면 Dijkstra 알고리즘을 진행하는 함수 _handleSubmit
   void _handleSubmit() {
-    // 만약 출발지, 목적지가 같은 경우 A* 알고리즘을 진행하지 않고 반환한다.
+    // 만약 출발지, 목적지가 같은 경우 Dijkstra 알고리즘을 진행하지 않고 반환한다.
     if (firstController.text == secondController.text) return;
 
-    // A* 알고리즘을 어떤 가중치를 통해서 진행할 지 설정한다.
+    // Dijkstra 알고리즘을 어떤 가중치를 통해서 진행할 지 설정한다.
     String weightSelect;
     if (algoValue.selectOption == 1 || algoValue.selectOption == 3) {
       weightSelect = "최단";
@@ -187,7 +187,7 @@ class _SearchScreenState extends State<SearchScreen> {
         algoValue.startNodeName = firstController.text;
         algoValue.endNodeName = secondController.text;
 
-        algoValue.finalPath = algoValue.astarPathMaking(
+        algoValue.finalPath = algoValue.dijkstraPathMaking(
           usingGraph: algoValue.graph,
           weight_select: weightSelect,
         );
@@ -212,7 +212,7 @@ class _SearchScreenState extends State<SearchScreen> {
         // (1) [ 시작 지점 -> 가까운 차도 ] 길탐색
         algoValue.startNodeName = start.name;
         algoValue.endNodeName = startClosest.name;
-        temp = algoValue.astarPathMaking(
+        temp = algoValue.dijkstraPathMaking(
           usingGraph: algoValue.graph,
           weight_select: weightSelect,
         );
@@ -227,7 +227,7 @@ class _SearchScreenState extends State<SearchScreen> {
         // (2) [ 시작 지점에서 가까운 차도 -> 도착 지점에서 가까운 차도 ] 길탐색
         algoValue.startNodeName = startClosest.name;
         algoValue.endNodeName = endClosest.name;
-        temp.addAll(algoValue.astarPathMaking(
+        temp.addAll(algoValue.dijkstraPathMaking(
             usingGraph: roadGraph, weight_select: weightSelect));
 
         // [ 시작 지점에서 가까운 차도 -> 도착 지점에서 가까운 차도 ] 걸린 시간을 계산해서 총 시간에 갱신
@@ -240,7 +240,7 @@ class _SearchScreenState extends State<SearchScreen> {
         tempLength = temp.length;
         algoValue.startNodeName = endClosest.name;
         algoValue.endNodeName = end.name;
-        temp.addAll(algoValue.astarPathMaking(
+        temp.addAll(algoValue.dijkstraPathMaking(
             usingGraph: algoValue.graph, weight_select: weightSelect));
 
         // [ 도착 지점에서 가까운 차도 -> 도착 지점 ] 걸린 시간을 계산해서 총 시간에 갱신
@@ -261,13 +261,13 @@ class _SearchScreenState extends State<SearchScreen> {
         }
       }
 
-      // A* 알고리즘이 작동했으므로 isAstared를 true로 바꾼다.
-      algoValue.isAstared = true;
+      // Dijkstra 알고리즘이 작동했으므로 isDijkstra를 true로 바꾼다.
+      algoValue.isDijkstra = true;
 
-      // A* 알고리즘의 결과 리스트 finalPath 디버깅용 print
+      // Dijkstra 알고리즘의 결과 리스트 finalPath 디버깅용 print
       print("finalPath: ${algoValue.finalPath}");
 
-      // A* 알고리즘의 결과 리스트의 시작과 끝에 존재하는 건물명을 없애고 [ 건물명 - 입구 ] 엣지에 설정해 둔 가중치 100000을 뺀다. (save.dart 참고)
+      // Dijkstra 알고리즘의 결과 리스트의 시작과 끝에 존재하는 건물명을 없애고 [ 건물명 - 입구 ] 엣지에 설정해 둔 가중치 100000을 뺀다. (save.dart 참고)
       if (isExistBuilding(firstController.text)) {
         algoValue.finalPath.removeAt(0);
         algoValue.totalWeight -= 100000;
@@ -277,7 +277,7 @@ class _SearchScreenState extends State<SearchScreen> {
         algoValue.totalWeight -= 100000;
       }
 
-      // LinePainter로 선을 그리기 위해 A* 알고리즘의 결과 리스트를 startNodes, endNodes에 순서대로 넣는다.
+      // LinePainter로 선을 그리기 위해 Dijkstra 알고리즘의 결과 리스트를 startNodes, endNodes에 순서대로 넣는다.
       for (int i = 0; i < algoValue.finalPath.length; i++) {
         if (i == 0) {
           algoValue.startNodes.add(algoValue.finalPath[i]);
@@ -336,7 +336,7 @@ class _SearchScreenState extends State<SearchScreen> {
         algoValue.meridiem = '오전';
       }
     } else {
-      algoValue.isAstared = false;
+      algoValue.isDijkstra = false;
     }
     print(
         'total_weight: ${algoValue.totalWeight ~/ 60}분 ${(algoValue.totalWeight % 60).toInt()}초, 약 ${algoValue.totalWeight ~/ 60 + 1}분');
@@ -727,7 +727,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 // 출발/목적지 설정 x -> 빈칸
-                if (algoValue.isAstared == true) //A* 알고리즘이 작동했다면
+                if (algoValue.isDijkstra == true) //Dijkstra 알고리즘이 작동했다면
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -855,7 +855,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ],
                     ),
                   ),
-                if (algoValue.isAstared == false)  // A* 알고리즘이 아직 돌아가지 않았을 때
+                if (algoValue.isDijkstra == false)  // Dijkstra 알고리즘이 아직 돌아가지 않았을 때
                   Expanded(
                     child: Container(
                       child: Center(
@@ -877,8 +877,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     ),
                   )
-                // A* 알고리즘이 돌아갔을 때 search_screen에서 상세 안내
-                else if (algoValue.isAstared == true)
+                // Dijkstra 알고리즘이 돌아갔을 때 search_screen에서 상세 안내
+                else if (algoValue.isDijkstra == true)
                   Expanded(
                     child: DetailList(
                       items: algoValue.finalDetailPath,
@@ -894,7 +894,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     height: 35.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (algoValue.isAstared == false) {
+                        if (algoValue.isDijkstra == false) {
                           // 경로를 찾지 않은 경우
                           guideStartFail(context);
                         } else {

@@ -679,7 +679,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       backgroundColor: Colors.orangeAccent
                                   ),
                                   onPressed: () {
-                                    algoValue.isAstared = false;
+                                    algoValue.isDijkstra = false;
                                     // 먼저 minX, maxX, minY, maxY를 초기화하여
                                     // 사용자가 지도를 드래그 하지 않은 상태에서 길찾기를 진행해도
                                     // 화면에 위젯 밖 부분이 보이지 않도록 만들었다

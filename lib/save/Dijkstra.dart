@@ -92,8 +92,8 @@ class Graph {
     edges.removeWhere((edge) => edge.node1.name == name || edge.node2.name == name);
   }
 
-  // A* 알고리즘 함수 aStar, 결과로 최단 거리 배열 dist와 이전 노드 배열 prev를 반환한다.
-  Tuple2<List<double>, List<int>> aStar(List<Node> nodes, List<Edge> edges, Node start, Node end, String weightSelect) {
+  // Dijkstra 알고리즘 함수 Dijkstra, 결과로 최단 거리 배열 dist와 이전 노드 배열 prev를 반환한다.
+  Tuple2<List<double>, List<int>> Dijkstra(List<Node> nodes, List<Edge> edges, Node start, Node end, String weightSelect) {
     int startIndex = findNodeIndex(nodes, start.name);
     int endIndex = findNodeIndex(nodes, end.name);
 
@@ -143,7 +143,7 @@ class Graph {
   }
 }
 
-// A* 결과 dist와 prev를 기반으로 반대로 돌아가면서 경로를 path 리스트에 저장한 후 reverse를 통해 경로 순서대로 재배치하는 함수 reconstructPath
+// Dijkstra 결과 dist와 prev를 기반으로 반대로 돌아가면서 경로를 path 리스트에 저장한 후 reverse를 통해 경로 순서대로 재배치하는 함수 reconstructPath
 List<Node> reconstructPath(
     List<int> prev,
     List<Node> nodes,

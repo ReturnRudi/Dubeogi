@@ -1,4 +1,4 @@
-import 'package:Dubeogi/save/astar.dart';
+import 'package:Dubeogi/save/Dijkstra.dart';
 /*
 String sciencePath = 'assets/images/building/과학관(1102,2973).png';
 String dhPath = 'assets/images/building/다향관(1337,2379).png';   //new

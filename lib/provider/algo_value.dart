@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:Dubeogi/save/astar.dart';
+import 'package:Dubeogi/save/Dijkstra.dart';
 import 'package:Dubeogi/save/save.dart';
 
 // 알고리즘에 사용되며 지속하여 변화하는 값들을 모아놓음.
@@ -33,7 +33,7 @@ class AlgoValue with ChangeNotifier{
   double _totalWeight = 0.0;
   bool _isRequired = false; // 길을 찾는 중인지
   //bool _isInitialized = false; // 처음 한번만 실행되도록하게하는 변수
-  bool _isAstared = false; // astar 알고리즘이 작동했는지 안했는지
+  bool _isDijkstra = false; // Dijkstra 알고리즘이 작동했는지 안했는지
 
 
   Graph get graph => _graph;
@@ -62,7 +62,7 @@ class AlgoValue with ChangeNotifier{
 
   bool get showDrawer => _isRequired;
   //bool get isInitialized => _isInitialized;
-  bool get isAstared => _isAstared;
+  bool get isDijkstra => _isDijkstra;
 
   set startNodeName(String str){
     _startNodeName = str;
@@ -118,9 +118,9 @@ class AlgoValue with ChangeNotifier{
     //print('check: set isRequired: ${_isRequired}');
     notifyListeners();
   }
-  set isAstared(bool tf){
-    _isAstared = tf;
-    print('check: set isAstared: $_isAstared');
+  set isDijkstra(bool tf){
+    _isDijkstra = tf;
+    print('check: set isDijkstra: $_isDijkstra');
     notifyListeners();
   }
 
@@ -147,8 +147,8 @@ class AlgoValue with ChangeNotifier{
     notifyListeners();
   }
   // ==============================================
-  List<Node> astarPathMaking({required Graph usingGraph, required String weight_select}) {
-    //시작 노드와 도착 노드를 매개변수로 받아 Astar 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
+  List<Node> dijkstraPathMaking({required Graph usingGraph, required String weight_select}) {
+    //시작 노드와 도착 노드를 매개변수로 받아 Dijkstra 알고리즘을 돌린 후 reconstructPath를 통해 경로를 리스트에 순서대로 저장한 후
     //지도 위에 그림을 그릴 수 있도록 start, end 리스트에 x, y값을 각각 넣는다.
     print('function starPathMaking start');
     Node startNode = usingGraph.findNode(_startNodeName);
@@ -159,7 +159,7 @@ class AlgoValue with ChangeNotifier{
 
     // Regular search
     var regularResult =
-    usingGraph.aStar(usingGraph.nodes, usingGraph.edges, startNode, endNode, weight_select);
+    usingGraph.Dijkstra(usingGraph.nodes, usingGraph.edges, startNode, endNode, weight_select);
     List<double> regularDist = regularResult.item1;
     List<int> regularPrev = regularResult.item2;
 

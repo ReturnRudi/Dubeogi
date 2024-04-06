@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Dubeogi/save/astar.dart';
+import 'package:Dubeogi/save/Dijkstra.dart';
 import 'package:Dubeogi/save/custom_text.dart';
 import 'dart:math';
 
