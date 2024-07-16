@@ -109,7 +109,7 @@ class HomeSidebarX extends StatelessWidget {
     return SidebarX(
       controller: _controller,
       theme: SidebarXTheme(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.8),
           borderRadius: BorderRadius.circular(20),
@@ -143,6 +143,7 @@ class HomeSidebarX extends StatelessWidget {
         ),
       ),
       extendedTheme: SidebarXTheme(
+        margin: const EdgeInsets.all(5),
         width: MediaQuery.of(context).size.width*0.7,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.8),

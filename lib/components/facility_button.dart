@@ -21,7 +21,6 @@ class FacilityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-
       onPressed: onPressed,
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -42,9 +41,9 @@ class FacilityButton extends StatelessWidget {
           Icon(
             icon,
             color: textColor,
-            size: 20.0,
+            size: 15.0,
           ),
-          const SizedBox(width: 8.0),
+          const SizedBox(width: 4.0),
           CustomText(
             text: text,
             color: textColor,
